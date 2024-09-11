@@ -1,6 +1,6 @@
 # SWP391-JobSeeker
 
-by Chu The Van - HE170807
+### by Chu The Van - HE170807 (with branch vancthe170807)
 
 ## Getting started
 

@@ -8,6 +8,7 @@
 | Subject  | **Application Development Project (SWP391)** |
 | Semester | **Fall 2024**                             |
 | Instructor | **Nguyễn Mạnh Hùng (HungNM142)**        |
+| Group | **4**        |
 
 ---
 
@@ -218,3 +219,5 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Alternative Flow**: Nil.
 - **Pre-Conditions**: Must be a registered user.
 - **Post-Conditions**: Nil.
+
+© 2024 by SE1868-NJ - Group 4. All rights reserved.

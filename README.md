@@ -2,19 +2,24 @@
 
 ## I. General information
 ### 1. Information of Subject
-| Class | **SE1868-NJ** |
-| Subject | **Application development project (SWP391)** |
-| Semester | **Fall 2024** |
-| Instructor | **Nguyễn Mạnh Hùng (HungNM142)** |
+
+| Class    | **SE1868-NJ**                             |
+|----------|-------------------------------------------|
+| Subject  | **Application Development Project (SWP391)** |
+| Semester | **Fall 2024**                             |
+| Instructor | **Nguyễn Mạnh Hùng (HungNM142)**        |
+
+---
 
 ### 2. Member of Team
-| ID Student | Fullname | Leader |
-| :—– | :———- | :————– |
-| HE170309 | Nguyễn Ngọc Tú |  |
-| HE170807 | Chu Thế Văn |  |
-| HE171932 | Nguyễn Văn Dũng |  |
-| HE173048 | Trần Văn Tuấn |  |
-| HE181811 | Ninh Hải Nam | True |
+
+| ID Student | Fullname         | Leader |
+|------------|------------------|--------|
+| HE170309   | Nguyễn Ngọc Tú    |        |
+| HE170807   | Chu Thế Văn       |        |
+| HE171932   | Nguyễn Văn Dũng   |        |
+| HE173048   | Trần Văn Tuấn     |        |
+| HE181811   | Ninh Hải Nam      | True   |
 
 ### 3. Link of Google Drive for Project
 

@@ -10,8 +10,6 @@
 | Instructor | **Nguyễn Mạnh Hùng (HungNM142)**        |
 | Group | **4**        |
 
----
-
 ### 2. Member of Team
 
 | ID Student | Fullname         | Leader |
@@ -26,6 +24,8 @@
 
 - [Google Drive Folder](https://drive.google.com/drive/folders/19U7SNAP5B_OhYPR-Kq8EUCoOhFxdbl3L)
 
+---
+
 ## II. Information of Topic Project
 
 ### 1. Problem
@@ -39,7 +39,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 3.	Seeker – Can apply for a job posting.
 
 #### 2.2. Usecase Specification
-# Use Cases
 
 ##### 1. Approve New Companies
 **Description**: Checks the credibility of the company and admits the company into the system.
@@ -48,7 +47,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Checking the proofs submitted. 
 - **Post-Conditions**: Background checks.
 
----
 
 ##### 2. Deletion of Fraudulent Companies
 **Description**: The admin can delete the company from the system if it is proven to be a false/fraudulent company.
@@ -57,7 +55,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Rechecking the submitted proof.
 - **Post-Conditions**: Based on feedback from job seekers.
 
----
 
 ##### 3. Maintenance/Updating
 **Description**: Refers to change an existing information in the system to fix errors or enhance functionality and deleting outdated information and updating new data into the system.
@@ -66,7 +63,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Status of each company/seeker.
 - **Post-Conditions**: Based on feedback from recruiters/seekers.
 
----
 
 ##### 4. Feedback
 **Description**: Getting input from recruiters/seekers to verify the credibility of the users and to modify/update the system for better enhancements/quality.
@@ -75,7 +71,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: The feedback collected must be from the registered users of the system.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 5. Registration
 **Description**: Every recruiter/seeker must first register to avail the opportunity to use the system.
@@ -84,7 +79,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: The proofs/ID must be credible.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 6. Profile
 **Description**: Contains the information which will be displayed to all other users of the system.
@@ -93,7 +87,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Only required information to be displayed.
 - **Post-Conditions**: Additional information can be added.
 
----
 
 ##### 7. Recruiter Login
 **Description**: The recruiter/company login through a separate login page.
@@ -103,7 +96,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Username and password must be correct.
 - **Post-Conditions**: Can change username/password.
 
----
 
 ##### 8. Manage Profile
 **Description**: Displays the information about the company.
@@ -112,7 +104,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Can input credible information about the company.
 - **Post-Conditions**: Update the required information.
 
----
 
 ##### 9. Post Job Vacancy
 **Description**: Can post a job vacancy and provide details about the field, category, salary, and other job requirements.
@@ -121,7 +112,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Should post all the details that the seeker must know.
 - **Post-Conditions**: Can post what is needed from the seeker for the required post.
 
----
 
 ##### 10. Job Requirements
 **Description**: Displays the information of the job posted.
@@ -130,7 +120,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Information about what is to be expected from the seeker.
 - **Post-Conditions**: Additional requirements along with the existing information from the company.
 
----
 
 ##### 11. Delete Job Vacancy
 **Description**: If a job vacancy is filled or no longer needed, the company can delete the job posting from the system.
@@ -140,7 +129,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: The recruiter should delete the job posting for an appropriate reason.
 - **Post-Conditions**: Can notify the admin after the change is made.
 
----
 
 ##### 12. Communicate with Job Seeker
 **Description**: If a job seeker applies for a job vacancy, the recruiter should communicate with the seeker to provide information like interview date, company tests, etc.
@@ -150,7 +138,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: The seeker must satisfy the required job specifications for the posting.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 13. Manage Account
 **Description**: Details actions such as change/update username and password, and deletion of the recruiter account.
@@ -160,7 +147,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Must be a registered user.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 14. Seeker Login
 **Description**: The job seeker logs in through a separate login page.
@@ -170,7 +156,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Username and password must be correct.
 - **Post-Conditions**: Can change username/password.
 
----
 
 ##### 15. Manage Profile/Seeker Details
 **Description**: Displays the information of the seeker provided during registration.
@@ -180,7 +165,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Nil.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 16. Upload/Update CV
 **Description**: The CV/resume, submitted in the profile section, is a requirement for applying for jobs.
@@ -190,7 +174,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Only credible information must be presented in the resume.
 - **Post-Conditions**: Can update the resume whenever required.
 
----
 
 ##### 17. View Job Vacancy
 **Description**: A job seeker can browse through various job postings, based on category and field and further constraints.
@@ -200,7 +183,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Must be a registered user.
 - **Post-Conditions**: Nil.
 
----
 
 ##### 18. Apply for Job Vacancy
 **Description**: A job seeker, if interested in a certain job posting, can apply for that posting.
@@ -210,7 +192,6 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Pre-Conditions**: Should meet the required requirements of the posting.
 - **Post-Conditions**: Upload CV.
 
----
 
 ##### 19. Modify Account
 **Description**: Details actions such as change/update username and password, and deletion of the account of the job seeker.
@@ -219,5 +200,7 @@ Job seekers work hard to gain the right skills and knowledge to give them an edg
 - **Alternative Flow**: Nil.
 - **Pre-Conditions**: Must be a registered user.
 - **Post-Conditions**: Nil.
+
+---
 
 © 2024 by SE1868-NJ - Group 4. All rights reserved.

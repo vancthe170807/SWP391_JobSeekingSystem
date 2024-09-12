@@ -1,93 +1,206 @@
-# SWP391-JobSeeker
+# SWP391 - Job Seeking System
+
+## I. General information
+### 1. Information of Subject
+
+| Class    | **SE1868-NJ**                             |
+|----------|-------------------------------------------|
+| Subject  | **Application Development Project (SWP391)** |
+| Semester | **Fall 2024**                             |
+| Instructor | **Nguyễn Mạnh Hùng (HungNM142)**        |
+| Group | **4**        |
+
+### 2. Member of Team
+
+| ID Student | Fullname         | Leader |
+|------------|------------------|--------|
+| HE170309   | Nguyễn Ngọc Tú    |        |
+| HE170807   | Chu Thế Văn       |        |
+| HE171932   | Nguyễn Văn Dũng   |        |
+| HE173048   | Trần Văn Tuấn     |        |
+| HE181811   | Ninh Hải Nam      | True   |
+
+### 3. Link of Google Drive for Project
+
+- [Google Drive Folder](https://drive.google.com/drive/folders/19U7SNAP5B_OhYPR-Kq8EUCoOhFxdbl3L)
+
+---
+
+## II. Information of Topic Project
+
+### 1. Problem
+Job seekers work hard to gain the right skills and knowledge to give them an edge over others in the role they seek. However, at times, despite their best efforts, one may find it difficult to move a step closer to this sought-after job. Hence a platform for listing out the availability of jobs irrespective of the field is required. Furthermore, a job site serves a dual purpose. On one hand, it lists out the availability of jobs to candidates, and on the other, it serves as a database of registered candidate’s profiles for companies to shortlist. The objective is to develop a software solution to predict the availability of jobs based on location, sectors, package, platform, interest and eligibility. As it is important to keep the candidates engaged during their job search, it is important to provide facets on the above - mentioned criteria so that they can narrow down to the jobs of their choice.
+
+### 2. Features and UC Model
+
+#### 2.1. Actor Specification
+1.	Admin – Verifies the company/seeker and maintains the system.
+2.	Recruiter – Posts job vacancies and its requirements.
+3.	Seeker – Can apply for a job posting.
+
+#### 2.2. Usecase Specification
+
+##### 1. Approve New Companies
+**Description**: Checks the credibility of the company and admits the company into the system.
+
+- **Flow of Events**: Verifies the Company’s information. 
+- **Pre-Conditions**: Checking the proofs submitted. 
+- **Post-Conditions**: Background checks.
 
 
+##### 2. Deletion of Fraudulent Companies
+**Description**: The admin can delete the company from the system if it is proven to be a false/fraudulent company.
 
-## Getting started
+- **Flow of Events**: Deletion of a company from the system. 
+- **Pre-Conditions**: Rechecking the submitted proof.
+- **Post-Conditions**: Based on feedback from job seekers.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+##### 3. Maintenance/Updating
+**Description**: Refers to change an existing information in the system to fix errors or enhance functionality and deleting outdated information and updating new data into the system.
 
-## Add your files
+- **Flow of Events**: Modifying and updating of the database based on various criteria.
+- **Pre-Conditions**: Status of each company/seeker.
+- **Post-Conditions**: Based on feedback from recruiters/seekers.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/NinhNam/swp391-jobseeker.git
-git branch -M main
-git push -uf origin main
-```
+##### 4. Feedback
+**Description**: Getting input from recruiters/seekers to verify the credibility of the users and to modify/update the system for better enhancements/quality.
 
-## Integrate with your tools
+- **Flow of Events**: Input from both recruiters and seekers.
+- **Pre-Conditions**: The feedback collected must be from the registered users of the system.
+- **Post-Conditions**: Nil.
 
-- [ ] [Set up project integrations](https://gitlab.com/NinhNam/swp391-jobseeker/-/settings/integrations)
 
-## Collaborate with your team
+##### 5. Registration
+**Description**: Every recruiter/seeker must first register to avail the opportunity to use the system.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- **Flow of Events**: Every user must submit the needed requirements for registration.
+- **Pre-Conditions**: The proofs/ID must be credible.
+- **Post-Conditions**: Nil.
 
-## Test and Deploy
 
-Use the built-in continuous integration in GitLab.
+##### 6. Profile
+**Description**: Contains the information which will be displayed to all other users of the system.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- **Flow of Events**: The information available in the profile should be credible.
+- **Pre-Conditions**: Only required information to be displayed.
+- **Post-Conditions**: Additional information can be added.
 
-***
 
-# Editing this README
+##### 7. Recruiter Login
+**Description**: The recruiter/company login through a separate login page.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- **Flow of Events**: Login into the system using the recruiter password.
+- **Alternative Flow**: Login through alternate means provided by admin (Forgot_password).
+- **Pre-Conditions**: Username and password must be correct.
+- **Post-Conditions**: Can change username/password.
 
-## Suggestions for a good README
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+##### 8. Manage Profile
+**Description**: Displays the information about the company.
 
-## Name
-Choose a self-explaining name for your project.
+- **Flow of Events**: Display Company information.
+- **Pre-Conditions**: Can input credible information about the company.
+- **Post-Conditions**: Update the required information.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+##### 9. Post Job Vacancy
+**Description**: Can post a job vacancy and provide details about the field, category, salary, and other job requirements.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- **Flow of Events**: Post a job vacancy with the required details.
+- **Pre-Conditions**: Should post all the details that the seeker must know.
+- **Post-Conditions**: Can post what is needed from the seeker for the required post.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+##### 10. Job Requirements
+**Description**: Displays the information of the job posted.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+- **Flow of Events**: Job requirement information.
+- **Pre-Conditions**: Information about what is to be expected from the seeker.
+- **Post-Conditions**: Additional requirements along with the existing information from the company.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+##### 11. Delete Job Vacancy
+**Description**: If a job vacancy is filled or no longer needed, the company can delete the job posting from the system.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- **Flow of Events**: Deletion of job posting if the post is filled.
+- **Alternative Flow**: Deletion of job post if it’s no longer needed.
+- **Pre-Conditions**: The recruiter should delete the job posting for an appropriate reason.
+- **Post-Conditions**: Can notify the admin after the change is made.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+##### 12. Communicate with Job Seeker
+**Description**: If a job seeker applies for a job vacancy, the recruiter should communicate with the seeker to provide information like interview date, company tests, etc.
 
-## License
-For open source projects, say how it is licensed.
+- **Flow of Events**: Communication between recruiter and seeker through the system.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: The seeker must satisfy the required job specifications for the posting.
+- **Post-Conditions**: Nil.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+##### 13. Manage Account
+**Description**: Details actions such as change/update username and password, and deletion of the recruiter account.
+
+- **Flow of Events**: Account updation/deletion.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Must be a registered user.
+- **Post-Conditions**: Nil.
+
+
+##### 14. Seeker Login
+**Description**: The job seeker logs in through a separate login page.
+
+- **Flow of Events**: Seeker login through password.
+- **Alternative Flow**: Login through alternate means provided by admin (Forgot_password).
+- **Pre-Conditions**: Username and password must be correct.
+- **Post-Conditions**: Can change username/password.
+
+
+##### 15. Manage Profile/Seeker Details
+**Description**: Displays the information of the seeker provided during registration.
+
+- **Flow of Events**: Information about the seeker.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Nil.
+- **Post-Conditions**: Nil.
+
+
+##### 16. Upload/Update CV
+**Description**: The CV/resume, submitted in the profile section, is a requirement for applying for jobs.
+
+- **Flow of Events**: Upload/update resume.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Only credible information must be presented in the resume.
+- **Post-Conditions**: Can update the resume whenever required.
+
+
+##### 17. View Job Vacancy
+**Description**: A job seeker can browse through various job postings, based on category and field and further constraints.
+
+- **Flow of Events**: Browsing job vacancies.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Must be a registered user.
+- **Post-Conditions**: Nil.
+
+
+##### 18. Apply for Job Vacancy
+**Description**: A job seeker, if interested in a certain job posting, can apply for that posting.
+
+- **Flow of Events**: Applying for a job vacancy.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Should meet the required requirements of the posting.
+- **Post-Conditions**: Upload CV.
+
+
+##### 19. Modify Account
+**Description**: Details actions such as change/update username and password, and deletion of the account of the job seeker.
+
+- **Flow of Events**: Account modification/updation.
+- **Alternative Flow**: Nil.
+- **Pre-Conditions**: Must be a registered user.
+- **Post-Conditions**: Nil.
+
+---
+
+© 2024 by SE1868-NJ - Group 4. All rights reserved.

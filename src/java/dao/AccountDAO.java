@@ -198,5 +198,14 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql);
     }
+    
+    public boolean checkUsernameExist(Account account) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Account]\n"
+                + "  where username = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("username", account.getUsername());
+        return !queryGenericDAO(sql).isEmpty();
+    }
 
 }

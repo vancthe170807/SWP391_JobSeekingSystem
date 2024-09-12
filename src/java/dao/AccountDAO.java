@@ -12,24 +12,15 @@ import model.Account;
  *
  * @author Admin
  */
-public class AccountDAO extends GenericDAO_HOLA<Account> {
+public class AccountDAO extends GenericDAO<Account> {
 
     @Override
     public List<Account> findAll() {
-        return queryGenericDAO();
+        return queryGenericDAO(Account.class);
     }
 
     @Override
     public int insert(Account t) {
-        return 0;
-    }
-//    danh sach tat ca cac account
-
-    public List<Account> findAllAccounts() {
-        return findAll();
-    }
-
-    public void insertAccount(Account t) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([username]\n"
                 + "           ,[password]\n"
@@ -62,8 +53,15 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap.put("isActive", t.isIsActive());
         parameterMap.put("createAt", t.getCreatAt());
         parameterMap.put("updatedAt", t.getUpdateAt());
-        insertGenericDAO(sql);
+        return insertGenericDAO(sql, parameterMap);
     }
+//    danh sach tat ca cac account
+
+    public List<Account> findAllAccounts() {
+        return findAll();
+    }
+
+    
 //  tim kiem user theo id
 
     public Account findUserById(Account account) {
@@ -85,7 +83,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
                 + "  FROM [dbo].[Account] where id = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("id", account.getId());
-        List<Account> list = queryGenericDAO(sql);
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
 //  tim kiem user theo ten dang nhap va mat khau
@@ -110,7 +108,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
         parameterMap.put("password", account.getPassword());
-        List<Account> list = queryGenericDAO(sql);
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
 //    tim kiem theo roleId
@@ -135,7 +133,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
         parameterMap.put("password", account.getPassword());
-        List<Account> list = queryGenericDAO(sql);
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
 //    update thong tin cua account
@@ -173,7 +171,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap.put("createAt", account.getCreatAt());
         parameterMap.put("updatedAt", account.getUpdateAt());
         parameterMap.put("id", account.getId());
-        updateGenericDAO(sql);
+        updateGenericDAO(sql, parameterMap);
 
     }
 //    tat hoat dong mot account
@@ -185,7 +183,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("isActive", 0);
         parameterMap.put("id", account.getId());
-        updateGenericDAO(sql);
+        updateGenericDAO(sql, parameterMap);
     }
 
 //    update password
@@ -196,7 +194,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("password", account.getPassword());
         parameterMap.put("id", account.getId());
-        updateGenericDAO(sql);
+        updateGenericDAO(sql, parameterMap);
     }
     
     public boolean checkUsernameExist(Account account) {
@@ -205,7 +203,18 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
                 + "  where username = ? ";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
-        return !queryGenericDAO(sql).isEmpty();
+        return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
+    }
+    
+    public static void main(String[] args) {
+        Account account = new Account(0, "vxcvxcv", "xcvxcvx",
+                "vxcvxcvx@gmail.com",
+                "vcxvcxvxc", "vcxvcxvxc", "vcxvcxvxc",
+                "vcxvcxvxc", null,
+                "vcxvcxvxc",
+                "vcxvcxvxc", 1, true, null, null);
+        new AccountDAO().insert(account);
+        
     }
 
 }

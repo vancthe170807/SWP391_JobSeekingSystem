@@ -205,7 +205,7 @@ public class AccountDAO extends GenericDAO_HOLA<Account> {
                 + "  where username = ? ";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
-        return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
+        return !queryGenericDAO(sql).isEmpty();
     }
 
 }

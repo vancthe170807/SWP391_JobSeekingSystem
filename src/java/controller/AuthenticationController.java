@@ -75,10 +75,9 @@ public class AuthenticationController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         //kiểm tra thông tin có tồn tại trong DB ko
-        Account account = Account.builder()
-                .username(username)
-                .password(password)
-                .build();
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(password);
         Account accFoundByUsernamePass = accountDAO.findUserByUsernameAndPassword(account);
         //true => trang home ( set account vao trong session ) 
         if (accFoundByUsernamePass != null) {
@@ -104,10 +103,9 @@ public class AuthenticationController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         //kiem tra xem username da ton tai trong db
-        Account account = Account.builder()
-                            .username(username)
-                            .password(password)
-                            .build();
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(password);
         boolean isExistUsername = accountDAO.checkUsernameExist(account);
         //true => quay tro lai trang register (set thong bao loi )
         if (isExistUsername) {

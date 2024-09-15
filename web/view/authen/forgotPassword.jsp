@@ -15,10 +15,6 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <!-- breadcrumb area -->
-        <jsp:include page="../common/breadcrumb-area.jsp"></jsp:include>
-            <!-- breadcrumb area end -->
-
             <div class="" id="forgotModal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-dialog modal-dialog-centered">
@@ -44,8 +40,7 @@
                                         <button class="rts__btn w-100 fill__btn">Reset Password</button>
                                     </div>
                                 </form>
-
-                                <span class="d-block text-center fw-medium">Remember Your Password? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+                                <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
                             </div>
                         </div>
                     </div>

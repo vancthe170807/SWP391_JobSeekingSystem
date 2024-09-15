@@ -15,9 +15,6 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <!-- breadcrumb area -->
-        <jsp:include page="../common/breadcrumb-area.jsp"></jsp:include>
-            <!-- breadcrumb area end -->
             <!--<div class="modal similar__modal fade " id="loginModal">-->
             <div class="" id="loginModal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -61,7 +58,7 @@
                                                 Remember me
                                             </label>
                                         </div>
-                                        <a href="#" class="forgot__password text-para" data-bs-toggle="modal" data-bs-target="#forgotModal" >Forgot Password?</a>
+                                        <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp" class="text-primary">Forgot Password?</a>
                                     </div>
                                     <div class="form-group my-3">
                                         <button class="rts__btn w-100 fill__btn">Login</button>
@@ -76,7 +73,8 @@
                                     <button><img src="${pageContext.request.contextPath}/assets/img/icon/facebook-small.svg" alt="">Continue with Facebook</button>
                                 </div>
                             </div>
-                            <span class="d-block text-center fw-medium">Don`t have an account? <a href="#" data-bs-target="#signupModal" data-bs-toggle="modal" class="text-primary">Sign Up</a> </span>
+                            <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/view/authen/register.jsp" class="text-primary">Register</a></span>
+
                         </div>
                     </div>
                 </div>

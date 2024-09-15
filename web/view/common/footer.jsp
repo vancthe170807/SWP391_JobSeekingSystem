@@ -32,7 +32,7 @@
                 <div class="rts__footer__widget max-content">
                     <div class="font-20 fw-medium mb-3 h6 ">Contact Us</div>
                     <ul class="list-unstyled mb-3">
-                        <li><a href="#"><i class="fa-light fa-location-dot"></i>2715 Ash Dr. San Jose,USA</a></li>
+                        <li><a href="#"><i class="fa-light fa-location-dot"></i>Thach That district, Ha Noi city</a></li>
                         <li><a href="callto:+880171234578"><i class="fa-light fa-phone"></i>+(61) 545-432-234</a></li>
                         <li><a href="mailto:jobpath@gmail.com"><i class="fa-light fa-envelope"></i> jobpath@gmail.com</a></li>
                     </ul>
@@ -73,7 +73,7 @@
     <div class="rts__copyright">
         <div class="container">
             <p class="text-center fw-medium py-4">
-                Copyright &copy; 2024 All Rights Reserved by jobpath
+                Copyright &copy; 2024 All Rights Reserved by Group 4 - SE1868-NJ
             </p>
         </div>
     </div>

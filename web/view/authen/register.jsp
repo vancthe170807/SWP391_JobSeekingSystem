@@ -15,10 +15,6 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <!-- breadcrumb area -->
-        <jsp:include page="../common/breadcrumb-area.jsp"></jsp:include>
-            <!-- breadcrumb area end -->
-
             <div class="" id="signupModal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-dialog modal-dialog-centered">
@@ -74,7 +70,8 @@
                                     <button><img src="${pageContext.request.contextPath}/assets/img/icon/facebook-small.svg" alt="">Continue with Facebook</button>
                                 </div>
                             </div>
-                            <span class="d-block text-center fw-medium">Have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+                            <span class="d-block text-center fw-medium">Have an account? You can <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
+
                         </div>
                     </div>
                 </div>

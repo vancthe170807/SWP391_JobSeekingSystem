@@ -24,17 +24,17 @@
         <meta name="format-detection" content="telephone=no">
         <title>Jobie - Job Portal Bootstrap Admin Dashboard</title>
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-        <link href="vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="vendor/chartist/css/chartist.min.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets-admin/images/favicon.png">
+        <link href="${pageContext.request.contextPath}/assets-admin/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets-admin/vendor/chartist/css/chartist.min.css">
         <!-- Vectormap -->
-        <link href="vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-        <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-        <link href="vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets-admin/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets-admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets-admin/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
         <link href="../../cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
-        <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
-
+        <link href="${pageContext.request.contextPath}/assets-admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets-admin/css/style.css" rel="stylesheet">
+        
     </head>
     <body>
 
@@ -117,7 +117,7 @@
                                         <li class="active dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -129,7 +129,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -141,7 +141,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -153,7 +153,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -166,7 +166,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -178,7 +178,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -190,7 +190,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -203,7 +203,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -215,7 +215,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -228,7 +228,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -240,7 +240,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -252,7 +252,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -264,7 +264,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -277,7 +277,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -289,7 +289,7 @@
                                         <li class="dz-chat-user">
                                             <div class="d-flex bd-highlight">
                                                 <div class="img_cont">
-                                                    <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
+                                                    <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
                                                     <span class="online_icon offline"></span>
                                                 </div>
                                                 <div class="user_info">
@@ -323,7 +323,7 @@
                                 <div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             Hi, how are you samim?
@@ -336,12 +336,12 @@
                                             <span class="msg_time_send">8:55 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             I am good too, thank you for your chat template
@@ -354,12 +354,12 @@
                                             <span class="msg_time_send">9:05 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             I am looking for your next templates
@@ -372,12 +372,12 @@
                                             <span class="msg_time_send">9:10 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             Bye, see you
@@ -386,7 +386,7 @@
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             Hi, how are you samim?
@@ -399,12 +399,12 @@
                                             <span class="msg_time_send">8:55 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             I am good too, thank you for your chat template
@@ -417,12 +417,12 @@
                                             <span class="msg_time_send">9:05 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             I am looking for your next templates
@@ -435,12 +435,12 @@
                                             <span class="msg_time_send">9:10 AM, Today</span>
                                         </div>
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mb-4">
                                         <div class="img_cont_msg">
-                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
                                         </div>
                                         <div class="msg_cotainer">
                                             Bye, see you
@@ -630,7 +630,7 @@
                                                 <li>
                                                     <div class="timeline-panel">
                                                         <div class="media me-2">
-                                                            <img alt="image" width="50" src="images/avatar/1.jpg">
+                                                            <img alt="image" width="50" src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg">
                                                         </div>
                                                         <div class="media-body">
                                                             <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -663,7 +663,7 @@
                                                 <li>
                                                     <div class="timeline-panel">
                                                         <div class="media me-2">
-                                                            <img alt="image" width="50" src="images/avatar/1.jpg">
+                                                            <img alt="image" width="50" src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg">
                                                         </div>
                                                         <div class="media-body">
                                                             <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -700,7 +700,7 @@
                                 </li>
                                 <li class="nav-item dropdown header-profile">
                                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-                                        <img src="images/profile/17.jpg" width="20" alt=""/>
+                                        <img src="${pageContext.request.contextPath}/assets-admin/images/profile/17.jpg" width="20" alt=""/>
                                         <div class="header-info">
                                             <span class="text-black">Oda Dink</span>
                                             <p class="fs-12 mb-0">Super Admin</p>
@@ -972,7 +972,7 @@
                                     <div class="card d-flex flex-xl-column flex-sm-column flex-md-row flex-column">
                                         <div class="card-body text-center profile-bx">
                                             <div class="profile-image mb-4">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle" alt="">
+                                                <img src="${pageContext.request.contextPath}/assets-admin/images/avatar/1.jpg" class="rounded-circle" alt="">
                                             </div>
                                             <h4 class="fs-22 text-black mb-1">Oda Dink</h4>
                                             <p class="mb-4">Programmer</p>
@@ -1318,21 +1318,21 @@
             Scripts
         ***********************************-->
         <!-- Required vendors -->
-        <script src="vendor/global/global.min.js"></script>
-        <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-        <script src="vendor/chart.js/Chart.bundle.min.js"></script>
-        <script src="vendor/owl-carousel/owl.carousel.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/vendor/global/global.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/vendor/chart.js/Chart.bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/vendor/owl-carousel/owl.carousel.js"></script>
 
         <!-- Chart piety plugin files -->
-        <script src="vendor/peity/jquery.peity.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/vendor/peity/jquery.peity.min.js"></script>
 
         <!-- Dashboard 1 -->
-        <script src="js/dashboard/dashboard-1.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/js/dashboard/dashboard-1.js"></script>
 
-        <script src="js/custom.min.js"></script>
-        <script src="js/deznav-init.js"></script>
-        <script src="js/demo.js"></script>
-        <script src="js/styleSwitcher.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/js/custom.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/js/deznav-init.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/js/demo.js"></script>
+        <script src="${pageContext.request.contextPath}/assets-admin/js/styleSwitcher.js"></script>
         <script>
 
 

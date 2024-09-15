@@ -8,44 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="description" content="Your Ultimate Job HTML Template">
-        <meta name="keywords" content="Hosting, Domain, Transfer, Buy Domain, WHMCS">
-        <link rel="canonical" href="https://html.themewant.com/hostie">
-        <meta name="robots" content="index, follow">
-        <!-- for open graph social media -->
-        <meta property="og:title" content="Your Ultimate Job HTML Template">
-        <meta property="og:description" content="Your Ultimate Job HTML Template">
-        <meta property="og:image" content="https://www.example.com/image.jpg">
-        <meta property="og:url" content="https://html.themewant.com/hostie/">
-        <!-- for twitter sharing -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Your Ultimate Job HTML Template">
-        <meta name="twitter:description" content="Your Ultimate Job HTML Template">
-        <meta name="twitter:image" content="https://html.themewant.com/hostie/landing/assets/images/banner/slider-img-01.webp">
-
-        <!-- fabicon -->
-        <link rel="icon" href="${pageContext.request.contextPath}/assets/img/favicon.ico" type="image/x-icon">
-        <link rel="shortcut-icon" href="${pageContext.request.contextPath}/assets/img/favicon-16x16.png" type="image/x-icon">
-
-
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/img/favicon.ico" type="image/x-icon">
-        <title>Jobpath - Job Seeker &amp; Job Holder HTML Template</title>
-        <!-- rt icons -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/icon/css/rt-icons.css">
-        <!-- fontawesome -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome/fontawesome.min.css">
-        <!-- all plugin css -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins.min.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
-        ${pageContext.request.contextPath}/
+        <jsp:include page="common/authen/common-css-authen.jsp"></jsp:include>
     </head>
     <body>
 
@@ -373,160 +336,13 @@
 
 
 
-        <div class="modal similar__modal fade " id="loginModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="max-content similar__form form__padding">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h6 class="mb-0">Login To Jobpath</h6>
-                            <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa-regular fa-xmark text-primary"></i>
-                            </button>
-                        </div>
-                        <div class="d-block has__line text-center"><p>Choose your Account Type</p></div>
-
-                        <div class="tab__switch flex-wrap flex-sm-nowrap nav-tab mt-30 mb-30">
-                            <button class="rts__btn nav-link  active"><i class="fa-light fa-user"></i>Candidate</button>
-                            <button class="rts__btn nav-link"><i class="rt-briefcase"></i> Employer</button>
-                        </div>
-                        <div class="tab-content" id="">
-
-                        </div>
-                        <form action="candidate-dashboard.html" method="post" class="d-flex flex-column gap-3">
-                            <div class="form-group">
-                                <label for="email" class="fw-medium text-dark mb-3">Your Email</label>
-                                <div class="position-relative">
-                                    <input type="email" name="email" id="email" value="user@test.com" placeholder="Enter your email" required>
-                                    <i class="fa-light fa-user icon"></i>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="fw-medium text-dark mb-3">Password</label>
-                                <div class="position-relative">
-                                    <input type="password" name="password" value="1234" id="password" placeholder="Enter your password" required>
-                                    <i class="fa-light fa-lock icon"></i>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap justify-content-between align-items-center fw-medium">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Remember me
-                                    </label>
-                                </div>
-                                <a href="#" class="forgot__password text-para" data-bs-toggle="modal" data-bs-target="#forgotModal" >Forgot Password?</a>
-                            </div>
-                            <div class="form-group my-3">
-                                <button class="rts__btn w-100 fill__btn">Login</button>
-                            </div>
-                        </form>
-                        <div class="d-block has__line text-center"><p>Or</p></div>
-                        <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
-                            <div class="is__social google">
-                                <button><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
-                            </div>
-                            <div class="is__social facebook">
-                                <button><img src="${pageContext.request.contextPath}/assets/img/icon/facebook-small.svg" alt="">Continue with Facebook</button>
-                            </div>
-                        </div>
-                        <span class="d-block text-center fw-medium">Don`t have an account? <a href="#" data-bs-target="#signupModal" data-bs-toggle="modal" class="text-primary">Sign Up</a> </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!--login form-->
+        
         <!-- signup form -->
-        <div class="modal similar__modal fade " id="signupModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="max-content similar__form form__padding">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h6 class="mb-0">Create A Free Account</h6>
-                            <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa-regular fa-xmark text-primary"></i>
-                            </button>
-                        </div>
-                        <div class="d-block has__line text-center"><p>Choose your Account Type</p></div>
-
-                        <div class="tab__switch flex-wrap flex-sm-nowrap nav-tab mt-30 mb-30">
-                            <button class="rts__btn nav-link  active"><i class="fa-light fa-user"></i>Candidate</button>
-                            <button class="rts__btn nav-link"><i class="rt-briefcase"></i> Employer</button>
-                        </div>
-                        <form action="#" class="d-flex flex-column gap-3">
-
-                            <div class="form-group">
-                                <label for="sname" class="fw-medium text-dark mb-3">Your Name</label>
-                                <div class="position-relative">
-                                    <input type="text" name="sname" id="sname" placeholder="Candidate" required>
-                                    <i class="fa-light fa-user icon"></i>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="signemail" class="fw-medium text-dark mb-3">Your Email</label>
-                                <div class="position-relative">
-                                    <input type="email" name="signemail" id="signemail" placeholder="Enter your email" required>
-                                    <i class="fa-sharp fa-light fa-envelope icon"></i>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="spassword" class="fw-medium text-dark mb-3">Password</label>
-                                <div class="position-relative">
-                                    <input type="password" name="spassword" id="spassword" placeholder="Enter your password" required>
-                                    <i class="fa-light fa-lock icon"></i>
-                                </div>
-                            </div>
-
-                            <div class="form-group my-3">
-                                <button class="rts__btn w-100 fill__btn">Login</button>
-                            </div>
-                        </form>
-                        <div class="d-block has__line text-center"><p>Or</p></div>
-                        <div class="d-flex flex-wrap justify-content-center gap-4 mt-20 mb-20">
-                            <div class="is__social google">
-                                <button><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
-                            </div>
-                            <div class="is__social facebook">
-                                <button><img src="${pageContext.request.contextPath}/assets/img/icon/facebook-small.svg" alt="">Continue with Facebook</button>
-                            </div>
-                        </div>
-                        <span class="d-block text-center fw-medium">Have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- forgot password form -->
-        <div class="modal similar__modal fade " id="forgotModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="max-content similar__form form__padding">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h6 class="mb-0">Forgot Password</h6>
-                            <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa-regular fa-xmark text-primary"></i>
-                            </button>
-                        </div>
-                        <form action="#" class="d-flex flex-column gap-3">
-
-                            <div class="form-group">
-                                <label for="fmail" class="fw-medium text-dark mb-3">Your Email</label>
-                                <div class="position-relative">
-                                    <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
-                                    <i class="fa-sharp fa-light fa-envelope icon"></i>
-                                </div>
-                            </div>
-
-                            <div class="form-group my-3">
-                                <button class="rts__btn w-100 fill__btn">Reset Password</button>
-                            </div>
-                        </form>
-
-                        <span class="d-block text-center fw-medium">Remember Your Password? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- footer-area -->
         <jsp:include page="common/footer.jsp"></jsp:include>
         <!-- footer-area end -->                    
@@ -584,7 +400,7 @@
             <i class="fas fa-arrow-up"></i>
         </button>
         <!-- all plugin js -->
-        <script src="${pageContext.request.contextPath}/assets/js/plugins.min.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+        
+        <jsp:include page="common/authen/common-js-authen.jsp"></jsp:include>
     </body>
 </html>

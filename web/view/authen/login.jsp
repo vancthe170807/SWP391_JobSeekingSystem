@@ -22,21 +22,12 @@
                         <div class="modal-content">
                             <div class="max-content similar__form form__padding">
                                 <div class="d-flex mb-3 align-items-center justify-content-between">
-                                    <h6 class="mb-0">Login To Jobpath</h6>
+                                    <h4 class="mb-0" style="margin-top: 100px; margin-left: 90px">Login To Jobpath</h4>
                                     <button type="button" data-bs-dismiss="modal" aria-label="Close">
                                         <i class="fa-regular fa-xmark text-primary"></i>
                                     </button>
                                 </div>
-                                <div class="d-block has__line text-center"><p>Choose your Account Type</p></div>
-
-                                <div class="tab__switch flex-wrap flex-sm-nowrap nav-tab mt-30 mb-30">
-                                    <button class="rts__btn nav-link  active"><i class="fa-light fa-user"></i>Candidate</button>
-                                    <button class="rts__btn nav-link"><i class="rt-briefcase"></i> Employer</button>
-                                </div>
-                                <div class="tab-content" id="">
-
-                                </div>
-                                <form action="candidate-dashboard.html" method="post" class="d-flex flex-column gap-3">
+                                <form action="${pageContext.request.contextPath}/login" method="post" class="d-flex flex-column gap-3">
                                     <div class="form-group">
                                         <label for="email" class="fw-medium text-dark mb-3">Your Email</label>
                                         <div class="position-relative">
@@ -61,16 +52,13 @@
                                         <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp" class="text-primary">Forgot Password?</a>
                                     </div>
                                     <div class="form-group my-3">
-                                        <button class="rts__btn w-100 fill__btn">Login</button>
+                                        <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
                                     </div>
                                 </form>
                                 <div class="d-block has__line text-center"><p>Or</p></div>
                                 <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
                                     <div class="is__social google">
-                                        <button><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
-                                </div>
-                                <div class="is__social facebook">
-                                    <button><img src="${pageContext.request.contextPath}/assets/img/icon/facebook-small.svg" alt="">Continue with Facebook</button>
+                                        <button disabled><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
                                 </div>
                             </div>
                             <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/view/authen/register.jsp" class="text-primary">Register</a></span>

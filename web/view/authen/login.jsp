@@ -61,7 +61,7 @@
                                         <button disabled><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
                                 </div>
                             </div>
-                            <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/view/authen/register.jsp" class="text-primary">Register</a></span>
+                                <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/authen?action=sign-up" class="text-primary">Register</a></span>
 
                         </div>
                     </div>

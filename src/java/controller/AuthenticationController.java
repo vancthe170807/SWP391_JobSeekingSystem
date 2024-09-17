@@ -7,14 +7,14 @@ package controller;
 import constant.CommonConst;
 import dao.AccountDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Account;
 
+@WebServlet(name="AuthenticationController", urlPatterns={"/authen"})
 public class AuthenticationController extends HttpServlet {
 
     AccountDAO accountDAO = new AccountDAO();
@@ -100,21 +100,30 @@ public class AuthenticationController extends HttpServlet {
     private String signUp(HttpServletRequest request, HttpServletResponse response) {
         String url;
         //get ve cac thong tin nguoi dung nhpa
+        int roleId = Integer.parseInt(request.getParameter("role"));
         String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         //kiem tra xem username da ton tai trong db
         Account account = new Account();
+        account.setRoleId(roleId);
         account.setUsername(username);
+        account.setEmail(email);
         account.setPassword(password);
         boolean isExistUsername = accountDAO.checkUsernameExist(account);
+        boolean isExistUserEmail = accountDAO.checkUserEmailExist(account);
         //true => quay tro lai trang register (set thong bao loi )
         if (isExistUsername) {
             request.setAttribute("error", "Username exist !!");
             url = "view/authen/register.jsp";
             //false => quay tro lai trang home ( ghi tai khoan vao trong DB )
-        }else {
+        }else if(isExistUserEmail){
+            request.setAttribute("error", "Email exist !!");
+            url = "view/authen/register.jsp";
+        }
+        else {
             accountDAO.insert(account);
-            url = "home";
+            url = "view/authen/login.jsp";
         }
         return url;
     }

@@ -32,15 +32,23 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/css/style.css</file>
         </group>
         <group name="SWP291">
-            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/login.jsp</file>
-            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/user/userHome.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/seeker/seekerHome.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/common-css-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/footer.jsp</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/sidebar-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/header-area.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/login.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/common-js-user.jsp</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/controller/HomeController.java</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/register.jsp</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/admin/adminHome.jsp</file>
-            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/forgotPassword.jsp</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/home.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/dao/AccountDAO.java</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/model/Account.java</file>
         </group>
     </open-files>
 </project-private>

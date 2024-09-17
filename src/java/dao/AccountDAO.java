@@ -50,9 +50,9 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("address", t.getAddress());
         parameterMap.put("avatar", t.getAvatar());
         parameterMap.put("roleId", t.getRoleId());
-        parameterMap.put("isActive", t.isIsActive());
-        parameterMap.put("createAt", t.getCreatAt());
-        parameterMap.put("updatedAt", t.getUpdateAt());
+        parameterMap.put("isActive", true);
+        parameterMap.put("createAt", t.getCreateAt());
+        parameterMap.put("updatedAt", t.getUpdatedAt());
         return insertGenericDAO(sql, parameterMap);
     }
 //    danh sach tat ca cac account
@@ -168,8 +168,8 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("address", account.getAddress());
         parameterMap.put("avatar", account.getAvatar());
         parameterMap.put("roleId", (Integer) account.getRoleId());
-        parameterMap.put("createAt", account.getCreatAt());
-        parameterMap.put("updatedAt", account.getUpdateAt());
+        parameterMap.put("createAt", account.getCreateAt());
+        parameterMap.put("updatedAt", account.getUpdatedAt());
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);
 
@@ -205,16 +205,26 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("username", account.getUsername());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
+    public boolean checkUserEmailExist(Account account) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Account]\n"
+                + "  where email = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("email", account.getEmail());
+        return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
+    }
     
     public static void main(String[] args) {
-        Account account = new Account(0, "vxcvxcv", "xcvxcvx",
+        Account account = new Account("nam", "xcvxcvx",
                 "vxcvxcvx@gmail.com",
                 "vcxvcxvxc", "vcxvcxvxc", "vcxvcxvxc",
                 "vcxvcxvxc", null,
                 "vcxvcxvxc",
                 "vcxvcxvxc", 1, true, null, null);
         new AccountDAO().insert(account);
-        
+        System.out.println(new AccountDAO().checkUsernameExist(account));
+     
     }
+
 
 }

@@ -9,6 +9,7 @@ import dao.AccountDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -72,13 +73,31 @@ public class AuthenticationController extends HttpServlet {
         request.getRequestDispatcher(url).forward(request, response);
 
     }
-
     
     private String loginDoPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
         //get về các thong tin người dung nhập
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String remember = request.getParameter("rememberMe");
+        
+        //Tạo 3 coo kies: username, pass, remember
+        Cookie cUser = new Cookie("cu",username);
+        Cookie cPass = new Cookie("cp", password);
+        Cookie cRem = new Cookie("cr", remember);
+        if(remember != null){
+            cUser.setMaxAge(60);
+            cPass.setMaxAge(60);
+            cRem.setMaxAge(60);
+        }else{
+            cUser.setMaxAge(0);
+            cPass.setMaxAge(0);
+            cRem.setMaxAge(0);
+        }
+        //luu vao browser
+        response.addCookie(cUser);
+        response.addCookie(cPass);
+        response.addCookie(cRem);
         //kiểm tra thông tin có tồn tại trong DB ko
         Account account = new Account();
         account.setUsername(username);

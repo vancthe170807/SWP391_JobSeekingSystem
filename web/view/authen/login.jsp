@@ -24,10 +24,9 @@
                             <div class="max-content similar__form form__padding">
                                 <div class="d-flex mb-3 align-items-center justify-content-between">
                                     <h4 class="mb-0" style="margin-top: 100px; margin-left: 90px">Login To Jobpath</h4>
-                                    <!--                                    <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i class="fa-regular fa-xmark text-primary"></i>
-                                                                        </button>-->
+
                                 </div>
+                            <c:set var="cookies" value="${pageContext.request.cookies}"/>
                                 <form action="${pageContext.request.contextPath}/authen?action=login" method="post" class="d-flex flex-column gap-3">
 
                                 <c:if test="${requestScope.mess != null}">
@@ -36,30 +35,34 @@
                                     </div>
                                 </c:if>
 
-
+                                
                                 <div class="form-group">
                                     <label for="username" class="fw-medium text-dark mb-3">Username</label>
                                     <div class="position-relative">
-                                        <input type="username" name="username" id="username" placeholder="Enter your username" required>
+                                        <input value="${cookie.cu.value}" type="username" name="username" id="username" placeholder="Enter your username" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
-                                        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                                        <input value="${cookie.cp.value}" type="password" name="password" id="password" placeholder="Enter your password" required>
                                         <i class="fa-light fa-lock icon"></i>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-center fw-medium">
-                                    <!--                                        <div class="form-check">
-                                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                                    Remember me
-                                                                                </label>
-                                                                            </div>-->
+                                    <div class="form-check">
+                                        <!--                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">-->
+                                        <input ${(cookie.cr != null ? 'checked':'')} class="form-check-input" type="checkbox" name="rememberMe" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Remember me
+                                        </label>
+                                    </div>
                                     <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp" class="text-primary">Forgot Password?</a>
                                 </div>
+
+
+
                                 <div class="form-group my-3">
                                     <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
                                 </div>

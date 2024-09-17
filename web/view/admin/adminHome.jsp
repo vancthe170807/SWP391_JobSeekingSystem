@@ -33,7 +33,7 @@
                         </div>
                         <!-- sidebar menu end -->
                         <div class="dash__overview">
-                            <h6 class="fw-medium mb-30">Applications Overview</h6>
+                            <h6 class="fw-medium mb-30">ADMIN</h6>
                             <div class="overview__content">
                                 <div class="single__overview">
                                     <div class="icon">
@@ -103,7 +103,7 @@
                             <!-- profile view -->
                             <div class="profile__view bg-white">
                                 <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
-                                    <h6 class="fw-medium mb-0">Profile View</h6>
+                                    <h6 class="fw-medium mb-0">Profile View ADMIN</h6>
                                     <div class="profile__view__tab" role="tablist" id="nav-tab">
                                         <button data-bs-toggle="tab" data-bs-target="#weakly" type="button" class="nav-link active">Weekly</button>
                                         <button data-bs-toggle="tab" data-bs-target="#mothly" type="button" class="nav-link">Monthly</button>

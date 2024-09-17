@@ -12,9 +12,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import model.Account;
 
-@WebServlet(name="AuthenticationController", urlPatterns={"/authen"})
+@WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
     AccountDAO accountDAO = new AccountDAO();
@@ -32,9 +34,9 @@ public class AuthenticationController extends HttpServlet {
             case "login":
                 url = "view/authen/login.jsp";
                 break;
-            case "log-out":
-                url = logOut(request, response);
-                break;
+//            case "log-out":
+//                url = logOut(request, response);
+//                break;
             case "sign-up":
                 url = "view/authen/register.jsp";
                 break;
@@ -62,6 +64,8 @@ public class AuthenticationController extends HttpServlet {
             case "sign-up":
                 url = signUp(request, response);
                 break;
+            case "log-out":
+                url = logOut(request, response);
             default:
                 url = "home";
         }
@@ -69,9 +73,10 @@ public class AuthenticationController extends HttpServlet {
 
     }
 
-    private String loginDoPost(HttpServletRequest request, HttpServletResponse response) {
+    
+    private String loginDoPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
-        //get về các thong tin người dufg nhập
+        //get về các thong tin người dung nhập
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         //kiểm tra thông tin có tồn tại trong DB ko
@@ -79,22 +84,37 @@ public class AuthenticationController extends HttpServlet {
         account.setUsername(username);
         account.setPassword(password);
         Account accFoundByUsernamePass = accountDAO.findUserByUsernameAndPassword(account);
-        //true => trang home ( set account vao trong session ) 
+
+        HttpSession session = request.getSession();
+
         if (accFoundByUsernamePass != null) {
-            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT,
-                    accFoundByUsernamePass);
-            url = "home";
-            //false => quay tro lai trang login ( set them thong bao loi )
+            if (accFoundByUsernamePass.getRoleId() == 1) {
+                session.setAttribute(CommonConst.SESSION_ACCOUNT,
+                        accFoundByUsernamePass);
+                url = "view/admin/adminHome.jsp";
+            } else if (accFoundByUsernamePass.getRoleId() == 2) {
+                session.setAttribute(CommonConst.SESSION_ACCOUNT,
+                        accFoundByUsernamePass);
+                url = "view/recruiter/recruiterHome.jsp";
+            } else if (accFoundByUsernamePass.getRoleId() == 3) {
+                session.setAttribute(CommonConst.SESSION_ACCOUNT,
+                        accFoundByUsernamePass);
+                url = "view/user/userHome.jsp";
+            }
         } else {
-            request.setAttribute("error", "Username or password incorrect!!");
-            url = "view/authen/login.jsp";
+            request.setAttribute("mess", "Username or password incorrect!!");
+            request.getRequestDispatcher("view/authen/login.jsp").forward(request, response);
+            //url = "view/authen/login.jsp";
         }
         return url;
     }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
-        return "home";
+        HttpSession session = request.getSession();
+        session.removeAttribute(CommonConst.SESSION_ACCOUNT);
+        //session.invalidate();
+        //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
+        return "view/home.jsp";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) {
@@ -117,11 +137,10 @@ public class AuthenticationController extends HttpServlet {
             request.setAttribute("error", "Username exist !!");
             url = "view/authen/register.jsp";
             //false => quay tro lai trang home ( ghi tai khoan vao trong DB )
-        }else if(isExistUserEmail){
+        } else if (isExistUserEmail) {
             request.setAttribute("error", "Email exist !!");
             url = "view/authen/register.jsp";
-        }
-        else {
+        } else {
             accountDAO.insert(account);
             url = "view/authen/login.jsp";
         }

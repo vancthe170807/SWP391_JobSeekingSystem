@@ -33,7 +33,7 @@
                         </div>
                         <!-- sidebar menu end -->
                         <div class="dash__overview">
-                            <h6 class="fw-medium mb-30">Applications Overview</h6>
+                            <h6 class="fw-medium mb-30">RECRUITER</h6>
                             <div class="overview__content">
                                 <div class="single__overview">
                                     <div class="icon">

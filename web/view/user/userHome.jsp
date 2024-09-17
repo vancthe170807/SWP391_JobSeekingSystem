@@ -34,7 +34,7 @@
 
                     <!-- overview section -->
                     <div class="dash__overview">
-                        <h6 class="fw-medium mb-30">Applications Overview</h6>
+                        <h6 class="fw-medium mb-30">USERHOME</h6>
                         <div class="overview__content">
                             <div class="single__overview">
                                 <div class="icon">
@@ -291,7 +291,7 @@
             <!-- login offcanvas -->
             <div class="mb-4 d-block d-sm-none">
                 <div class="header__right__btn d-flex justify-content-center gap-3">
-                    <a href="#" class="small__btn no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>
+                    <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="small__btn no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>
                     <a href="#" class="small__btn d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
                 </div>
             </div>

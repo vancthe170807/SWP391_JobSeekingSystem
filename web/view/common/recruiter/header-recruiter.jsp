@@ -215,7 +215,7 @@
                                     <li><a class="dropdown-item" href="employer-dash-package.html">Packages</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-passwordchange.html">Change Password</a></li>
-                                    <li><a class="dropdown-item" href="#">Log Out</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
                                 </ul>  
                             </div>

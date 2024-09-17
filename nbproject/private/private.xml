@@ -3,16 +3,44 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="SWP391_Project">
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/index.html</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/config/GlobalConfig.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/README.md</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/fonts/icon/css/rt-icons-ie7-codes.css</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/controller/LoginServlet.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/authen/forgotPassword.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/home.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/config/EmailConfig.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/scss/default/_variables.scss</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/fonts/icon/css/rt-icons-ie7.css</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/.gitignore</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/common/footer.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/dao/DBContext.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/authen/register.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/css/plugins.min.css</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/vendors/css/bootstrap.min.css</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/common/breadcrumb-area.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/fonts/fontawesome/fa-duotone-900.html</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/README.md</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/META-INF/web.xml</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/common/authen/common-css-authen.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/config/EmailConfig.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/model/Account.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/authen/login.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/config/GlobalConfig.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/common/header-area.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/view/admin/adminHome.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/src/java/controller/HomeController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker-main/web/assets/css/style.css</file>
         </group>
         <group name="SWP291">
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/login.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/user/userHome.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/sidebar-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/controller/HomeController.java</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/authen/register.jsp</file>
             <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/web/view/home.jsp</file>
+            <file>file:/D:/SWP291/SWP391-JobSeeker/src/java/controller/AuthenticationController.java</file>
         </group>
     </open-files>
 </project-private>

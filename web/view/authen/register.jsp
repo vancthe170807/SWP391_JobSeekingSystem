@@ -15,9 +15,6 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <!-- breadcrumb area -->
-        <jsp:include page="../common/breadcrumb-area.jsp"></jsp:include>
-            <!-- breadcrumb area end -->
             <div class="" id="signupModal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-dialog modal-dialog-centered">
@@ -61,20 +58,24 @@
                                     </div>
 
                                     <div class="form-group my-3">
-                                        <button class="rts__btn w-100 fill__btn">Login</button>
+                                        <button class="rts__btn w-100 fill__btn">Register</button>
                                     </div>
                                 </form>
                                 <div class="d-block has__line text-center"><p>Or</p></div>
                                 <div class="d-flex flex-wrap justify-content-center gap-4 mt-20 mb-20">
                                     <div class="is__social google">
-                                        <button><img src="assets/img/icon/google-small.svg" alt="">Continue with Google</button>
-                                    </div>
+                                        <button><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
                                 </div>
-                                <span class="d-block text-center fw-medium">Have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+
                             </div>
+                            <span class="d-block text-center fw-medium">Have an account? You can <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
+
                         </div>
                     </div>
                 </div>
-            <jsp:include page="../common/footer.jsp"></jsp:include>                    
-            <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>                    
+            </div>
+        </div>
+        <jsp:include page="../common/footer.jsp"></jsp:include>                    
+        <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>                    
 </html>
+

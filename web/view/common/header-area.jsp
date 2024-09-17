@@ -5,13 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <header class="rts__section rts__header absolute__header">
     <div class="container-none">
         <div class="rts__menu__background">
             <div class="row">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="rts__logo">
-                        <a href="index.html">
+                        <a href="${pageContext.request.contextPath}/view/home.jsp">
                             <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                         </a>
                     </div>
@@ -135,8 +137,8 @@
                         </div>
 
                         <div class="header__right__btn d-flex gap-3">
-                            <a href="#" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>
-                            <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
+                            <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button"><i class="rt-login"></i>Sign In</a>
+                            <a href="${pageContext.request.contextPath}/" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
                             <button class="d-md-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><i class="fa-sharp fa-regular fa-bars"></i></button>
                         </div>
                     </div>

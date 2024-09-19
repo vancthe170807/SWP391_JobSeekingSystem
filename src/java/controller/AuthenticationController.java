@@ -35,11 +35,14 @@ public class AuthenticationController extends HttpServlet {
             case "login":
                 url = "view/authen/login.jsp";
                 break;
-//            case "log-out":
-//                url = logOut(request, response);
-//                break;
+            case "log-out":
+                url = logOut(request, response);
+                break;
             case "sign-up":
                 url = "view/authen/register.jsp";
+                break;
+            case "change-password":
+                url = "view/authen/changePassword.jsp";
                 break;
             default:
                 url = "home";
@@ -67,29 +70,32 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "log-out":
                 url = logOut(request, response);
+            case "change-password":
+                url = changePassword(request, response);
+                break;
             default:
                 url = "home";
         }
         request.getRequestDispatcher(url).forward(request, response);
-
+        
     }
-    
+
     private String loginDoPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
         //get về các thong tin người dung nhập
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
-        
-        //Tạo 3 coo kies: username, pass, remember
-        Cookie cUser = new Cookie("cu",username);
+
+        //Tạo 3 cookies: username, password, remember
+        Cookie cUser = new Cookie("cu", username);
         Cookie cPass = new Cookie("cp", password);
         Cookie cRem = new Cookie("cr", remember);
-        if(remember != null){
+        if (remember != null) {
             cUser.setMaxAge(60);
             cPass.setMaxAge(60);
             cRem.setMaxAge(60);
-        }else{
+        } else {
             cUser.setMaxAge(0);
             cPass.setMaxAge(0);
             cRem.setMaxAge(0);
@@ -102,35 +108,35 @@ public class AuthenticationController extends HttpServlet {
         Account account = new Account();
         account.setUsername(username);
         account.setPassword(password);
-        Account accFoundByUsernamePass = accountDAO.findUserByUsernameAndPassword(account);
+        Account accFound = accountDAO.findUserByUsernameAndPassword(account);
 
         HttpSession session = request.getSession();
 
-        if (accFoundByUsernamePass != null) {
-            if (accFoundByUsernamePass.getRoleId() == 1) {
-                session.setAttribute(CommonConst.SESSION_ACCOUNT,
-                        accFoundByUsernamePass);
+        if (accFound != null) {
+            if (accFound.getRoleId() == 1) {
+                session.setAttribute("account",
+                        accFound);
                 url = "view/admin/adminHome.jsp";
-            } else if (accFoundByUsernamePass.getRoleId() == 2) {
-                session.setAttribute(CommonConst.SESSION_ACCOUNT,
-                        accFoundByUsernamePass);
+            } else if (accFound.getRoleId() == 2) {
+                session.setAttribute("account",
+                        accFound);
                 url = "view/recruiter/recruiterHome.jsp";
-            } else if (accFoundByUsernamePass.getRoleId() == 3) {
-                session.setAttribute(CommonConst.SESSION_ACCOUNT,
-                        accFoundByUsernamePass);
+            } else if (accFound.getRoleId() == 3) {
+                session.setAttribute("account",
+                        accFound);
                 url = "view/user/userHome.jsp";
             }
         } else {
             request.setAttribute("mess", "Username or password incorrect!!");
-            request.getRequestDispatcher("view/authen/login.jsp").forward(request, response);
-            //url = "view/authen/login.jsp";
+            //request.getRequestDispatcher("view/authen/login.jsp").forward(request, response);
+            url = "view/authen/login.jsp";
         }
         return url;
     }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.removeAttribute(CommonConst.SESSION_ACCOUNT);
+        session.removeAttribute("account");
         //session.invalidate();
         //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
         return "view/home.jsp";
@@ -166,4 +172,11 @@ public class AuthenticationController extends HttpServlet {
         return url;
     }
 
+    private String changePassword(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("account");
+        //session.invalidate();
+        //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
+        return "view/home.jsp";
+    }
 }

@@ -21,23 +21,21 @@
                         <div class="modal-content">
                             <div class="max-content similar__form form__padding">
                                 <div class="d-flex mb-3 align-items-center justify-content-between">
-                                    <h6 class="mb-0">Forgot Password</h6>
-                                    <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                        <i class="fa-regular fa-xmark text-primary"></i>
-                                    </button>
+                                    <h6 class="mb-0">Confirm OTP - Forgot Password</h6>
+
                                 </div>
-                                <form action="${pageContext.request.contextPath}/authen?action=forgot-password" method="post" class="d-flex flex-column gap-3">
+                                <form action="${pageContext.request.contextPath}/authen?action=verify-reset-otp" method="post" class="d-flex flex-column gap-3">
 
                                     <div class="form-group">
-                                        <label for="fmail" class="fw-medium text-dark mb-3">Your Email</label>
+                                        <label for="ResetOTPCode" class="fw-medium text-dark mb-3">Enter OTP to confirm</label>
                                         <div class="position-relative">
-                                            <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
+                                            <input type="text" name="otp" id="ResetOTPCode" placeholder="Enter OTP" required>
                                             <i class="fa-sharp fa-light fa-envelope icon"></i>
                                         </div>
                                     </div>
 
                                     <div class="form-group my-3">
-                                        <button class="rts__btn w-100 fill__btn">Send OTP</button>
+                                        <button class="rts__btn w-100 fill__btn">Reset Password</button>
                                     </div>
                                 </form>
                                 <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>

@@ -6,6 +6,7 @@ package dao;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.sql.*;
 import model.Account;
 
 /**
@@ -61,9 +62,7 @@ public class AccountDAO extends GenericDAO<Account> {
         return findAll();
     }
 
-    
 //  tim kiem user theo id
-
     public Account findUserById(Account account) {
         String sql = "SELECT [id]\n"
                 + "      ,[username]\n"
@@ -196,7 +195,7 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);
     }
-    
+
     public boolean checkUsernameExist(Account account) {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[Account]\n"
@@ -205,6 +204,7 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("username", account.getUsername());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
+
     public boolean checkUserEmailExist(Account account) {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[Account]\n"
@@ -213,7 +213,7 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("email", account.getEmail());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
-    
+
     public static void main(String[] args) {
         Account account = new Account("nam", "xcvxcvx",
                 "vxcvxcvx@gmail.com",
@@ -223,8 +223,17 @@ public class AccountDAO extends GenericDAO<Account> {
                 "vcxvcxvxc", 1, true, null, null);
         new AccountDAO().insert(account);
         System.out.println(new AccountDAO().checkUsernameExist(account));
-     
+
     }
 
-
+    //    update password
+    public void updatePasswordbyEmail(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [password] = ?\n"
+                + " WHERE email = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("password", account.getPassword());
+        parameterMap.put("email", account.getEmail());
+        updateGenericDAO(sql, parameterMap);
+    }
 }

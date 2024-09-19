@@ -167,5 +167,8 @@ public class Account {
     public void setUpdatedAt(Date updateAt) {
         this.updatedAt = updateAt;
     }
+    public String getFullName() {
+        return lastName + " " + firstName;
+    } 
 
 }

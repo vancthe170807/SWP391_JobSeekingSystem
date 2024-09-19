@@ -236,8 +236,10 @@
                                         <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/author/1.svg" alt="">
                                     </div>
                                     <div class="user__name d-none d-xl-block">
+
                                         <h6 class="font-20 mb-0 fw-medium lh-sm">Hello ${sessionScope.account.getLastName()} </h6>
                                         <span>Seeker Page</span>
+
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">
                                         <div class="dropdown__icon " ><i class="fa-light fa-chevron-down"></i></div>                                
@@ -254,7 +256,7 @@
                                     <li><a class="dropdown-item" href="candidate-deleteprofile.html">Delete Account</a></li>
                                 </ul>  
                             </div>
-                            <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add A Job</a>
+                            
                             <button class="d-md-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><i class="fa-sharp fa-regular fa-bars"></i></button>
                         </div>
                     </div>

@@ -32,42 +32,49 @@
                                     <button class="rts__btn nav-link  active"><i class="fa-light fa-user"></i>Seeker</button>
                                     <button class="rts__btn nav-link"><i class="rt-briefcase"></i>Recruiter</button>
                                 </div>
-                                <form action="authen?action=sign-up" method="POST" class="d-flex flex-column gap-3">
-                                    <input type="hidden" name="role" value=""/>
-                                    <div class="form-group">
-                                        <label for="sname" class="fw-medium text-dark mb-3">Your Name</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="username" id="sname" placeholder="Enter your name" required>
-                                            <i class="fa-light fa-user icon"></i>
-                                        </div>
+                                <form action="${pageContext.request.contextPath}/authen?action=sign-up" method="POST" class="d-flex flex-column gap-3">
+                                <input type="hidden" name="role" value=""/>
+                                <div class="form-group">
+                                    <label for="sname" class="fw-medium text-dark mb-3">Last Name</label>
+                                    <div class="position-relative">
+                                        <input type="text" name="lastname" id="sname" placeholder="Enter last name" required>
+                                        <i class="fa-light fa-user icon"></i>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sname" class="fw-medium text-dark mb-3">First name</label>
+                                    <div class="position-relative">
+                                        <input type="text" name="firstname" id="sname" placeholder="Enter first name" required>
+                                        <i class="fa-light fa-user icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sname" class="fw-medium text-dark mb-3">User name</label>
+                                    <div class="position-relative">
+                                        <input type="text" name="username" id="sname" placeholder="Enter user name" required>
+                                        <i class="fa-light fa-user icon"></i>
+                                    </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="signemail" class="fw-medium text-dark mb-3">Your Email</label>
-                                        <div class="position-relative">
-                                            <input type="email" name="email" id="signemail" placeholder="Enter your email" required>
-                                            <i class="fa-sharp fa-light fa-envelope icon"></i>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="signemail" class="fw-medium text-dark mb-3">Your Email</label>
+                                    <div class="position-relative">
+                                        <input type="email" name="email" id="signemail" placeholder="Enter your email" required>
+                                        <i class="fa-sharp fa-light fa-envelope icon"></i>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="spassword" class="fw-medium text-dark mb-3">Password</label>
-                                        <div class="position-relative">
-                                            <input type="password" name="password" id="spassword" placeholder="Enter your password" required>
-                                            <i class="fa-light fa-lock icon"></i>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="spassword" class="fw-medium text-dark mb-3">Password</label>
+                                    <div class="position-relative">
+                                        <input type="password" name="password" id="spassword" placeholder="Enter your password" required>
+                                        <i class="fa-light fa-lock icon"></i>
                                     </div>
-                                    <span style="color:red">${error}</span>
+                                </div>
+                                <span style="color:red">${error}</span>
                                 <div class="form-group my-3">
                                     <button class="rts__btn w-100 fill__btn" onclick="document.querySelector('#signUpForm').submit()">Register</button>
                                 </div>
                             </form>
-                            <div class="d-block has__line text-center"><p>Or</p></div>
-                            <div class="d-flex flex-wrap justify-content-center gap-4 mt-20 mb-20">
-                                <div class="is__social google">
-                                    <button><img src="${pageContext.request.contextPath}/assets/img/icon/google-small.svg" alt="">Continue with Google</button>
-                                </div>
-
-                            </div>
                             <span class="d-block text-center fw-medium">Have an account? You can <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
 
                         </div>
@@ -102,9 +109,11 @@
                 // Set initial value based on the button that has 'active' class
                 const activeButton = document.querySelector('.tab__switch .rts__btn.active');
                 if (activeButton) {
-                    hiddenInput.value = activeButton.textContent.trim() === 'Candidate' ? '3' : '2';
+                    hiddenInput.value = activeButton.textContent.trim() === 'Seeker' ? '3' : '2';
                 }
             });
         </script>
 </html>
+
+
 

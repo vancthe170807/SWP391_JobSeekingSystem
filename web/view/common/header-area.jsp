@@ -137,8 +137,8 @@
                         </div>
 
                         <div class="header__right__btn d-flex gap-3">
-                            <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button"><i class="rt-login"></i>Sign In</a>
-                            <a href="${pageContext.request.contextPath}/" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
+                            <a href="${pageContext.request.contextPath}/authen" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button"><i class="rt-login"></i>Sign In</a>
+                            
                             <button class="d-md-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><i class="fa-sharp fa-regular fa-bars"></i></button>
                         </div>
                     </div>

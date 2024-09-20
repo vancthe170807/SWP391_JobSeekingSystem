@@ -92,6 +92,9 @@ public class AuthenticationController extends HttpServlet {
             case "reset-password":
                 url = resetPassword(request, response);
                 break;
+            case "delete-account":  // Thêm hành động để xóa tài khoản
+                url = deleteAccount(request, response);
+                break;
             case "log-out":
                 url = logOut(request, response);
             case "change-password":
@@ -379,6 +382,37 @@ public class AuthenticationController extends HttpServlet {
             // Mật khẩu và xác nhận mật khẩu không khớp
             request.setAttribute("error", "Passwords do not match. Please try again.");
             return "view/authen/ResetPassword.jsp";
+        }
+    }
+
+    private String deleteAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Lấy tài khoản từ session
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+        if (account != null) {
+            // Lấy mật khẩu mà người dùng đã nhập từ request
+            String currentPassword = request.getParameter("currentPassword");
+
+            // Kiểm tra xem mật khẩu nhập vào có trùng với mật khẩu của tài khoản hiện tại không
+            if (account.getPassword().equals(currentPassword)) {  // So sánh mật khẩu đã lưu với mật khẩu nhập vào
+                // Nếu mật khẩu đúng, xóa tài khoản khỏi cơ sở dữ liệu
+                accountDAO.deleteAccount(account);
+
+                // Xóa thông tin tài khoản khỏi session
+                session.removeAttribute(CommonConst.SESSION_ACCOUNT);
+
+                // Chuyển hướng đến trang đăng nhập sau khi xóa thành công
+                request.setAttribute("message", "Account successfully deleted.");
+                return "view/authen/login.jsp";
+            } else {
+                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại
+                request.setAttribute("error", "Incorrect password. Please try again.");
+                return "view/authen/deleteAccount.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
+            }
+        } else {
+            // Nếu không có tài khoản trong session, quay lại trang chủ
+            return "home";
         }
     }
 

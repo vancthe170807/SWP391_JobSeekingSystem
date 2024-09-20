@@ -203,8 +203,13 @@
                                         <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/icon/google.svg" alt="">
                                     </div>
                                     <div class="user__name d-none d-xl-block">
+<<<<<<< HEAD
                                         <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">Hello ${sessionScope.account.getFullName()}</h6>
                                         <span>Admin Page</span>
+=======
+                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">google.com</h6>
+                                        <span>Administrator</span>
+>>>>>>> aba6ebba8ef0eecbe18758436896f7cb79f4698a
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">
                                         <div class="dropdown__icon " ><i class="fa-light fa-chevron-down"></i></div>                                
@@ -217,11 +222,17 @@
                                     <li><a class="dropdown-item" href="employer-dash-shortlist.html">Shortlist Job</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-package.html">Packages</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-message.html">Message</a></li>
+<<<<<<< HEAD
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
 
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login" >Log Out</a></li>
 
                                     <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
+=======
+                                    <li><a class="dropdown-item" href="employer-dash-passwordchange.html">Change Password</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login" >Log Out</a></li>
+
+>>>>>>> aba6ebba8ef0eecbe18758436896f7cb79f4698a
                                 </ul>  
                             </div>
                             <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add A Job</a>

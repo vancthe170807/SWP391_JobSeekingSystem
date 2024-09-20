@@ -216,4 +216,13 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("email", account.getEmail());
         updateGenericDAO(sql, parameterMap);
     }
+    
+    //Xoa account khoi DB
+    public boolean deleteAccount(Account account) {
+        // Câu lệnh SQL để xóa tài khoản dựa vào username
+        String sql = "DELETE FROM Account WHERE username = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("username", account.getUsername());
+        return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
+    }
 }

@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="user__name d-none d-xl-block">
                                         <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">google.com</h6>
-                                        <span>Employer</span>
+                                        <span>Administrator</span>
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">
                                         <div class="dropdown__icon " ><i class="fa-light fa-chevron-down"></i></div>                                
@@ -215,12 +215,8 @@
                                     <li><a class="dropdown-item" href="employer-dash-package.html">Packages</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-passwordchange.html">Change Password</a></li>
-
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login" >Log Out</a></li>
 
-
-
-                                    <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
                                 </ul>  
                             </div>
                             <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add A Job</a>

@@ -25,24 +25,28 @@
 
                                 </div>
                                 <form action="${pageContext.request.contextPath}/authen?action=verify-reset-otp" method="post" class="d-flex flex-column gap-3">
-
-                                    <div class="form-group">
-                                        <label for="ResetOTPCode" class="fw-medium text-dark mb-3">Enter OTP to confirm</label>
-                                        <div class="position-relative">
-                                            <input type="text" name="otp" id="ResetOTPCode" placeholder="Enter OTP" required>
-                                            <i class="fa-sharp fa-light fa-envelope icon"></i>
-                                        </div>
+                                
+                                <div class="form-group">
+                                    <label for="ResetOTPCode" class="fw-medium text-dark mb-3">Enter OTP to confirm</label>
+                                    <div class="position-relative">
+                                        <input type="text" name="otp" id="ResetOTPCode" placeholder="Enter OTP" required>
+                                        <i class="fa-sharp fa-light fa-envelope icon"></i>
                                     </div>
-
-                                    <div class="form-group my-3">
-                                        <button class="rts__btn w-100 fill__btn">Reset Password</button>
+                                </div>
+                                <c:if test="${requestScope.error != null}">
+                                    <div style="color: red; text-align: center;">
+                                        ${requestScope.error}
                                     </div>
-                                </form>
-                                <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
-                            </div>
+                                </c:if>
+                                <div class="form-group my-3">
+                                    <button class="rts__btn w-100 fill__btn">Reset Password</button>
+                                </div>
+                            </form>
+                            <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
                         </div>
                     </div>
                 </div>
+            </div>
             <jsp:include page="../common/footer.jsp"></jsp:include>                       
             <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>
 </html>

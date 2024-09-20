@@ -34,11 +34,11 @@
                                 </div>
 
                                 <!-- Error message if OTP is incorrect -->
-                                <c:if test="${not empty error}">
-                                <div class="alert alert-danger">
-                                    ${error}
-                                </div>
-                            </c:if>
+                                <c:if test="${requestScope.error != null}">
+                                    <div style="color: red; text-align: center;">
+                                        ${requestScope.error}
+                                    </div>
+                                </c:if>
 
                             <div class="form-group my-3">
                                 <button type="submit" class="rts__btn w-100 fill__btn">Change Password</button>

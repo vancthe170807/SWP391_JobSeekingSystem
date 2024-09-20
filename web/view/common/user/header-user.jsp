@@ -237,7 +237,7 @@
                                     </div>
                                     <div class="user__name d-none d-xl-block">
 
-                                        <h6 class="font-20 mb-0 fw-medium lh-sm">Hello ${sessionScope.account.getLastName()} </h6>
+                                        <h6 class="font-20 mb-0 fw-medium lh-sm">Hello ${sessionScope.account.getFirstName()} </h6>
                                         <span>Seeker Page</span>
 
                                     </div>

@@ -36,7 +36,7 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "log-out":
                 url = logOut(request, response);
-                break;       
+                break;
             case "change-password":
                 url = "view/authen/changePassword.jsp";
                 break;
@@ -48,7 +48,7 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "edit-profile":
                 url = "view/user/editUserProfile.jsp";
-                break;    
+                break;
             default:
                 url = "view/authen/login.jsp";
         }
@@ -88,7 +88,7 @@ public class AuthenticationController extends HttpServlet {
             break;
             case "verify-reset-otp": // Handle OTP verification for password reset
                 url = verifyResetOtp(request, response);
-                break;  
+                break;
             case "reset-password":
                 url = resetPassword(request, response);
                 break;
@@ -113,7 +113,6 @@ public class AuthenticationController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
-
         // Create cookies for username, password, and remember me
         Cookie cUser = new Cookie("cu", username);
         Cookie cPass = new Cookie("cp", password);
@@ -121,9 +120,9 @@ public class AuthenticationController extends HttpServlet {
 
         // Set cookie max age (persistent for 1 day if "remember me" is checked)
         if (remember != null) {
-            cUser.setMaxAge(60);
-            cPass.setMaxAge(60);
-            cRem.setMaxAge(60);
+            cUser.setMaxAge(60 * 60 * 24);
+            cPass.setMaxAge(60 * 60 * 24);
+            cRem.setMaxAge(60 * 60 * 24);
         } else {
             cUser.setMaxAge(0);
             cPass.setMaxAge(0);
@@ -147,16 +146,22 @@ public class AuthenticationController extends HttpServlet {
             if (accFound.getRoleId() == 1) {
                 session.setAttribute("account",
                         accFound);
+                session.setAttribute("role", 1);
+                session.setAttribute("pw", accFound.getPassword());
                 url = "view/admin/adminHome.jsp";
             } else if (accFound.getRoleId() == 2) {
                 session.setAttribute("account",
                         accFound);
+                session.setAttribute("role", 2);
+                session.setAttribute("pw", accFound.getPassword());
+                session.setAttribute("p", accFound.getUsername());
                 url = "view/recruiter/recruiterHome.jsp";
             } else if (accFound.getRoleId() == 3) {
                 session.setAttribute("account",
                         accFound);
+                session.setAttribute("role", 3);
+                session.setAttribute("pw", accFound.getPassword());
                 url = "view/user/userHome.jsp";
-
             }
         } else {
             // Invalid credentials: display error message and go back to login
@@ -222,13 +227,44 @@ public class AuthenticationController extends HttpServlet {
         return url;
     }
 
+    private String changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String currPass = request.getParameter("currentPassword");
+        String newPass = request.getParameter("newPassword");
+        String retypePass = request.getParameter("retypePassword");
 
-    private String changePassword(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.removeAttribute("account");
-        //session.invalidate();
-        //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
-        return "view/home.jsp";
+        String url = null;
+
+//        if (!currPass.equals(session.getAttribute("pw"))) {
+//            request.setAttribute("msg1", "Password does not exist");
+//            url = "view/authen/changePassword.jsp";
+//        } else if (!newPass.equals(retypePass)) {
+//            request.setAttribute("msg2", "New password does not match Retype password");
+//            url = "view/authen/changePassword.jsp";
+//        } else if(!currPass.equals(session.getAttribute("pw")) || !newPass.equals(retypePass) || (!newPass.equals(retypePass) && !currPass.equals(session.getAttribute("pw")))) {
+//            request.setAttribute("msg3", "Incorrect Password and Incorrect New Password");
+//            url = "view/authen/changePassword.jsp";
+//        }
+//        return url;
+
+        if (!currPass.equals((String)session.getAttribute("pw")) || !newPass.equals(retypePass)) {
+            request.setAttribute("msg1", "Thay doi mat khau that bai roi");
+            url = "view/authen/changePassword.jsp";
+        } else {
+//            session.setAttribute("pw", newPass); // Cập nhật mật khẩu mới vào session
+//            request.setAttribute("msgSuccess", "Password changed successfully.");
+//            url = "view/home.jsp"; // Chuyển hướng sang trang người dùng sau khi đổi mật khẩu thành công
+
+            
+
+            Account account = new Account();
+            account.setPassword(newPass);
+            account.setUsername((String)session.getAttribute("p"));
+            //Account accFound = accountDAO.updatePassword1(account);
+        }
+
+        return url;
+
     }
 
     private String verifyOtp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

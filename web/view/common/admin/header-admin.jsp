@@ -203,7 +203,7 @@
                                         <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/icon/google.svg" alt="">
                                     </div>
                                     <div class="user__name d-none d-xl-block">
-                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">Hello ${sessionScope.account.getLastName()}</h6>
+                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">Hello ${sessionScope.account.getFirstName()}</h6>
                                         <span>Admin Page</span>
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">
@@ -220,8 +220,6 @@
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
 
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login" >Log Out</a></li>
-
-
 
                                     <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
                                 </ul>  

@@ -110,6 +110,15 @@ public class AccountDAO extends GenericDAO<Account> {
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
+    
+    public Account findUserByUsername(Account account) {
+        String sql = "select * from Account where username = '?'";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("username", account.getUsername());
+       
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+    }
 //    tim kiem theo roleId
 
     public Account findUserByRoleId(Account account) {
@@ -193,6 +202,15 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("password", account.getPassword());
         parameterMap.put("id", account.getId());
+        updateGenericDAO(sql, parameterMap);
+    }
+    public void updatePassword1(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [password] = ?\n"
+                + " WHERE username = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("password", account.getPassword());
+        parameterMap.put("username", account.getId());
         updateGenericDAO(sql, parameterMap);
     }
 

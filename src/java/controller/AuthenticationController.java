@@ -136,7 +136,7 @@ public class AuthenticationController extends HttpServlet {
 
         // Determine user role and redirect accordingly
         if (accFound != null) {
-            session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
+            session.setAttribute("account", accFound);
             switch (accFound.getRoleId()) {
                 case 1:
                     url = "view/admin/adminHome.jsp";

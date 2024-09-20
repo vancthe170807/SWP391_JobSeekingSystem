@@ -36,9 +36,10 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "           ,[roleId]\n"
                 + "           ,[isActive]\n"
                 + "           ,[createAt]\n"
-                + "           ,[updatedAt])\n"
+                + "           ,[updatedAt]\n"
+                + "           ,[gender])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", t.getUsername());
         parameterMap.put("password", t.getPassword());
@@ -54,6 +55,8 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("isActive", true);
         parameterMap.put("createAt", t.getCreateAt());
         parameterMap.put("updatedAt", t.getUpdatedAt());
+        parameterMap.put("gender", t.isGender());
+        
         return insertGenericDAO(sql, parameterMap);
     }
 //    danh sach tat ca cac account
@@ -64,22 +67,7 @@ public class AccountDAO extends GenericDAO<Account> {
 
 //  tim kiem user theo id
     public Account findUserById(Account account) {
-        String sql = "SELECT [id]\n"
-                + "      ,[username]\n"
-                + "      ,[password]\n"
-                + "      ,[email]\n"
-                + "      ,[phone]\n"
-                + "      ,[citizenId]\n"
-                + "      ,[firstName]\n"
-                + "      ,[lastName]\n"
-                + "      ,[dob]\n"
-                + "      ,[address]\n"
-                + "      ,[avatar]\n"
-                + "      ,[roleId]\n"
-                + "      ,[isActive]\n"
-                + "      ,[createAt]\n"
-                + "      ,[updatedAt]\n"
-                + "  FROM [dbo].[Account] where id = ?";
+        String sql = "SELECT * FROM [dbo].[Account] where id = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("id", account.getId());
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
@@ -88,22 +76,7 @@ public class AccountDAO extends GenericDAO<Account> {
 //  tim kiem user theo ten dang nhap va mat khau
 
     public Account findUserByUsernameAndPassword(Account account) {
-        String sql = "SELECT [id]\n"
-                + "      ,[username]\n"
-                + "      ,[password]\n"
-                + "      ,[email]\n"
-                + "      ,[phone]\n"
-                + "      ,[citizenId]\n"
-                + "      ,[firstName]\n"
-                + "      ,[lastName]\n"
-                + "      ,[dob]\n"
-                + "      ,[address]\n"
-                + "      ,[avatar]\n"
-                + "      ,[roleId]\n"
-                + "      ,[isActive]\n"
-                + "      ,[createAt]\n"
-                + "      ,[updatedAt]\n"
-                + "  FROM [dbo].[Account] where username = ? and password = ?";
+        String sql = "SELECT * FROM [dbo].[Account] where username = ? and password = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
         parameterMap.put("password", account.getPassword());
@@ -113,22 +86,7 @@ public class AccountDAO extends GenericDAO<Account> {
 //    tim kiem theo roleId
 
     public Account findUserByRoleId(Account account) {
-        String sql = "SELECT [id]\n"
-                + "      ,[username]\n"
-                + "      ,[password]\n"
-                + "      ,[email]\n"
-                + "      ,[phone]\n"
-                + "      ,[citizenId]\n"
-                + "      ,[firstName]\n"
-                + "      ,[lastName]\n"
-                + "      ,[dob]\n"
-                + "      ,[address]\n"
-                + "      ,[avatar]\n"
-                + "      ,[roleId]\n"
-                + "      ,[isActive]\n"
-                + "      ,[createAt]\n"
-                + "      ,[updatedAt]\n"
-                + "  FROM [dbo].[Account] where roleId = ?";
+        String sql = "SELECT * FROM [dbo].[Account] where roleId = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", account.getUsername());
         parameterMap.put("password", account.getPassword());
@@ -153,6 +111,7 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "      ,[isActive] = ?\n"
                 + "      ,[createAt] = ?\n"
                 + "      ,[updatedAt] = ?\n"
+                + "      ,[gender] = ?\n"
                 + " WHERE id = ?";
 
         parameterMap = new LinkedHashMap<>();
@@ -167,12 +126,15 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("address", account.getAddress());
         parameterMap.put("avatar", account.getAvatar());
         parameterMap.put("roleId", (Integer) account.getRoleId());
+        parameterMap.put("isActive", account.isIsActive());
         parameterMap.put("createAt", account.getCreateAt());
         parameterMap.put("updatedAt", account.getUpdatedAt());
+        parameterMap.put("gender", account.isGender());
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);
-
     }
+        
+
 //    tat hoat dong mot account
 
     public void deactiveAccount(Account account) {
@@ -215,14 +177,14 @@ public class AccountDAO extends GenericDAO<Account> {
     }
 
     public static void main(String[] args) {
-        Account account = new Account("nam", "xcvxcvx",
-                "vxcvxcvx@gmail.com",
-                "vcxvcxvxc", "vcxvcxvxc", "vcxvcxvxc",
-                "vcxvcxvxc", null,
-                "vcxvcxvxc",
-                "vcxvcxvxc", 1, true, null, null);
-        new AccountDAO().insert(account);
-        System.out.println(new AccountDAO().checkUsernameExist(account));
+//        Account account = new Account("nam", "xcvxcvx",
+//                "vxcvxcvx@gmail.com",
+//                "vcxvcxvxc", "vcxvcxvxc", "vcxvcxvxc",
+//                "vcxvcxvxc", null,
+//                "vcxvcxvxc",
+//                "vcxvcxvxc", 1, true, null, null);
+//        new AccountDAO().insert(account);
+//        System.out.println(new AccountDAO().checkUsernameExist(account));
 
     }
 

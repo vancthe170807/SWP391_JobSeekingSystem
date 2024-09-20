@@ -52,8 +52,10 @@
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ForgotPasswordOTP.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/recruiter/sidebar-recruiter.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/header-area.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/user/sidebar-user.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/HomeController.java</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/admin/sidebar-admin.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/register.jsp</file>
         </group>
     </open-files>

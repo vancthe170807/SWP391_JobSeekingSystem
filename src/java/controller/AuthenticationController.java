@@ -143,30 +143,29 @@ public class AuthenticationController extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (accFound != null) {
-            if (accFound.getRoleId() == 1) {
-                session.setAttribute("account",
-                        accFound);
-                session.setAttribute("role", 1);
-                session.setAttribute("pw", accFound.getPassword());
-                url = "view/admin/adminHome.jsp";
-            } else if (accFound.getRoleId() == 2) {
-                session.setAttribute("account",
-                        accFound);
-                session.setAttribute("role", 2);
-                session.setAttribute("pw", accFound.getPassword());
-                session.setAttribute("p", accFound.getUsername());
-                url = "view/recruiter/recruiterHome.jsp";
-            } else if (accFound.getRoleId() == 3) {
-                session.setAttribute("account",
-                        accFound);
-                session.setAttribute("role", 3);
-                session.setAttribute("pw", accFound.getPassword());
-                url = "view/user/userHome.jsp";
+            session.setAttribute("account", accFound);
+            switch (accFound.getRoleId()) {
+                case 1:
+                    session.setAttribute("role", 1);
+                    session.setAttribute("pw", accFound.getPassword());
+                    session.setAttribute("p", accFound.getUsername());
+                    url = "view/admin/adminHome.jsp";
+                    break;
+                case 2:
+                    session.setAttribute("role", 2);
+                    session.setAttribute("pw", accFound.getPassword());
+                    session.setAttribute("p", accFound.getUsername());
+                    url = "view/recruiter/recruiterHome.jsp";
+                    break;
+                case 3:
+                    session.setAttribute("role", 3);
+                    session.setAttribute("pw", accFound.getPassword());
+                    session.setAttribute("p", accFound.getUsername());
+                    url = "view/user/userHome.jsp";
+                    break;
             }
         } else {
-            // Invalid credentials: display error message and go back to login
             request.setAttribute("mess", "Username or password incorrect!!");
-            //request.getRequestDispatcher("view/authen/login.jsp").forward(request, response);
             url = "view/authen/login.jsp";
         }
         return url;
@@ -246,16 +245,13 @@ public class AuthenticationController extends HttpServlet {
 //            url = "view/authen/changePassword.jsp";
 //        }
 //        return url;
-
-        if (!currPass.equals((String)session.getAttribute("pw")) || !newPass.equals(retypePass)) {
+        if (!currPass.equals((String) session.getAttribute("pw")) || !newPass.equals(retypePass)) {
             request.setAttribute("msg1", "Thay doi mat khau that bai roi");
             url = "view/authen/changePassword.jsp";
         } else {
 //            session.setAttribute("pw", newPass); // Cập nhật mật khẩu mới vào session
 //            request.setAttribute("msgSuccess", "Password changed successfully.");
 //            url = "view/home.jsp"; // Chuyển hướng sang trang người dùng sau khi đổi mật khẩu thành công
-
-            
 
             Account account = new Account();
             account.setPassword(newPass);

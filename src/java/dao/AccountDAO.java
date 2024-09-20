@@ -111,7 +111,7 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "      ,[isActive] = ?\n"
                 + "      ,[createAt] = ?\n"
                 + "      ,[updatedAt] = ?\n"
-                + "      ,[gender] = ?)\n"
+                + "      ,[gender] = ?\n"
                 + " WHERE id = ?";
 
         parameterMap = new LinkedHashMap<>();

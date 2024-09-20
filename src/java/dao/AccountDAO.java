@@ -166,13 +166,14 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);
     }
-    public void updatePassword1(Account account) {
+    
+    public void updatePasswordByUsername(Account account) {
         String sql = "UPDATE [dbo].[Account]\n"
-                + "   SET [password] = ?\n"
+                + "   SET [password] = ?\n, [updatedAt] = (getDate())"
                 + " WHERE username = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("password", account.getPassword());
-        parameterMap.put("username", account.getId());
+        parameterMap.put("username", account.getUsername());
         updateGenericDAO(sql, parameterMap);
     }
 

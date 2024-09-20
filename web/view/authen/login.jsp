@@ -20,6 +20,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="max-content similar__form form__padding">
+                            
                             <div class="d-flex mb-3 align-items-center justify-content-between">
                                 <h4 class="mb-0" style="margin-top: 100px; margin-left: 90px">Login To Jobpath</h4>
                             </div>
@@ -57,6 +58,8 @@
                                 </div>
                                 <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp" class="text-primary">Forgot Password?</a>
                             </div>
+
+                            <div style="color: red; text-align: center; font-size: 16px;">${requestScope.success}</div>
 
                             <div class="form-group my-3">
                                 <button type="submit" class="rts__btn w-100 fill__btn">Login</button>

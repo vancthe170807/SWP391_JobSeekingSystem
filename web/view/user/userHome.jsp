@@ -34,7 +34,7 @@
 
                     <!-- overview section -->
                     <div class="dash__overview">
-                        <h6 class="fw-medium mb-30">USERHOME</h6>
+                        <h6 class="fw-medium mb-30">SEEKER HOME</h6>
                         <div class="overview__content">
                             <div class="single__overview">
                                 <div class="icon">

@@ -15,7 +15,6 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <div class="" id="forgotModal" style="margin-top: 100px">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -28,23 +27,27 @@
                                 </div>
                                 <form action="${pageContext.request.contextPath}/authen?action=forgot-password" method="post" class="d-flex flex-column gap-3">
 
-                                    <div class="form-group">
-                                        <label for="fmail" class="fw-medium text-dark mb-3">Your Email</label>
-                                        <div class="position-relative">
-                                            <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
-                                            <i class="fa-sharp fa-light fa-envelope icon"></i>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="fmail" class="fw-medium text-dark mb-3">Your Email</label>
+                                    <div class="position-relative">
+                                        <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
+                                        <i class="fa-sharp fa-light fa-envelope icon"></i>
                                     </div>
-
-                                    <div class="form-group my-3">
-                                        <button class="rts__btn w-100 fill__btn">Send OTP</button>
+                                </div>
+                                <c:if test="${requestScope.error != null}">
+                                    <div style="color: red; text-align: center;">
+                                        ${requestScope.error}
                                     </div>
-                                </form>
-                                <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
-                            </div>
+                                </c:if>
+                                <div class="form-group my-3">
+                                    <button class="rts__btn w-100 fill__btn">Send OTP</button>
+                                </div>
+                            </form>
+                            <span class="d-block text-center fw-medium">Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>
                         </div>
                     </div>
                 </div>
+            </div>
             <jsp:include page="../common/footer.jsp"></jsp:include>                       
             <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>
 </html>

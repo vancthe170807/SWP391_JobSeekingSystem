@@ -236,8 +236,10 @@
                                         <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/author/1.svg" alt="">
                                     </div>
                                     <div class="user__name d-none d-xl-block">
-                                        <h6 class="font-20 mb-0 fw-medium lh-sm">${sessionScope.account.getFullName()}</h6>
-                                        <span>Seeker</span>
+
+                                        <h6 class="font-20 mb-0 fw-medium lh-sm">Hello ${sessionScope.account.getFullName()} </h6>
+                                        <span>Seeker Page</span>
+
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">
                                         <div class="dropdown__icon " ><i class="fa-light fa-chevron-down"></i></div>                                
@@ -249,7 +251,7 @@
                                     <li><a class="dropdown-item" href="candidate-resume.html">Resume</a></li>
                                     <li><a class="dropdown-item" href="candidate-shortlist.html">Shortlist Job</a></li>
                                     <li><a class="dropdown-item" href="candidate-message.html">Message</a></li>
-                                    <li><a class="dropdown-item" href="candidate-passwordchange.html">Change Password</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
                                     <li><a class="dropdown-item" href="candidate-deleteprofile.html">Delete Account</a></li>
                                 </ul>  

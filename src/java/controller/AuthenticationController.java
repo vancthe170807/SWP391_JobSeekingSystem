@@ -35,6 +35,12 @@ public class AuthenticationController extends HttpServlet {
             case "login":
                 url = "view/authen/login.jsp";
                 break;
+            case "log-out":
+                url = logOut(request, response);
+                break;
+            case "change-password":
+                url = "view/authen/changePassword.jsp";
+                break;
             case "sign-up":
                 url = "view/authen/register.jsp";
                 break;
@@ -43,7 +49,7 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "edit-profile":
                 url = "view/user/editUserProfile.jsp";
-                break;    
+                break;
             default:
                 url = "view/authen/login.jsp";
         }
@@ -83,20 +89,25 @@ public class AuthenticationController extends HttpServlet {
             break;
             case "verify-reset-otp": // Handle OTP verification for password reset
                 url = verifyResetOtp(request, response);
-                break;  
+                break;
             case "reset-password":
                 url = resetPassword(request, response);
                 break;
+            case "delete-account":  // Thêm hành động để xóa tài khoản
+                url = deleteAccount(request, response);
+                break;
             case "log-out":
                 url = logOut(request, response);
+            case "change-password":
+                url = changePassword(request, response);
+
                 break;
             case "edit-profile":
                 url = editProfile(request, response);
-                break;    
+                break;
             default:
                 url = "home";
         }
-
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
     }
@@ -116,9 +127,9 @@ public class AuthenticationController extends HttpServlet {
 
         // Set cookie max age (persistent for 1 day if "remember me" is checked)
         if (remember != null) {
-            cUser.setMaxAge(24 * 60 * 60);  // 1 day
-            cPass.setMaxAge(24 * 60 * 60);
-            cRem.setMaxAge(24 * 60 * 60);
+            cUser.setMaxAge(60 * 60 * 24);
+            cPass.setMaxAge(60 * 60 * 24);
+            cRem.setMaxAge(60 * 60 * 24);
         } else {
             cUser.setMaxAge(0);
             cPass.setMaxAge(0);
@@ -138,9 +149,8 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        // Determine user role and redirect accordingly
         if (accFound != null) {
-            session.setAttribute("account", accFound);
+            session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
                 case 1:
                     url = "view/admin/adminHome.jsp";
@@ -151,22 +161,19 @@ public class AuthenticationController extends HttpServlet {
                 case 3:
                     url = "view/user/userHome.jsp";
                     break;
-                    
-                default:
-                    url = "home";
             }
         } else {
-            // Invalid credentials: display error message and go back to login
             request.setAttribute("mess", "Username or password incorrect!!");
             url = "view/authen/login.jsp";
         }
-
         return url;
     }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.removeAttribute(CommonConst.SESSION_ACCOUNT);
+        session.removeAttribute("account");
+        //session.invalidate();
+        //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
         return "view/home.jsp";
     }
 
@@ -225,7 +232,30 @@ public class AuthenticationController extends HttpServlet {
             // Forward to OTP confirmation page
             return "view/authen/ConfirmOTP.jsp";  // Forward to OTP page after registration
         }
+        return url;
+    }
 
+    private String changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String currPass = request.getParameter("currentPassword");
+        String newPass = request.getParameter("newPassword");
+        String retypePass = request.getParameter("retypePassword");
+
+        HttpSession session = request.getSession();
+
+        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        String url = null;
+
+        if (acc != null) {
+            if (!currPass.equals(acc.getPassword()) || !newPass.equals(retypePass)) {
+                request.setAttribute("fail", "Password Change Failed");
+                url = "view/authen/changePassword.jsp";
+            } else {
+                acc.setPassword(newPass);
+                accountDAO.updatePasswordByUsername(acc);
+                request.setAttribute("success", "Password Changed Successfully. Please Login Again.");
+                url = "view/authen/login.jsp";
+            }
+        }
         return url;
     }
 
@@ -349,20 +379,20 @@ public class AuthenticationController extends HttpServlet {
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
-        
+
 //        get ve cac parameter
         String lastName = request.getParameter("lastName");
         String firstName = request.getParameter("firstName");
         String phone = request.getParameter("phone");
-        
+
         Date dob = Date.valueOf(request.getParameter("date"));
         String gender = request.getParameter("gender");
         String citizenId = request.getParameter("citizenid");
         String address = request.getParameter("address");
 //        tạo đối tượng account và set các thuộc tính
         HttpSession session = request.getSession();
-        
-        Account accountEdit = (Account) session.getAttribute("account");
+
+        Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         accountEdit.setLastName(lastName);
         accountEdit.setFirstName(firstName);
         accountEdit.setPhone(phone);
@@ -372,6 +402,37 @@ public class AuthenticationController extends HttpServlet {
         accountEdit.setAddress(address);
         accountDAO.updateAccount(accountEdit);
         return "view/user/userProfile.jsp";
+    }
+
+    private String deleteAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Lấy tài khoản từ session
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+        if (account != null) {
+            // Lấy mật khẩu mà người dùng đã nhập từ request
+            String currentPassword = request.getParameter("currentPassword");
+
+            // Kiểm tra xem mật khẩu nhập vào có trùng với mật khẩu của tài khoản hiện tại không
+            if (account.getPassword().equals(currentPassword)) {  // So sánh mật khẩu đã lưu với mật khẩu nhập vào
+                // Nếu mật khẩu đúng, xóa tài khoản khỏi cơ sở dữ liệu
+                accountDAO.deleteAccount(account);
+
+                // Xóa thông tin tài khoản khỏi session
+                session.removeAttribute(CommonConst.SESSION_ACCOUNT);
+
+                // Chuyển hướng đến trang đăng nhập sau khi xóa thành công
+                request.setAttribute("message", "Account successfully deleted.");
+                return "view/authen/login.jsp";
+            } else {
+                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại
+                request.setAttribute("error", "Incorrect password. Please try again.");
+                return "view/authen/deleteAccount.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
+            }
+        } else {
+            // Nếu không có tài khoản trong session, quay lại trang chủ
+            return "home";
+        }
     }
 
 }

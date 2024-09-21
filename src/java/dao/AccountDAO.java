@@ -110,7 +110,7 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "      ,[roleId] = ?\n"
                 + "      ,[isActive] = ?\n"
                 + "      ,[createAt] = ?\n"
-                + "      ,[updatedAt] = ?\n"
+                + "      ,[updatedAt] = getDate()\n"
                 + "      ,[gender] = ?\n"
                 + " WHERE id = ?";
 
@@ -128,7 +128,7 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("roleId", (Integer) account.getRoleId());
         parameterMap.put("isActive", account.isIsActive());
         parameterMap.put("createAt", account.getCreateAt());
-        parameterMap.put("updatedAt", account.getUpdatedAt());
+//        parameterMap.put("updatedAt", account.getUpdatedAt());
         parameterMap.put("gender", account.isGender());
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);

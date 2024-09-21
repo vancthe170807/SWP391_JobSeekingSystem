@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.mail.MessagingException;
+import java.sql.Date;
 import model.Account;
 
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
@@ -89,6 +90,9 @@ public class AuthenticationController extends HttpServlet {
             case "log-out":
                 url = logOut(request, response);
                 break;
+            case "edit-profile":
+                url = editProfile(request, response);
+                break;    
             default:
                 url = "home";
         }
@@ -173,6 +177,7 @@ public class AuthenticationController extends HttpServlet {
         int roleId = Integer.parseInt(request.getParameter("role"));
         String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
+        String gender = request.getParameter("gender");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -182,6 +187,16 @@ public class AuthenticationController extends HttpServlet {
         account.setRoleId(roleId);
         account.setLastName(lastname);
         account.setFirstName(firstname);
+        switch (gender) {
+            case "male":
+                account.setGender(true);
+                break;
+            case "female":
+                account.setGender(false);
+                break;
+            default:
+                account.setGender(true);
+        }
         account.setUsername(username);
         account.setEmail(email);
         account.setPassword(password);
@@ -331,6 +346,32 @@ public class AuthenticationController extends HttpServlet {
             request.setAttribute("error", "Passwords do not match. Please try again.");
             return "view/authen/ResetPassword.jsp";
         }
+    }
+
+    private String editProfile(HttpServletRequest request, HttpServletResponse response) {
+        
+//        get ve cac parameter
+        String lastName = request.getParameter("lastName");
+        String firstName = request.getParameter("firstName");
+        String phone = request.getParameter("phone");
+        
+        Date dob = Date.valueOf(request.getParameter("date"));
+        String gender = request.getParameter("gender");
+        String citizenId = request.getParameter("citizenid");
+        String address = request.getParameter("address");
+//        tạo đối tượng account và set các thuộc tính
+        HttpSession session = request.getSession();
+        
+        Account accountEdit = (Account) session.getAttribute("account");
+        accountEdit.setLastName(lastName);
+        accountEdit.setFirstName(firstName);
+        accountEdit.setPhone(phone);
+        accountEdit.setDob(dob);
+        accountEdit.setGender(gender == "male" ? true : false);
+        accountEdit.setCitizenId(citizenId);
+        accountEdit.setAddress(address);
+        accountDAO.updateAccount(accountEdit);
+        return "view/user/userProfile.jsp";
     }
 
 }

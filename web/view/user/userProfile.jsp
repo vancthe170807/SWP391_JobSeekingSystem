@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,15 @@
                             <div class="my__details" id="info">
                                 <div class="info__top">
                                     <div class="author__image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/proifle.svg" alt="">
+                                        <c:if test="${empty sessionScope.account.getAvatar()}">
+                                            <!-- Đường dẫn ảnh trống -->
+                                            <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="">
+                                        </c:if>
+
+                                        <c:if test="${!empty sessionScope.account.getAvatar()}">
+                                            <!-- Đường dẫn ảnh không trống -->
+                                            <img src="${sessionScope.account.getAvatar()}" alt="">
+                                        </c:if>
                                 </div>
                                 <div class="select__image">
                                     <label for="editProfile" class="file-upload__label">Edit Profile</label>

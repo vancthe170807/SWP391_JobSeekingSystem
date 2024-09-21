@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <header class="rts__section rts__dashboard__header position-fixed w-100">
     <div class="container-fluid g-0">
         <div class="rts__menu__background mw-100 px-20 mobile__padding rounded-0">
@@ -233,7 +236,16 @@
                             <div class="user__info">
                                 <div class="d-flex gap-3 align-items-center pointer" data-bs-toggle="dropdown">
                                     <div class="user__image">
-                                        <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/author/1.svg" alt="">
+                                        <c:if test="${empty sessionScope.account.getAvatar()}">
+                                            <!-- Đường dẫn ảnh trống -->
+                                            <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="">
+                                        </c:if>
+
+                                        <c:if test="${!empty sessionScope.account.getAvatar()}">
+                                            <!-- Đường dẫn ảnh không trống -->
+                                            <img class="rounded-5" width="48" height="48" id="preview" src="${sessionScope.account.getAvatar()}" alt="" width="150">
+                                        </c:if>
+                                        
                                     </div>
                                     <div class="user__name d-none d-xl-block">
 

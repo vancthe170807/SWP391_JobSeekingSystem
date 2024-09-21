@@ -77,9 +77,12 @@
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/user/header-user.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/model/Account.java</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/editUserProfile.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/header-area.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/HomeController.java</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/userProfile.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/DBContext.java</file>
         </group>
     </open-files>
 </project-private>

@@ -58,7 +58,7 @@
                             <div class="sidebar__action"><i class="fa-sharp fa-regular fa-bars"></i> Sidebar</div>
                         </div>
                         <!-- sidebar menu end -->
-                        <form action="${pageContext.request.contextPath}/authen?action=edit-profile" method="POST" id="profile-form">
+                        <form action="${pageContext.request.contextPath}/authen?action=edit-profile" method="POST" id="profile-form" enctype="multipart/form-data">
                         <div class="my__profile__tab radius-16 bg-white">
                             <nav>
                                 <div class="nav nav-tabs">
@@ -76,13 +76,13 @@
 
                                         <c:if test="${!empty sessionScope.account.getAvatar()}">
                                             <!-- Đường dẫn ảnh không trống -->
-                                            <img src="${sessionScope.account.getAvatar()}" alt="">
+                                            <img id="preview" src="${sessionScope.account.getAvatar()}" alt="" width="150">
                                         </c:if>
 
                                     </div>
                                     <div class="select__image">
                                         <label for="file" class="file-upload__label">Upload New Photo</label>
-                                        <input type="file" class="file-upload__input" id="file" required>
+                                        <input type="file" class="file-upload__input" id="file" name="image" required onchange="previewImage(event)">
                                     </div>
 
 
@@ -91,21 +91,21 @@
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">
                                             <label for="lname">Last Name</label>
-                                            <input type="text" name="lastName" id="lname" placeholder="Last Name" required  >
+                                            <input type="text" name="lastName" id="lname" placeholder="Last Name" required value="${sessionScope.account.getLastName()}" >
                                         </div>
                                         <div class="rt-input-group">
                                             <label for="fname">First Name</label>
-                                            <input type="text" name="firstName" id="fname" placeholder="First Name" required  >
+                                            <input type="text" name="firstName" id="fname" placeholder="First Name" required value="${sessionScope.account.getFirstName()}" >
                                         </div>
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">
                                             <label for="phone">Phone</label>
-                                            <input type="text" name="phone" id="phone" placeholder="+84" required >
+                                            <input type="text" name="phone" id="phone" placeholder="+84" required value="${sessionScope.account.getPhone()}" >
                                         </div>
                                         <div class="rt-input-group">
                                             <label for="dob">Date of Birth</label>
-                                            <input type="date" name="date" id="dob" required  >
+                                            <input type="date" name="date" id="dob" required value="${sessionScope.account.getDob()}" >
                                         </div>
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
@@ -119,13 +119,13 @@
                                         </div> 
                                         <div class="rt-input-group">
                                             <label for="citizenId">Citizen ID</label>
-                                            <input type="text" name="citizenid" id="citizenId" placeholder="ID" required >
+                                            <input type="text" name="citizenid" id="citizenId" placeholder="ID" required value="${sessionScope.account.getCitizenId()}">
                                         </div>
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">
                                             <label for="add">Address</label>
-                                            <input type="text" name="address" id="add" placeholder="Your Address" required>
+                                            <input type="text" name="address" id="add" placeholder="Your Address" value="${sessionScope.account.getAddress()}"required>
                                         </div>
                                         <div class="rt-input-group">
                                             <label for="email">Email</label>
@@ -202,6 +202,22 @@
         </button>
         <!-- all plugin js -->
         <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
+        <script>
+            function previewImage(event) {
+                var input = event.target;
+                var reader = new FileReader(); // Tạo đối tượng FileReader để đọc dữ liệu của file
 
+                reader.onload = function () {
+                    var dataURL = reader.result; // Kết quả đọc file dưới dạng URL
+                    var output = document.getElementById('preview'); // Chọn ảnh preview
+                    output.src = dataURL; // Thay đổi src của ảnh thành URL của file
+                };
+
+                if (input.files && input.files[0]) {
+                    reader.readAsDataURL(input.files[0]); // Đọc file dưới dạng Data URL
+                }
+            }
+
+        </script>
     </body>
 </html>

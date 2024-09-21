@@ -15,9 +15,13 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.sql.Date;
 import model.Account;
 
+@MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
@@ -379,29 +383,54 @@ public class AuthenticationController extends HttpServlet {
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
-
+        String url = "";
 //        get ve cac parameter
-        String lastName = request.getParameter("lastName");
-        String firstName = request.getParameter("firstName");
-        String phone = request.getParameter("phone");
+        try {
+            String lastName = request.getParameter("lastName");
+            String firstName = request.getParameter("firstName");
+            String phone = request.getParameter("phone");
+            Date dob = Date.valueOf(request.getParameter("date"));
+            String gender = request.getParameter("gender");
+            String citizenId = request.getParameter("citizenid");
+            String address = request.getParameter("address");
+//        get về image
+            Part part = request.getPart("image");
+            String imagePath = null;
+            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
+                imagePath = null;
+            } else {
+//        duong dan lưu ảnh
+                String path = request.getServletContext().getRealPath("images");
+                File dir = new File(path);
+//        xem duong dan nay ton tai chua
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+//        ghi file vao trong duong dan
+                part.write(image.getAbsolutePath());
+//        lay ra contextPath cua project
+                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
+            }
 
-        Date dob = Date.valueOf(request.getParameter("date"));
-        String gender = request.getParameter("gender");
-        String citizenId = request.getParameter("citizenid");
-        String address = request.getParameter("address");
-//        tạo đối tượng account và set các thuộc tính
-        HttpSession session = request.getSession();
+//        tạo đối tượng session và set các thuộc tính
+            HttpSession session = request.getSession();
 
-        Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        accountEdit.setLastName(lastName);
-        accountEdit.setFirstName(firstName);
-        accountEdit.setPhone(phone);
-        accountEdit.setDob(dob);
-        accountEdit.setGender(gender == "male" ? true : false);
-        accountEdit.setCitizenId(citizenId);
-        accountEdit.setAddress(address);
-        accountDAO.updateAccount(accountEdit);
-        return "view/user/userProfile.jsp";
+            Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+            accountEdit.setLastName(lastName);
+            accountEdit.setFirstName(firstName);
+            accountEdit.setPhone(phone);
+            accountEdit.setDob(dob);
+            accountEdit.setGender(gender == "male" ? true : false);
+            accountEdit.setCitizenId(citizenId);
+            accountEdit.setAddress(address);
+            accountEdit.setAvatar(imagePath);
+            accountDAO.updateAccount(accountEdit);
+            url = "view/user/userProfile.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return url;
     }
 
     private String deleteAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

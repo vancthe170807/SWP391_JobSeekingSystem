@@ -10,6 +10,7 @@
 <html>
     <head>
         <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         </head>
         <body>
             <!-- header area -->
@@ -20,7 +21,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="max-content similar__form form__padding">
-                            
+
                             <div class="d-flex mb-3 align-items-center justify-content-between">
                                 <h4 class="mb-0" style="margin-top: 100px; margin-left: 90px">Login To Jobpath</h4>
                             </div>
@@ -32,7 +33,7 @@
                             </div>
                         </c:if>
 
-                        <form action="${pageContext.request.contextPath}/authen?action=login" method="post" class="d-flex flex-column gap-3">
+                        <form action="${pageContext.request.contextPath}/authen?action=login" method="post" class="d-flex flex-column gap-3" id="login-form">
                             <c:set var="cookies" value="${pageContext.request.cookies}"/>
                             <div class="form-group">
                                 <label for="username" class="fw-medium text-dark mb-3">Username</label>
@@ -48,6 +49,8 @@
                                     <i class="fa-light fa-lock icon"></i>
                                 </div>
                             </div>
+                            <div class="g-recaptcha" data-sitekey="6LeVFEsqAAAAAFK_7xKTrV798KMOrnTYcVgfeMIa"></div>
+                            <div style="color: red" id="error"></div>
                             <div class="d-flex flex-wrap justify-content-between align-items-center fw-medium">
                                 <div class="form-check">
 
@@ -62,7 +65,7 @@
                             <div style="color: red; text-align: center; font-size: 16px;">${requestScope.success}</div>
 
                             <div class="form-group my-3">
-                                <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
+                                <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
                             </div>
                         </form>
 
@@ -75,6 +78,18 @@
         <jsp:include page="../common/footer.jsp"></jsp:include>                       
         <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>
 
+        <script type="text/javascript">
+            function checkCapcha() {
+                var form = document.getElementById("login-form");
+                var error = document.getElementById("error");
+                const response = grecaptcha.getResponse();
+                if (response) {
+                    form.submit();
+                } else {
+                    error.textContent = "Please verify that you are not a robot.";
+                }
+            }
+        </script>
     </body>
 </html>
 

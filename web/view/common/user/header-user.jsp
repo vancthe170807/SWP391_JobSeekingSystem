@@ -259,13 +259,12 @@
                                 </div>
                                 <ul class="rts__dropdown dropdown-menu top-25">
                                     <li><a class="dropdown-item" href="candidate-dashboard.html">Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="candidate-profile.html">Profile</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=view-profile">Profile</a></li>
                                     <li><a class="dropdown-item" href="candidate-resume.html">Resume</a></li>
                                     <li><a class="dropdown-item" href="candidate-shortlist.html">Shortlist Job</a></li>
                                     <li><a class="dropdown-item" href="candidate-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
-                                    <li><a class="dropdown-item" href="candidate-deleteprofile.html">Delete Account</a></li>
                                 </ul>  
                             </div>
                             

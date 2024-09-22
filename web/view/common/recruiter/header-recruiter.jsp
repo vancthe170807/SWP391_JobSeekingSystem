@@ -209,14 +209,13 @@
                                 </div>
                                 <ul class="rts__dropdown dropdown-menu top-25">
                                     <li><a class="dropdown-item" href="employer-dashboard.html">Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="employer-dash-profile.html">Profile</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=view-profile">Profile</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-alert.html">Job Alert</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-shortlist.html">Shortlist Job</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-package.html">Packages</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
-                                    <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
                                 </ul>  
                             </div>
                             <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add A Job</a>

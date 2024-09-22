@@ -25,8 +25,8 @@
                     <h6 class="mb-3">Delete Profile</h6>
                     <div class="change__password">
                         <div class="password__change__form">
-                            <h6 class="text-center mb-4">Are you sure you want to delete your profile?</h6>
-                            <form action="${pageContext.request.contextPath}/authen?action=delete-account" method="POST">
+                            <h6 class="text-center mb-4">Are you sure you want to deactivate your profile?</h6>
+                            <form action="${pageContext.request.contextPath}/authen?action=deactivate-account" method="POST">
                             <!-- Password Input -->
                             <c:if test="${requestScope.error != null}">
                                 <div style="color: red; text-align: center;">
@@ -36,13 +36,13 @@
                             <div class="rts-input-group">
                                 <label for="currentPassword">Please Enter Your Login Password</label>
                                 <input type="password" name="currentPassword" id="currentPassword" placeholder="Enter your current password" required>
-                                <span><strong>Note: </strong>After deleting your account, all associated data will be permanently removed and cannot be restored. Please consider this decision carefully before proceeding.</span>
+                                <span style="color: red"><strong>Note: </strong>After your account is deactivated, you will temporarily be unable to use it. If you wish to reactivate your account and resume using it, please contact the Admin for assistance.</span>
                             </div>
                                 
                             <!-- Action Buttons -->
                             <div class="d-flex justify-content-end gap-30">
                                 <button type="button" class="rts__btn fill__btn" onclick="window.location.href = '${pageContext.request.contextPath}/view/home.jsp'">Cancel</button>
-                                <button type="submit" class="cancel__button rts__btn gray__btn">Delete Profile</button>
+                                <button type="submit" class="cancel__button rts__btn gray__btn">Deactivate Profile</button>
                             </div>
                         </form>
                     </div>

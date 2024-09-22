@@ -97,8 +97,8 @@ public class AuthenticationController extends HttpServlet {
             case "reset-password":
                 url = resetPassword(request, response);
                 break;
-            case "delete-account":  // Thêm hành động để xóa tài khoản
-                url = deleteAccount(request, response);
+            case "deactivate-account":  // Thêm hành động để xóa tài khoản
+                url = deactivateAccount(request, response);
                 break;
             case "log-out":
                 url = logOut(request, response);
@@ -150,10 +150,11 @@ public class AuthenticationController extends HttpServlet {
         account.setUsername(username);
         account.setPassword(password);
         Account accFound = accountDAO.findUserByUsernameAndPassword(account);
+        //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
 
-        if (accFound != null) {
+        if (accFound != null && accFound.isIsActive()) {
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
                 case 1:
@@ -166,6 +167,9 @@ public class AuthenticationController extends HttpServlet {
                     url = "view/user/userHome.jsp";
                     break;
             }
+        } else if(!accFound.isIsActive()) {
+            request.setAttribute("mess", "Your account has deactive. You can contact for Admin to solve that!!");
+            url = "view/authen/login.jsp";
         } else {
             request.setAttribute("mess", "Username or password incorrect!!");
             url = "view/authen/login.jsp";
@@ -433,7 +437,8 @@ public class AuthenticationController extends HttpServlet {
         return url;
     }
 
-    private String deleteAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // Vo hieu hoa tai khoan
+    private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy tài khoản từ session
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
@@ -445,18 +450,15 @@ public class AuthenticationController extends HttpServlet {
             // Kiểm tra xem mật khẩu nhập vào có trùng với mật khẩu của tài khoản hiện tại không
             if (account.getPassword().equals(currentPassword)) {  // So sánh mật khẩu đã lưu với mật khẩu nhập vào
                 // Nếu mật khẩu đúng, xóa tài khoản khỏi cơ sở dữ liệu
-                accountDAO.deleteAccount(account);
+                accountDAO.deactiveAccount(account);
 
-                // Xóa thông tin tài khoản khỏi session
-                session.removeAttribute(CommonConst.SESSION_ACCOUNT);
-
-                // Chuyển hướng đến trang đăng nhập sau khi xóa thành công
-                request.setAttribute("message", "Account successfully deleted.");
+                // Chuyển hướng đến trang đăng nhập sau khi vô hiệu hoá thành công
+                request.setAttribute("message", "Your account has deactive successfully.");
                 return "view/authen/login.jsp";
             } else {
                 // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại
                 request.setAttribute("error", "Incorrect password. Please try again.");
-                return "view/authen/deleteAccount.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
+                return "view/authen/deactivteAccount.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
             }
         } else {
             // Nếu không có tài khoản trong session, quay lại trang chủ

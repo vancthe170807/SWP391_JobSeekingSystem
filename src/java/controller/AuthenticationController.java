@@ -15,8 +15,13 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.sql.Date;
 import model.Account;
 
+@MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
@@ -101,6 +106,9 @@ public class AuthenticationController extends HttpServlet {
                 url = changePassword(request, response);
 
                 break;
+            case "edit-profile":
+                url = editProfile(request, response);
+                break;
             default:
                 url = "home";
         }
@@ -146,7 +154,7 @@ public class AuthenticationController extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (accFound != null) {
-            session.setAttribute("account", accFound);
+            session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
                 case 1:
                     url = "view/admin/adminHome.jsp";
@@ -180,6 +188,7 @@ public class AuthenticationController extends HttpServlet {
         int roleId = Integer.parseInt(request.getParameter("role"));
         String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
+        String gender = request.getParameter("gender");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -189,6 +198,16 @@ public class AuthenticationController extends HttpServlet {
         account.setRoleId(roleId);
         account.setLastName(lastname);
         account.setFirstName(firstname);
+        switch (gender) {
+            case "male":
+                account.setGender(true);
+                break;
+            case "female":
+                account.setGender(false);
+                break;
+            default:
+                account.setGender(true);
+        }
         account.setUsername(username);
         account.setEmail(email);
         account.setPassword(password);
@@ -227,7 +246,7 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        Account acc = (Account) session.getAttribute("account");
+        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String url = null;
 
         if (acc != null) {
@@ -361,6 +380,57 @@ public class AuthenticationController extends HttpServlet {
             request.setAttribute("error", "Passwords do not match. Please try again.");
             return "view/authen/ResetPassword.jsp";
         }
+    }
+
+    private String editProfile(HttpServletRequest request, HttpServletResponse response) {
+        String url = "";
+//        get ve cac parameter
+        try {
+            String lastName = request.getParameter("lastName");
+            String firstName = request.getParameter("firstName");
+            String phone = request.getParameter("phone");
+            Date dob = Date.valueOf(request.getParameter("date"));
+            String gender = request.getParameter("gender");
+            String citizenId = request.getParameter("citizenid");
+            String address = request.getParameter("address");
+//        get về image
+            Part part = request.getPart("image");
+            String imagePath = null;
+            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
+                imagePath = null;
+            } else {
+//        duong dan lưu ảnh
+                String path = request.getServletContext().getRealPath("images");
+                File dir = new File(path);
+//        xem duong dan nay ton tai chua
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+//        ghi file vao trong duong dan
+                part.write(image.getAbsolutePath());
+//        lay ra contextPath cua project
+                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
+            }
+
+//        tạo đối tượng session và set các thuộc tính
+            HttpSession session = request.getSession();
+
+            Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+            accountEdit.setLastName(lastName);
+            accountEdit.setFirstName(firstName);
+            accountEdit.setPhone(phone);
+            accountEdit.setDob(dob);
+            accountEdit.setGender(gender == "male" ? true : false);
+            accountEdit.setCitizenId(citizenId);
+            accountEdit.setAddress(address);
+            accountEdit.setAvatar(imagePath);
+            accountDAO.updateAccount(accountEdit);
+            url = "view/user/userProfile.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return url;
     }
 
     private String deleteAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

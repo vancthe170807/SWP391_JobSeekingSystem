@@ -49,6 +49,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="form-select" >
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="sname" class="fw-medium text-dark mb-3">User name</label>
                                     <div class="position-relative">
                                         <input type="text" name="username" id="sname" placeholder="Enter user name" required>

@@ -14,9 +14,9 @@
 
 | ID Student | Fullname         | Leader |
 |------------|------------------|--------|
-| HE170309   | Nguyễn Ngọc Tú    |        |
+| ~~HE170309~~   | ~~Nguyễn Ngọc Tú~~    |        |
 | HE170807   | Chu Thế Văn       |        |
-| HE171932   | Nguyễn Văn Dũng   |        |
+| ~~HE171932~~   | ~~Nguyễn Văn Dũng~~   |        |
 | HE173048   | Trần Văn Tuấn     |        |
 | HE181811   | Ninh Hải Nam      | True   |
 

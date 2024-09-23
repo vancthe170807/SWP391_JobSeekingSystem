@@ -243,7 +243,7 @@
 
                                         <c:if test="${!empty sessionScope.account.getAvatar()}">
                                             <!-- Đường dẫn ảnh không trống -->
-                                            <img class="rounded-5" width="48" height="48" id="preview" src="${sessionScope.account.getAvatar()}" alt="" width="150">
+                                            <img class="rounded-5" width="48" height="48" src="${sessionScope.account.getAvatar()}" alt="" width="150">
                                         </c:if>
                                         
                                     </div>

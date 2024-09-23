@@ -440,6 +440,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/user/userProfile.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            url = "view/user/editUserProfile.jsp";
         }
         return url;
     }

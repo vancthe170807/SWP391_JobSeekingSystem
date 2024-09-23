@@ -23,13 +23,11 @@ public class HomeController extends HttpServlet {
         request.getRequestDispatcher("view/home.jsp").forward(request, response);
     } 
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
-
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -47,5 +45,4 @@ public class HomeController extends HttpServlet {
             out.println("</html>");
         }
     } 
-
 }

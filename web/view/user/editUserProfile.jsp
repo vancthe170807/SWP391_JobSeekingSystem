@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="select__image">
                                         <label for="file" class="file-upload__label">Upload New Photo</label>
-                                        <input type="file" class="file-upload__input" id="file" name="image" required onchange="previewImage(event)">
+                                        <input type="file" class="file-upload__input" id="file" name="image"  onchange="previewImage(event)">
                                     </div>
 
 

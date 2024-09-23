@@ -154,7 +154,16 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (accFound != null && accFound.isIsActive()) {
+        if (accFound == null) {
+            // If no account is found, show the incorrect username/password message
+            request.setAttribute("mess", "Username or password incorrect!!");
+            url = "view/authen/login.jsp";
+        } else if (!accFound.isIsActive()) {
+            // If the account is found but inactive
+            request.setAttribute("mess", "Your account is deactivated. Please contact Admin by email to resolve this.");
+            url = "view/authen/login.jsp";
+        } else {
+            // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
                 case 1:
@@ -166,16 +175,14 @@ public class AuthenticationController extends HttpServlet {
                 case 3:
                     url = "view/user/userHome.jsp";
                     break;
+                default:
+                    // Redirect to login page in case of unknown role
+                    request.setAttribute("mess", "Unknown role, please try again.");
+                    url = "view/authen/login.jsp";
             }
-        } else if(!accFound.isIsActive()) {
-            request.setAttribute("mess", "Your account has deactive. You can contact for Admin to solve that!!");
-            url = "view/authen/login.jsp";
-        } else {
-            request.setAttribute("mess", "Username or password incorrect!!");
-            url = "view/authen/login.jsp";
         }
         return url;
-    }
+   }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
@@ -425,7 +432,7 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setFirstName(firstName);
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
-            accountEdit.setGender(gender == "male" ? true : false);
+            accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
             accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);

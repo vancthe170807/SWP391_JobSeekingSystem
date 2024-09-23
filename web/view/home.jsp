@@ -11,7 +11,6 @@
         <jsp:include page="common/authen/common-css-authen.jsp"></jsp:include>
         </head>
         <body>
-
             <!-- header area -->
         <jsp:include page="common/header-area.jsp"></jsp:include>
             <!-- header area end -->
@@ -19,7 +18,6 @@
             <!-- breadcrumb area -->
         <jsp:include page="common/breadcrumb-area.jsp"></jsp:include>
             <!-- breadcrumb area end -->
-
     <div class="rts__section section__padding">
         <div class="container">
             <div class="row g-30">

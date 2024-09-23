@@ -15,7 +15,7 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <div class="" id="signupModal">
+            <div class="" id="signupModal" style="margin-top: 100px">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

@@ -182,7 +182,7 @@ public class AuthenticationController extends HttpServlet {
             }
         }
         return url;
-    }
+   }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
@@ -432,7 +432,7 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setFirstName(firstName);
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
-            accountEdit.setGender(gender.equalsIgnoreCase("male"));
+            accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
             accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
@@ -440,6 +440,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/user/userProfile.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            url = "view/user/editUserProfile.jsp";
         }
         return url;
     }

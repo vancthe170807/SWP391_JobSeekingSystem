@@ -13,12 +13,12 @@
         </head>
         <body class="template-dashboard">
             <!-- Header area -->
-        <jsp:include page="../common/user/header-user.jsp"></jsp:include>
+        <jsp:include page="../common/recruiter/header-recruiter.jsp"></jsp:include>
 
             <!-- Content area -->
             <div class="dashboard__content d-flex">
                 <!-- Sidebar -->
-            <jsp:include page="../common/user/sidebar-user.jsp"></jsp:include>
+            <jsp:include page="../common/recruiter/sidebar-recruiter.jsp"></jsp:include>
 
                 <!-- Profile Deletion Form -->
                 <div class="candidate__passwordchange" style="margin-left: 500px; margin-right: 100px">

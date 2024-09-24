@@ -71,7 +71,7 @@
                                     <div class="author__image">
                                         <c:if test="${empty sessionScope.account.getAvatar()}">
                                             <!-- Đường dẫn ảnh trống -->
-                                            <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="">
+                                            <img id="preview" src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="">
                                         </c:if>
 
                                         <c:if test="${!empty sessionScope.account.getAvatar()}">
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="select__image">
                                         <label for="file" class="file-upload__label">Upload New Photo</label>
-                                        <input type="file" class="file-upload__input" id="file" name="image" required onchange="previewImage(event)">
+                                        <input type="file" class="file-upload__input" id="file" name="image"  onchange="previewImage(event)">
                                     </div>
 
 
@@ -114,7 +114,6 @@
                                             <select name="gender" id="gender" class="form-select">
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
-                                                <option value="other">Other</option>
                                             </select>
                                         </div> 
                                         <div class="rt-input-group">
@@ -204,20 +203,31 @@
         <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
         <script>
             function previewImage(event) {
+                console.log("previewImage function called");
                 var input = event.target;
-                var reader = new FileReader(); // Tạo đối tượng FileReader để đọc dữ liệu của file
-
-                reader.onload = function () {
-                    var dataURL = reader.result; // Kết quả đọc file dưới dạng URL
-                    var output = document.getElementById('preview'); // Chọn ảnh preview
-                    output.src = dataURL; // Thay đổi src của ảnh thành URL của file
-                };
-
-                if (input.files && input.files[0]) {
-                    reader.readAsDataURL(input.files[0]); // Đọc file dưới dạng Data URL
+                if (!input.files || !input.files[0]) {
+                    console.log("No file selected");
+                    return;
                 }
-            }
 
+                console.log("File selected:", input.files[0].name);
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    console.log("FileReader onload triggered");
+                    var output = document.getElementById('preview');
+                    if (output) {
+                        output.src = e.target.result;
+                        console.log("Image preview updated");
+                    } else {
+                        console.error("Preview element not found");
+                    }
+                };
+                reader.onerror = function (error) {
+                    console.error("FileReader error:", error);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         </script>
     </body>
 </html>

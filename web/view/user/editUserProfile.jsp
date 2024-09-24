@@ -43,7 +43,7 @@
                             <figure class="logout__image">
                                 <img src="assets/img/dashboard/logout.png" alt="">
                             </figure>
-                            <a class="logout__btn" href="#"><i class="rt-login"></i> Logout</a>
+                            <a class="logout__btn" href="${pageContext.request.contextPath}/authen?action=log-out"><i class="rt-login"></i> Logout</a>
                         </div>
                     </div>
                     <!-- sidebar menu end -->

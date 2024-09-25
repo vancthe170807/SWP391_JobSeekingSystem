@@ -47,7 +47,7 @@
                             </svg> 
                         </div>
                     </div>
-                    <div style="color: red; text-align: center; font-size: 16px;">${requestScope.fail}</div>
+                    <div style="color: red; text-align: center; font-size: 16px;">${requestScope.changePWfail}</div>
                     <!-- single item end -->
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="rts__btn fill__btn">Update Password</button>

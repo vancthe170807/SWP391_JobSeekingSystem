@@ -153,7 +153,7 @@ public class AuthenticationController extends HttpServlet {
         //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
-
+        
         if (accFound == null) {
             // If no account is found, show the incorrect username/password message
             request.setAttribute("mess", "Username or password incorrect!!");
@@ -175,21 +175,15 @@ public class AuthenticationController extends HttpServlet {
                 case 3:
                     url = "view/user/userHome.jsp";
                     break;
-                default:
-                    // Redirect to login page in case of unknown role
-                    request.setAttribute("mess", "Unknown role, please try again.");
-                    url = "view/authen/login.jsp";
             }
         }
         return url;
-   }
+    }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        //session.invalidate();
-        //response.sendRedirect("${pageContext.request.contextPath}/view/home.jsp");
-        return "view/home.jsp";
+        return "view/authen/login.jsp";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
@@ -260,16 +254,36 @@ public class AuthenticationController extends HttpServlet {
         Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String url = null;
 
-        if (acc != null) {
-            if (!currPass.equals(acc.getPassword()) || !newPass.equals(retypePass)) {
-                request.setAttribute("fail", "Password Change Failed");
+        int status = 0;
+        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
+            status = 1;
+        } else if (!currPass.equals(acc.getPassword())) {
+            status = 2;
+        } else if (!newPass.equals(retypePass)) {
+            status = 3;
+        } else {
+            status = 4;
+        }
+
+        switch (status) {
+            case 1:
+                request.setAttribute("changePWfail", "Both current password and new password do not match.");
                 url = "view/authen/changePassword.jsp";
-            } else {
+                break;
+            case 2:
+                request.setAttribute("changePWfail", "Incorrect current password.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 3:
+                request.setAttribute("changePWfail", "New password and retype password do not match.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 4:
                 acc.setPassword(newPass);
                 accountDAO.updatePasswordByUsername(acc);
-                request.setAttribute("success", "Password Changed Successfully. Please Login Again.");
+                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
                 url = "view/authen/login.jsp";
-            }
+                break;
         }
         return url;
     }
@@ -444,6 +458,7 @@ public class AuthenticationController extends HttpServlet {
         }
         return url;
     }
+
 
     // Vo hieu hoa tai khoan
     private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

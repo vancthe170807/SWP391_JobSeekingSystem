@@ -200,7 +200,7 @@
                                         <img class="rounded-5" width="48" height="48" src="${pageContext.request.contextPath}/assets/img/icon/google.svg" alt="">
                                     </div>
                                     <div class="user__name d-none d-xl-block">
-                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">Hello ${sessionScope.account.getFullName()}</h6>
+                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">${sessionScope.account.getFullName()}</h6>
                                         <span>Recruiter Page</span>
                                     </div>
                                     <div class="dropdown__option d-none d-xl-block">

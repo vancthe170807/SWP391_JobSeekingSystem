@@ -49,7 +49,7 @@
                                     <i class="fa-light fa-lock icon"></i>
                                 </div>
                             </div>
-                                                                            
+
                             <div class="d-flex flex-wrap justify-content-between align-items-center fw-medium">
                                 <div class="form-check">
 
@@ -61,12 +61,18 @@
                                 <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp" class="text-primary">Forgot Password?</a>
                             </div>
 
-                            <div style="color: green; text-align: center; font-size: 16px;">${requestScope.success}</div>
+                            <div style="color: green; text-align: center; font-size: 16px;">${requestScope.changePWsuccess}</div>
 
                             <div style="display: flex; justify-content: center;" class="g-recaptcha" data-sitekey="6LeVFEsqAAAAAFK_7xKTrV798KMOrnTYcVgfeMIa"></div> 
                             <div style="color: red" id="error"></div>
-                            <div class="form-group my-3">
+<!--                            <div class="form-group my-3">
                                 <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
+                            </div>-->
+                            <!--                            <div class="form-group my-3">
+                                                            <button type="submit"  class="rts__btn w-100 fill__btn">Login</button>
+                                                        </div>-->
+                            <div class="form-group my-3">
+                                <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
                             </div>
                         </form>
 

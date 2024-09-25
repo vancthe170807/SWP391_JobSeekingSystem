@@ -22,9 +22,7 @@
                             <div class="max-content similar__form form__padding">
                                 <div class="d-flex mb-3 align-items-center justify-content-between">
                                     <h6 class="mb-0">Create A Free Account</h6>
-                                    <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                                        <i class="fa-regular fa-xmark text-primary"></i>
-                                    </button>
+                                    
                                 </div>
                                 <div class="d-block has__line text-center"><p>Choose your Account Type</p></div>
 

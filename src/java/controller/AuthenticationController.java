@@ -153,7 +153,7 @@ public class AuthenticationController extends HttpServlet {
         //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
-        
+
         if (accFound == null) {
             // If no account is found, show the incorrect username/password message
             request.setAttribute("mess", "Username or password incorrect!!");
@@ -292,22 +292,29 @@ public class AuthenticationController extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Retrieve the OTP entered by the user and the OTP stored in session
-        int enteredOtp = Integer.parseInt(request.getParameter("otp"));
-        int sessionOtp = (int) session.getAttribute("OTPCode");
+        try {
+            int enteredOtp = Integer.parseInt(request.getParameter("otp"));
+            int sessionOtp = (int) session.getAttribute("OTPCode");
+//            parse sang string và so sanh hai chuỗi
+            String inputOtp = Integer.toString(enteredOtp).trim();
+            String storedOtp = Integer.toString(sessionOtp).trim();
+            if (inputOtp.equals(storedOtp)) {
+                // OTP is correct, complete the registration process
+                Account account = (Account) session.getAttribute("userRegister");
+                accountDAO.insert(account);  // Save the user account to the database
 
-        if (enteredOtp == sessionOtp) {
-            // OTP is correct, complete the registration process
-            Account account = (Account) session.getAttribute("userRegister");
-            accountDAO.insert(account);  // Save the user account to the database
+                // Clear the OTP from the session
+                session.removeAttribute("OTPCode");
+                session.removeAttribute("userRegister");
 
-            // Clear the OTP from the session
-            session.removeAttribute("OTPCode");
-            session.removeAttribute("userRegister");
-
-            // Redirect to the login page
-            return "view/authen/login.jsp";
-        } else {
-            // OTP is incorrect, set an error message and stay on the OTP page
+                // Redirect to the login page
+                return "view/authen/login.jsp";
+            } else {
+                // OTP is incorrect, set an error message and stay on the OTP page
+                request.setAttribute("error", "Invalid OTP. Please try again.");
+                return "view/authen/ConfirmOTP.jsp";
+            }
+        } catch (Exception e) {
             request.setAttribute("error", "Invalid OTP. Please try again.");
             return "view/authen/ConfirmOTP.jsp";
         }
@@ -458,7 +465,6 @@ public class AuthenticationController extends HttpServlet {
         }
         return url;
     }
-
 
     // Vo hieu hoa tai khoan
     private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

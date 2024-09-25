@@ -27,6 +27,7 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "           ,[password]\n"
                 + "           ,[email]\n"
                 + "           ,[phone]\n"
+                + "           ,[citizenId]\n"
                 + "           ,[firstName]\n"
                 + "           ,[lastName]\n"
                 + "           ,[dob]\n"
@@ -44,6 +45,7 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("password", t.getPassword());
         parameterMap.put("email", t.getEmail());
         parameterMap.put("phone", t.getPhone());
+        parameterMap.put("citizenId", t.getCitizenId());
         parameterMap.put("firstName", t.getFirstName());
         parameterMap.put("lastName", t.getLastName());
         parameterMap.put("dob", t.getDob());

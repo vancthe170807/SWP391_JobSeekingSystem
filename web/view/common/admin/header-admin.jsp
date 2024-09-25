@@ -202,7 +202,7 @@
                                     </div>
                                     <div class="user__name d-none d-xl-block">
 
-                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">Hello ${sessionScope.account.getFullName()}</h6>
+                                        <h6 class="font-20 mb-1 text-capitalize fw-medium lh-sm">${sessionScope.account.getFullName()}</h6>
                                         <span>Admin Page</span>
 
                                     </div>

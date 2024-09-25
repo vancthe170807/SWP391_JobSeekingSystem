@@ -34,7 +34,7 @@
                     <ul class="list-unstyled mb-3">
                         <li><a href="#"><i class="fa-light fa-location-dot"></i>Thach That district, Ha Noi city</a></li>
                         <li><a href="callto:+880171234578"><i class="fa-light fa-phone"></i>+(61) 545-432-234</a></li>
-                        <li><a href="mailto:jobpath@gmail.com"><i class="fa-light fa-envelope"></i> jobpath@gmail.com</a></li>
+                        <li><a href="mailto:vanctquantrivien@gmail.com"><i class="fa-light fa-envelope"></i>vanctquantrivien@gmail.com</a></li>
                     </ul>
                     <div class="font-20 fw-medium mb-20 text-dark">Social Link</div>
                     <div class="rts__social d-flex gap-4">

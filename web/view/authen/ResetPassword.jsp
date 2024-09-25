@@ -9,7 +9,7 @@
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
 
-            <div class="container" id="forgotModal" style="margin-top: 100px">
+            <div class="container" id="forgotModal" style="margin-top: 100px; align-content: center">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="max-content similar__form form__padding">

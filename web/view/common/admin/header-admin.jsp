@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <header class="rts__section rts__dashboard__header position-fixed w-100">
     <div class="container-fluid g-0">
         <div class="rts__menu__background mw-100 px-20 mobile__padding rounded-0">
@@ -220,7 +223,8 @@
 
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
 
-                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login" >Log Out</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/view/authen/logout.jsp" >Log Out</a></li>
+ 
 
                                     <li><a class="dropdown-item" href="employer-dash-deleteprofile.html">Delete Account</a></li>
                                 </ul>  

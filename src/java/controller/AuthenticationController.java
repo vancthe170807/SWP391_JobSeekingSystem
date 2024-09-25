@@ -21,12 +21,14 @@ import java.io.File;
 import java.sql.Date;
 import model.Account;
 import validate.ValidatePassword;
+import validate.ValidatePassword;
 
 @MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
+    ValidatePassword valid = new ValidatePassword();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -189,7 +191,7 @@ public class AuthenticationController extends HttpServlet {
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
         String url;
-        ValidatePassword valid = new ValidatePassword();
+
         // Get sign-up information
         int roleId = Integer.parseInt(request.getParameter("role"));
         String lastname = request.getParameter("lastname");
@@ -229,11 +231,10 @@ public class AuthenticationController extends HttpServlet {
         } else if (isExistUserEmail) {
             request.setAttribute("error", "Email exists!!");
             url = "view/authen/register.jsp";
-        } else if (valid.validatePassword(password)) {
+        } else if (valid.checkPassword(password)) {
             request.setAttribute("error", "Password must be 8 character!!");
             url = "view/authen/register.jsp";
-        }
-        else {
+        } else {
             // Generate OTP and send email
             int sixDigitNumber = 100000 + new Random().nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
@@ -255,6 +256,69 @@ public class AuthenticationController extends HttpServlet {
         String retypePass = request.getParameter("retypePassword");
 
         HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        String url = null;
+
+        // Trạng thái của việc thay đổi mật khẩu
+        int status = 0;
+
+        // Kiểm tra trường hợp mật khẩu cũ, mật khẩu mới và xác nhận mật khẩu mới
+        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
+            // Cả mật khẩu cũ sai và mật khẩu mới không khớp
+            status = 3;
+        } else if (!currPass.equals(acc.getPassword())) {
+            // Mật khẩu cũ sai
+            status = 1;
+        } else if (!newPass.equals(retypePass)) {
+            // Mật khẩu mới và xác nhận mật khẩu không khớp
+            status = 2;
+        } else if (!valid.checkPassword(newPass)) {
+            // Mật khẩu mới không đạt yêu cầu (không thỏa mãn yêu cầu về độ mạnh)
+            status = 4;
+        } else {
+            status = 5;
+        }
+
+        // Xử lý từng trạng thái theo logic yêu cầu
+        switch (status) {
+            case 1:
+                // Mật khẩu cũ sai
+                request.setAttribute("changePWfail", "Incorrect current password.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 2:
+                // Mật khẩu mới và xác nhận mật khẩu không khớp
+                request.setAttribute("changePWfail", "New password and retype password do not match.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 3:
+                // Cả mật khẩu cũ sai và mật khẩu mới không khớp
+                request.setAttribute("changePWfail", "Both current password is incorrect and new password does not match.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 4:
+                // Mật khẩu mới không thỏa mãn yêu cầu của checkPassword()
+                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 5:
+                // Nếu không có lỗi, thực hiện cập nhật mật khẩu
+                acc.setPassword(newPass);
+                accountDAO.updatePasswordByUsername(acc);
+                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
+                url = "view/authen/login.jsp";
+                break;
+        }
+
+        return url;
+    }
+
+    private String changePassword1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String currPass = request.getParameter("currentPassword");
+        String newPass = request.getParameter("newPassword");
+        String retypePass = request.getParameter("retypePassword");
+
+        HttpSession session = request.getSession();
 
         Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String url = null;
@@ -266,8 +330,10 @@ public class AuthenticationController extends HttpServlet {
             status = 2;
         } else if (!newPass.equals(retypePass)) {
             status = 3;
-        } else {
+        } else if (!valid.checkPassword(newPass)) {
             status = 4;
+        } else if (currPass.equals(acc.getPassword()) && newPass.equals(retypePass) && valid.checkPassword(newPass)) {
+            status = 5;
         }
 
         switch (status) {
@@ -284,6 +350,10 @@ public class AuthenticationController extends HttpServlet {
                 url = "view/authen/changePassword.jsp";
                 break;
             case 4:
+                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
+                url = "view/authen/changePassword.jsp";
+                break;
+            case 5:
                 acc.setPassword(newPass);
                 accountDAO.updatePasswordByUsername(acc);
                 request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
@@ -359,16 +429,21 @@ public class AuthenticationController extends HttpServlet {
 
     private String verifyResetOtp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
-        // Retrieve the OTP entered by the user and the OTP stored in session
-        int enteredOtp = Integer.parseInt(request.getParameter("otp"));
-        int sessionOtp = (int) session.getAttribute("ResetOTPCode");
-
-        if (enteredOtp == sessionOtp) {
-            // OTP is correct, forward to the reset password page
-            return "view/authen/ResetPassword.jsp"; // Let the user reset their password
-        } else {
-            // OTP is incorrect, set an error message and stay on the OTP page
+        try {
+            int enteredOtp = Integer.parseInt(request.getParameter("otp"));
+            int sessionOtp = (int) session.getAttribute("ResetOTPCode");
+//            parse sang string và so sanh hai chuỗi
+            String inputOtp = Integer.toString(enteredOtp).trim();
+            String storedOtp = Integer.toString(sessionOtp).trim();
+            if (inputOtp.equals(storedOtp)) {
+                // OTP is correct, forward to the reset password page
+                return "view/authen/ResetPassword.jsp";
+            } else {
+                // OTP is incorrect, set an error message and stay on the OTP page
+                request.setAttribute("error", "Invalid OTP. Please try again.");
+                return "view/authen/ForgotPasswordOTP.jsp";
+            }
+        } catch (Exception e) {
             request.setAttribute("error", "Invalid OTP. Please try again.");
             return "view/authen/ForgotPasswordOTP.jsp";
         }
@@ -499,7 +574,5 @@ public class AuthenticationController extends HttpServlet {
             return "home";
         }
     }
-
-    
 
 }

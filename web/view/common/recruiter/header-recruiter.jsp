@@ -215,7 +215,7 @@
                                     <li><a class="dropdown-item" href="employer-dash-package.html">Packages</a></li>
                                     <li><a class="dropdown-item" href="employer-dash-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
-                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/view/authen/logout.jsp">Log Out</a></li>
                                 </ul>  
                             </div>
                             <a href="employer-dash-jobpost.html" class="small__btn d-none d-sm-flex d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add A Job</a>

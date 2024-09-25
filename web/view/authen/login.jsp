@@ -68,9 +68,6 @@
 <!--                            <div class="form-group my-3">
                                 <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
                             </div>-->
-                            <!--                            <div class="form-group my-3">
-                                                            <button type="submit"  class="rts__btn w-100 fill__btn">Login</button>
-                                                        </div>-->
                             <div class="form-group my-3">
                                 <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
                             </div>

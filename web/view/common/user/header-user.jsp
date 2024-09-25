@@ -264,7 +264,7 @@
                                     <li><a class="dropdown-item" href="candidate-shortlist.html">Shortlist Job</a></li>
                                     <li><a class="dropdown-item" href="candidate-message.html">Message</a></li>
                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=change-password">Change Password</a></li>
-                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/authen?action=login">Log Out</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/view/authen/logout.jsp">Log Out</a></li>
                                 </ul>  
                             </div>
                             

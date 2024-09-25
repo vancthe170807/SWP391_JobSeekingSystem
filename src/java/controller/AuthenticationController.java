@@ -20,6 +20,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.Date;
 import model.Account;
+import validate.ValidatePassword;
 
 @MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
@@ -188,7 +189,7 @@ public class AuthenticationController extends HttpServlet {
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
         String url;
-
+        ValidatePassword valid = new ValidatePassword();
         // Get sign-up information
         int roleId = Integer.parseInt(request.getParameter("role"));
         String lastname = request.getParameter("lastname");
@@ -228,7 +229,11 @@ public class AuthenticationController extends HttpServlet {
         } else if (isExistUserEmail) {
             request.setAttribute("error", "Email exists!!");
             url = "view/authen/register.jsp";
-        } else {
+        } else if (valid.validatePassword(password)) {
+            request.setAttribute("error", "Password must be 8 character!!");
+            url = "view/authen/register.jsp";
+        }
+        else {
             // Generate OTP and send email
             int sixDigitNumber = 100000 + new Random().nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
@@ -494,5 +499,7 @@ public class AuthenticationController extends HttpServlet {
             return "home";
         }
     }
+
+    
 
 }

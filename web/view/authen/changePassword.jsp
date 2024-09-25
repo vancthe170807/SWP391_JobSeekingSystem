@@ -7,7 +7,7 @@
         </head>
         <body>        
         <jsp:include page="../common/header-area.jsp"></jsp:include>
-            <div class="change__password">
+            <div class="change__password" style="margin-top: 100px; margin-bottom: 20px">
                 <div class="password__change__form">
                     <h4 class="text-center mb-4" style="color: green">Change Password</h4>
                     <form action="${pageContext.request.contextPath}/authen?action=change-password" method="post">

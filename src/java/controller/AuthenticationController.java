@@ -20,15 +20,14 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.Date;
 import model.Account;
-import validate.ValidatePassword;
-import validate.ValidatePassword;
+import validate.Validation;
 
 @MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
-    ValidatePassword valid = new ValidatePassword();
+    Validation valid = new Validation();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -231,8 +230,14 @@ public class AuthenticationController extends HttpServlet {
         } else if (isExistUserEmail) {
             request.setAttribute("error", "Email exists!!");
             url = "view/authen/register.jsp";
-        } else if (valid.checkPassword(password)) {
+        } else if (!valid.checkPassword(password)) {
             request.setAttribute("error", "Password must be 8 character!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkName(firstname)) {
+            request.setAttribute("error", "Your first name is invalid!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkName(lastname)) {
+            request.setAttribute("error", "Your last name is invalid!!");
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
@@ -310,56 +315,6 @@ public class AuthenticationController extends HttpServlet {
                 break;
         }
 
-        return url;
-    }
-
-    private String changePassword1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String currPass = request.getParameter("currentPassword");
-        String newPass = request.getParameter("newPassword");
-        String retypePass = request.getParameter("retypePassword");
-
-        HttpSession session = request.getSession();
-
-        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        String url = null;
-
-        int status = 0;
-        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
-            status = 1;
-        } else if (!currPass.equals(acc.getPassword())) {
-            status = 2;
-        } else if (!newPass.equals(retypePass)) {
-            status = 3;
-        } else if (!valid.checkPassword(newPass)) {
-            status = 4;
-        } else if (currPass.equals(acc.getPassword()) && newPass.equals(retypePass) && valid.checkPassword(newPass)) {
-            status = 5;
-        }
-
-        switch (status) {
-            case 1:
-                request.setAttribute("changePWfail", "Both current password and new password do not match.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 2:
-                request.setAttribute("changePWfail", "Incorrect current password.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 3:
-                request.setAttribute("changePWfail", "New password and retype password do not match.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 4:
-                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 5:
-                acc.setPassword(newPass);
-                accountDAO.updatePasswordByUsername(acc);
-                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
-                url = "view/authen/login.jsp";
-                break;
-        }
         return url;
     }
 
@@ -502,6 +457,7 @@ public class AuthenticationController extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String phone = request.getParameter("phone");
             Date dob = Date.valueOf(request.getParameter("date"));
+            int yearofbirth = dob.toLocalDate().getYear();
             String gender = request.getParameter("gender");
             String citizenId = request.getParameter("citizenid");
             String address = request.getParameter("address");
@@ -537,8 +493,13 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
-            accountDAO.updateAccount(accountEdit);
-            url = "view/user/userProfile.jsp";
+            if (!valid.checkYearOfBirth(yearofbirth)) {
+                request.setAttribute("error", "You must be between 17 and 50 years old!!");
+                url = "view/user/editUserProfile.jsp";
+            } else {
+                accountDAO.updateAccount(accountEdit);
+                url = "view/user/userProfile.jsp";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             url = "view/user/editUserProfile.jsp";

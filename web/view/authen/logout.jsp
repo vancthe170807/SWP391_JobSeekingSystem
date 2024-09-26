@@ -6,6 +6,7 @@
         <title>Confirm Logout</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
         <!-- Custom CSS -->
         <style>
             body {
@@ -84,7 +85,7 @@
             <div class="logout-card">
                 <!-- Logo JobPath -->
                 <div class="jobpath-logo">
-                    <span class="job">Job</span><span class="path">Path</span>
+                    <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                 </div>
 
                 <h2>Confirm Logout</h2>
@@ -95,9 +96,9 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="footer">
-                    Copyright © 2024 All Rights Reserved by <span style="font-weight: bold;">JobPath</span>
-                </div>
+                <p class="text-center fw-medium py-4">
+                Copyright &copy; 2024 All Rights Reserved by Group 4 - SE1868-NJ
+            </p>
             </div>
         </div>
 

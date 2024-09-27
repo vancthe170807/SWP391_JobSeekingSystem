@@ -84,15 +84,6 @@ public class AccountDAO extends GenericDAO<Account> {
         return list.isEmpty() ? null : list.get(0);
     }
     
-    public Account findUserByEmailAndPassword(Account account) {
-        String sql = "SELECT * FROM [dbo].[Account] where email = ? and password = ?";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("email", account.getEmail());
-        parameterMap.put("password", account.getPassword());
-        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
-        return list.isEmpty() ? null : list.get(0);
-    }
-    
     public Account findUserByUsername(Account account) {
         String sql = "select * from Account where username = '?'";
         parameterMap = new LinkedHashMap<>();

@@ -122,43 +122,43 @@ public class AuthenticationController extends HttpServlet {
         String url = null;
 
         // Get login credentials from request
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
         // Create cookies for username, password, and remember me
-        Cookie cEmail = new Cookie("ce", email);
+        Cookie cUser = new Cookie("cu", username);
         Cookie cPass = new Cookie("cp", password);
         Cookie cRem = new Cookie("cr", remember);
 
         // Set cookie max age (persistent for 1 day if "remember me" is checked)
         if (remember != null) {
-            cEmail.setMaxAge(60 * 60 * 24);
+            cUser.setMaxAge(60 * 60 * 24);
             cPass.setMaxAge(60 * 60 * 24);
             cRem.setMaxAge(60 * 60 * 24);
         } else {
-            cEmail.setMaxAge(0);
+            cUser.setMaxAge(0);
             cPass.setMaxAge(0);
             cRem.setMaxAge(0);
         }
 
         // Add cookies to the response
-        response.addCookie(cEmail);
+        response.addCookie(cUser);
         response.addCookie(cPass);
         response.addCookie(cRem);
 
         // Check credentials in the database
         Account account = new Account();
-        account.setEmail(email);
+        account.setUsername(username);
         account.setPassword(password);
-        Account accFound = accountDAO.findUserByEmailAndPassword(account);
+        Account accFound = accountDAO.findUserByUsernameAndPassword(account);
         //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
 
         if (accFound == null) {
             // If no account is found, show the incorrect username/password message
-            request.setAttribute("messLogin", "Email or Password Incorrect!");
+            request.setAttribute("messLogin", "Username or Password Incorrect!");
             url = "view/authen/login.jsp";
         } else if (!accFound.isIsActive()) {
             // If the account is found but inactive

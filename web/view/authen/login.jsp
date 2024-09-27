@@ -50,9 +50,9 @@
                         <form action="${pageContext.request.contextPath}/authen?action=login" method="post" class="d-flex flex-column gap-3" id="login-form">
                             <c:set var="cookies" value="${pageContext.request.cookies}"/>
                             <div class="form-group">
-                                <label for="username" class="fw-medium text-dark mb-3">Email</label>
+                                <label for="username" class="fw-medium text-dark mb-3">Username</label>
                                 <div class="position-relative">
-                                    <input value="${cookie.ce.value}" type="email" name="email" id="email" placeholder="Enter your email" required>
+                                    <input value="${cookie.cu.value}" type="username" name="username" id="username" placeholder="Enter your username" required>
                                     <i class="fa-light fa-user icon"></i>
                                 </div>
                             </div>

@@ -20,14 +20,14 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.Date;
 import model.Account;
-import utils.Validation;
+import validate.Validation;
 
 @MultipartConfig
 @WebServlet(name = "AuthenticationController", urlPatterns = {"/authen"})
 public class AuthenticationController extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
-    Validation va  = new Validation();
+    Validation valid = new Validation();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -230,6 +230,15 @@ public class AuthenticationController extends HttpServlet {
         } else if (isExistUserEmail) {
             request.setAttribute("error", "Email exists!!");
             url = "view/authen/register.jsp";
+        } else if (!valid.checkPassword(password)) {
+            request.setAttribute("error", "Password must be 8 character!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkName(firstname)) {
+            request.setAttribute("error", "Your first name is invalid!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkName(lastname)) {
+            request.setAttribute("error", "Your last name is invalid!!");
+            url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
             int sixDigitNumber = 100000 + new Random().nextInt(900000);
@@ -268,7 +277,7 @@ public class AuthenticationController extends HttpServlet {
         } else if (!newPass.equals(retypePass)) {
             // Mật khẩu mới và xác nhận mật khẩu không khớp
             status = 2;
-        } else if (!va.checkPassword(newPass)) {
+        } else if (!valid.checkPassword(newPass)) {
             // Mật khẩu mới không đạt yêu cầu (không thỏa mãn yêu cầu về độ mạnh)
             status = 4;
         } else {
@@ -448,6 +457,7 @@ public class AuthenticationController extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String phone = request.getParameter("phone");
             Date dob = Date.valueOf(request.getParameter("date"));
+            int yearofbirth = dob.toLocalDate().getYear();
             String gender = request.getParameter("gender");
             String citizenId = request.getParameter("citizenid");
             String address = request.getParameter("address");
@@ -483,8 +493,13 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
-            accountDAO.updateAccount(accountEdit);
-            url = "view/user/userProfile.jsp";
+            if (!valid.checkYearOfBirth(yearofbirth)) {
+                request.setAttribute("error", "You must be between 17 and 50 years old!!");
+                url = "view/user/editUserProfile.jsp";
+            } else {
+                accountDAO.updateAccount(accountEdit);
+                url = "view/user/userProfile.jsp";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             url = "view/user/editUserProfile.jsp";

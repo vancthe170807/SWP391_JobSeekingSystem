@@ -1,5 +1,7 @@
 # SWP391 - Job Seeking System
 
+![Logo](https://i.imgur.com/EGcujvW.png)
+
 ## I. General information
 ### 1. Information of Subject
 

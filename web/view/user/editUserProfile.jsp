@@ -127,6 +127,11 @@
                                     </div>
 
                                 </div>
+                                <c:if test="${requestScope.error != null}">
+                                    <div style="color: red; text-align: center;">
+                                        ${requestScope.error}
+                                    </div>
+                                </c:if>
                             </div>
                         </div>
                         <div class="info__field">

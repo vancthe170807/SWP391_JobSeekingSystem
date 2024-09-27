@@ -1,12 +1,5 @@
-<%-- 
-    Document   : header
-    Created on : Sep 14, 2024, 5:34:51 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
 <header class="rts__section rts__header absolute__header">
     <div class="container-none">
         <div class="rts__menu__background">
@@ -135,10 +128,8 @@
                                 </ul>
                             </nav>
                         </div>
-
                         <div class="header__right__btn d-flex gap-3">
-                            <a href="${pageContext.request.contextPath}/authen" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button"><i class="rt-login"></i>Sign In</a>
-                            
+                            <a href="${pageContext.request.contextPath}/authen" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button">Sign In</a>                           
                             <button class="d-md-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><i class="fa-sharp fa-regular fa-bars"></i></button>
                         </div>
                     </div>

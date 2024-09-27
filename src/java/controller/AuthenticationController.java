@@ -122,47 +122,47 @@ public class AuthenticationController extends HttpServlet {
         String url = null;
 
         // Get login credentials from request
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
         // Create cookies for username, password, and remember me
-        Cookie cUser = new Cookie("cu", username);
+        Cookie cEmail = new Cookie("ce", email);
         Cookie cPass = new Cookie("cp", password);
         Cookie cRem = new Cookie("cr", remember);
 
         // Set cookie max age (persistent for 1 day if "remember me" is checked)
         if (remember != null) {
-            cUser.setMaxAge(60 * 60 * 24);
+            cEmail.setMaxAge(60 * 60 * 24);
             cPass.setMaxAge(60 * 60 * 24);
             cRem.setMaxAge(60 * 60 * 24);
         } else {
-            cUser.setMaxAge(0);
+            cEmail.setMaxAge(0);
             cPass.setMaxAge(0);
             cRem.setMaxAge(0);
         }
 
         // Add cookies to the response
-        response.addCookie(cUser);
+        response.addCookie(cEmail);
         response.addCookie(cPass);
         response.addCookie(cRem);
 
         // Check credentials in the database
         Account account = new Account();
-        account.setUsername(username);
+        account.setEmail(email);
         account.setPassword(password);
-        Account accFound = accountDAO.findUserByUsernameAndPassword(account);
+        Account accFound = accountDAO.findUserByEmailAndPassword(account);
         //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
 
         if (accFound == null) {
             // If no account is found, show the incorrect username/password message
-            request.setAttribute("mess", "Username or password incorrect!!");
+            request.setAttribute("messLogin", "Email or Password Incorrect!");
             url = "view/authen/login.jsp";
         } else if (!accFound.isIsActive()) {
             // If the account is found but inactive
-            request.setAttribute("mess", "Your account is deactivated. Please contact Admin by email to resolve this.");
+            request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
             url = "view/authen/login.jsp";
         } else {
             // If the account is found and active
@@ -271,7 +271,7 @@ public class AuthenticationController extends HttpServlet {
         } else if (!va.checkPassword(newPass)) {
             // Mật khẩu mới không đạt yêu cầu (không thỏa mãn yêu cầu về độ mạnh)
             status = 4;
-        }else{
+        } else {
             status = 5;
         }
 
@@ -294,62 +294,12 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case 4:
                 // Mật khẩu mới không thỏa mãn yêu cầu của checkPassword()
-                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
+                request.setAttribute("changePWfail", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 5:
                 // Nếu không có lỗi, thực hiện cập nhật mật khẩu
-                acc.setPassword(newPass);
-                accountDAO.updatePasswordByUsername(acc);
-                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
-                url = "view/authen/login.jsp";
-                break;
-        }
-
-        return url;
-    }
-
-    private String changePassword1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String currPass = request.getParameter("currentPassword");
-        String newPass = request.getParameter("newPassword");
-        String retypePass = request.getParameter("retypePassword");
-
-        HttpSession session = request.getSession();
-
-        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        String url = null;
-
-        int status = 0;
-        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
-            status = 1;
-        } else if (!currPass.equals(acc.getPassword())) {
-            status = 2;
-        } else if (!newPass.equals(retypePass)) {
-            status = 3;
-        } else if (!va.checkPassword(newPass)) {
-            status = 4;
-        } else if (currPass.equals(acc.getPassword()) && newPass.equals(retypePass) && va.checkPassword(newPass)) {
-            status = 5;
-        }
-
-        switch (status) {
-            case 1:
-                request.setAttribute("changePWfail", "Both current password and new password do not match.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 2:
-                request.setAttribute("changePWfail", "Incorrect current password.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 3:
-                request.setAttribute("changePWfail", "New password and retype password do not match.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 4:
-                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
-                url = "view/authen/changePassword.jsp";
-                break;
-            case 5:
                 acc.setPassword(newPass);
                 accountDAO.updatePasswordByUsername(acc);
                 request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");

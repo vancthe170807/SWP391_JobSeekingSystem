@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Sep 15, 2024, 9:29:22 PM
-    Author     : TuanTVHE173048
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -175,7 +169,7 @@
         <!-- Login Container -->
         <div class="login-container">
             <!-- X Icon to go back to Home -->
-            <i class="fas fa-times close-icon" onclick="window.location.href='${pageContext.request.contextPath}/view/home.jsp'"></i>
+            <i class="fas fa-times close-icon" onclick="window.location.href = '${pageContext.request.contextPath}/view/home.jsp'"></i>
 
             <!-- Login Heading -->
             <h4>Login to Job<span>Path</span></h4>
@@ -218,11 +212,11 @@
 
                 <!-- Google reCAPTCHA -->
                 <div class="g-recaptcha" data-sitekey="6LeVFEsqAAAAAFK_7xKTrV798KMOrnTYcVgfeMIa"></div>
-                <div style="color: red" id="error"></div>
+                <div id="error" style="color: red;"></div> <!-- Div để hiển thị lỗi reCAPTCHA -->
 
                 <!-- Login Button -->
                 <div class="form-group my-3">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" onclick="checkCapCha()" class="btn btn-primary">Login</button>
                 </div>
             </form>
 
@@ -241,6 +235,17 @@
                 } else {
                     input.type = "password";
                     icon.textContent = 'Show';
+                }
+            }
+
+            function checkCapCha() {
+                var form = document.getElementById("login-form");
+                var error = document.getElementById("error");
+                const response = grecaptcha.getResponse();
+                if (response) {
+                    form.submit();
+                } else {
+                    error.textContent = "Please verify that you are not a robot";
                 }
             }
         </script>

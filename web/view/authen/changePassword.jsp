@@ -273,7 +273,17 @@
         <!-- JavaScript function for Cancel -->
         <script>
             function cancelChangePassword() {
-                window.history.back();
+                var role = ${sessionScope.account.getRoleId()};
+
+                    if (role === 1) {
+                        window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
+                    } else if (role === 2) {
+                        window.location.href = "${pageContext.request.contextPath}/view/recruiter/user/recruiterHome.jsp";
+                    } else if (role === 3) {
+                        window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
+                    } else {
+                        // Trường hợp không xác định vai trò
+                        window.location.href = "${pageContext.request.contextPath}/view/home.jsp";
             }
     </script>
 </body>

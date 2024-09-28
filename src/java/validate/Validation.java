@@ -50,6 +50,7 @@ public class Validation {
         return age >= 17 && age <= 50;
     }
     
+     // Hàm kiểm tra số điện thoại
     public boolean CheckPhoneNumber(String phone) {
         // Biểu thức chính quy để kiểm tra số điện thoại
         String regex = "^(\\+\\d{1,3})?\\d{9,15}$";

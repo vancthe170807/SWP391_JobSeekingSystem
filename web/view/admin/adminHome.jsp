@@ -34,7 +34,7 @@
                         <!-- sidebar menu end -->
                         <div class="dash__overview">
                             <h6 class="fw-medium mb-30">ADMIN HOME</h6>
-                            <div class="overview__content">
+<!--                            <div class="overview__content">
                                 <div class="single__overview">
                                     <div class="icon">
                                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,12 +96,12 @@
                                         <p class="font-20">Review</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="chart__and__notification  gap-4 my-4">
 
                             <!-- profile view -->
-                            <div class="profile__view bg-white">
+<!--                            <div class="profile__view bg-white">
                                 <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
                                     <h6 class="fw-medium mb-0">Profile View ADMIN</h6>
                                     <div class="profile__view__tab" role="tablist" id="nav-tab">
@@ -121,11 +121,11 @@
                                         <div id="spline__chart__candidate__yearly"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!-- profile view end -->
 
                             <!-- notification -->
-                            <div class="notification__area bg-white">
+<!--                            <div class="notification__area bg-white">
                                 <h6 class="fw-medium mb-20">Recent Notification</h6>
                                 <div class="notification__list">
                                     <div class="notification__item">
@@ -156,16 +156,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- notification end -->
                     </div>
 
                     <!-- Applied Jobs -->
-                    <div class="applied__jobs">
+<!--                    <div class="applied__jobs">
                         <h6 class="fw-medium mb-30">Recent Applicants</h6>
                         <div class="short__list__candidate">
 
-                            <!-- single item -->
+                             single item 
                             <div class="single__shortlist__item">
                                 <div class="author__info">
                                     <div class="author__meta">
@@ -244,8 +244,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- single item end -->
-                            <!-- single item -->
+                             single item end 
+                             single item 
                             <div class="single__shortlist__item">
                                 <div class="author__info">
                                     <div class="author__meta">
@@ -325,8 +325,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- single item end -->
-                            <!-- single item -->
+                             single item end 
+                             single item 
                             <div class="single__shortlist__item">
                                 <div class="author__info">
                                     <div class="author__meta">
@@ -406,10 +406,10 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- single item end -->
+                             single item end 
 
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Applied Jobs end -->
                 </div>
                 <div class="d-flex justify-content-center mt-30">

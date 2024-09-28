@@ -24,7 +24,7 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="job__search__section mb-40">
                         <div class="d-flex flex-column gap-3">
-                            <div class="search__item">
+<!--                            <div class="search__item">
                                 <label for="search" class="mb-20 font-20 fw-medium text-dark text-capitalize">Search By Job Title</label>
                                 <div class="position-relative">
                                     <form action="#">
@@ -33,7 +33,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <!-- category item -->
+                             category item 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Category</h6>
                                 <div class="search__item__list">
@@ -75,9 +75,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- category item end -->
+                             category item end 
 
-                            <!-- Author label -->
+                             Author label 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Author</h6>
                                 <div class="search__item__list">
@@ -111,9 +111,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Author label end -->
+                             Author label end 
 
-                            <!-- tags -->
+                             tags 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Tags</h6>
                                 <div class="job__tags d-flex flex-wrap gap-3">
@@ -124,9 +124,9 @@
                                     <a href="#">UI/UX</a>
                                 </div>
                             </div>
-                            <!-- tags end -->
+                             tags end 
 
-                            <!-- latest blog -->
+                             latest blog 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Latest Blog</h6>
                                 <div class="d-flex flex-column gap-4">
@@ -161,7 +161,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!-- latest blog end -->
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                 <div class="col-lg-7 col-xl-8">
                     <div class="row g-30">
                         <!-- single blog -->
-                        <div class="col-xl-6 col-lg-12">
+<!--                        <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
                                     <img src="${pageContext.request.contextPath}/assets/img/pages/blog-2/1.webp" class="mb-2" alt="blog">
@@ -186,8 +186,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -205,8 +205,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -224,8 +224,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -243,8 +243,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -262,8 +262,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -280,17 +280,17 @@
                                     <a href="blog-details.html" class="readmore__btn d-flex mt-3 gap-2 align-items-center">Read More <i class="fa-light fa-arrow-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- single blog end -->
                     </div>
                     <div class="rts__pagination mx-auto pt-60 max-content">
-                        <ul class="d-flex gap-2">
+<!--                        <ul class="d-flex gap-2">
                             <li><a href="#" class="inactive"><i class="rt-chevron-left"></i></a></li>
                             <li><a class="active" href="#">1</a></li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#"><i class="rt-chevron-right"></i></a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>

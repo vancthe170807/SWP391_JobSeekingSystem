@@ -1,12 +1,18 @@
+<%-- 
+    Document   : logout
+    Created on : Sep 15, 2024, 9:29:22 PM
+    Author     : TuanTVHE173048
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Confirm Logout</title>
+        <title>Logout</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
+        <jsp:include page="../common/authen/common-css-authen.jsp"></jsp:include>
         <!-- Custom CSS -->
         <style>
             body {
@@ -34,14 +40,14 @@
                 border-radius: 10px;
                 padding: 40px;
                 width: 80%;
-                max-width: 1000px;
+                max-width: 500px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 text-align: center;
             }
             .logout-card h2 {
-                font-size: 36px; /* Phóng to chữ Confirm Logout */
+                font-size: 24px; /* Reduced font size */
                 margin-bottom: 20px;
-                font-weight: bold;
+                font-weight: normal; /* Removed bold */
             }
             .jobpath-logo {
                 font-size: 50px;
@@ -77,6 +83,21 @@
                 padding-top: 10px;
                 border-top: 1px solid #e9ecef;
             }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .logout-card {
+                    padding: 20px;
+                    width: 90%;
+                }
+                .logout-card h2 {
+                    font-size: 22px;
+                }
+                .btn-primary, .btn-secondary {
+                    width: 100%; /* Make buttons full-width on small screens */
+                    margin-bottom: 10px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -88,19 +109,14 @@
                     <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                 </div>
 
-                <h2>Confirm Logout</h2>
-                <p>Are you sure you want to log out?</p>
+                <h2>Logout from status?</h2>
                 <div>
                     <button class="btn btn-secondary mr-3" onclick="cancelLogout()">Cancel</button>
                     <button class="btn btn-primary" id="confirmLogout">Continue</button>
                 </div>
-
-                <!-- Footer -->
-                <p class="text-center fw-medium py-4">
-                Copyright &copy; 2024 All Rights Reserved by Group 4 - SE1868-NJ
-            </p>
             </div>
         </div>
+
         <!-- Bootstrap JS, jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -114,6 +130,6 @@
             function cancelLogout() {
                 window.history.back();
             }
-        </script>                       
+        </script>
     </body>
 </html>

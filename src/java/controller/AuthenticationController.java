@@ -496,11 +496,10 @@ public class AuthenticationController extends HttpServlet {
             if (!valid.checkYearOfBirth(yearofbirth)) {
                 request.setAttribute("error", "You must be between 17 and 50 years old!!");
                 url = "view/user/editUserProfile.jsp";
-            }else if (!valid.CheckPhoneNumber(phone)) {
+            } else if (!valid.CheckPhoneNumber(phone)) {
                 request.setAttribute("error", "Phone number is not valid!!");
                 url = "view/user/editUserProfile.jsp";
-            }
-            else {
+            } else {
                 accountDAO.updateAccount(accountEdit);
                 url = "view/user/userProfile.jsp";
             }

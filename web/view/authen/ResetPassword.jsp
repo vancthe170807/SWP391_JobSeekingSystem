@@ -5,6 +5,17 @@
         <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
         </head>
         <body>
+            <style>
+                .password__icon {
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    font-size: 18px; /* Thay đổi kích thước icon nếu cần */
+                }
+            </style>
+
             <!-- header area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
@@ -20,25 +31,33 @@
                             <!-- OTP confirmation form -->
                             <form action="authen?action=reset-password" method="POST" class="d-flex flex-column gap-3">
                                 <div class="form-group">
-                                    <label for="password" class="fw-medium text-dark mb-3">New Password</label>
+                                    <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
-                                        <input type="password" name="password" id="password" placeholder="Enter new password" required>
-                                        <i class="fa-sharp fa-light fa-envelope icon"></i>
+                                        <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
+                                        <input type="password" name="password" id="password" placeholder="Enter your new password" required>
+                                        <i class="fa-light fa-lock icon"></i>
+                                        <!--                                     Icon mắt dùng để ẩn/hiện mật khẩu -->
+                                        <span class="password__icon" onclick="togglePassword('password')">
+                                            👁️
+                                        </span>
                                     </div>
 
                                     <label for="confirmPassword" class="fw-medium text-dark mb-3">Confirm New Password</label>
                                     <div class="position-relative">
                                         <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Enter confirm to new password" required>
                                         <i class="fa-sharp fa-light fa-envelope icon"></i>
+                                        <span class="password__icon" onclick="togglePassword('confirmPassword')">
+                                            👁️
+                                        </span>
                                     </div>
                                 </div>
 
                                 <!-- Error message if OTP is incorrect -->
                                 <c:if test="${requestScope.error != null}">
-                                    <div style="color: red; text-align: center;">
-                                        ${requestScope.error}
-                                    </div>
-                                </c:if>
+                                <div style="color: red; text-align: center;">
+                                    ${requestScope.error}
+                                </div>
+                            </c:if>
 
                             <div class="form-group my-3">
                                 <button type="submit" class="rts__btn w-100 fill__btn">Change Password</button>
@@ -55,4 +74,15 @@
         <jsp:include page="../common/footer.jsp"></jsp:include>                       
         <jsp:include page="../common/authen/common-js-authen.jsp"></jsp:include>
     </body>
+
+    <script>
+        function togglePassword(id) {
+            var input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
 </html>

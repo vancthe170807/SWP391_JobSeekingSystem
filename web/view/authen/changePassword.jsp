@@ -261,8 +261,6 @@
                     <button type="submit" class="rts__btn fill__btn">Update Password</button>
                     <button type="button" class="rts__btn fill__btn" onclick="cancelChangePassword()">Cancel</button>
                 </div>
-
-
             </form>              
         </div>
     </div>
@@ -270,11 +268,20 @@
     <jsp:include page="../common/footer.jsp"></jsp:include>                       
     <jsp:include page="../common/authen/common-js-authen.jsp"></jsp:include>
 
-        <!-- JavaScript function for Cancel -->
-        <script>
-            function cancelChangePassword() {
-                window.history.back();
+    <!-- JavaScript function for Cancel -->
+    <script>
+        function cancelChangePassword() {
+            window.history.back();
+        }
+        function togglePasswordVisibility(id) {
+            var input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
             }
+        }
+
     </script>
 </body>
 </html>

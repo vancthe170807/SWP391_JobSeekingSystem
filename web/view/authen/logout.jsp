@@ -101,11 +101,9 @@
             </p>
             </div>
         </div>
-
         <!-- Bootstrap JS, jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
         <script>
             // Khi người dùng nhấn nút "Continue" để xác nhận logout
             document.getElementById("confirmLogout").addEventListener("click", function() {
@@ -116,7 +114,6 @@
             function cancelLogout() {
                 window.history.back();
             }
-        </script>                     
-        
+        </script>                       
     </body>
 </html>

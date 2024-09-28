@@ -49,4 +49,10 @@ public class Validation {
         // Người dùng phải từ 17 đến 50 tuổi
         return age >= 17 && age <= 50;
     }
+    
+    public boolean CheckPhoneNumber(String phone) {
+        // Biểu thức chính quy để kiểm tra số điện thoại
+        String regex = "^(\\+\\d{1,3})?\\d{9,15}$";
+        return phone.matches(regex);
+    }
 }

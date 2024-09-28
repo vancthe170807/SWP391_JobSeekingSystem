@@ -24,7 +24,7 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="job__search__section mb-40">
                         <div class="d-flex flex-column gap-3">
-                            <div class="search__item">
+<!--                            <div class="search__item">
                                 <label for="search" class="mb-20 font-20 fw-medium text-dark text-capitalize">Search By Job Title</label>
                                 <div class="position-relative">
                                     <form action="#">
@@ -33,7 +33,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <!-- category item -->
+                             category item 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Category</h6>
                                 <div class="search__item__list">
@@ -75,9 +75,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- category item end -->
+                             category item end 
 
-                            <!-- Author label -->
+                             Author label 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Author</h6>
                                 <div class="search__item__list">
@@ -111,9 +111,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Author label end -->
+                             Author label end 
 
-                            <!-- tags -->
+                             tags 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Tags</h6>
                                 <div class="job__tags d-flex flex-wrap gap-3">
@@ -124,9 +124,9 @@
                                     <a href="#">UI/UX</a>
                                 </div>
                             </div>
-                            <!-- tags end -->
+                             tags end 
 
-                            <!-- latest blog -->
+                             latest blog 
                             <div class="search__item">
                                 <h6 class="mb-20 font-20 fw-medium text-dark text-capitalize">Latest Blog</h6>
                                 <div class="d-flex flex-column gap-4">
@@ -161,7 +161,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!-- latest blog end -->
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                 <div class="col-lg-7 col-xl-8">
                     <div class="row g-30">
                         <!-- single blog -->
-                        <div class="col-xl-6 col-lg-12">
+<!--                        <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
                                     <img src="${pageContext.request.contextPath}/assets/img/pages/blog-2/1.webp" class="mb-2" alt="blog">
@@ -186,8 +186,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -205,8 +205,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -224,8 +224,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -243,8 +243,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -262,8 +262,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- single blog end -->
-                        <!-- single blog -->
+                         single blog end 
+                         single blog 
                         <div class="col-xl-6 col-lg-12">
                             <div class="rts__single__blog">
                                 <a href="blog-details.html" class="blog__img">
@@ -280,17 +280,17 @@
                                     <a href="blog-details.html" class="readmore__btn d-flex mt-3 gap-2 align-items-center">Read More <i class="fa-light fa-arrow-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- single blog end -->
                     </div>
                     <div class="rts__pagination mx-auto pt-60 max-content">
-                        <ul class="d-flex gap-2">
+<!--                        <ul class="d-flex gap-2">
                             <li><a href="#" class="inactive"><i class="rt-chevron-left"></i></a></li>
                             <li><a class="active" href="#">1</a></li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#"><i class="rt-chevron-right"></i></a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>
@@ -307,9 +307,9 @@
                     </div>
                     <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
                         <div class="content__left align-items-end d-flex position-relative top-15px">
-                            <img src="${pageContext.request.contextPath}/assets/img/home-1/app/app_screen.png" alt="">
+                            <!--<img src="${pageContext.request.contextPath}/assets/img/home-1/app/app_screen.png" alt="">-->
                         </div>
-                        <div class="content__right text-white text-center text-xl-start max-630">
+<!--                        <div class="content__right text-white text-center text-xl-start max-630">
                             <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app Free!</h3>
                             <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
                             <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
@@ -324,7 +324,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

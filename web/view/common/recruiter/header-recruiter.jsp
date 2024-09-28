@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="rts__logo">
-                        <a href="index.html">
+                        <a href="${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp">
                             <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                         </a>
                     </div>
                     <div class="navigation d-none d-lg-block">
                         <nav class="navigation__menu" id="offcanvas__menu">
-                            <ul class="list-unstyled">
+<!--                            <ul class="list-unstyled">
                                 <li class="navigation__menu--item has-child has-arrow">
                                     <a href="#" class="navigation__menu--item__link">Home</a>
                                     <ul class="submenu sub__style" role="menu">
@@ -122,7 +122,7 @@
                                         <li role="menuitem"><a href="contact-2.html">Contact Two</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul>-->
                         </nav>
                     </div>
 

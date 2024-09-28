@@ -34,7 +34,10 @@
                     cursor: pointer;
                     font-size: 18px; /* Thay đổi kích thước icon nếu cần */
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bbbd3c74ae70b4fc9b1f9c37c9568d755a5def3b
             </style>
             <!-- header area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
@@ -98,8 +101,16 @@
                                                             <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
                                                         </div>-->
                             <div class="form-group my-3">
+<<<<<<< HEAD
                                 <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
                             </div>                                                     
+=======
+                                <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
+                            </div>
+                            <!--                            <div class="form-group my-3">
+                                                            <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
+                                                        </div>                                                     -->
+>>>>>>> bbbd3c74ae70b4fc9b1f9c37c9568d755a5def3b
                         </form>
                         <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/authen?action=sign-up" class="text-primary">Register</a></span>
 
@@ -121,6 +132,10 @@
                     error.textContent = "Please verify that you are not a robot.";
                 }
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> bbbd3c74ae70b4fc9b1f9c37c9568d755a5def3b
             function togglePassword(id) {
                 var input = document.getElementById(id);
                 if (input.type === "password") {

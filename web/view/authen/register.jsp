@@ -11,6 +11,17 @@
         <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
         </head>
         <body>
+            <style>
+                .password__icon {
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    font-size: 18px; /* Thay đổi kích thước icon nếu cần */
+                }
+            </style>
+
             <!-- header area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
@@ -22,7 +33,7 @@
                             <div class="max-content similar__form form__padding">
                                 <div class="d-flex mb-3 align-items-center justify-content-between">
                                     <h6 class="mb-0">Create A Free Account</h6>
-                                    
+
                                 </div>
                                 <div class="d-block has__line text-center"><p>Choose your Account Type</p></div>
 
@@ -69,10 +80,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="spassword" class="fw-medium text-dark mb-3">Password</label>
+                                    <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
-                                        <input type="password" name="password" id="spassword" placeholder="Enter your password" required>
+                                        <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
+                                        <input value="${cookie.cp.value}" type="password" name="password" id="password" placeholder="Enter your password" required>
                                         <i class="fa-light fa-lock icon"></i>
+                                        <!--                                     Icon mắt dùng để ẩn/hiện mật khẩu -->
+                                        <span class="password__icon" onclick="togglePassword('password')">
+                                            👁️
+                                        </span>
                                     </div>
                                 </div>
                                 <span style="color:red">${error}</span>
@@ -117,6 +133,15 @@
                     hiddenInput.value = activeButton.textContent.trim() === 'Seeker' ? '3' : '2';
                 }
             });
+
+            function togglePassword(id) {
+                var input = document.getElementById(id);
+                if (input.type === "password") {
+                    input.type = "text";
+                } else {
+                    input.type = "password";
+                }
+            }
         </script>
 </html>
 

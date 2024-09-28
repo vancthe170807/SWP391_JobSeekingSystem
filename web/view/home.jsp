@@ -307,9 +307,9 @@
                     </div>
                     <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
                         <div class="content__left align-items-end d-flex position-relative top-15px">
-                            <img src="${pageContext.request.contextPath}/assets/img/home-1/app/app_screen.png" alt="">
+                            <!--<img src="${pageContext.request.contextPath}/assets/img/home-1/app/app_screen.png" alt="">-->
                         </div>
-                        <div class="content__right text-white text-center text-xl-start max-630">
+<!--                        <div class="content__right text-white text-center text-xl-start max-630">
                             <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app Free!</h3>
                             <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
                             <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
@@ -324,7 +324,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

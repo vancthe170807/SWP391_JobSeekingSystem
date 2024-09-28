@@ -13,20 +13,20 @@
                     <a href="index.html" class="footer__logo" aria-label="logo">
                         <img src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                     </a>
-                    <p class="mt-4">Whether you're an experienced professional or a fresh graduate eager to dive into the workforce, we have something for everyone.
+                    <!--<p class="mt-4">Whether you're an experienced professional or a fresh graduate eager to dive into the workforce, we have something for everyone.-->
                     </p>
                 </div>
 
                 <!-- footer menu -->
                 <div class="rts__footer__widget max-content">
-                    <div class="font-20 fw-medium mb-3 h6">Links</div>
+<!--                    <div class="font-20 fw-medium mb-3 h6">Links</div>
                     <ul class="list-unstyled">
                         <li><a href="job-list-1.html" aria-label="footer__menu__link">Browse Jobs</a></li>
                         <li><a href="candidate-1.html" aria-label="footer__menu__link">Browse Candidates</a></li>
                         <li><a href="blog-1.html" aria-label="footer__menu__link">Blog & News</a></li>
                         <li><a href="faq.html" aria-label="footer__menu__link">FAQ Question</a></li>
                         <li><a href="#" aria-label="footer__menu__link">Job Alerts</a></li>
-                    </ul>
+                    </ul>-->
                 </div>
 
                 <div class="rts__footer__widget max-content">
@@ -36,7 +36,7 @@
                         <li><a href="callto:+880171234578"><i class="fa-light fa-phone"></i>+(61) 545-432-234</a></li>
                         <li><a href="mailto:vanctquantrivien@gmail.com"><i class="fa-light fa-envelope"></i>vanctquantrivien@gmail.com</a></li>
                     </ul>
-                    <div class="font-20 fw-medium mb-20 text-dark">Social Link</div>
+<!--                    <div class="font-20 fw-medium mb-20 text-dark">Social Link</div>
                     <div class="rts__social d-flex gap-4">
                         <a href="https://facebook.com"  aria-label="facebook">
                             <i class="fa-brands fa-facebook"></i>
@@ -53,17 +53,17 @@
                         <a href="https://youtube.com"  aria-label="youtube">
                             <i class="fa-brands fa-youtube"></i>
                         </a>
-                    </div>
+                    </div>-->
                 </div>
 
                 <!-- newsletter form -->
                 <div class="rts__footer__widget max-320">
-                    <div class="font-20 fw-medium mb-3 h6 ">Subscribe Our Newsletter</div>
+<!--                    <div class="font-20 fw-medium mb-3 h6 ">Subscribe Our Newsletter</div>
                     <p class="br-sm-none">Subscribe Our Newsletter get <br> Update our New Course</p>
                     <form action="#" class="d-flex align-items-center justify-content-between mt-4 newsletter">
                         <input type="email" name="semail" id="semail" placeholder="Enter your email" required>
                         <button type="submit" class="rts__btn fill__btn">Subscribe</button>
-                    </form>
+                    </form>-->
                 </div>
                 <!-- newsletter form end -->
 

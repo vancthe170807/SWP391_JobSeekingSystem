@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="rts__logo">
-                        <a href="index.html">
+                        <a href="${pageContext.request.contextPath}/view/user/userHome.jsp">
                             <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                         </a>
                     </div>

@@ -89,7 +89,7 @@
                     <div class="rts__menu d-flex gap-5 gap-lg-4 gap-xl-5 align-items-center">
                         <div class="navigation d-none d-lg-block">
                             <nav class="navigation__menu" id="offcanvas__menu">
-                                <ul class="list-unstyled">
+<!--                                <ul class="list-unstyled">
                                     <li class="navigation__menu--item has-child has-arrow">
                                         <a href="#" class="navigation__menu--item__link">Home</a>
                                         <ul class="submenu sub__style" role="menu">
@@ -201,7 +201,7 @@
                                             <li role="menuitem"><a href="contact-2.html">Contact Two</a></li>
                                         </ul>
                                     </li>
-                                </ul>
+                                </ul>-->
                             </nav>
                         </div>
                         <div class="header__right__btn d-flex gap-3">

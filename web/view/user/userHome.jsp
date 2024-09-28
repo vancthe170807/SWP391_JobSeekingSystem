@@ -35,7 +35,7 @@
                     <!-- overview section -->
                     <div class="dash__overview">
                         <h6 class="fw-medium mb-30">SEEKER HOME</h6>
-                        <div class="overview__content">
+<!--                        <div class="overview__content">
                             <div class="single__overview">
                                 <div class="icon">
                                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,11 +83,11 @@
                                     <p class="font-20">Job Alerts</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="chart__and__notification gap-4 my-4">
                         <!-- profile view -->
-                        <div class="profile__view bg-white">
+<!--                        <div class="profile__view bg-white">
                             <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
                                 <h6 class="fw-medium mb-0">Profile View</h6>
                                 <div class="profile__view__tab" role="tablist" id="nav-tab">
@@ -107,11 +107,11 @@
                                     <div id="spline__chart__candidate__yearly"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- profile view end -->
 
                         <!-- notification -->
-                        <div class="notification__area bg-white">
+<!--                        <div class="notification__area bg-white">
                             <h6 class="fw-medium mb-20">Recent Notification</h6>
                             <div class="notification__list">
                                 <div class="notification__item">
@@ -142,15 +142,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- notification end -->
                     </div>
 
                     <!-- Applied Jobs -->
-                    <div class="applied__jobs">
+<!--                    <div class="applied__jobs">
                         <h6 class="fw-medium mb-30">Applications Overview</h6>
                         <div class="row px-3 d-flex flex-column g-30">
-                            <!-- single job item -->
+                             single job item 
                             <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
                                 <div class="company__icon">
                                     <img src="${pageContext.request.contextPath}/assets/img/home-1/company/apple.svg" alt="">
@@ -188,8 +188,8 @@
                                     </div>
                                 </div>
                             </div> 
-                            <!-- single job item end --> 
-                            <!-- single job item -->
+                             single job item end  
+                             single job item 
                             <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
                                 <div class="company__icon">
                                     <img src="${pageContext.request.contextPath}/assets/img/home-1/company/facebook.svg" alt="">
@@ -226,8 +226,8 @@
                                     </div>
                                 </div>
                             </div> 
-                            <!-- single job item end --> 
-                            <!-- single job item -->
+                             single job item end  
+                             single job item 
                             <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
                                 <div class="company__icon">
                                     <img src="${pageContext.request.contextPath}/assets/img/home-1/company/udemy.svg" alt="">
@@ -265,9 +265,9 @@
                                     </div>
                                 </div>
                             </div> 
-                            <!-- single job item end --> 
+                             single job item end  
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Applied Jobs end -->
                 </div>
                 <!-- footer copyright -->

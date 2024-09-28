@@ -64,7 +64,7 @@ public class AccountDAO extends GenericDAO<Account> {
     public List<Account> findAllAccounts() {
         return findAll();
     }
-
+    
 //  tim kiem user theo id
     public Account findUserById(Account account) {
         String sql = "SELECT * FROM [dbo].[Account] where id = ?";
@@ -180,12 +180,13 @@ public class AccountDAO extends GenericDAO<Account> {
     public boolean checkUsernameExist(Account account) {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[Account]\n"
-                + "  where username = ? ";
+                + "  where email = ? ";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("username", account.getUsername());
+        parameterMap.put("username", account.getEmail());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
 
+    
     public boolean checkUserEmailExist(Account account) {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[Account]\n"
@@ -194,7 +195,16 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("email", account.getEmail());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
-
+    
+   public Account checkUserExistByEmail(String email) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Account]\n"
+                + "  where email = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("email", email);
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+    }
     public static void main(String[] args) {
 //        Account account = new Account("nam", "xcvxcvx",
 //                "vxcvxcvx@gmail.com",

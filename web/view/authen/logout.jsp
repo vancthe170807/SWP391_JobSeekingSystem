@@ -11,23 +11,23 @@
         <style>
             body {
                 font-family: 'Arial', sans-serif;
-                background-color: #f8f9fa;
                 margin: 0;
+                padding: 0;
                 height: 100vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ bao phủ toàn bộ trang */
             }
             .logout-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                position: absolute;
-                top: 0;
-                left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+                position: fixed; /* Đảm bảo container phủ kín toàn màn hình */
+                top: 0;
+                left: 0;
             }
             .logout-card {
                 background-color: #ffffff;

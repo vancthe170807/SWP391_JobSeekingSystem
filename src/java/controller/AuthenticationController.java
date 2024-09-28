@@ -158,11 +158,11 @@ public class AuthenticationController extends HttpServlet {
 
         if (accFound == null) {
             // If no account is found, show the incorrect username/password message
-            request.setAttribute("mess", "Username or password incorrect!!");
+            request.setAttribute("messLogin", "Username or Password Incorrect!");
             url = "view/authen/login.jsp";
         } else if (!accFound.isIsActive()) {
             // If the account is found but inactive
-            request.setAttribute("mess", "Your account is deactivated. Please contact Admin by email to resolve this.");
+            request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
             url = "view/authen/login.jsp";
         } else {
             // If the account is found and active
@@ -303,7 +303,8 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case 4:
                 // Mật khẩu mới không thỏa mãn yêu cầu của checkPassword()
-                request.setAttribute("changePWfail", "New password must be 8-20 characters long, include at least one uppercase letter and one special character.");
+                request.setAttribute("changePWfail", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 5:
@@ -314,7 +315,6 @@ public class AuthenticationController extends HttpServlet {
                 url = "view/authen/login.jsp";
                 break;
         }
-
         return url;
     }
 

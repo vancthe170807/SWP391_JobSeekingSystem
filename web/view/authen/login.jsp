@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Sep 15, 2024, 6:07:15 PM
-    Author     : Admin
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +7,26 @@
             <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         </head>
         <body>
+            <style>
+                .btn-google {
+                    display: inline-block;
+                    background-color: #4285F4;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    text-decoration: none;
+                    font-size: 14px;
+                    font-weight: bold;
+                    transition: background-color 0.3s ease;
+                }
+                .btn-google:hover {
+                    background-color: #357AE8;
+                }
+                .btn-google img {
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+            </style>
             <!-- header area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
             <!-- header area end -->
@@ -27,9 +41,9 @@
                             </div>
                         <c:set var="cookies" value="${pageContext.request.cookies}"/>
 
-                        <c:if test="${requestScope.mess != null}">
+                        <c:if test="${requestScope.messLogin != null}">
                             <div style="color: red; text-align: center;">
-                                ${requestScope.mess}
+                                ${requestScope.messLogin}
                             </div>
                         </c:if>
 
@@ -38,7 +52,7 @@
                             <div class="form-group">
                                 <label for="username" class="fw-medium text-dark mb-3">Username</label>
                                 <div class="position-relative">
-                                    <input value="${cookie.cu.value}" type="text" name="username" id="username" placeholder="Enter your username" required>
+                                    <input value="${cookie.cu.value}" type="username" name="username" id="username" placeholder="Enter your username" required>
                                     <i class="fa-light fa-user icon"></i>
                                 </div>
                             </div>
@@ -65,14 +79,13 @@
 
                             <div style="display: flex; justify-content: center;" class="g-recaptcha" data-sitekey="6LeVFEsqAAAAAFK_7xKTrV798KMOrnTYcVgfeMIa"></div> 
                             <div style="color: red" id="error"></div>
-<!--                            <div class="form-group my-3">
-                                <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
-                            </div>-->
                             <div class="form-group my-3">
-                                <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
+                                <button type="button" onclick="checkCapcha()" class="rts__btn w-100 fill__btn">Login</button>
                             </div>
+<!--                            <div class="form-group my-3">
+                                <button type="submit" class="rts__btn w-100 fill__btn">Login</button>
+                            </div>                                                     -->
                         </form>
-
                         <span class="d-block text-center fw-medium">Don’t have an account? You can <a href="${pageContext.request.contextPath}/authen?action=sign-up" class="text-primary">Register</a></span>
 
                     </div>
@@ -96,4 +109,3 @@
         </script>
     </body>
 </html>
-

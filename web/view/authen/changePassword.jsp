@@ -1,290 +1,218 @@
+<%-- 
+    Document   : change password
+    Created on : Sep 15, 2024, 9:29:22 PM
+    Author     : TuanTVHE173048
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <jsp:include  page="../common/authen/common-css-authen.jsp"></jsp:include>
-            <style>
-                .password__change__form {
-                    max-width: 500px;
-                    margin: 0 auto;
-                    padding: 30px;
-                    background-color: #f9f9f9;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    border-radius: 10px;
-                }
-                .input-box {
-                    position: relative;
-                }
-                .password__icon {
-                    position: absolute;
-                    right: 10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    cursor: pointer;
-                }
-                h4 {
-                    color: #28a745; /* Màu xanh lá cây cho tiêu đề */
-                }
-                .rts-input-group {
-                    margin-bottom: 15px;
-                }
-                .rts-input-group label {
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                    display: block;
-                }
-                .input-box input {
-                    width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    padding-left: 40px; /* Khoảng cách cho icon */
-                }
-                .rts__btn {
-                    background-color: #28a745;
-                    color: white;
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
-                .rts__btn:hover {
-                    background-color: #218838;
-                }
-                .cancel__btn {
-                    background-color: #6c757d;
-                    color: white;
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    margin-right: 10px;
-                }
-                .cancel__btn:hover {
-                    background-color: #5a6268;
-                }
-                .error-message {
-                    color: red;
-                    text-align: center;
-                    font-size: 16px;
-                    margin-bottom: 10px;
-                }
-                .icon-left {
-                    position: absolute;
-                    left: 10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                }
-            </style>
-        <div class="container-none">
-            <div class="rts__menu__background">
-                <div class="row">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="rts__logo">
-                            <a href="${pageContext.request.contextPath}/view/home.jsp">
-                            <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
-                        </a>
-                    </div>
-                    <div class="rts__menu d-flex gap-5 gap-lg-4 gap-xl-5 align-items-center">
-                        <div class="navigation d-none d-lg-block">
-                            <nav class="navigation__menu" id="offcanvas__menu">
-<!--                                <ul class="list-unstyled">
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Home</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem"><a href="index.html">Home One</a></li>
-                                            <li role="menuitem"><a href="index-2.html">Home Two</a></li>
-                                            <li role="menuitem"><a href="index-3.html">Home Three</a></li>
-                                            <li role="menuitem"><a href="index-4.html">Home Four</a></li>
-                                            <li role="menuitem"><a href="index-5.html">Home Five</a></li>
-                                            <li role="menuitem"><a href="index-6.html">Home Six</a></li>
-                                        </ul>
-                                    </li>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Change Password</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Browse Jobs</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="#">Job List</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="job-list-1.html">Job List One</a></li>
-                                                    <li role="menuitem"><a href="job-list-2.html">Job List Two</a></li>
-                                                    <li role="menuitem"><a href="job-list-3.html">Job List Three</a></li>
-                                                    <li role="menuitem"><a href="job-list-4.html">Job List Four</a></li>
-                                                    <li role="menuitem"><a href="job-list-5.html">Job List Five</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="#">Job Details</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="job-details-1.html">Job Details One</a></li>
-                                                    <li role="menuitem"><a href="job-details-2.html">Job Details Two</a></li>
-                                                    <li role="menuitem"><a href="job-details-3.html">Job Details Three</a></li>
-                                                    <li role="menuitem"><a href="job-details-4.html">Job Details Four</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding: 20px;
+            }
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Employers</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="employer-1.html">Employer Style</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="employer-1.html">Employer One</a></li>
-                                                    <li role="menuitem"><a href="employer-2.html">Employer Two</a></li>
-                                                    <li role="menuitem"><a href="employer-3.html">Employer Three</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="employer-details-1.html">Employer Details</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="employer-details-1.html">Employer Details 1</a></li>
-                                                    <li role="menuitem"><a href="employer-details-2.html">Employer Details 2</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem"><a href="employer-dashboard.html">Employer Dashboard</a></li>
-                                        </ul>
-                                    </li>
+            .password-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Candidates</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="candidate-1.html">Candidate Style</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="candidate-1.html">Candidate One</a></li>
-                                                    <li role="menuitem"><a href="candidate-2.html">Candidate Two</a></li>
-                                                    <li role="menuitem"><a href="candidate-3.html">Candidate Three</a></li>
-                                                    <li role="menuitem"><a href="candidate-4.html">Candidate Four</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="candidate-details-1.html">Candidate Details</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="candidate-details-1.html">Candidate Details 1</a></li>
-                                                    <li role="menuitem"><a href="candidate-details-2.html">Candidate Details 2</a></li>
+            .password-box {
+                background-color: white;
+                padding: 60px; /* Tăng thêm padding để tăng chiều cao */
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                width: 500px;
+                text-align: center;
+            }
 
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem"><a href="candidate-dashboard.html">Candidate Dashboard</a></li>
-                                        </ul>
-                                    </li>
+            h2 {
+                margin-bottom: 40px; /* Tăng khoảng cách dưới tiêu đề */
+                font-size: 26px;
+                color: #28a745;
+            }
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Pages</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="about.html">Blog</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="blog-1.html">Blog One</a></li>
-                                                    <li role="menuitem"><a href="blog-2.html">Blog Two</a></li>
-                                                    <li role="menuitem"><a href="blog-3.html">Blog Three</a></li>
-                                                    <li role="menuitem"><a href="blog-4.html">Blog Four</a></li>
-                                                    <li role="menuitem"><a href="blog-details.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem"><a href="about.html">About</a></li>
-                                            <li role="menuitem"><a href="faq.html">Faq</a></li>
-                                            <li role="menuitem"><a href="tos.html">Terms &amp; Conditions</a></li>
-                                            <li role="menuitem"><a href="privacy.html">Privacy Policy</a></li>
-                                            <li role="menuitem"><a href="pricing.html">Pricing</a></li>
-                                        </ul>
-                                    </li>
+            .highlight {
+                color: #28a745;
+            }
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Contact</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem"><a href="contact-1.html">Contact One</a></li>
-                                            <li role="menuitem"><a href="contact-2.html">Contact Two</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>-->
-                            </nav>
-                        </div>
-                        <div class="header__right__btn d-flex gap-3">
-                            <a href="${pageContext.request.contextPath}/view/authen/logout.jsp" class="small__btn d-none d-sm-flex no__fill__btn border-6 font-xs" aria-label="Login Button">Logout</a>                           
-                        </div>
-                    </div>
+            .welcome {
+                margin-bottom: 40px; /* Tăng khoảng cách dưới phần welcome */
+                font-size: 18px;
+                text-align: left;
+            }
+
+            .welcome strong {
+                font-weight: bold;
+            }
+
+            .logout-btn {
+                float: right;
+                padding: 8px 15px;
+                background-color: #dc3545;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .logout-btn:hover {
+                background-color: #c82333;
+            }
+
+            .input-group {
+                margin-bottom: 30px; /* Tăng khoảng cách giữa các nhóm input */
+                text-align: left;
+                position: relative;
+            }
+
+            label {
+                display: block;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            input[type="password"], input[type="text"] {
+                width: 100%;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .toggle-password {
+                position: absolute;
+                right: 10px;
+                top: 40px;
+                cursor: pointer;
+                color: #007bff;
+                font-size: 14px;
+            }
+
+            .button-group {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 30px; /* Tăng khoảng cách giữa các nút */
+            }
+
+            .btn {
+                padding: 18px 40px;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                font-size: 18px;
+            }
+
+            .update-btn {
+                background-color: #28a745;
+                color: white;
+            }
+
+            .update-btn:hover {
+                background-color: #218838;
+            }
+
+            .cancel-btn {
+                background-color: #6c757d;
+                color: white;
+                text-decoration: none;
+                line-height: 20px;
+            }
+
+            .cancel-btn:hover {
+                background-color: #5a6268;
+            }
+
+            .error-message {
+                color: #f08080;
+                background-color: #ffecec;
+                border: 1px solid #f5c6cb;
+                padding: 20px; /* Tăng padding cho thông báo lỗi */
+                border-radius: 5px;
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="password-container">
+            <div class="password-box">
+                <h2>Change Password</h2>
+
+                <div class="welcome">
+                    Welcome <strong>${sessionScope.account.getFullName()}</strong>
                 </div>
+                <form action="${pageContext.request.contextPath}/authen?action=change-password" method="POST">
+                    <div class="input-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                        <span class="toggle-password" onclick="togglePasswordVisibility('currentPassword', this)">Show</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                        <span class="toggle-password" onclick="togglePasswordVisibility('newPassword', this)">Show</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="retypePassword">Retype Password</label>
+                        <input type="password" id="retypePassword" name="retypePassword" required>
+                        <span class="toggle-password" onclick="togglePasswordVisibility('retypePassword', this)">Show</span>
+                    </div>
+
+                    <c:if test="${not empty requestScope.changePWfail}">
+                        <div class="error-message">${requestScope.changePWfail}</div>
+                    </c:if>
+                    <div class="button-group">
+                        <button type="submit" class="btn update-btn">Update</button>
+                        <a class="btn cancel-btn" onclick="cancelChangePassword()">Cancel</a>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-</head>
-<body>        
-    <div class="change__password" style="margin-top: 100px; margin-bottom: 20px">
-        <div class="password__change__form">
-            <h4 class="text-center mb-4">Change Password</h4>
-            <form action="${pageContext.request.contextPath}/authen?action=change-password" method="post">
-                <!-- Current Password -->
-                <div class="rts-input-group">
-                    <label for="currentPassword">Current Password</label>
-                    <div class="input-box">
-                        <svg class="icon-left" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5m0-2C8.13 5 5 8.13 5 12s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" fill="#6c757d"/>
-                        </svg>
-                        <input type="password" name="currentPassword" id="currentPassword" placeholder="Enter your current password" required>
-                    </div>
-                </div>
 
-                <!-- New Password -->
-                <div class="rts-input-group">
-                    <label for="newPassword">New Password</label>
-                    <div class="input-box">
-                        <svg class="icon-left" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5m0-2C8.13 5 5 8.13 5 12s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" fill="#28a745"/>
-                        </svg>
-                        <input type="password" name="newPassword" id="newPassword" placeholder="Enter your new password" required>
-                    </div>
-                </div>
-
-                <!-- Retype Password -->
-                <div class="rts-input-group">
-                    <label for="retypePassword">Retype Password</label>
-                    <div class="input-box">
-                        <svg class="icon-left" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5m0-2C8.13 5 5 8.13 5 12s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" fill="#007bff"/>
-                        </svg>
-                        <input type="password" name="retypePassword" id="retypePassword" placeholder="Retype your new password" required>
-                    </div>
-                </div>
-
-                <!-- Error message -->
-                <c:if test="${not empty requestScope.changePWfail}">
-                    <div class="error-message">${requestScope.changePWfail}</div>
-                </c:if>
-
-                <!-- Buttons: Cancel and Update -->
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="rts__btn fill__btn">Update Password</button>
-                    <button type="button" class="rts__btn fill__btn" onclick="cancelChangePassword()">Cancel</button>
-                </div>
-
-
-            </form>              
-        </div>
-    </div>
-
-    <jsp:include page="../common/footer.jsp"></jsp:include>                       
-    <jsp:include page="../common/authen/common-js-authen.jsp"></jsp:include>
-
-        <!-- JavaScript function for Cancel -->
+        <!-- JavaScript function for Cancel and Toggle Password -->
         <script>
             function cancelChangePassword() {
                 var role = ${sessionScope.account.getRoleId()};
-
-                    if (role === 1) {
-                        window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
-                    } else if (role === 2) {
-                        window.location.href = "${pageContext.request.contextPath}/view/recruiter/user/recruiterHome.jsp";
-                    } else if (role === 3) {
-                        window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
-                    } else {
-                        // Trường hợp không xác định vai trò
-                        window.location.href = "${pageContext.request.contextPath}/view/home.jsp";
+                if (role === 1) {
+                    window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
+                } else if (role === 2) {
+                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp";
+                } else if (role === 3) {
+                    window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
+                }
             }
-    </script>
-</body>
+
+            function togglePasswordVisibility(id, element) {
+                var input = document.getElementById(id);
+                if (input.type === "password") {
+                    input.type = "text";
+                    element.textContent = "Hide";
+                } else {
+                    input.type = "password";
+                    element.textContent = "Show";
+                }
+            }
+        </script>
+    </body>
 </html>

@@ -271,9 +271,9 @@
                     <!-- Applied Jobs end -->
                 </div>
                 <!-- footer copyright -->
-                <div class="d-flex justify-content-center mt-30">
+<!--                <div class="d-flex justify-content-center mt-30">
                     <p class="copyright">Copyright © 2024 All Rights Reserved by jobpath</p>
-                </div>
+                </div>-->
                 <!-- footer copyright end -->
             </div>
         </div>

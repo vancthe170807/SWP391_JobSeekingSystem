@@ -423,9 +423,16 @@ public class AuthenticationController extends HttpServlet {
         // Lấy mật khẩu và mật khẩu xác nhận từ request
         String newPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-
-        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có khớp nhau không
-        if (newPassword.equals(confirmPassword)) {
+        
+        if(!newPassword.equals(confirmPassword)) {
+            // Mật khẩu và xác nhận mật khẩu không khớp
+            request.setAttribute("error", "Passwords do not match. Please try again.");
+            return "view/authen/ResetPassword.jsp";
+        } else if(!valid.checkPassword(newPassword)) {
+            request.setAttribute("error", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
+            return "view/authen/ResetPassword.jsp";
+        } else {
             // Get user email from the request
             Account account = new Account();
             account.setEmail(email);
@@ -452,11 +459,7 @@ public class AuthenticationController extends HttpServlet {
                 request.setAttribute("error", "User not found. Please try again.");
                 return "view/authen/ResetPassword.jsp";
             }
-        } else {
-            // Mật khẩu và xác nhận mật khẩu không khớp
-            request.setAttribute("error", "Passwords do not match. Please try again.");
-            return "view/authen/ResetPassword.jsp";
-        }
+        } 
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
@@ -500,7 +503,6 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
             accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
-            accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
             if (!valid.checkYearOfBirth(yearofbirth)) {

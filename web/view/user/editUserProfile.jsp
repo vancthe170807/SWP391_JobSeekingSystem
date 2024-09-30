@@ -110,10 +110,7 @@
                                                 <option value="female">Female</option>
                                             </select>
                                         </div> 
-                                        <div class="rt-input-group">
-                                            <label for="citizenId">Citizen ID</label>
-                                            <input type="text" name="citizenid" id="citizenId" placeholder="ID" required value="${sessionScope.account.getCitizenId()}">
-                                        </div>
+                                        
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">

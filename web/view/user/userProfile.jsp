@@ -86,10 +86,7 @@
                                         <input type="text" id="genderDisplay" class="form-control" value="${sessionScope.account.isGender() == true ? 'Male' : 'Female'}" readonly >
                                         <input type="hidden" name="gender" id="genderHidden">
                                     </div>
-                                    <div class="rt-input-group">
-                                        <label for="citizenId">Citizen ID</label>
-                                        <input type="text" id="citizenId" placeholder="ID" required readonly value="${sessionScope.account.getCitizenId()}">
-                                    </div>
+                                    
                                 </div>
                                 <div class="row row-cols-sm-2 row-cols-1 g-3">
                                     <div class="rt-input-group">

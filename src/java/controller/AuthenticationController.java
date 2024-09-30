@@ -126,27 +126,6 @@ public class AuthenticationController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
-        // Create cookies for username, password, and remember me
-        Cookie cUser = new Cookie("cu", username);
-        Cookie cPass = new Cookie("cp", password);
-        Cookie cRem = new Cookie("cr", remember);
-
-        // Set cookie max age (persistent for 1 day if "remember me" is checked)
-        if (remember != null) {
-            cUser.setMaxAge(60 * 60 * 24);
-            cPass.setMaxAge(60 * 60 * 24);
-            cRem.setMaxAge(60 * 60 * 24);
-        } else {
-            cUser.setMaxAge(0);
-            cPass.setMaxAge(0);
-            cRem.setMaxAge(0);
-        }
-
-        // Add cookies to the response
-        response.addCookie(cUser);
-        response.addCookie(cPass);
-        response.addCookie(cRem);
-
         // Check credentials in the database
         Account account = new Account();
         account.setUsername(username);
@@ -164,7 +143,36 @@ public class AuthenticationController extends HttpServlet {
             // If the account is found but inactive
             request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
             url = "view/authen/login.jsp";
+        } else if (!valid.checkUserName(username)) {
+            // If the account is found but inactive
+            request.setAttribute("messLogin", "Username or Password Incorrect!");
+            url = "view/authen/login.jsp";
+        } else if (!valid.checkPassword(password)) {
+            // If the account is found but inactive
+            request.setAttribute("messLogin", "Username or Password Incorrect!");
+            url = "view/authen/login.jsp";
         } else {
+            // Create cookies for username, password, and remember me
+            Cookie cUser = new Cookie("cu", username);
+            Cookie cPass = new Cookie("cp", password);
+            Cookie cRem = new Cookie("cr", remember);
+
+            // Set cookie max age (persistent for 1 day if "remember me" is checked)
+            if (remember != null) {
+                cUser.setMaxAge(60 * 60 * 24);
+                cPass.setMaxAge(60 * 60 * 24);
+                cRem.setMaxAge(60 * 60 * 24);
+            } else {
+                cUser.setMaxAge(0);
+                cPass.setMaxAge(0);
+                cRem.setMaxAge(0);
+            }
+
+            // Add cookies to the response
+            response.addCookie(cUser);
+            response.addCookie(cPass);
+            response.addCookie(cRem);
+
             // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
@@ -199,7 +207,15 @@ public class AuthenticationController extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        // set sign-up information to request to save the data in the form
+        request.setAttribute("lname", lastname);
+        request.setAttribute("fname", firstname);
+        request.setAttribute("gender", gender);
+        request.setAttribute("username", username);
+        request.setAttribute("email", email);
+        request.setAttribute("password", password);
+        
+        
         // Create account object
         Account account = new Account();
         account.setRoleId(roleId);
@@ -224,20 +240,23 @@ public class AuthenticationController extends HttpServlet {
         boolean isExistUserEmail = accountDAO.checkUserEmailExist(account);
 
         // Handle validation errors
-        if (isExistUsername) {
-            request.setAttribute("error", "Username exists!!");
-            url = "view/authen/register.jsp";
-        } else if (isExistUserEmail) {
-            request.setAttribute("error", "Email exists!!");
-            url = "view/authen/register.jsp";
-        } else if (!valid.checkPassword(password)) {
-            request.setAttribute("error", "Password must be 8 character!!");
-            url = "view/authen/register.jsp";
-        } else if (!valid.checkName(firstname)) {
-            request.setAttribute("error", "Your first name is invalid!!");
+        if (!valid.checkName(firstname)) {
+            request.setAttribute("errorName", "Your first name is invalid!!");
             url = "view/authen/register.jsp";
         } else if (!valid.checkName(lastname)) {
-            request.setAttribute("error", "Your last name is invalid!!");
+            request.setAttribute("errorName", "Your last name is invalid!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkUserName(username)) {
+            request.setAttribute("errorUsername", "Your user name must be not contain special characters");
+            url = "view/authen/register.jsp";
+        } else if (isExistUsername) {
+            request.setAttribute("errorUsernameExits", "Username exists!!");
+            url = "view/authen/register.jsp";
+        } else if (isExistUserEmail) {
+            request.setAttribute("errorEmail", "Email exists!!");
+            url = "view/authen/register.jsp";
+        } else if (!valid.checkPassword(password)) {
+            request.setAttribute("errorPassword", "Password must be follow the convention!!");
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email

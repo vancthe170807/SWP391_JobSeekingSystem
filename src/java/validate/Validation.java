@@ -16,7 +16,7 @@ public class Validation {
         // - Phải có ít nhất 1 chữ cái hoa
         // - Phải có ít nhất 1 ký tự đặc biệt
         // - Phải có từ 8 đến 20 ký tự
-        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_.+=-]).{8,20}$";
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_.+=-])(?=\\\\S+$).{8,20}$";
 
         return password.matches(passwordRegex);
     }
@@ -43,6 +43,14 @@ public class Validation {
         String regex = "^(\\+\\d{1,3})?\\d{9,15}$";
         return phone.matches(regex);
     }
+     public static boolean checkUserName(String username) {
+        // Biểu thức chính quy: chỉ cho phép chữ cái, số và dấu gạch dưới
+        String regex = "^[a-zA-Z0-9_]+$";
+        
+        // Kiểm tra username có khớp với biểu thức chính quy không
+        return username.matches(regex);
+    }
+    
     
     public boolean checkNoSpaces(String input) {
         // Sử dụng regex để kiểm tra nếu chuỗi không chứa khoảng trắng

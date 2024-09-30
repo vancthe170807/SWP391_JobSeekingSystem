@@ -45,52 +45,59 @@
                                 <div class="form-group">
                                     <label for="sname" class="fw-medium text-dark mb-3">Last Name</label>
                                     <div class="position-relative">
-                                        <input type="text" name="lastname" id="sname" placeholder="Enter last name" required>
+                                        <input type="text" name="lastname" id="sname" placeholder="Enter last name" value="${requestScope.lname}" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
+                                    <span style="color:red">${errorName}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="sname" class="fw-medium text-dark mb-3">First name</label>
                                     <div class="position-relative">
-                                        <input type="text" name="firstname" id="sname" placeholder="Enter first name" required>
+                                        <input type="text" name="firstname" id="sname" placeholder="Enter first name" value="${requestScope.fname}" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
+                                    <span style="color:red">${errorName}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Gender</label>
                                     <select name="gender" id="gender" class="form-select" >
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="male" ${gender == 'male' ? 'selected' : ''}>Male</option>
+                                        <option value="female" ${gender == 'female' ? 'selected' : ''}>Female</option>
                                     </select>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="sname" class="fw-medium text-dark mb-3">User name</label>
                                     <div class="position-relative">
-                                        <input type="text" name="username" id="sname" placeholder="Enter user name" required>
+                                        <input type="text" name="username" id="sname" placeholder="Enter user name" value="${requestScope.username}" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
+                                    <span style="color:red">${errorUsernameExits}</span>
+                                    <span style="color:red">${errorUsername}</span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signemail" class="fw-medium text-dark mb-3">Your Email</label>
                                     <div class="position-relative">
-                                        <input type="email" name="email" id="signemail" placeholder="Enter your email" required>
+                                        <input type="email" name="email" id="signemail" placeholder="Enter your email" value="${requestScope.email}" required>
                                         <i class="fa-sharp fa-light fa-envelope icon"></i>
                                     </div>
+                                    <span style="color:red">${errorEmail}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
                                         <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
-                                        <input value="${cookie.cp.value}" type="password" name="password" id="password" placeholder="Enter your password" required>
+                                        <input value="${cookie.cp.value}" type="password" name="password" id="password" placeholder="Enter your password" value="${requestScope.password}" required>
                                         <i class="fa-light fa-lock icon"></i>
                                         <!--                                     Icon mắt dùng để ẩn/hiện mật khẩu -->
                                         <span class="password__icon" onclick="togglePassword('password')">
                                             👁️
                                         </span>
                                     </div>
+                                    <span style="color: #737477">! Password must be 8-20 character, Contain at least alphabet and special character </span>    
+                                    <span style="color:red">${errorPassword}</span>
                                 </div>
-                                <span style="color:red">${error}</span>
                                 <div class="form-group my-3">
                                     <button class="rts__btn w-100 fill__btn" onclick="document.querySelector('#signUpForm').submit()">Register</button>
                                 </div>
@@ -104,42 +111,56 @@
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>                    
         <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>      
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const buttons = document.querySelectorAll('.tab__switch .rts__btn');
-                const hiddenInput = document.querySelector('input[name="role"]');
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const buttons = document.querySelectorAll('.tab__switch .rts__btn');
+                    const hiddenInput = document.querySelector('input[name="role"]');
 
-                buttons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        // Remove active class from all buttons
-                        buttons.forEach(btn => btn.classList.remove('active'));
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            // Remove active class from all buttons
+                            buttons.forEach(btn => btn.classList.remove('active'));
 
-                        // Add active class to clicked button
-                        this.classList.add('active');
+                            // Add active class to clicked button
+                            this.classList.add('active');
 
-                        // Update hidden input value based on selection
-                        if (this.textContent.trim() === 'Seeker') {
-                            hiddenInput.value = '3';
-                        } else if (this.textContent.trim() === 'Recruiter') {
-                            hiddenInput.value = '2';
-                        }
+                            // Update hidden input value based on selection
+                            if (this.textContent.trim() === 'Seeker') {
+                                hiddenInput.value = '3';
+                            } else if (this.textContent.trim() === 'Recruiter') {
+                                hiddenInput.value = '2';
+                            }
+                        });
                     });
-                });
 
-                // Set initial value based on the button that has 'active' class
-                const activeButton = document.querySelector('.tab__switch .rts__btn.active');
-                if (activeButton) {
-                    hiddenInput.value = activeButton.textContent.trim() === 'Seeker' ? '3' : '2';
+                    // Set initial value based on the button that has 'active' class
+                    const activeButton = document.querySelector('.tab__switch .rts__btn.active');
+                    if (activeButton) {
+                        hiddenInput.value = activeButton.textContent.trim() === 'Seeker' ? '3' : '2';
+                    }
+                });
+                function togglePassword(id) {
+                    var input = document.getElementById(id);
+                    if (input.type === "password") {
+                        input.type = "text";
+                    } else {
+                        input.type = "password";
+                    }
                 }
-            });
-            function togglePassword(id) {
-                var input = document.getElementById(id);
-                if (input.type === "password") {
-                    input.type = "text";
-                } else {
-                    input.type = "password";
-                }
-            }
+//                get ve gender
+//                var genderSelect = document.getElementById('gender');
+//                var selectedGender = '${requestScope.gender}'; // Giả sử bạn đã set attribute 'gender' trong servlet
+//
+//                if (selectedGender) {
+//                    for (var i = 0; i < genderSelect.options.length; i++) {
+//                        if (genderSelect.options[i].value === selectedGender) {
+//                            genderSelect.options[i].selected = true;
+//                            break;
+//                        }
+//                        }
+//                    }
+//                }
+//                );
         </script>
 </html>
 

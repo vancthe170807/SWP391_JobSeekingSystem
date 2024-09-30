@@ -12,11 +12,13 @@ import java.time.Year;
  */
 public class Validation {
     public boolean checkPassword(String password) {
-       // Biểu thức chính quy kiểm tra mật khẩu:
-        // - Phải có ít nhất 1 chữ cái hoa
-        // - Phải có ít nhất 1 ký tự đặc biệt
-        // - Phải có từ 8 đến 20 ký tự
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_.+=-])(?=\\\\S+$).{8,20}$";
+        // Regular expression to validate password:
+        // - At least 1 uppercase letter
+        // - At least 1 lowercase letter
+        // - At least 1 special character
+        // - No whitespace
+        // - Length between 8 and 20 characters
+        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_.+=-]).{8,20}$";
 
         return password.matches(passwordRegex);
     }

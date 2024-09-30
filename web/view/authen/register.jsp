@@ -88,7 +88,7 @@
                                     <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
                                         <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
-                                        <input value="${cookie.cp.value}" type="password" name="password" id="password" placeholder="Enter your password" value="${requestScope.password}" required>
+                                        <input type="password" name="password" id="password" placeholder="Enter your password" value="${requestScope.password}" required>
                                         <i class="fa-light fa-lock icon"></i>
                                         <!--                                     Icon mắt dùng để ẩn/hiện mật khẩu -->
                                         <span class="password__icon" onclick="togglePassword('password')">

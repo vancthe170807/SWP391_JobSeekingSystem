@@ -140,28 +140,26 @@
                 position: relative;
             }
 
-            .g-recaptcha {
-                margin-top: 20px;
-            }
-
             .error-message {
                 color: #f08080;
                 background-color: #ffecec;
                 border: 1px solid #f5c6cb;
                 padding: 15px;
                 border-radius: 5px;
-                font-size: 18px;
+                font-size: 15px;
                 margin-bottom: 20px;
+                font-weight: bold;
             }
             
             .error-changePW {
-                color: #66FF33;
+                color: #218838;
                 background-color: #FFFFFF;
                 border: 1px solid #f5c6cb;
                 padding: 15px;
                 border-radius: 5px;
-                font-size: 18px;
+                font-size: 15px;
                 margin-bottom: 20px;
+                font-weight: bold;
             }
 
             .form-group {
@@ -197,7 +195,6 @@
                 <div class="form-group position-relative text-left">
                     <label for="username" class="fw-medium text-dark mb-2">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" value="${cookie.cu.value}" required>
-                    
                 </div>
 
                 <!-- Password Input -->
@@ -205,7 +202,6 @@
                     <label for="password" class="fw-medium text-dark mb-2">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" value="${cookie.cp.value}" required>
                     <span class="password__icon" onclick="togglePassword('password')">Show</span>
-                    
                 </div>
 
                 <!-- Forgot Password and Remember Me -->

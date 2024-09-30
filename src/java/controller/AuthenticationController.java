@@ -126,6 +126,27 @@ public class AuthenticationController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
+        // Create cookies for username, password, and remember me
+        Cookie cUser = new Cookie("cu", username);
+        Cookie cPass = new Cookie("cp", password);
+        Cookie cRem = new Cookie("cr", remember);
+
+        // Set cookie max age (persistent for 1 day if "remember me" is checked)
+        if (remember != null) {
+            cUser.setMaxAge(60 * 60 * 24);
+            cPass.setMaxAge(60 * 60 * 24);
+            cRem.setMaxAge(60 * 60 * 24);
+        } else {
+            cUser.setMaxAge(0);
+            cPass.setMaxAge(0);
+            cRem.setMaxAge(0);
+        }
+
+        // Add cookies to the response
+        response.addCookie(cUser);
+        response.addCookie(cPass);
+        response.addCookie(cRem);
+
         // Check credentials in the database
         Account account = new Account();
         account.setUsername(username);
@@ -143,36 +164,7 @@ public class AuthenticationController extends HttpServlet {
             // If the account is found but inactive
             request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
             url = "view/authen/login.jsp";
-        } else if (!valid.checkUserName(username)) {
-            // If the account is found but inactive
-            request.setAttribute("messLogin", "Username or Password Incorrect!");
-            url = "view/authen/login.jsp";
-        } else if (!valid.checkPassword(password)) {
-            // If the account is found but inactive
-            request.setAttribute("messLogin", "Username or Password Incorrect!");
-            url = "view/authen/login.jsp";
         } else {
-            // Create cookies for username, password, and remember me
-            Cookie cUser = new Cookie("cu", username);
-            Cookie cPass = new Cookie("cp", password);
-            Cookie cRem = new Cookie("cr", remember);
-
-            // Set cookie max age (persistent for 1 day if "remember me" is checked)
-            if (remember != null) {
-                cUser.setMaxAge(60 * 60 * 24);
-                cPass.setMaxAge(60 * 60 * 24);
-                cRem.setMaxAge(60 * 60 * 24);
-            } else {
-                cUser.setMaxAge(0);
-                cPass.setMaxAge(0);
-                cRem.setMaxAge(0);
-            }
-
-            // Add cookies to the response
-            response.addCookie(cUser);
-            response.addCookie(cPass);
-            response.addCookie(cRem);
-
             // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
@@ -214,8 +206,7 @@ public class AuthenticationController extends HttpServlet {
         request.setAttribute("username", username);
         request.setAttribute("email", email);
         request.setAttribute("password", password);
-        
-        
+
         // Create account object
         Account account = new Account();
         account.setRoleId(roleId);

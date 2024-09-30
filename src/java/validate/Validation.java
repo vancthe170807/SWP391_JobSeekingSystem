@@ -19,19 +19,6 @@ public class Validation {
         String passwordRegex = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_.+=-]).{8,20}$";
 
         return password.matches(passwordRegex);
-
-        /* pass valid
-        abcABC!@#
-        Password123!
-        Example_Pass@
-        Secure$Pass1
-         */
-        
-        /* pass invalid
-        abcdef12 (thiếu ký tự đặc biệt).
-        12345678 (không có chữ cái).
-        Password (không có ký tự đặc biệt).   
-        */
     }
     
     // Kiểm tra tên (không chứa số và cho phép ký tự có dấu tiếng Việt)
@@ -56,4 +43,10 @@ public class Validation {
         String regex = "^(\\+\\d{1,3})?\\d{9,15}$";
         return phone.matches(regex);
     }
+    
+    public boolean checkNoSpaces(String input) {
+        // Sử dụng regex để kiểm tra nếu chuỗi không chứa khoảng trắng
+        return input.matches("\\S+");
+    }
+
 }

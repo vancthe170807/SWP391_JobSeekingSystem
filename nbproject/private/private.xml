@@ -92,6 +92,7 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/admin/header-admin.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/META-INF/web.xml</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/constant/CommonConst.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/recruiter/header-recruiter.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/user/header-user.jsp</file>
@@ -104,10 +105,12 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/register.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/ResetPassword.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/config/EmailConfig.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/admin/sidebar-admin.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Account.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/forgotPassword.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/user/userHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/assets/css/style.css</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/HomeController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/changePassword.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/config/GlobalConfig.java</file>

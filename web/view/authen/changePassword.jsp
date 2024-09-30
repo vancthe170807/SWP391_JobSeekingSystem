@@ -1,9 +1,3 @@
-<%-- 
-    Document   : change password
-    Created on : Sep 15, 2024, 9:29:22 PM
-    Author     : TuanTVHE173048
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -39,7 +33,7 @@
 
             .password-box {
                 background-color: white;
-                padding: 60px; /* Tăng thêm padding để tăng chiều cao */
+                padding: 60px;
                 border-radius: 10px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
                 width: 500px;
@@ -47,7 +41,7 @@
             }
 
             h2 {
-                margin-bottom: 40px; /* Tăng khoảng cách dưới tiêu đề */
+                margin-bottom: 40px;
                 font-size: 26px;
                 color: #28a745;
             }
@@ -57,7 +51,7 @@
             }
 
             .welcome {
-                margin-bottom: 40px; /* Tăng khoảng cách dưới phần welcome */
+                margin-bottom: 40px;
                 font-size: 18px;
                 text-align: left;
             }
@@ -81,7 +75,7 @@
             }
 
             .input-group {
-                margin-bottom: 30px; /* Tăng khoảng cách giữa các nhóm input */
+                margin-bottom: 30px;
                 text-align: left;
                 position: relative;
             }
@@ -112,7 +106,7 @@
             .button-group {
                 display: flex;
                 justify-content: space-between;
-                margin-top: 30px; /* Tăng khoảng cách giữa các nút */
+                margin-top: 30px;
             }
 
             .btn {
@@ -147,11 +141,19 @@
                 color: #f08080;
                 background-color: #ffecec;
                 border: 1px solid #f5c6cb;
-                padding: 20px; /* Tăng padding cho thông báo lỗi */
+                padding: 20px;
                 border-radius: 5px;
                 font-size: 16px;
                 margin-bottom: 20px;
             }
+
+            .space-error {
+                color: red;
+                font-size: 14px;
+                margin-top: 10px;
+                display: none;
+            }
+
         </style>
     </head>
     <body>
@@ -162,20 +164,20 @@
                 <div class="welcome">
                     Welcome <strong>${sessionScope.account.getFullName()}</strong>
                 </div>
-                <form action="${pageContext.request.contextPath}/authen?action=change-password" method="POST">
+                <form action="${pageContext.request.contextPath}/authen?action=change-password" method="POST" onsubmit="return validateForm()">
                     <div class="input-group">
                         <label for="currentPassword">Current Password</label>
-                        <input type="password" id="currentPassword" name="currentPassword" required>
+                        <input type="password" id="currentPassword" name="currentPassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('currentPassword', this)">Show</span>
                     </div>
                     <div class="input-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" name="newPassword" required>
+                        <input type="password" id="newPassword" name="newPassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('newPassword', this)">Show</span>
                     </div>
                     <div class="input-group">
                         <label for="retypePassword">Retype Password</label>
-                        <input type="password" id="retypePassword" name="retypePassword" required>
+                        <input type="password" id="retypePassword" name="retypePassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('retypePassword', this)">Show</span>
                     </div>
 
@@ -212,6 +214,27 @@
                     input.type = "password";
                     element.textContent = "Show";
                 }
+            }
+
+            // Prevent entering spaces in password fields
+            function preventSpaces(event) {
+                if (event.key === " ") {
+                    event.preventDefault();  // Prevent the space from being entered
+                    alert("Passwords cannot contain spaces.");
+                }
+            }
+
+            // Validate form before submission to ensure no spaces in passwords
+            function validateForm() {
+                var currentPassword = document.getElementById("currentPassword").value;
+                var newPassword = document.getElementById("newPassword").value;
+                var retypePassword = document.getElementById("retypePassword").value;
+
+                if (currentPassword.includes(" ") || newPassword.includes(" ") || retypePassword.includes(" ")) {
+                    alert("Passwords cannot contain spaces.");
+                    return false;
+                }
+                return true;
             }
         </script>
     </body>

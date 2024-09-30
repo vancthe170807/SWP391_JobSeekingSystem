@@ -133,7 +133,6 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("roleId", (Integer) account.getRoleId());
         parameterMap.put("isActive", account.isIsActive());
         parameterMap.put("createAt", account.getCreateAt());
-//        parameterMap.put("updatedAt", account.getUpdatedAt());
         parameterMap.put("gender", account.isGender());
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);

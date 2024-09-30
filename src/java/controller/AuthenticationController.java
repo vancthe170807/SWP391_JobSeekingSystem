@@ -509,7 +509,6 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
             accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
-            accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
             if (!valid.checkYearOfBirth(yearofbirth)) {

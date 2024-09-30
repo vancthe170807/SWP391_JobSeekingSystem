@@ -16,7 +16,7 @@ public class Validation {
         // - Phải có ít nhất 1 chữ cái hoa
         // - Phải có ít nhất 1 ký tự đặc biệt
         // - Phải có từ 8 đến 20 ký tự
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_.+=-])(?=\\\\S+$).{8,20}$";
+        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_.+=-]).{8,20}$";
 
         return password.matches(passwordRegex);
     }

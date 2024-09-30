@@ -11,16 +11,19 @@ import java.time.Year;
  * @author Admin
  */
 public class Validation {
+
     public boolean checkPassword(String password) {
-       // Biểu thức chính quy kiểm tra mật khẩu:
-        // - Phải có ít nhất 1 chữ cái hoa
-        // - Phải có ít nhất 1 ký tự đặc biệt
-        // - Phải có từ 8 đến 20 ký tự
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_.+=-])(?=\\\\S+$).{8,20}$";
+        // Regular expression to validate password:
+        // - At least 1 uppercase letter
+        // - At least 1 lowercase letter
+        // - At least 1 special character
+        // - No whitespace
+        // - Length between 8 and 20 characters
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_.+=-])(?=\\S+$).{8,20}$";
 
         return password.matches(passwordRegex);
     }
-    
+
     // Kiểm tra tên (không chứa số và cho phép ký tự có dấu tiếng Việt)
     public boolean checkName(String name) {
         // Biểu thức chính quy cho tên: không chứa số, cho phép ký tự dấu tiếng Việt
@@ -36,22 +39,22 @@ public class Validation {
         // Người dùng phải từ 17 đến 50 tuổi
         return age >= 17 && age <= 50;
     }
-    
-     // Hàm kiểm tra số điện thoại
+
+    // Hàm kiểm tra số điện thoại
     public boolean CheckPhoneNumber(String phone) {
         // Biểu thức chính quy để kiểm tra số điện thoại
         String regex = "^(\\+\\d{1,3})?\\d{9,15}$";
         return phone.matches(regex);
     }
-     public static boolean checkUserName(String username) {
+
+    public static boolean checkUserName(String username) {
         // Biểu thức chính quy: chỉ cho phép chữ cái, số và dấu gạch dưới
         String regex = "^[a-zA-Z0-9_]+$";
-        
+
         // Kiểm tra username có khớp với biểu thức chính quy không
         return username.matches(regex);
     }
-    
-    
+
     public boolean checkNoSpaces(String input) {
         // Sử dụng regex để kiểm tra nếu chuỗi không chứa khoảng trắng
         return input.matches("\\S+");

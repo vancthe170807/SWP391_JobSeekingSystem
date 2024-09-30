@@ -31,10 +31,11 @@
                             <!-- OTP confirmation form -->
                             <form action="authen?action=reset-password" method="POST" class="d-flex flex-column gap-3">
                                 <div class="form-group">
+                                    
                                     <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
                                         <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
-                                        <input type="password" name="password" id="password" placeholder="Enter your new password" required>
+                                        <input type="password" name="password" id="password" placeholder="Enter your new password" required onkeydown="preventSpaces(event)">
                                         <i class="fa-light fa-lock icon"></i>
                                         <!--                                     Icon mắt dùng để ẩn/hiện mật khẩu -->
                                         <span class="password__icon" onclick="togglePassword('password')">
@@ -44,7 +45,7 @@
 
                                     <label for="confirmPassword" class="fw-medium text-dark mb-3">Confirm New Password</label>
                                     <div class="position-relative">
-                                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Enter confirm to new password" required>
+                                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Enter confirm to new password" required onkeydown="preventSpaces(event)">
                                         <i class="fa-sharp fa-light fa-envelope icon"></i>
                                         <span class="password__icon" onclick="togglePassword('confirmPassword')">
                                             👁️
@@ -76,6 +77,14 @@
     </body>
 
     <script>
+        // Prevent entering spaces in password fields
+            function preventSpaces(event) {
+                if (event.key === " ") {
+                    event.preventDefault();  // Prevent the space from being entered
+                    alert("Passwords cannot contain spaces.");
+                }
+            }
+        
         function togglePassword(id) {
             var input = document.getElementById(id);
             if (input.type === "password") {

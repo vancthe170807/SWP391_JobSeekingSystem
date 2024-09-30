@@ -17,7 +17,6 @@ public class Account {
     private String password;
     private String email;
     private String phone;
-    private String citizenId;
     private String firstName;
     private String lastName;
     private Date dob;
@@ -33,13 +32,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, String username, String password, String email, String phone, String citizenId, String firstName, String lastName, Date dob, String address, String avatar, int roleId, boolean isActive, Date createAt, Date updatedAt, boolean gender) {
+    public Account(int id, String username, String password, String email, String phone, String firstName, String lastName, Date dob, String address, String avatar, int roleId, boolean isActive, Date createAt, Date updatedAt, boolean gender) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.citizenId = citizenId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -100,14 +98,6 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getCitizenId() {
-        return citizenId;
-    }
-
-    public void setCitizenId(String citizenId) {
-        this.citizenId = citizenId;
     }
 
     public String getFirstName() {

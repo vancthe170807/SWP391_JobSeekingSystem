@@ -126,6 +126,27 @@ public class AuthenticationController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("rememberMe");
 
+        // Create cookies for username, password, and remember me
+        Cookie cUser = new Cookie("cu", username);
+        Cookie cPass = new Cookie("cp", password);
+        Cookie cRem = new Cookie("cr", remember);
+
+        // Set cookie max age (persistent for 1 day if "remember me" is checked)
+        if (remember != null) {
+            cUser.setMaxAge(60 * 60 * 24);
+            cPass.setMaxAge(60 * 60 * 24);
+            cRem.setMaxAge(60 * 60 * 24);
+        } else {
+            cUser.setMaxAge(0);
+            cPass.setMaxAge(0);
+            cRem.setMaxAge(0);
+        }
+
+        // Add cookies to the response
+        response.addCookie(cUser);
+        response.addCookie(cPass);
+        response.addCookie(cRem);
+
         // Check credentials in the database
         Account account = new Account();
         account.setUsername(username);
@@ -143,36 +164,7 @@ public class AuthenticationController extends HttpServlet {
             // If the account is found but inactive
             request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
             url = "view/authen/login.jsp";
-        } else if (!valid.checkUserName(username)) {
-            // If the account is found but inactive
-            request.setAttribute("messLogin", "Username or Password Incorrect!");
-            url = "view/authen/login.jsp";
-        } else if (!valid.checkPassword(password)) {
-            // If the account is found but inactive
-            request.setAttribute("messLogin", "Username or Password Incorrect!");
-            url = "view/authen/login.jsp";
         } else {
-            // Create cookies for username, password, and remember me
-            Cookie cUser = new Cookie("cu", username);
-            Cookie cPass = new Cookie("cp", password);
-            Cookie cRem = new Cookie("cr", remember);
-
-            // Set cookie max age (persistent for 1 day if "remember me" is checked)
-            if (remember != null) {
-                cUser.setMaxAge(60 * 60 * 24);
-                cPass.setMaxAge(60 * 60 * 24);
-                cRem.setMaxAge(60 * 60 * 24);
-            } else {
-                cUser.setMaxAge(0);
-                cPass.setMaxAge(0);
-                cRem.setMaxAge(0);
-            }
-
-            // Add cookies to the response
-            response.addCookie(cUser);
-            response.addCookie(cPass);
-            response.addCookie(cRem);
-
             // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             switch (accFound.getRoleId()) {
@@ -432,9 +424,16 @@ public class AuthenticationController extends HttpServlet {
         // Lấy mật khẩu và mật khẩu xác nhận từ request
         String newPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-
-        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có khớp nhau không
-        if (newPassword.equals(confirmPassword)) {
+        
+        if(!newPassword.equals(confirmPassword)) {
+            // Mật khẩu và xác nhận mật khẩu không khớp
+            request.setAttribute("error", "Passwords do not match. Please try again.");
+            return "view/authen/ResetPassword.jsp";
+        } else if(!valid.checkPassword(newPassword)) {
+            request.setAttribute("error", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
+            return "view/authen/ResetPassword.jsp";
+        } else {
             // Get user email from the request
             Account account = new Account();
             account.setEmail(email);
@@ -461,11 +460,7 @@ public class AuthenticationController extends HttpServlet {
                 request.setAttribute("error", "User not found. Please try again.");
                 return "view/authen/ResetPassword.jsp";
             }
-        } else {
-            // Mật khẩu và xác nhận mật khẩu không khớp
-            request.setAttribute("error", "Passwords do not match. Please try again.");
-            return "view/authen/ResetPassword.jsp";
-        }
+        } 
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
@@ -509,7 +504,6 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
             accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
-            accountEdit.setCitizenId(citizenId);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);
             if (!valid.checkYearOfBirth(yearofbirth)) {

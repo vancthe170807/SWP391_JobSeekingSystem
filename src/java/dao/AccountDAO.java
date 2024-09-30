@@ -27,7 +27,6 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "           ,[password]\n"
                 + "           ,[email]\n"
                 + "           ,[phone]\n"
-                + "           ,[citizenId]\n"
                 + "           ,[firstName]\n"
                 + "           ,[lastName]\n"
                 + "           ,[dob]\n"
@@ -39,13 +38,12 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "           ,[updatedAt]\n"
                 + "           ,[gender])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", t.getUsername());
         parameterMap.put("password", t.getPassword());
         parameterMap.put("email", t.getEmail());
         parameterMap.put("phone", t.getPhone());
-        parameterMap.put("citizenId", t.getCitizenId());
         parameterMap.put("firstName", t.getFirstName());
         parameterMap.put("lastName", t.getLastName());
         parameterMap.put("dob", t.getDob());
@@ -110,7 +108,6 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "      ,[password] = ?\n"
                 + "      ,[email] = ?\n"
                 + "      ,[phone] = ?\n"
-                + "      ,[citizenId] = ?\n"
                 + "      ,[firstName] = ?\n"
                 + "      ,[lastName] = ?\n"
                 + "      ,[dob] = ?\n"
@@ -128,7 +125,6 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("password", account.getPassword());
         parameterMap.put("email", account.getEmail());
         parameterMap.put("phone", account.getPhone());
-        parameterMap.put("citizenId", account.getCitizenId());
         parameterMap.put("firstName", account.getFirstName());
         parameterMap.put("lastName", account.getLastName());
         parameterMap.put("dob", account.getDob());
@@ -137,7 +133,6 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("roleId", (Integer) account.getRoleId());
         parameterMap.put("isActive", account.isIsActive());
         parameterMap.put("createAt", account.getCreateAt());
-//        parameterMap.put("updatedAt", account.getUpdatedAt());
         parameterMap.put("gender", account.isGender());
         parameterMap.put("id", account.getId());
         updateGenericDAO(sql, parameterMap);
@@ -180,9 +175,9 @@ public class AccountDAO extends GenericDAO<Account> {
     public boolean checkUsernameExist(Account account) {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[Account]\n"
-                + "  where email = ? ";
+                + "  where username = ? ";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("username", account.getEmail());
+        parameterMap.put("username", account.getUsername());
         return !queryGenericDAO(Account.class, sql, parameterMap).isEmpty();
     }
 

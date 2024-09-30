@@ -1,3 +1,8 @@
+<%-- 
+    Document   : Change password
+    Created on : Sep 15, 2024, 9:29:22 PM
+    Author     : TuanTVHE173048
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 

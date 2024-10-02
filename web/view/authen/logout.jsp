@@ -23,7 +23,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ bao phủ toàn bộ trang */
+                background-color: rgba(0, 0, 0, 0.5);
             }
             .logout-container {
                 display: flex;
@@ -31,7 +31,7 @@
                 align-items: center;
                 width: 100%;
                 height: 100%;
-                position: fixed; /* Đảm bảo container phủ kín toàn màn hình */
+                position: fixed;
                 top: 0;
                 left: 0;
             }
@@ -45,9 +45,9 @@
                 text-align: center;
             }
             .logout-card h2 {
-                font-size: 24px; /* Reduced font size */
+                font-size: 24px;
                 margin-bottom: 20px;
-                font-weight: normal; /* Removed bold */
+                font-weight: normal;
             }
             .jobpath-logo {
                 font-size: 50px;
@@ -57,7 +57,7 @@
                 color: black;
             }
             .jobpath-logo .path {
-                color: #28a745; /* Màu xanh lá cây */
+                color: #28a745;
             }
             .btn-primary {
                 background-color: #28a745;
@@ -94,7 +94,7 @@
                     font-size: 22px;
                 }
                 .btn-primary, .btn-secondary {
-                    width: 100%; /* Make buttons full-width on small screens */
+                    width: 100%;
                     margin-bottom: 10px;
                 }
             }

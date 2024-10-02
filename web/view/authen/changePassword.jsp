@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Change password
+    Document   : Change Password
     Created on : Sep 15, 2024, 9:29:22 PM
     Author     : TuanTVHE173048
 --%>
@@ -38,16 +38,16 @@
 
             .password-box {
                 background-color: white;
-                padding: 60px;
+                padding: 40px;
                 border-radius: 10px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                width: 500px;
+                width: 400px;
                 text-align: center;
             }
 
             h2 {
                 margin-bottom: 40px;
-                font-size: 26px;
+                font-size: 32px;
                 color: #28a745;
             }
 
@@ -60,12 +60,13 @@
             label {
                 display: block;
                 font-size: 16px;
+                font-weight: bold;
                 margin-bottom: 10px;
             }
 
             input[type="password"], input[type="text"] {
                 width: 100%;
-                padding: 15px;
+                padding: 12px;
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 font-size: 16px;
@@ -85,7 +86,7 @@
                 color: #737477;
                 margin-top: 5px;
                 font-style: italic;
-                display: none; /* Ẩn ghi chú mặc định */
+                display: none;
             }
 
             .button-group {
@@ -95,11 +96,11 @@
             }
 
             .btn {
-                padding: 18px 40px;
+                padding: 12px 30px;
                 border: none;
                 border-radius: 5px;
                 text-decoration: none;
-                font-size: 18px;
+                font-size: 16px;
             }
 
             .update-btn {
@@ -128,7 +129,7 @@
                 border: 1px solid #f5c6cb;
                 padding: 20px;
                 border-radius: 5px;
-                font-size: 15px;
+                font-size: 13px;
                 margin-bottom: 20px;
                 font-weight: bold;
             }
@@ -156,11 +157,9 @@
                         <input type="password" id="retypePassword" name="retypePassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('retypePassword', this)">Show</span>
                     </div>
-
                     <c:if test="${not empty requestScope.changePWfail}">
                         <div class="error-message">${requestScope.changePWfail}</div>
                     </c:if>
-
                     <div class="button-group">
                         <button type="submit" class="btn update-btn">Update</button>
                         <a class="btn cancel-btn" onclick="cancelChangePassword()">Cancel</a>

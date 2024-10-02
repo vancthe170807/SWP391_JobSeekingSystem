@@ -185,7 +185,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "view/home.jsp";
+        return "home";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
@@ -274,51 +274,39 @@ public class AuthenticationController extends HttpServlet {
         Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String url = null;
 
-        // Trạng thái của việc thay đổi mật khẩu
         int status = 0;
 
-        // Kiểm tra trường hợp mật khẩu cũ, mật khẩu mới và xác nhận mật khẩu mới
         if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
-            // Cả mật khẩu cũ sai và mật khẩu mới không khớp
             status = 3;
         } else if (!currPass.equals(acc.getPassword())) {
-            // Mật khẩu cũ sai
             status = 1;
         } else if (!newPass.equals(retypePass)) {
-            // Mật khẩu mới và xác nhận mật khẩu không khớp
             status = 2;
         } else if (!valid.checkPassword(newPass)) {
-            // Mật khẩu mới không đạt yêu cầu (không thỏa mãn yêu cầu về độ mạnh)
             status = 4;
         } else {
             status = 5;
         }
 
-        // Xử lý từng trạng thái theo logic yêu cầu
         switch (status) {
             case 1:
-                // Mật khẩu cũ sai
                 request.setAttribute("changePWfail", "Incorrect current password.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 2:
-                // Mật khẩu mới và xác nhận mật khẩu không khớp
                 request.setAttribute("changePWfail", "New password and retype password do not match.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 3:
-                // Cả mật khẩu cũ sai và mật khẩu mới không khớp
                 request.setAttribute("changePWfail", "Both current password is incorrect and new password does not match.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 4:
-                // Mật khẩu mới không thỏa mãn yêu cầu của checkPassword()
                 request.setAttribute("changePWfail", "The new password must be 8-20 characters long, and include at "
                         + "least one letter and one special character.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 5:
-                // Nếu không có lỗi, thực hiện cập nhật mật khẩu
                 acc.setPassword(newPass);
                 accountDAO.updatePasswordByUsername(acc);
                 request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
@@ -423,14 +411,14 @@ public class AuthenticationController extends HttpServlet {
         // Lấy mật khẩu và mật khẩu xác nhận từ request
         String newPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        
-        if(!newPassword.equals(confirmPassword)) {
+
+        if (!newPassword.equals(confirmPassword)) {
             // Mật khẩu và xác nhận mật khẩu không khớp
             request.setAttribute("error", "Passwords do not match. Please try again.");
             return "view/authen/ResetPassword.jsp";
-        } else if(!valid.checkPassword(newPassword)) {
+        } else if (!valid.checkPassword(newPassword)) {
             request.setAttribute("error", "The new password must be 8-20 characters long, and include at "
-                        + "least one letter and one special character.");
+                    + "least one letter and one special character.");
             return "view/authen/ResetPassword.jsp";
         } else {
             // Get user email from the request
@@ -459,7 +447,7 @@ public class AuthenticationController extends HttpServlet {
                 request.setAttribute("error", "User not found. Please try again.");
                 return "view/authen/ResetPassword.jsp";
             }
-        } 
+        }
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {

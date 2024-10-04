@@ -110,7 +110,7 @@
                                                 <option value="female">Female</option>
                                             </select>
                                         </div> 
-                                        
+
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">
@@ -156,7 +156,7 @@
             <!-- login offcanvas -->
             <div class="mb-4 d-block d-sm-none">
                 <div class="header__right__btn d-flex justify-content-center gap-3">
-<!--                    <a href="#" class="small__btn no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>-->
+                    <!--                    <a href="#" class="small__btn no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>-->
                     <a href="#" class="small__btn d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
                 </div>
             </div>

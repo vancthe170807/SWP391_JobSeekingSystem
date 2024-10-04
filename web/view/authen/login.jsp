@@ -205,13 +205,13 @@
             <form action="${pageContext.request.contextPath}/authen?action=login" method="post" id="login-form" onsubmit="return validateForm()">
                 <!-- Username Input -->
                 <div class="form-group position-relative text-left">
-                    <label for="username" class="fw-medium text-dark mb-2">Username</label>
+                    <label for="username" class="fw-medium text-dark mb-2">Username*</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" value="${cookie.cu.value}" required>
                 </div>
 
                 <!-- Password Input -->
                 <div class="form-group position-relative text-left">
-                    <label for="password" class="fw-medium text-dark mb-2">Password</label>
+                    <label for="password" class="fw-medium text-dark mb-2">Password*</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" value="${cookie.cp.value}" required>
                     <span class="password__icon" onclick="togglePassword('password')">Show</span>
                 </div>
@@ -224,19 +224,15 @@
                     </div>
                     <a href="${pageContext.request.contextPath}/view/authen/forgotPassword.jsp">Forgot Password?</a>
                 </div>
-                <!-- Login Button -->
-                <!--                <div class="form-group my-3">
-                                    <button type="submit" class="btn btn-primary">Login</button>
-                                </div>-->
-
                 <!-- Google reCAPTCHA -->
                 <div class="g-recaptcha scale-recaptcha" data-sitekey="6LeVFEsqAAAAAFK_7xKTrV798KMOrnTYcVgfeMIa"></div>
                 <div id="error" style="color: red;"></div> <!-- Div để hiển thị lỗi reCAPTCHA -->
-
-
                 <!-- Login Button -->
+                <!--                <div class="form-group my-3">
+                                    <button type="button" onclick="checkCapCha()" class="btn btn-primary">Login</button>
+                                </div>-->
                 <div class="form-group my-3">
-                    <button type="button" onclick="checkCapCha()" class="btn btn-primary">Login</button>
+                    <button type="submit"  class="btn btn-primary">Login</button>
                 </div>
             </form>
             <!-- Register Link -->

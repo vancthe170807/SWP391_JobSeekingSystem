@@ -40,7 +40,6 @@
     </div>
 </footer>
 
-<<<<<<< HEAD
 <style>
     .footer__link {
         transition: color 0.3s ease, transform 0.3s ease;
@@ -58,5 +57,3 @@
         }
     }
 </style>
-=======
->>>>>>> ea586e88dd23b5a7bac82db60beb6d2230a20adf

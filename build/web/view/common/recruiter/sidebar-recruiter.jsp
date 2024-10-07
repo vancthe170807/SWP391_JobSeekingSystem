@@ -2,7 +2,7 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light text-light vh-100" 
      style="width: 280px; position: fixed; top: 0; left: 0; border-right: 2px solid #28a745;">
     <div class="rts__logo text-center mb-3">
-        <a href="${pageContext.request.contextPath}/view/admin/adminHome.jsp">
+        <a href="${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp">
             <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
         </a>
     </div>

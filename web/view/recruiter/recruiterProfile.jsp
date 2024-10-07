@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="select__image">
                                             <label for="editProfile" class="file-upload__label">Edit Profile</label>
-                                            <input type="button" class="file-upload__input" id="editProfile" onclick="location.href = '${pageContext.request.contextPath}/authen?action=edit-profile'" value="Edit Profile">
+                                            <input type="button" class="file-upload__input" id="editProfile" onclick="location.href = '${pageContext.request.contextPath}/authen?action=edit-recruiter-profile'" value="Edit Profile">
                                         </div>
                                         <div class="mb-3">
                                             <label for="fullName" class="form-label">Full Name</label>

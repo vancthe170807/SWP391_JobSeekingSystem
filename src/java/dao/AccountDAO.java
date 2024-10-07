@@ -64,10 +64,10 @@ public class AccountDAO extends GenericDAO<Account> {
     }
     
 //  tim kiem user theo id
-    public Account findUserById(Account account) {
+    public Account findUserById(int id) {
         String sql = "SELECT * FROM [dbo].[Account] where id = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("id", account.getId());
+        parameterMap.put("id", id);
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
@@ -90,15 +90,13 @@ public class AccountDAO extends GenericDAO<Account> {
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
-//    tim kiem theo roleId
-
-    public Account findUserByRoleId(Account account) {
+//    hiển thi các user theo role
+    public List<Account> findAllUserByRoleId(int roleId){
         String sql = "SELECT * FROM [dbo].[Account] where roleId = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("username", account.getUsername());
-        parameterMap.put("password", account.getPassword());
+        parameterMap.put("roleId", roleId);
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
-        return list.isEmpty() ? null : list.get(0);
+        return list;
     }
 //    update thong tin cua account
 
@@ -222,5 +220,22 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("email", account.getEmail());
         updateGenericDAO(sql, parameterMap);
     }
-    
+//    active account
+    public void activeAccount(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [isActive] = ?\n"
+                + " WHERE id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("isActive", 1);
+        parameterMap.put("id", account.getId());
+        updateGenericDAO(sql, parameterMap);
+    }
+//    get active, inactive account
+    public List<Account> filterSeekerByStatus(boolean status) {
+        String sql = "SELECT * FROM [dbo].[Account] where isActive = ? and roleId = 3";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", status);
+        List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
+        return list;
+    }
 }

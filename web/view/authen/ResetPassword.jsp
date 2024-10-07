@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
                             <!-- OTP confirmation form -->
                             <form action="authen?action=reset-password" method="POST" class="d-flex flex-column gap-3">
                                 <div class="form-group">
-                                    
+
                                     <label for="password" class="fw-medium text-dark mb-3">Password</label>
                                     <div class="position-relative">
                                         <!-- Trường nhập mật khẩu với icon để ẩn/hiện mật khẩu -->
@@ -54,7 +55,7 @@
                                 </div>
 
                                 <!-- Error message if OTP is incorrect -->
-                                <c:if test="${requestScope.error != null}">
+                            <c:if test="${requestScope.error != null}">
                                 <div style="color: red; text-align: center;">
                                     ${requestScope.error}
                                 </div>
@@ -78,13 +79,13 @@
 
     <script>
         // Prevent entering spaces in password fields
-            function preventSpaces(event) {
-                if (event.key === " ") {
-                    event.preventDefault();  // Prevent the space from being entered
-                    alert("Passwords cannot contain spaces.");
-                }
+        function preventSpaces(event) {
+            if (event.key === " ") {
+                event.preventDefault();  // Prevent the space from being entered
+                alert("Passwords cannot contain spaces.");
             }
-        
+        }
+
         function togglePassword(id) {
             var input = document.getElementById(id);
             if (input.type === "password") {

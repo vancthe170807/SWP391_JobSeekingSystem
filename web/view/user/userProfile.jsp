@@ -86,14 +86,12 @@
                                         <input type="text" id="genderDisplay" class="form-control" value="${sessionScope.account.isGender() == true ? 'Male' : 'Female'}" readonly >
                                         <input type="hidden" name="gender" id="genderHidden">
                                     </div>
-                                    
-                                </div>
-                                <div class="row row-cols-sm-2 row-cols-1 g-3">
                                     <div class="rt-input-group">
                                         <label for="add">Address</label>
                                         <input type="text" id="add" placeholder="Your Address" required readonly value="${sessionScope.account.getAddress()}">
                                     </div>
                                 </div>
+                                
 
                             </div>
                         </div>

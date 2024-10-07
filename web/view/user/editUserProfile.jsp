@@ -110,16 +110,15 @@
                                                 <option value="female">Female</option>
                                             </select>
                                         </div> 
-                                        
+                                        <div class="rt-input-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" name="email" id="email" value="${sessionScope.account.getEmail()}" required readonly >
+                                        </div>
                                     </div>
                                     <div class="row row-cols-sm-2 row-cols-1 g-3">
                                         <div class="rt-input-group">
                                             <label for="add">Address</label>
                                             <input type="text" name="address" id="add" placeholder="Your Address" value="${sessionScope.account.getAddress()}"required>
-                                        </div>
-                                        <div class="rt-input-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" name="email" id="email" value="${sessionScope.account.getEmail()}" required readonly >
                                         </div>
                                     </div>
 

@@ -60,67 +60,51 @@
         </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ResetPassword.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/logout.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/editUserProfile.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/changePassword.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/login.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/admin/SeekerAdminController.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/admin/listSeeker.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ConfirmOTP.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/forgotPassword.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/userProfile.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/admin/header-admin.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/userHome.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/user/header-user.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/META-INF/context.xml</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/home.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/register.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/authen/common-css-authen.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/validate/Validation.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/META-INF/web.xml</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/login.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/recruiter/header-recruiter.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ConfirmOTP.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/utils/Email.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/breadcrumb-area.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/DBContext.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/footer.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/model/Account.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/deactivateAccount.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/home.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ForgotPasswordOTP.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/header-area.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/admin/adminHome.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/HomeController.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/admin/sidebar-admin.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/register.jsp</file>
         </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ResetPassword.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/logout.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/editUserProfile.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/changePassword.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/login.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/admin/SeekerAdminController.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/admin/listSeeker.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ConfirmOTP.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/forgotPassword.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/userProfile.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/admin/header-admin.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/userHome.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/user/header-user.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/META-INF/context.xml</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/home.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/register.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/authen/common-css-authen.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/validate/Validation.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/META-INF/web.xml</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/login.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/recruiter/header-recruiter.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ConfirmOTP.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/utils/Email.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/breadcrumb-area.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/DBContext.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/footer.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/model/Account.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/user/deactivateAccount.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/home.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/ForgotPasswordOTP.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/header-area.jsp</file>
             <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/admin/adminHome.jsp</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/controller/HomeController.java</file>
-            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/common/admin/sidebar-admin.jsp</file>
+            <file>file:/D:/SWP291/swp391-jobseeker-dev/swp391-jobseeker-dev/web/view/authen/register.jsp</file>
         </group>
     </open-files>
 </project-private>

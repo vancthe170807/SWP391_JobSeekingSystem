@@ -48,7 +48,7 @@
                                         <input type="text" name="lastname" id="sname" placeholder="Enter last name" value="${requestScope.lname}" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
-                                    <span style="color:red">${errorName}</span>
+                                    <span style="color:red">${errorLname}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="sname" class="fw-medium text-dark mb-3">First name</label>
@@ -56,7 +56,7 @@
                                         <input type="text" name="firstname" id="sname" placeholder="Enter first name" value="${requestScope.fname}" required>
                                         <i class="fa-light fa-user icon"></i>
                                     </div>
-                                    <span style="color:red">${errorName}</span>
+                                    <span style="color:red">${errorFname}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Gender</label>
@@ -95,7 +95,8 @@
                                             👁️
                                         </span>
                                     </div>
-                                    <span style="color: #737477">! Password must be 8-20 character, Contain at least alphabet and special character </span>    
+                                    <span style="color: #737477">! Password must be 8-20 character, Contain at least alphabet and special character </span> 
+                                    <br/>
                                     <span style="color:red">${errorPassword}</span>
                                 </div>
                                 <div class="form-group my-3">

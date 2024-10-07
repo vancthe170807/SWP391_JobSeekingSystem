@@ -19,6 +19,8 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import model.Account;
 import validate.Validation;
 
@@ -37,6 +39,7 @@ public class AuthenticationController extends HttpServlet {
         String url;
 
         // Handle GET requests based on the action
+        // SWT: CRITICAL(CODE_SMELL)
         switch (action) {
             case "login":
                 url = "view/authen/login.jsp";
@@ -178,6 +181,7 @@ public class AuthenticationController extends HttpServlet {
                     url = "view/user/userHome.jsp";
                     break;
             }
+            
         }
         return url;
     }
@@ -189,7 +193,7 @@ public class AuthenticationController extends HttpServlet {
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
-        String url;
+        String url = null;
 
         // Get sign-up information
         int roleId = Integer.parseInt(request.getParameter("role"));
@@ -206,8 +210,7 @@ public class AuthenticationController extends HttpServlet {
         request.setAttribute("username", username);
         request.setAttribute("email", email);
         request.setAttribute("password", password);
-        
-        
+
         // Create account object
         Account account = new Account();
         account.setRoleId(roleId);
@@ -232,23 +235,35 @@ public class AuthenticationController extends HttpServlet {
         boolean isExistUserEmail = accountDAO.checkUserEmailExist(account);
 
         // Handle validation errors
+        // Initialize error messages
+        Map<String, String> errorMessages = new HashMap<>();
+
+// Validate inputs
         if (!valid.checkName(firstname)) {
-            request.setAttribute("errorName", "Your first name is invalid!!");
-            url = "view/authen/register.jsp";
-        } else if (!valid.checkName(lastname)) {
-            request.setAttribute("errorName", "Your last name is invalid!!");
-            url = "view/authen/register.jsp";
-        } else if (!valid.checkUserName(username)) {
-            request.setAttribute("errorUsername", "Your user name must be not contain special characters");
-            url = "view/authen/register.jsp";
-        } else if (isExistUsername) {
-            request.setAttribute("errorUsernameExits", "Username exists!!");
-            url = "view/authen/register.jsp";
-        } else if (isExistUserEmail) {
-            request.setAttribute("errorEmail", "Email exists!!");
-            url = "view/authen/register.jsp";
-        } else if (!valid.checkPassword(password)) {
-            request.setAttribute("errorPassword", "Password must be follow the convention!!");
+            errorMessages.put("errorFname", "Your first name is invalid!!");
+        }
+        if (!valid.checkName(lastname)) {
+            errorMessages.put("errorLname", "Your last name is invalid!!");
+        }
+        if (!valid.checkUserName(username)) {
+            errorMessages.put("errorUsername", "Your username must not contain special characters");
+        }
+        if (isExistUsername) {
+            errorMessages.put("errorUsernameExits", "Username exists!!");
+        }
+        if (isExistUserEmail) {
+            errorMessages.put("errorEmail", "Email exists!!");
+        }
+        if (!valid.checkPassword(password)) {
+            errorMessages.put("errorPassword", "Password must follow the convention!!");
+        }
+
+// Check if there are any errors
+        if (!errorMessages.isEmpty()) {
+            // Set error messages in request attributes
+            for (Map.Entry<String, String> entry : errorMessages.entrySet()) {
+                request.setAttribute(entry.getKey(), entry.getValue());
+            }
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
@@ -261,8 +276,9 @@ public class AuthenticationController extends HttpServlet {
             session.setAttribute("userRegister", account);
 
             // Forward to OTP confirmation page
-            return "view/authen/ConfirmOTP.jsp";  // Forward to OTP page after registration
+            return "view/authen/ConfirmOTP.jsp"; // Forward to OTP page after registration
         }
+
         return url;
     }
 
@@ -360,6 +376,7 @@ public class AuthenticationController extends HttpServlet {
             return "view/authen/ConfirmOTP.jsp";
         }
     }
+//SWT: MAJOR (Code_SMELL)
 
     private String sendResetOtp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
         String url;
@@ -378,6 +395,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/forgotPassword.jsp"; // Stay on forgot password page
         } else {
             // Generate a 6-digit OTP and send it to the user's email
+//SWT: CRITICAL (CODE_SMELL)            
             int sixDigitNumber = 100000 + new Random().nextInt(900000);
             Email.sendEmail(email, "OTP Reset Password", "Your OTP code is: " + sixDigitNumber);
 
@@ -424,14 +442,14 @@ public class AuthenticationController extends HttpServlet {
         // Lấy mật khẩu và mật khẩu xác nhận từ request
         String newPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        
-        if(!newPassword.equals(confirmPassword)) {
+
+        if (!newPassword.equals(confirmPassword)) {
             // Mật khẩu và xác nhận mật khẩu không khớp
             request.setAttribute("error", "Passwords do not match. Please try again.");
             return "view/authen/ResetPassword.jsp";
-        } else if(!valid.checkPassword(newPassword)) {
+        } else if (!valid.checkPassword(newPassword)) {
             request.setAttribute("error", "The new password must be 8-20 characters long, and include at "
-                        + "least one letter and one special character.");
+                    + "least one letter and one special character.");
             return "view/authen/ResetPassword.jsp";
         } else {
             // Get user email from the request
@@ -460,7 +478,7 @@ public class AuthenticationController extends HttpServlet {
                 request.setAttribute("error", "User not found. Please try again.");
                 return "view/authen/ResetPassword.jsp";
             }
-        } 
+        }
     }
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
@@ -473,11 +491,11 @@ public class AuthenticationController extends HttpServlet {
             Date dob = Date.valueOf(request.getParameter("date"));
             int yearofbirth = dob.toLocalDate().getYear();
             String gender = request.getParameter("gender");
-            String citizenId = request.getParameter("citizenid");
             String address = request.getParameter("address");
 //        get về image
             Part part = request.getPart("image");
             String imagePath = null;
+//SWT: MAJOR (CODE_SMELL)            
             if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
                 imagePath = null;
             } else {
@@ -503,6 +521,7 @@ public class AuthenticationController extends HttpServlet {
             accountEdit.setFirstName(firstName);
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
+//SWT: MINOR (CODE_SMELL)            
             accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
             accountEdit.setAddress(address);
             accountEdit.setAvatar(imagePath);

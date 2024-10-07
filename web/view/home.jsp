@@ -173,7 +173,7 @@
                         <li><a href="about.jsp">About</a></li>
                         <li><a href="blog.jsp">Blog</a></li>
                         <li><a href="contact.jsp">Contact</a></li>
-                        <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="sign-in-btn">Sign In</a>
+                        <a href="${pageContext.request.contextPath}/authen?action=login" class="sign-in-btn">Sign In</a>
                     </ul>
 
                 </nav>

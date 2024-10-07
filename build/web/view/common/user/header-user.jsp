@@ -25,14 +25,14 @@
                                 <a class="nav-link" href="#">Contact</a>
                             </li>
 
-                            <!-- N?u ch?a tham gia tìm vi?c, hi?n th? nút Join Job Seeking -->
+                            <!-- N?u ch?a tham gia tï¿½m vi?c, hi?n th? nï¿½t Join Job Seeking -->
                             <c:if test="${showJoinJobSeekingButton}">
                                 <a href="${pageContext.request.contextPath}/view/user/JoinJobSeeking.jsp">
                                     <button class="btn btn-success">Join Job Seeking</button>
                                 </a>
                             </c:if>
 
-                            <!-- N?u ?ã tham gia, hi?n th? JobSeekerID -->
+                            <!-- N?u ?ï¿½ tham gia, hi?n th? JobSeekerID -->
                             <c:if test="${not empty jobSeekerInfo}">
                                 <p class="nav-link">Job Seeker ID: 
                                     <strong>${jobSeekerInfo.AccountID}</strong>

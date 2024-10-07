@@ -152,6 +152,7 @@
                     </div>
 
                     <!-- Applied Jobs -->
+<<<<<<< HEAD
                     <!--                    <div class="applied__jobs">
                                             <h6 class="fw-medium mb-30">Applications Overview</h6>
                                             <div class="row px-3 d-flex flex-column g-30">
@@ -279,10 +280,140 @@
                 <!--                <div class="d-flex justify-content-center mt-30">
                                     <p class="copyright">Copyright © 2024 All Rights Reserved by Group 4 - SE1868-NJ</p>
                                 </div>-->
+=======
+<!--                    <div class="applied__jobs">
+                        <h6 class="fw-medium mb-30">Applications Overview</h6>
+                        <div class="row px-3 d-flex flex-column g-30">
+                             single job item 
+                            <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
+                                <div class="company__icon">
+                                    <img src="${pageContext.request.contextPath}/assets/img/home-1/company/apple.svg" alt="">
+                                </div>
+                                <div class="d-flex justify-content-between flex-wrap w-100 gap-3 gap-lg-3">
+                                    <div class="job__meta">
+                                        <div class="d-flex align-items-center justify-content-between gap-3">
+                                            <a href="job-details-3.html" class="job__title h6 fw-semibold">Digital Marketer, Apple</a>
+                                            <span class="badge d-none d-sm-block">Featured</span>
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap gap-lg-4 fw-medium">
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-location-dot"></i> Atlanta, USA
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light rt-briefcase"></i> Full Time
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-clock"></i> 30 Days Ago
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3 gap-xl-5 flex-wrap align-items-center">
+                                        <div class="job__tags d-flex flex-wrap gap-3">
+                                            <a href="#">Marketing</a>
+                                            <a href="#">Selling</a> 
+                                            <a href="#">Selling</a> 
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap">
+                                            <div class="job__sallery d-flex gap-2 align-items-center">
+                                                <i class="fa-sharp rt-price-tag"></i> $500 <span>Monthly</span>
+                                            </div>
+                                            <button class="apply__btn">View Job</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                             single job item end  
+                             single job item 
+                            <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
+                                <div class="company__icon">
+                                    <img src="${pageContext.request.contextPath}/assets/img/home-1/company/facebook.svg" alt="">
+                                </div>
+                                <div class="d-flex justify-content-between flex-wrap w-100 gap-3 gap-lg-3">
+                                    <div class="job__meta">
+                                        <div class="d-flex align-items-center justify-content-between gap-3">
+                                            <a href="job-details-3.html" class="job__title h6 fw-semibold">Digital Marketer, Linkedin</a>
+                                            <span class="badge d-none d-sm-block">Featured</span>
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap gap-lg-4 fw-medium">
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-location-dot"></i> Atlanta, USA
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light rt-briefcase"></i> Full Time
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-clock"></i> 30 Days Ago
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3 gap-xl-5 flex-wrap align-items-center">
+                                        <div class="job__tags d-flex flex-wrap gap-3">
+                                            <a href="#">Marketing</a>
+                                            <a href="#">Selling</a> 
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap">
+                                            <div class="job__sallery d-flex gap-2 align-items-center">
+                                                <i class="fa-sharp rt-price-tag"></i> $500 <span>Monthly</span>
+                                            </div>
+                                            <button class="apply__btn">View Job</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                             single job item end  
+                             single job item 
+                            <div class="rts__job__card__big d-flex flex-wrap flex-md-nowrap gap-4 align-items-center">
+                                <div class="company__icon">
+                                    <img src="${pageContext.request.contextPath}/assets/img/home-1/company/udemy.svg" alt="">
+                                </div>
+                                <div class="d-flex justify-content-between flex-wrap w-100 gap-3 gap-lg-3">
+                                    <div class="job__meta">
+                                        <div class="d-flex align-items-center justify-content-between gap-3">
+                                            <a href="job-details-3.html" class="job__title h6 fw-semibold">Instructor, Udemy</a>
+                                            <span class="badge d-none d-sm-block">Urgent</span>
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap gap-lg-4 fw-medium">
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-location-dot"></i> Atlanta, USA
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light rt-briefcase"></i> Full Time
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <i class="fa-light fa-clock"></i> 30 Days Ago
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3 gap-xl-5 flex-wrap align-items-center">
+                                        <div class="job__tags d-flex flex-wrap gap-3">
+                                            <a href="#">Marketing</a>
+                                            <a href="#">Learning</a> 
+                                            <a href="#">Selling</a> 
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap">
+                                            <div class="job__sallery d-flex gap-2 align-items-center">
+                                                <i class="fa-sharp rt-price-tag"></i> $500 <span>Monthly</span>
+                                            </div>
+                                            <button class="apply__btn">View Job</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                             single job item end  
+                        </div>
+                    </div>-->
+                    <!-- Applied Jobs end -->
+                </div>
+                <!-- footer copyright -->
+<!--                <div class="d-flex justify-content-center mt-30">
+                    <p class="copyright">Copyright © 2024 All Rights Reserved by jobpath</p>
+                </div>-->
+>>>>>>> ea586e88dd23b5a7bac82db60beb6d2230a20adf
                 <!-- footer copyright end -->
             </div>
         </div>
         <!-- content area end -->
+<<<<<<< HEAD
         <!-- THEME PRELOADER START -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
             <!-- THEME PRELOADER END -->
@@ -293,5 +424,61 @@
         <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+=======
+
+
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+            <div class="offcanvas-header p-0 mb-5 mt-4">
+                <a href="index.html" class="offcanvas-title" id="offcanvasLabel">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" alt="logo">
+                </a> 
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <!-- login offcanvas -->
+            <div class="mb-4 d-block d-sm-none">
+                <div class="header__right__btn d-flex justify-content-center gap-3">
+<!--                    <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="small__btn no__fill__btn border-6 font-xs" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"> <i class="rt-login"></i>Sign In</a>-->
+                    <a href="#" class="small__btn d-xl-flex fill__btn border-6 font-xs" aria-label="Job Posting Button">Add Job</a>
+                </div>
+            </div>
+            <div class="offcanvas-body p-0">
+                <div class="rts__offcanvas__menu overflow-hidden">
+                    <div class="offcanvas__menu"></div>
+                </div>
+                <p class="max-auto font-20 fw-medium text-center text-decoration-underline mt-4">Our Social Links</p>
+                <div class="rts__social d-flex justify-content-center gap-3 mt-3">
+                    <a href="https://facebook.com"  aria-label="facebook">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://instagram.com"  aria-label="instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com"  aria-label="linkedin">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://pinterest.com"  aria-label="pinterest">
+                        <i class="fa-brands fa-pinterest"></i>
+                    </a>
+                    <a href="https://youtube.com"  aria-label="youtube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- THEME PRELOADER START -->
+        <div class="loader-wrapper">
+            <div class="loader">
+            </div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+        <!-- THEME PRELOADER END -->
+        <button type="button" class="rts__back__top" id="rts-back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <!-- all plugin js -->
+        <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
+>>>>>>> ea586e88dd23b5a7bac82db60beb6d2230a20adf
     </body>
 </html>

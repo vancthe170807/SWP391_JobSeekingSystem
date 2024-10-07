@@ -59,7 +59,6 @@
             </div>
         </div>
 
-
         <!-- Footer and JS includes -->
         <jsp:include page="../common/footer.jsp"></jsp:include>                       
         <jsp:include page="../common/authen/common-js-authen.jsp"></jsp:include>

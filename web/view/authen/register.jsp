@@ -82,6 +82,7 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <jsp:include page="../common/authen/common-js-authen.jsp"></jsp:include>
@@ -141,3 +142,62 @@
         </script>
     </body>
 </html>
+=======
+        <jsp:include page="../common/footer.jsp"></jsp:include>                    
+        <jsp:include  page="../common/authen/common-js-authen.jsp"></jsp:include>      
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const buttons = document.querySelectorAll('.tab__switch .rts__btn');
+                    const hiddenInput = document.querySelector('input[name="role"]');
+
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            // Remove active class from all buttons
+                            buttons.forEach(btn => btn.classList.remove('active'));
+
+                            // Add active class to clicked button
+                            this.classList.add('active');
+
+                            // Update hidden input value based on selection
+                            if (this.textContent.trim() === 'Seeker') {
+                                hiddenInput.value = '3';
+                            } else if (this.textContent.trim() === 'Recruiter') {
+                                hiddenInput.value = '2';
+                            }
+                        });
+                    });
+
+                    // Set initial value based on the button that has 'active' class
+                    const activeButton = document.querySelector('.tab__switch .rts__btn.active');
+                    if (activeButton) {
+                        hiddenInput.value = activeButton.textContent.trim() === 'Seeker' ? '3' : '2';
+                    }
+                });
+                function togglePassword(id) {
+                    var input = document.getElementById(id);
+                    if (input.type === "password") {
+                        input.type = "text";
+                    } else {
+                        input.type = "password";
+                    }
+                }
+//                get ve gender
+//                var genderSelect = document.getElementById('gender');
+//                var selectedGender = '${requestScope.gender}'; // Giả sử bạn đã set attribute 'gender' trong servlet
+//
+//                if (selectedGender) {
+//                    for (var i = 0; i < genderSelect.options.length; i++) {
+//                        if (genderSelect.options[i].value === selectedGender) {
+//                            genderSelect.options[i].selected = true;
+//                            break;
+//                        }
+//                        }
+//                    }
+//                }
+//                );
+        </script>
+</html>
+
+
+
+>>>>>>> ea586e88dd23b5a7bac82db60beb6d2230a20adf

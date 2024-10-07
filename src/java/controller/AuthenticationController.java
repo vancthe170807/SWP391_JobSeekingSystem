@@ -21,6 +21,8 @@ import java.io.File;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 import validate.Validation;
 
@@ -58,6 +60,9 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "edit-profile":
                 url = "view/user/editUserProfile.jsp";
+                break;
+            case "edit-recruiter-profile":
+                url = "view/recruiter/editRecruiterProfile.jsp";
                 break;
             default:
                 url = "view/authen/login.jsp";
@@ -113,6 +118,9 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "edit-profile":
                 url = editProfile(request, response);
+                break;
+            case "edit-recruiter-profile":
+                url = editRecruiterProfile(request, response);
                 break;
             default:
                 url = "home";
@@ -189,7 +197,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "view/home.jsp";
+        return "home";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
@@ -291,51 +299,39 @@ public class AuthenticationController extends HttpServlet {
         Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String url = null;
 
-        // Trạng thái của việc thay đổi mật khẩu
         int status = 0;
 
-        // Kiểm tra trường hợp mật khẩu cũ, mật khẩu mới và xác nhận mật khẩu mới
         if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
-            // Cả mật khẩu cũ sai và mật khẩu mới không khớp
             status = 3;
         } else if (!currPass.equals(acc.getPassword())) {
-            // Mật khẩu cũ sai
             status = 1;
         } else if (!newPass.equals(retypePass)) {
-            // Mật khẩu mới và xác nhận mật khẩu không khớp
             status = 2;
         } else if (!valid.checkPassword(newPass)) {
-            // Mật khẩu mới không đạt yêu cầu (không thỏa mãn yêu cầu về độ mạnh)
             status = 4;
         } else {
             status = 5;
         }
 
-        // Xử lý từng trạng thái theo logic yêu cầu
         switch (status) {
             case 1:
-                // Mật khẩu cũ sai
                 request.setAttribute("changePWfail", "Incorrect current password.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 2:
-                // Mật khẩu mới và xác nhận mật khẩu không khớp
                 request.setAttribute("changePWfail", "New password and retype password do not match.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 3:
-                // Cả mật khẩu cũ sai và mật khẩu mới không khớp
                 request.setAttribute("changePWfail", "Both current password is incorrect and new password does not match.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 4:
-                // Mật khẩu mới không thỏa mãn yêu cầu của checkPassword()
                 request.setAttribute("changePWfail", "The new password must be 8-20 characters long, and include at "
                         + "least one letter and one special character.");
                 url = "view/authen/changePassword.jsp";
                 break;
             case 5:
-                // Nếu không có lỗi, thực hiện cập nhật mật khẩu
                 acc.setPassword(newPass);
                 accountDAO.updatePasswordByUsername(acc);
                 request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
@@ -537,7 +533,96 @@ public class AuthenticationController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            url = "view/user/editUserProfile.jsp";
+            url = "view/user/userProfile.jsp";
+        }
+        return url;
+    }
+
+    private String editRecruiterProfile(HttpServletRequest request, HttpServletResponse response) {
+        String url = "";
+        try {
+            // Lấy các thông tin từ form
+            String lastName = request.getParameter("lastName");
+            String firstName = request.getParameter("firstName");
+            String phone = request.getParameter("phone");
+            Date dob = Date.valueOf(request.getParameter("date"));
+            int yearofbirth = dob.toLocalDate().getYear();
+            String gender = request.getParameter("gender");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+
+            // Lấy ảnh avatar từ form (nếu có)
+            Part part = request.getPart("avatar");
+            String imagePath = null;
+
+            // Nếu có ảnh mới thì xử lý tải lên
+            if (part != null && part.getSize() > 0 && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
+                // Đường dẫn lưu ảnh
+                String path = request.getServletContext().getRealPath("/images");
+                File dir = new File(path);
+
+                // Kiểm tra xem thư mục có tồn tại không, nếu không thì tạo mới
+                if (!dir.exists()) {
+                    dir.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+                }
+
+                // Tạo file ảnh trong thư mục images
+                File image = new File(dir, part.getSubmittedFileName());
+
+                // Ghi file ảnh vào đường dẫn
+                part.write(image.getAbsolutePath());
+
+                // Lấy đường dẫn tương đối của ảnh để lưu vào database
+                imagePath = request.getContextPath() + "/images/" + image.getName();
+            }
+
+            // Lấy session và đối tượng Account hiện tại
+            HttpSession session = request.getSession();
+            Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+            // Cập nhật thông tin trong đối tượng Account
+            accountEdit.setLastName(lastName);
+            accountEdit.setFirstName(firstName);
+            accountEdit.setPhone(phone);
+            accountEdit.setDob(dob);
+            accountEdit.setGender(gender.equalsIgnoreCase("male"));
+            accountEdit.setAddress(address);
+            accountEdit.setEmail(email);
+
+            // Nếu có ảnh mới, cập nhật ảnh avatar, nếu không, giữ lại ảnh hiện tại
+            if (imagePath != null) {
+                accountEdit.setAvatar(imagePath);
+            }
+
+            // Kiểm tra điều kiện hợp lệ cho ngày sinh và số điện thoại
+            List<String> errorsMessage = new ArrayList<>();
+            if (!valid.checkYearOfBirth(yearofbirth)) {
+                errorsMessage.add("You must be between 17 and 50 years old!");
+            }
+            if (!valid.CheckPhoneNumber(phone)) {
+                errorsMessage.add("Phone number is not valid!");
+            }
+            if (!valid.checkName(lastName)) {
+                errorsMessage.add("Last name is invalid!");
+            }
+            if (!valid.checkName(firstName)) {
+                errorsMessage.add("First name is invalid!");
+            }
+
+            // Nếu có lỗi, đặt thông báo lỗi vào request và quay lại trang chỉnh sửa hồ sơ
+            if (!errorsMessage.isEmpty()) {
+                request.setAttribute("errorsMessage", errorsMessage);
+                url = "view/recruiter/editRecruiterProfile.jsp";
+            } else {
+                // Cập nhật thông tin người dùng vào cơ sở dữ liệu
+                accountDAO.updateAccount(accountEdit);
+                request.setAttribute("successMessage", "Profile updated successfully.");
+                url = "view/recruiter/recruiterHome.jsp";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            url = "view/recruiter/editRecruiterProfile.jsp";
         }
         return url;
     }

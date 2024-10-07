@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Change password
+    Document   : Change Password
     Created on : Sep 15, 2024, 9:29:22 PM
     Author     : TuanTVHE173048
 --%>
@@ -38,45 +38,17 @@
 
             .password-box {
                 background-color: white;
-                padding: 60px;
+                padding: 40px;
                 border-radius: 10px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                width: 500px;
+                width: 400px;
                 text-align: center;
             }
 
             h2 {
                 margin-bottom: 40px;
-                font-size: 26px;
+                font-size: 32px;
                 color: #28a745;
-            }
-
-            .highlight {
-                color: #28a745;
-            }
-
-            .welcome {
-                margin-bottom: 40px;
-                font-size: 18px;
-                text-align: left;
-            }
-
-            .welcome strong {
-                font-weight: bold;
-            }
-
-            .logout-btn {
-                float: right;
-                padding: 8px 15px;
-                background-color: #dc3545;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                font-size: 16px;
-            }
-
-            .logout-btn:hover {
-                background-color: #c82333;
             }
 
             .input-group {
@@ -88,12 +60,13 @@
             label {
                 display: block;
                 font-size: 16px;
+                font-weight: bold;
                 margin-bottom: 10px;
             }
 
             input[type="password"], input[type="text"] {
                 width: 100%;
-                padding: 15px;
+                padding: 12px;
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 font-size: 16px;
@@ -108,6 +81,14 @@
                 font-size: 14px;
             }
 
+            .password-note {
+                font-size: 14px;
+                color: #737477;
+                margin-top: 5px;
+                font-style: italic;
+                display: none;
+            }
+
             .button-group {
                 display: flex;
                 justify-content: space-between;
@@ -115,11 +96,11 @@
             }
 
             .btn {
-                padding: 18px 40px;
+                padding: 12px 30px;
                 border: none;
                 border-radius: 5px;
                 text-decoration: none;
-                font-size: 18px;
+                font-size: 16px;
             }
 
             .update-btn {
@@ -148,15 +129,9 @@
                 border: 1px solid #f5c6cb;
                 padding: 20px;
                 border-radius: 5px;
-                font-size: 16px;
+                font-size: 13px;
                 margin-bottom: 20px;
-            }
-
-            .space-error {
-                color: red;
-                font-size: 14px;
-                margin-top: 10px;
-                display: none;
+                font-weight: bold;
             }
 
         </style>
@@ -165,10 +140,6 @@
         <div class="password-container">
             <div class="password-box">
                 <h2>Change Password</h2>
-
-                <div class="welcome">
-                    Welcome <strong>${sessionScope.account.getFullName()}</strong>
-                </div>
                 <form action="${pageContext.request.contextPath}/authen?action=change-password" method="POST" onsubmit="return validateForm()">
                     <div class="input-group">
                         <label for="currentPassword">Current Password</label>
@@ -179,13 +150,13 @@
                         <label for="newPassword">New Password</label>
                         <input type="password" id="newPassword" name="newPassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('newPassword', this)">Show</span>
+                        <p id="passwordNote" class="password-note">Passwords must be 8 to 20 characters long and include numbers, letters and special characters.</p>
                     </div>
                     <div class="input-group">
                         <label for="retypePassword">Retype Password</label>
                         <input type="password" id="retypePassword" name="retypePassword" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('retypePassword', this)">Show</span>
                     </div>
-
                     <c:if test="${not empty requestScope.changePWfail}">
                         <div class="error-message">${requestScope.changePWfail}</div>
                     </c:if>
@@ -197,19 +168,9 @@
             </div>
         </div>
 
-        <!-- JavaScript function for Cancel and Toggle Password -->
+        <!-- JavaScript -->
         <script>
-            function cancelChangePassword() {
-                var role = ${sessionScope.account.getRoleId()};
-                if (role === 1) {
-                    window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
-                } else if (role === 2) {
-                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp";
-                } else if (role === 3) {
-                    window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
-                }
-            }
-
+            // Function to show or hide the password
             function togglePasswordVisibility(id, element) {
                 var input = document.getElementById(id);
                 if (input.type === "password") {
@@ -221,10 +182,34 @@
                 }
             }
 
+            // Function to cancel password change and redirect to appropriate page
+            function cancelChangePassword() {
+                var role = ${sessionScope.account.getRoleId()};
+                if (role === 1) {
+                    window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
+                } else if (role === 2) {
+                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp";
+                } else if (role === 3) {
+                    window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
+                }
+            }
+
+            // Event listeners to show/hide password note
+            var newPasswordInput = document.getElementById('newPassword');
+            var passwordNote = document.getElementById('passwordNote');
+
+            newPasswordInput.addEventListener('focus', function() {
+                passwordNote.style.display = 'block'; // Hiện ghi chú khi người dùng nhấp vào trường
+            });
+
+            newPasswordInput.addEventListener('blur', function() {
+                passwordNote.style.display = 'none'; // Ẩn ghi chú khi người dùng nhấp ra ngoài trường
+            });
+
             // Prevent entering spaces in password fields
             function preventSpaces(event) {
                 if (event.key === " ") {
-                    event.preventDefault();  // Prevent the space from being entered
+                    event.preventDefault();
                     alert("Passwords cannot contain spaces.");
                 }
             }

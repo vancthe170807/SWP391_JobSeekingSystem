@@ -202,43 +202,67 @@
                             </form>
                         </div>
                         <div class="seeker-list">
-                            <c:forEach items="${listSeekers}" var="seeker">
-                                <div class="seeker-item">
-                                    <img src="${seeker.getAvatar()}" alt="Avatar" class="seeker-avatar">
-                                    <div class="seeker-info">
-                                        <h6 class="seeker-name">${seeker.getFullName()}</h6>
-                                    </div>
-                                    <span class="seeker-status ${seeker.isIsActive() ? 'active' : 'inactive'}">
-                                        ${seeker.isIsActive() ? 'Active' : 'Inactive'}
-                                    </span>
-                                    <div class="seeker-actions">
-                                        <form action="${pageContext.request.contextPath}/seekers?action=view-detail" method="POST">
-                                            <input type="hidden" name="id-seeker" value="${seeker.getId()}">
-                                            <button class="btn btn-info" type="submit">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </form>
-                                        <c:choose>
-                                            <c:when test="${seeker.isIsActive()}">
-                                                <form action="${pageContext.request.contextPath}/seekers?action=deactive" method="POST" class="status-change-form">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Avatar</th>
+                                        <th>Full Name</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will go here (populated dynamically) -->
+                                    <c:forEach items="${listSeekers}" var="seeker">
+                                        <tr>
+                                            <!-- Avatar Column -->
+                                            <td>
+                                                <img src="${seeker.getAvatar()}" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                            </td>
+
+                                            <!-- Full Name Column -->
+                                            <td>${seeker.getFullName()}</td>
+
+                                            <!-- Status Column -->
+                                            <td>
+                                                <span class="seeker-status ${seeker.isIsActive() ? 'active' : 'inactive'}">
+                                                    ${seeker.isIsActive() ? 'Active' : 'Inactive'}
+                                                </span>
+                                            </td>
+
+                                            <!-- Action Column -->
+                                            <td>
+                                                <form action="${pageContext.request.contextPath}/seekers?action=view-detail" method="POST">
                                                     <input type="hidden" name="id-seeker" value="${seeker.getId()}">
-                                                    <button class="btn btn-danger status-change-btn" type="button" data-action="deactivate">
-                                                        <i class="fa fa-ban"></i>
-                                                    </button>
-                                                </form>    
-                                            </c:when>
-                                            <c:otherwise>
-                                                <form action="${pageContext.request.contextPath}/seekers?action=active" method="POST" class="status-change-form">
-                                                    <input type="hidden" name="id-seeker" value="${seeker.getId()}">
-                                                    <button class="btn btn-success status-change-btn" type="button" data-action="activate">
-                                                        <i class="fa fa-check"></i>
+                                                    <button class="btn btn-info" type="submit">
+                                                        <i class="fa fa-eye"></i>
                                                     </button>
                                                 </form>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                            </c:forEach>
+
+                                                <c:choose>
+                                                    <c:when test="${seeker.isIsActive()}">
+                                                        <form action="${pageContext.request.contextPath}/seekers?action=deactive" method="POST">
+                                                            <input type="hidden" name="id-seeker" value="${seeker.getId()}">
+                                                            <button class="btn btn-danger" type="submit">
+                                                                <i class="fa fa-ban"></i> 
+                                                            </button>
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <form action="${pageContext.request.contextPath}/seekers?action=active" method="POST">
+                                                            <input type="hidden" name="id-seeker" value="${seeker.getId()}">
+                                                            <button class="btn btn-success" type="submit">
+                                                                <i class="fa fa-check"></i> 
+                                                            </button>
+                                                        </form>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
 
                             <!-- Add more seekers here -->
                         </div>
@@ -299,55 +323,7 @@
                 </button>
                 <!-- all plugin js -->
                 <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const statusButtons = document.querySelectorAll('.status-change-btn');
-                            const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-                            let currentForm;
-
-                            statusButtons.forEach(button => {
-                                button.addEventListener('click', function (e) {
-                                    e.preventDefault();
-                                    const action = this.getAttribute('data-action');
-                                    const seekerName = this.closest('.seeker-item').querySelector('.seeker-name').textContent;
-                                    currentForm = this.closest('form');
-
-                                    let message = '';
-                                    if (action === 'activate') {
-                                        message = `Are you sure you want to activate ${seekerName}'s account?`;
-                                    } else {
-                                        message = `Are you sure you want to activate ${seekerName}'s account?`;
-                                    }
-
-                                    document.getElementById('confirmMessage').textContent = message;
-                                    confirmModal.show();
-                                });
-                            });
-
-                            document.getElementById('confirmAction').addEventListener('click', function () {
-                                if (currentForm) {
-                                    currentForm.submit();
-                                }
-                                confirmModal.hide();
-                            });
-                        });
-                </script>
-                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmModalLabel">Confirm status change</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p id="confirmMessage"></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                 
+           
                 </body>
                 </html>

@@ -65,7 +65,7 @@
                         <div id="error" class="text-danger mb-3"></div> <!-- Div to display reCAPTCHA errors -->
 
                         <!-- Login Button -->
-                        <button type="submit" onclick="checkCapCha()" class="btn btn-success w-100 my-3">Login</button>
+                        <button type="submit" class="btn btn-success w-100 my-3">Login</button>
                     </form>
 
                     <!-- Register Link -->

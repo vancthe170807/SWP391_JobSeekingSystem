@@ -18,5 +18,21 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
         </group>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/recruiter/sidebar-recruiter.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/login.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/register.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/common/recruiter/common-css-recruiter.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/home.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/listSeeker.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Account.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/changePassword.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobSeekers.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/logout.jsp</file>
+        </group>
     </open-files>
 </project-private>

@@ -18,6 +18,7 @@ public class JobSeekerCheck extends HttpServlet {
     AccountDAO accountDAO = new AccountDAO();
     JobSeekerDAO jobSeekerDAO = new JobSeekerDAO();
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -44,10 +45,22 @@ public class JobSeekerCheck extends HttpServlet {
                 session.setAttribute("jobSeekerID", null);
             }
 
-            response.sendRedirect("view/user/userHome.jsp");
+            response.sendRedirect("view/user/userProfile.jsp");
         } else {
             // Handle invalid login
             response.sendRedirect("login.jsp?error=Invalid credentials");
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Get session if exists, don't create new one
+        if (session != null && session.getAttribute("account") != null) {
+            // If account exists in session, redirect to profile
+            response.sendRedirect("view/user/userProfile.jsp");
+        } else {
+            // Otherwise, redirect to login page
+            response.sendRedirect("login.jsp");
         }
     }
 }

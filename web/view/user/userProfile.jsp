@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@page import="model.Account"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,45 +13,71 @@
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        </head>
-        <body class="template-dashboard">
-            <!-- header area -->
+    </head>
+    <body class="template-dashboard">
+        <!-- header area -->
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- header area end -->
+        <%
+            Account account = (Account) session.getAttribute("account");
+            String jobSeekerID = (String) session.getAttribute("jobSeekerID");
 
-            <div class="container mt-5 mb-5">
-                <div class="row">
-                    <!-- Sidebar Section -->
-                    <div class="col-md-3 sidebar p-3">
-                        <h5 class="text-center text-white">User Menu</h5>
-                        <ul class="nav nav-tabs flex-column" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="cv-tab" data-bs-toggle="tab" href="#cv" role="tab" aria-controls="cv" aria-selected="false">Upload / Update CV</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab" aria-controls="education" aria-selected="false">Education</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="skill-experience-tab" data-bs-toggle="tab" href="#skill-experience" role="tab" aria-controls="skill-experience" aria-selected="false">Skill & Experience</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="deactivate-account-tab" data-bs-toggle="tab" href="#deactivate-account" role="tab" aria-controls="deactivate-account" aria-selected="false">Deactivate Account</a>
-                            </li>
-                        </ul>
-                    </div>
+            if (account != null) {
+        %>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thông Tin Tài Khoản</h5>
+                    <p><strong>Tên đăng nhập:</strong> <%= account.getUsername() %></p>
+                    <p><strong>Email:</strong> <%= account.getEmail() %></p>
+                    <%
+                        if (jobSeekerID != null) {
+                    %>
+                        <p><strong>Job Seeker ID:</strong> <%= jobSeekerID %></p>
+                    <%
+                        } else {
+                    %>
+                        <p><strong>Job Seeker ID:</strong> Không tìm thấy</p>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+        <%
+            } 
+        %>
+        <div class="container mt-5 mb-5">
+            <div class="row">
+                <!-- Sidebar Section -->
+                <div class="col-md-3 sidebar p-3">
+                    <h5 class="text-center text-white">User Menu</h5>
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cv-tab" data-bs-toggle="tab" href="#cv" role="tab" aria-controls="cv" aria-selected="false">Upload / Update CV</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab" aria-controls="education" aria-selected="false">Education</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="skill-experience-tab" data-bs-toggle="tab" href="#skill-experience" role="tab" aria-controls="skill-experience" aria-selected="false">Skill & Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="deactivate-account-tab" data-bs-toggle="tab" href="#deactivate-account" role="tab" aria-controls="deactivate-account" aria-selected="false">Deactivate Account</a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <!-- Main Content Section -->
-                    <div class="col-md-9">
-                        <c:set var="isJobSeeker" value="${not empty jobSeekerInfo}" />
-                        <div class="tab-content">
-                            <!-- Profile Tab -->
-                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <h4 class="mb-3">Profile Information</h4>
-                                <form class="p-4 rounded shadow-sm bg-light">
-                                    <div class="author__image mb-3 text-center">
+                <!-- Main Content Section -->
+                <div class="col-md-9">
+                    <c:set var="isJobSeeker" value="${not empty jobSeekerInfo}" />
+                    <div class="tab-content">
+                        <!-- Profile Tab -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <h4 class="mb-3">Profile Information</h4>
+                            <form class="p-4 rounded shadow-sm bg-light">
+                                <div class="author__image mb-3 text-center">
                                     <c:if test="${empty sessionScope.account.avatar}">
                                         <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
                                     </c:if>
@@ -64,7 +91,7 @@
                                         <input type="text" id="jobseekerid" class="form-control" placeholder="Full Name" required readonly value="${jobSeekerInfo.jobSeekerID}">
                                     </div>
                                 </c:if>
-                                    
+
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Full Name</label>
                                     <input type="text" id="name" class="form-control" placeholder="Full Name" required readonly value="${sessionScope.account.fullName}">
@@ -108,7 +135,34 @@
                         </div>
                         <!-- Education-->
                         <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
-
+                            <h5 class="mb-3">Education</h5>
+                            <form action="/submit-education-info" method="POST">
+                                <div class="mb-3">
+                                    <label for="institution" class="form-label">Institution</label>
+                                    <input type="text" class="form-control" id="institution" name="institution" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="degree" class="form-label">Degree</label>
+                                    <input type="text" class="form-control" id="degree" name="degree" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fieldOfStudy" class="form-label">Field of Study</label>
+                                    <input type="text" class="form-control" id="fieldOfStudy" name="fieldOfStudy" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="endDate" class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="endDate" name="endDate">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" class="form-check-input" id="currentlyStudying" name="currentlyStudying" onclick="toggleEndDate()">
+                                    <label class="form-check-label" for="currentlyStudying">Studying</label>
+                                </div>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </form>
 
                         </div>
 
@@ -172,6 +226,17 @@
                 input.type = "text";
             } else {
                 input.type = "password";
+            }
+        }
+
+        function toggleEndDate() {
+            const checkbox = document.getElementById('currentlyStudying');
+            const endDateField = document.getElementById('endDate');
+            if (checkbox.checked) {
+                endDateField.disabled = true;
+                endDateField.value = ''; // Reset value if checked
+            } else {
+                endDateField.disabled = false;
             }
         }
     </script>

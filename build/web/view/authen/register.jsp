@@ -63,7 +63,7 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" value="${cookie.cp.value}" required>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" value="${requestScope.password}" required>
                                         <span class="input-group-text cursor-pointer" onclick="togglePassword('password')">
                                             👁️
                                         </span>

@@ -18,14 +18,7 @@
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Job Seeker ID: ${sessionScope.jobSeekerID}</a></li>
                             <li class="nav-item">
-                                <c:choose>
-                                    <c:when test="${not empty sessionScope.jobSeekerID}">
-                                        <span>Job Seeker ID: ${sessionScope.jobSeekerID}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="${pageContext.request.contextPath}/view/user/JoinJobSeeking.jsp" class="btn btn-success">Join Job Seeking</a>
-                                    </c:otherwise>
-                                </c:choose>
+                                
                             </li>
                         </ul>
                     </nav>

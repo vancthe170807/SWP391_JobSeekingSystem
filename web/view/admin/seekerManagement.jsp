@@ -39,14 +39,14 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
 
-                    <div class="col-md-10">
+                    <div class="col-md-9">
 
                         <!--content-main can fix-->
                         <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">

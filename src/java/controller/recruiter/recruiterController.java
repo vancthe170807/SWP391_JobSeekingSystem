@@ -2,35 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-package controller.admin;
+package controller.recruiter;
 
 import dao.AccountDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 
-@WebServlet(name="SeekerAdminController", urlPatterns={"/seekers"})
-public class SeekerAdminController extends HttpServlet {
+@WebServlet(name = "recruiterController", urlPatterns = {"/re"})
+public class recruiterController extends HttpServlet {
+
     AccountDAO dao = new AccountDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
-        //lay ve id de view profile
         // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
         List<Account> listSeekers;
         switch (filter) {
-            
+
             case "all":
                 listSeekers = dao.findAllUserByRoleId(3);
                 break;
@@ -41,28 +41,26 @@ public class SeekerAdminController extends HttpServlet {
                 listSeekers = dao.filterSeekerByStatus(false);
                 break;
             default:
-                 listSeekers = dao.findAllUserByRoleId(3);
+                listSeekers = dao.findAllUserByRoleId(3);
         }
         request.setAttribute("listSeekers", listSeekers);
         // Handle GET requests based on the action
-        
+
         switch (action) {
             case "view-list-seekers":
-                url = "view/admin/seekerManagement.jsp";
+                url = "view/admin/listSeeker.jsp";
                 break;
             default:
-                url = "view/admin/seekerManagement.jsp";
+                url = "view/admin/listSeeker.jsp";
         }
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
-        
-    } 
-
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
         int id = Integer.parseInt(request.getParameter("id-seeker"));
@@ -76,16 +74,31 @@ public class SeekerAdminController extends HttpServlet {
                 break;
             case "view-detail":
                 url = viewDetail(request, response, account);
-                request.getRequestDispatcher(url).forward(request, response);
                 break;
-                
             default:
-                url = "view/admin/seekerManagement.jsp";
+                url = "view/admin/listSeeker.jsp";
         }
-       response.sendRedirect(url);
+        response.sendRedirect(url);
     }
 
-    private String deactive(HttpServletRequest request, HttpServletResponse response, Account account) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet recruiterController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet recruiterController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+    
+     private String deactive(HttpServletRequest request, HttpServletResponse response, Account account) {
         dao.deactiveAccount(account);
         return "seekers";
     }
@@ -96,13 +109,7 @@ public class SeekerAdminController extends HttpServlet {
     }
 
     private String viewDetail(HttpServletRequest request, HttpServletResponse response, Account account) {
-        request.setAttribute("accountView", account);
-        return "view/admin/viewDetailSeekers.jsp";
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
-
-   
-    
 
 }

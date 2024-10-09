@@ -15,12 +15,12 @@
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/seekers" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-users"></i></span> Seeker List
+                <span class="me-2"><i class="fa-solid fa-users"></i></span> Seeker Management
             </a>
         </li>
         <li>
-            <a href="/admin/users" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-users"></i></span> Users
+            <a href="${pageContext.request.contextPath}/companies" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-users"></i></span> Company Management
             </a>
         </li>
         <li>
@@ -47,7 +47,7 @@
                     <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="40" height="40">
                 </c:if>
                 <c:if test="${!empty sessionScope.account.avatar}">
-                    <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="40" height="40">
+                    <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="40" height="40">
                 </c:if>
             </div>
             <div class="d-flex flex-column">

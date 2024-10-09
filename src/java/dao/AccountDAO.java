@@ -224,7 +224,7 @@ public class AccountDAO extends GenericDAO<Account> {
     public List<Account> filterSeekerByStatus(boolean status) {
         String sql = "SELECT * FROM [dbo].[Account] where isActive = ? and roleId = 3";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("id", status);
+        parameterMap.put("isActive", status);
         List<Account> list = queryGenericDAO(Account.class, sql, parameterMap);
         return list;
     }

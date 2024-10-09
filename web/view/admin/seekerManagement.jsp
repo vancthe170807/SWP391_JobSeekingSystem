@@ -77,7 +77,7 @@
                                                 <th>Avatar</th>
                                                 <th>Full Name</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>View</th>
                                             </tr>
                                         </thead>
                                         <tbody>

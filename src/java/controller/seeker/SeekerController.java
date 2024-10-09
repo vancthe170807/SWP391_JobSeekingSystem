@@ -1,4 +1,4 @@
-package controller;
+package controller.seeker;
 
 import constant.CommonConst;
 import dao.JobSeekerDAO;
@@ -72,7 +72,7 @@ public class SeekerController extends HttpServlet {
 
     // Bật chức năng tìm việc để ghi vào DB JobSeeker
     private String joinJobSeeking(HttpServletRequest request) {
-        String url = "view/user/userHome.jsp";
+        String url = null;
 
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
@@ -81,7 +81,7 @@ public class SeekerController extends HttpServlet {
         if (account == null) {
             System.out.println("Account is null. User might not be logged in.");
             request.setAttribute("joinerror", "Unable to join job seeking. Please log in first.");
-            return "view/authen/login.jsp";
+            url= "view/authen/login.jsp";
         }
 
         int accountId = account.getId();
@@ -96,6 +96,7 @@ public class SeekerController extends HttpServlet {
             jobSeekerDAO.insert(jobSeeker);
             System.out.println("Job seeker inserted successfully with AccountID: " + accountId);
             request.setAttribute("joinsuccess", "Confirmed! You have successfully joined Job Seeking.");
+            url = "view/user/JoinJobSeeking.jsp";
         } catch (Exception e) {
             // Log ngoại lệ khi xảy ra lỗi
             System.out.println("Error inserting job seeker: " + e.getMessage());

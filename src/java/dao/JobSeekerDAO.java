@@ -19,9 +19,8 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
     // Insert a new Job Seeker
     @Override
     public int insert(JobSeekers t) {
-        String sql = "INSERT INTO [dbo].[JobSeekers] ([JobSeekerID], [AccountID]) VALUES (?, ?)";
+        String sql = "INSERT INTO [dbo].[JobSeekers] ([AccountID]) VALUES (?)";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("JobSeekerID", t.getAccountID()); //De JobSeekerID no trung voi AccountID
         parameterMap.put("AccountID", t.getAccountID());
         return insertGenericDAO(sql, parameterMap);
     }

@@ -12,33 +12,21 @@
                 <div class="navigation d-none d-lg-block">
                     <nav class="navigation__menu" id="offcanvas__menu">
                         <ul class="nav">
+                            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Job Seeker ID: ${sessionScope.jobSeekerID}</a></li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.jobSeekerID}">
+                                        <span>Job Seeker ID: ${sessionScope.jobSeekerID}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.contextPath}/view/user/JoinJobSeeking.jsp" class="btn btn-success">Join Job Seeking</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
-                            </li>
-
-                            <!-- N?u ch?a tham gia t�m vi?c, hi?n th? n�t Join Job Seeking -->
-                            <c:if test="${showJoinJobSeekingButton}">
-                                <a href="${pageContext.request.contextPath}/view/user/JoinJobSeeking.jsp">
-                                    <button class="btn btn-success">Join Job Seeking</button>
-                                </a>
-                            </c:if>
-
-                            <!-- N?u ?� tham gia, hi?n th? JobSeekerID -->
-                            <c:if test="${not empty jobSeekerInfo}">
-                                <p class="nav-link">Job Seeker ID: 
-                                    <strong>${jobSeekerInfo.AccountID}</strong>
-                                </p>
-                            </c:if>
-
                         </ul>
                     </nav>
                 </div>
@@ -46,19 +34,20 @@
                     <div class="dropdown mt-auto">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="author__image me-2">
-                                <c:if test="${empty sessionScope.account.avatar}">
-                                    <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="40" height="40">
-                                </c:if>
-                                <c:if test="${not empty sessionScope.account.avatar}">
-                                    <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="40" height="40">
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.account.avatar}">
+                                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="40" height="40">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="40" height="40">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div class="d-flex flex-column align-items-start">
                                 <strong class="user-name text-dark">${sessionScope.account.fullName}</strong>
                                 <span class="text-secondary">Seeker Page</span>
                             </div>
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa-solid fa-house me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/view/user/userProfile.jsp"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
@@ -69,7 +58,6 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

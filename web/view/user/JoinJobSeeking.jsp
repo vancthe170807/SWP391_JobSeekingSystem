@@ -17,6 +17,7 @@
                 <div class="alert alert-success">
                     ${requestScope.joinsuccess}
                 </div>
+                    <a href="${pageContext.request.contextPath}/view/user/userHome.jsp" class="btn btn-success">Go to Home</a>
             </c:if>
             <c:if test="${!empty requestScope.joinerror}">
                 <div class="alert alert-danger">
@@ -32,7 +33,7 @@
                 <button class="btn btn-secondary mr-3" onclick="cancelJoin()">Cancel</button>
 
                 <!-- Confirm form -->
-                <form id="confirmForm" action="${pageContext.request.contextPath}/seeker" method="post" style="display: inline;">
+                <form id="confirmForm" action="${pageContext.request.contextPath}/seeker?action=join-job-seeking" method="post" style="display: inline;">
                     <input type="hidden" name="action" value="join-job-seeking">
                     <input type="hidden" name="accountid" value="${sessionScope.account.id}">
                     <button type="submit" class="btn btn-primary">Confirm</button>

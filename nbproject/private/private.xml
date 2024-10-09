@@ -12,11 +12,37 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="SWP391_Project">
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ResetPassword.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/footer.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/forgotPassword.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/HomeController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/recruiter/sidebar-recruiter.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/listSeeker.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/changePassword.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/editUserProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ConfirmOTP.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/recruiter/recruiterProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/SeekerController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/JoinJobSeeking.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ForgotPasswordOTP.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/Account.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/validate/Validation.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/home.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/admin/sidebar-admin.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/footer.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/JobSeekerDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/header-area.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/JobSeekerCheck.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/recruiter/editRecruiterProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/SeekerAdminController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/forgotPassword.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userHome.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

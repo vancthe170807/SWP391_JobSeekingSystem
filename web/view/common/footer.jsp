@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="footer__wrapper d-flex flex-wrap justify-content-between pt-60 pb-60">
-                <div class="rts__footer__widget text-center text-md-start mb-4">
+                <div class="rts__footer__widget text-center text-md-start mb-4 mt-3">
                     <a href="index.html" class="footer__logo" aria-label="logo">
                         <img src="${pageContext.request.contextPath}/assets/img/logo/header__one_dark.svg" width="160" height="40" alt="logo">
                     </a>

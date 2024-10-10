@@ -11,7 +11,7 @@ import java.util.Date;
  * @author nhanh
  */
 public class JobPostings {
-    private int CompanyID;
+    private int JobPostingID;
     private String Title;
     private String Description;
     private String Requirements;
@@ -24,8 +24,8 @@ public class JobPostings {
     public JobPostings() {
     }
 
-    public JobPostings(int CompanyID, String Title, String Description, String Requirements, double Salary, String Location, Date PostedDate, Date ClosingDate, String Status) {
-        this.CompanyID = CompanyID;
+    public JobPostings(int JobPostingID, String Title, String Description, String Requirements, double Salary, String Location, Date PostedDate, Date ClosingDate, String Status) {
+        this.JobPostingID = JobPostingID;
         this.Title = Title;
         this.Description = Description;
         this.Requirements = Requirements;
@@ -36,12 +36,12 @@ public class JobPostings {
         this.Status = Status;
     }
 
-    public int getCompanyID() {
-        return CompanyID;
+    public int getJobPostingID() {
+        return JobPostingID;
     }
 
-    public void setCompanyID(int CompanyID) {
-        this.CompanyID = CompanyID;
+    public void setJobPostingID(int JobPostingID) {
+        this.JobPostingID = JobPostingID;
     }
 
     public String getTitle() {
@@ -107,11 +107,4 @@ public class JobPostings {
     public void setStatus(String Status) {
         this.Status = Status;
     }
-
-    @Override
-    public String toString() {
-        return "JobPostings{" + "CompanyID=" + CompanyID + ", Title=" + Title + ", Description=" + Description + ", Requirements=" + Requirements + ", Salary=" + Salary + ", Location=" + Location + ", PostedDate=" + PostedDate + ", ClosingDate=" + ClosingDate + ", Status=" + Status + '}';
-    }
-    
-    
 }

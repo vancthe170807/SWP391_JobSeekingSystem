@@ -12,12 +12,20 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            /* General form container styles */
+            /* Flexbox layout to push footer to bottom */
+            html, body {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Main content layout to take remaining space */
             .job-posting-container {
+                flex: 1;
                 padding: 20px;
                 margin-left: 260px; /* Adjust for the sidebar */
-                padding-top: 80px; /* Adjust for header */
-                min-height: calc(100vh - 120px); /* Adjust height so footer stays at bottom */
+                padding-top: 80px; /* Adjust for the header */
                 box-sizing: border-box;
             }
 
@@ -34,9 +42,16 @@
                 font-weight: bold;
             }
 
-            /* Search input styling */
+            /* Search bar styling */
+            .search-bar {
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
             .search-bar input {
-                width: 200px; /* Shortened search bar */
+                width: 200px;
                 padding: 8px;
                 border: 1px solid #ddd;
                 border-radius: 5px;
@@ -61,7 +76,7 @@
                 border: 1px solid #ddd;
             }
 
-            /* Icon button styling */
+            /* Icon button styling for actions */
             .btn-action {
                 background-color: transparent;
                 border: none;
@@ -75,7 +90,7 @@
                 color: #005f46;
             }
 
-            /* Add job button */
+            /* Styling for the button */
             .btn-add-job {
                 background-color: #007b5e;
                 color: white;
@@ -84,12 +99,18 @@
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
+                text-decoration: none; /* Removes underline */
+                display: inline-block; /* Makes it behave like a button */
             }
 
             .btn-add-job i {
                 margin-right: 5px;
             }
 
+            .btn-add-job:hover {
+                background-color: #005f46;
+                text-decoration: none; /* Ensures underline is still removed on hover */
+            }
             /* Pagination */
             .pagination {
                 display: flex;
@@ -114,52 +135,33 @@
                 background-color: #007b5e;
                 color: white;
             }
-
-            /* Footer at the bottom */
-/*            footer {
-                background-color: #007b5e;
-                color: white;
-                text-align: center;
-                padding: 10px;
-                position: fixed;
-                bottom: 0;
-                left: 260px;  Adjust for the sidebar 
-                width: calc(100% - 260px);  Adjust width to fill the remaining space 
-            }
-
-            footer a {
-                color: white;
-                margin-left: 15px;
-            }
-
-            footer a:hover {
-                text-decoration: underline;
-            }*/
         </style>
     </head>
     <body>
-        <!-- Include Sidebar -->
+        <!-- Include Sidebar (unchanged) -->
         <%@ include file="../recruiter/sidebar-re.jsp" %>
 
-        <!-- Include Header -->
+        <!-- Include Header (unchanged) -->
         <%@ include file="../recruiter/header-re.jsp" %>
 
-        <!-- Job Posting Management -->
+        <!-- Job Posting Management Main Content -->
         <div class="job-posting-container">
-            <!-- Header and search bar section -->
+            <!-- Page Title Section -->
             <div class="header-section">
                 <h2>Job Posting Management</h2>
-                <div>
-                    <input type="text" class="form-control search-bar" placeholder="Search by job title">
-                </div>
-                <button class="btn-add-job"><i class="fas fa-plus"></i> Add a new job</button>
+                <a href="${pageContext.request.contextPath}/view/recruiter/jobPosting.jsp" class="btn-add-job"><i class="fas fa-plus"></i> Add a new job</a>
             </div>
 
-            <!-- Sorting buttons -->
-            <div class="mb-3">
-                <button class="btn btn-outline-success">Name A-Z</button>
-                <button class="btn btn-outline-success">Date Post</button>
-                <button class="btn btn-outline-success">Status</button>
+
+            <!-- Search Bar Section (Below Header) -->
+            <div class="search-bar">
+                <input type="text" class="form-control" placeholder="Search by job title">
+                <!-- Sorting buttons -->
+                <div>
+                    <button class="btn btn-outline-success">Name A-Z</button>
+                    <button class="btn btn-outline-success">Date Post</button>
+                    <button class="btn btn-outline-success">Status</button>
+                </div>
             </div>
 
             <!-- Job posting table -->
@@ -226,13 +228,9 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer>
-            © 2024 JobPath. All rights reserved.
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-        </footer>
-<%@ include file="../recruiter/footer-re.jsp" %>
+        <!-- Footer (always at the bottom) -->
+        <%@ include file="../recruiter/footer-re.jsp" %>
+
         <!-- JavaScript -->
         <script>
             // JavaScript for sorting or other interactive functionality

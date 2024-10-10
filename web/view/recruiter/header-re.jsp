@@ -38,7 +38,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
             <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i> Job Alerts</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i> Deactive account</a></li>
             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/view/recruiter/changePW-re.jsp"><i class="fas fa-lock"></i> Change Password</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>

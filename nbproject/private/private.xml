@@ -20,22 +20,39 @@
         </group>
         <group>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/login.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/JobSeekerCheck.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/recruiterController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPosting.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/viewDetailSeekers.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/recruiterHome.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Company.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/addCompany.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/header-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobPostings.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/changePW-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/sidebar-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/recruiterController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/edit.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewRecruiterProfile.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/footer-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/forgotPassword.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Account.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/changePassword.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/logout.jsp</file>
         </group>
     </open-files>
 </project-private>

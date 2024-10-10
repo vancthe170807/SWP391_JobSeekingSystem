@@ -11,56 +11,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.JobSeekers;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @WebServlet(name = "JobSeekerCheck", urlPatterns = {"/JobSeekerCheck"})
 public class JobSeekerCheck extends HttpServlet {
-
-    AccountDAO accountDAO = new AccountDAO();
-    JobSeekerDAO jobSeekerDAO = new JobSeekerDAO();
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        Account account = new Account();
-        account.setUsername(username);
-        account.setPassword(password);
-
-        // Check the account in the Account table
-        Account accFound = accountDAO.findUserByUsernameAndPassword(account);
-
-        if (accFound != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("account", accFound);
-            // Log for debugging
-            System.out.println("Account ID: " + accFound.getId());
-
-            JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerByAccountID(accFound.getId());
-            if (jobSeekerFound != null) {
-                session.setAttribute("jobSeekerID", jobSeekerFound.getJobSeekerID());
-                // Log for debugging
-                System.out.println("Job Seeker ID: " + jobSeekerFound.getJobSeekerID());
-            } else {
-                session.setAttribute("jobSeekerID", null);
-            }
-
-            response.sendRedirect("view/user/userProfile.jsp");
-        } else {
-            // Handle invalid login
-            response.sendRedirect("login.jsp?error=Invalid credentials");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        // Giả sử bạn đã có accountId từ session
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        
+        if (username != null) {
+            JobSeekerDAO jobSeekerDAO = new JobSeekerDAO();
+            JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByUsername(username);
+            
+            request.setAttribute("jobSeeker", jobSeeker);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false); // Get session if exists, don't create new one
-        if (session != null && session.getAttribute("account") != null) {
-            // If account exists in session, redirect to profile
-            response.sendRedirect("view/user/userProfile.jsp");
-        } else {
-            // Otherwise, redirect to login page
-            response.sendRedirect("login.jsp");
-        }
+        
+        request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }
 }

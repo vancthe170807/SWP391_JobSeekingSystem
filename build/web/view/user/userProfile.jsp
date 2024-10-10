@@ -5,12 +5,14 @@
 --%>
 
 <%@page import="model.Account"%>
+<%@page import="model.JobSeekers"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!--css-->
+        <title>Seeker Profile</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
@@ -18,38 +20,31 @@
         <!-- header area -->
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- header area end -->
-        <%
-            Account account = (Account) session.getAttribute("account");
-            String jobSeekerID = (String) session.getAttribute("jobSeekerID");
+        <% 
+        JobSeekers jobSeeker = (JobSeekers) request.getAttribute("jobSeeker");
+        if (jobSeeker != null) {
+        %>
+        <div>
+            <h2>Thông tin JobSeeker</h2>
+            <p>JobSeeker ID của bạn: <%= jobSeeker.getJobSeekerID()%></p>
+        </div>
+        <% } else { %>
+        <div>
+            <h2>Bạn chưa là JobSeeker</h2>
+            <a href="JoinJobSeeking.jsp" class="btn btn-success">Tham gia ngay</a>
+        </div>
+        <% } %>
 
-            if (account != null) {
-        %>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Thông Tin Tài Khoản</h5>
-                    <p><strong>Tên đăng nhập:</strong> <%= account.getUsername() %></p>
-                    <p><strong>Email:</strong> <%= account.getEmail() %></p>
-                    <%
-                        if (jobSeekerID != null) {
-                    %>
-                        <p><strong>Job Seeker ID:</strong> <%= jobSeekerID %></p>
-                    <%
-                        } else {
-                    %>
-                        <p><strong>Job Seeker ID:</strong> Không tìm thấy</p>
-                    <%
-                        }
-                    %>
-                </div>
-            </div>
-        <%
-            } 
-        %>
+        <% if (request.getAttribute("error") != null) { %>
+        <div style="color: red;">
+            <%= request.getAttribute("error") %>
+        </div>
+        <% } %>
         <div class="container mt-5 mb-5">
             <div class="row">
                 <!-- Sidebar Section -->
                 <div class="col-md-3 sidebar p-3">
-                    <h5 class="text-center text-white">User Menu</h5>
+                    <h5 class="text-center text-dark">User Menu</h5>
                     <ul class="nav nav-tabs flex-column" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
@@ -210,35 +205,42 @@
         <jsp:include page="../common/footer.jsp"></jsp:include>
             <!-- all plugin js -->
         <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
-    </body>
-    <script>
-        // Prevent entering spaces in password fields
-        function preventSpaces(event) {
-            if (event.key === " ") {
-                event.preventDefault();  // Prevent the space from being entered
-                alert("Passwords cannot contain spaces.");
+        </body>
+        <script>
+            // Prevent entering spaces in password fields
+            function preventSpaces(event) {
+                if (event.key === " ") {
+                    event.preventDefault();  // Prevent the space from being entered
+                    alert("Passwords cannot contain spaces.");
+                }
             }
-        }
 
-        function togglePassword(id) {
-            var input = document.getElementById(id);
-            if (input.type === "password") {
-                input.type = "text";
-            } else {
-                input.type = "password";
+            function togglePassword(id) {
+                var input = document.getElementById(id);
+                if (input.type === "password") {
+                    input.type = "text";
+                } else {
+                    input.type = "password";
+                }
             }
-        }
 
-        function toggleEndDate() {
-            const checkbox = document.getElementById('currentlyStudying');
-            const endDateField = document.getElementById('endDate');
-            if (checkbox.checked) {
-                endDateField.disabled = true;
-                endDateField.value = ''; // Reset value if checked
-            } else {
-                endDateField.disabled = false;
+            function toggleEndDate() {
+                const checkbox = document.getElementById('currentlyStudying');
+                const endDateField = document.getElementById('endDate');
+                if (checkbox.checked) {
+                    endDateField.disabled = true;
+                    endDateField.value = ''; // Reset value if checked
+                } else {
+                    endDateField.disabled = false;
+                }
             }
-        }
+
+            // Kiểm tra trạng thái tab từ server và đặt tab đó là active
+            var activeTab = '${activeTab != null ? activeTab : ""}';
+            if (activeTab) {
+                var myTab = new bootstrap.Tab(document.querySelector(activeTab));
+                myTab.show();
+            }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

@@ -171,7 +171,7 @@ public class AuthenticationController extends HttpServlet {
         account.setUsername(username);
         account.setPassword(password);
         Account accFound = accountDAO.findUserByUsernameAndPassword(account);
-        JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerByAccountID(account.getId());
+//        JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId());
         //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
@@ -652,19 +652,19 @@ public class AuthenticationController extends HttpServlet {
                 accountDAO.deactiveAccount(account);
 
                 // Chuyển hướng đến trang đăng nhập sau khi vô hiệu hoá thành công
-                request.setAttribute("message", "Your account has deactive successfully.");
+                request.setAttribute("message", "Your account has deactivated successfully.");
                 return "view/authen/login.jsp";
             } else {
-                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại
+                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại và lưu trạng thái tab
+                request.setAttribute("error", "Incorrect password. Please try again.");
+                request.setAttribute("activeTab", "#deactivate-account"); // Đặt tab Deactivate là tab đang mở
+
                 if (account.getRoleId() == 3) {
-                    request.setAttribute("error", "Incorrect password. Please try again.");
                     return "view/user/userProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
                 if (account.getRoleId() == 2) {
-                    request.setAttribute("error", "Incorrect password. Please try again.");
                     return "view/recruiter/recruiterProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
-
             }
         } else {
             // Nếu không có tài khoản trong session, quay lại trang chủ

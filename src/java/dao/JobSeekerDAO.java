@@ -34,7 +34,7 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
     }
 
     // Find JobSeeker by AccountID
-    public JobSeekers findJobSeekerByAccountID(int accountID) {
+    public JobSeekers findJobSeekerIDByAccountID(int accountID) {
         String sql = "SELECT * FROM [dbo].[JobSeekers] WHERE AccountID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("AccountID", accountID);
@@ -48,7 +48,7 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
         JobSeekerDAO dao = new JobSeekerDAO();
         Scanner sc = new Scanner(System.in);
         int accountID = sc.nextInt();
-        JobSeekers jobSeeker = dao.findJobSeekerByAccountID(accountID);
+        JobSeekers jobSeeker = dao.findJobSeekerIDByAccountID(accountID);
         if (jobSeeker != null) {
             System.out.println("Job Seeker ID: " + jobSeeker.getJobSeekerID());
         } else {

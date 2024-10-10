@@ -12,14 +12,16 @@
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+        
     </head>
     <body>
-
-        <!-- content area -->
-        <div class="row">
-            <div class="col-md-3">
-                <!--Side bar-->
+        <!-- header area -->
+        <jsp:include page="../common/admin/header-admin.jsp"></jsp:include>
+            <!-- header area end -->
+            <!-- content area -->
+            <div class="row">
+                <div class="col-md-3">
+                    <!--Side bar-->
                 <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                     <!--side bar-end-->
                 </div>
@@ -481,7 +483,7 @@
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
         </div>
-
+         
         <!-- all plugin js -->
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
     </body>

@@ -25,6 +25,7 @@ public class SeekerAdminController extends HttpServlet {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
+        //lay ve id de view profile
         // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
         List<Account> listSeekers;
@@ -47,10 +48,10 @@ public class SeekerAdminController extends HttpServlet {
         
         switch (action) {
             case "view-list-seekers":
-                url = "view/admin/listSeeker.jsp";
+                url = "view/admin/seekerManagement.jsp";
                 break;
             default:
-                url = "view/admin/listSeeker.jsp";
+                url = "view/admin/seekerManagement.jsp";
         }
 
         // Forward to the appropriate page
@@ -75,9 +76,11 @@ public class SeekerAdminController extends HttpServlet {
                 break;
             case "view-detail":
                 url = viewDetail(request, response, account);
+                request.getRequestDispatcher(url).forward(request, response);
                 break;
+                
             default:
-                url = "view/admin/listSeeker.jsp";
+                url = "view/admin/seekerManagement.jsp";
         }
        response.sendRedirect(url);
     }
@@ -93,10 +96,8 @@ public class SeekerAdminController extends HttpServlet {
     }
 
     private String viewDetail(HttpServletRequest request, HttpServletResponse response, Account account) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        request.setAttribute("accountView", account);
+        return "view/admin/viewDetailSeekers.jsp";
     }
-
-   
-    
 
 }

@@ -225,7 +225,15 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
-
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                <li>
+                                                    <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
 
                                     <!-- Add more seekers here -->
                                 </div>

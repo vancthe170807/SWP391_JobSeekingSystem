@@ -32,7 +32,7 @@ public class recruiterController extends HttpServlet {
         switch (filter) {
 
             case "all":
-                listSeekers = dao.findAllUserByRoleId(3);
+                listSeekers = dao.findAllUserByRoleId(3, page);
                 break;
             case "active":
                 listSeekers = dao.filterSeekerByStatus(true);
@@ -41,7 +41,7 @@ public class recruiterController extends HttpServlet {
                 listSeekers = dao.filterSeekerByStatus(false);
                 break;
             default:
-                listSeekers = dao.findAllUserByRoleId(3);
+                listSeekers = dao.findAllUserByRoleId(3, page);
         }
         request.setAttribute("listSeekers", listSeekers);
         // Handle GET requests based on the action

@@ -60,6 +60,9 @@ public class AuthenticationController extends HttpServlet {
             case "change-password":
                 url = "view/authen/changePassword.jsp";
                 break;
+            case "change-password-re":
+                url = "view/recruiter/changePW-re.jsp";
+                break;
             case "sign-up":
                 url = "view/authen/register.jsp";
                 break;
@@ -122,7 +125,9 @@ public class AuthenticationController extends HttpServlet {
                 url = logOut(request, response);
             case "change-password":
                 url = changePassword(request, response);
-
+                break;
+            case "change-password-re":
+                url = changePW(request, response);
                 break;
             case "edit-profile":
                 url = editProfile(request, response);
@@ -626,7 +631,7 @@ public class AuthenticationController extends HttpServlet {
                 // Cập nhật thông tin người dùng vào cơ sở dữ liệu
                 accountDAO.updateAccount(accountEdit);
                 request.setAttribute("successMessage", "Profile updated successfully.");
-                url = "view/recruiter/recruiterHome.jsp";
+                url = "view/recruiter/editRecruiterProfile.jsp";
             }
 
         } catch (Exception e) {
@@ -671,6 +676,57 @@ public class AuthenticationController extends HttpServlet {
             return "home";
         }
         return null;
+    }
+
+    private String changePW(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String currPass = request.getParameter("currentPassword");
+        String newPass = request.getParameter("newPassword");
+        String retypePass = request.getParameter("retypePassword");
+
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        String url = null;
+
+        int status = 0;
+
+        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
+            status = 3;
+        } else if (!currPass.equals(acc.getPassword())) {
+            status = 1;
+        } else if (!newPass.equals(retypePass)) {
+            status = 2;
+        } else if (!valid.checkPassword(newPass)) {
+            status = 4;
+        } else {
+            status = 5;
+        }
+
+        switch (status) {
+            case 1:
+                request.setAttribute("changePWrefail", "Incorrect current password.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 2:
+                request.setAttribute("changePWrefail", "New password and retype password do not match.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 3:
+                request.setAttribute("changePWrefail", "Both current password is incorrect and new password does not match.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 4:
+                request.setAttribute("changePWrefail", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 5:
+                acc.setPassword(newPass);
+                accountDAO.updatePasswordByUsername(acc);
+                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
+                url = "view/authen/login.jsp";
+                break;
+        }
+        return url;
     }
 
 }

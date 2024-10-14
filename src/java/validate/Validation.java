@@ -45,7 +45,7 @@ public class Validation {
         return phone.matches(regex);
     }
 
-    public static boolean checkUserName(String username) {
+    public boolean checkUserName(String username) {
         // Biểu thức chính quy: chỉ cho phép chữ cái, số và dấu gạch dưới
         String regex = "^[a-zA-Z0-9_]+$";
 

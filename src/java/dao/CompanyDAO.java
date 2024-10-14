@@ -4,6 +4,7 @@
  */
 package dao;
 
+import static constant.CommonConst.RECORD_PER_PAGE;
 import java.util.LinkedHashMap;
 import java.util.List;
 import model.Account;
@@ -36,10 +37,17 @@ public class CompanyDAO extends GenericDAO<Company> {
         return insertGenericDAO(sql, parameterMap);
     }
 
-    public List<Company> filterCompanyByStatus(boolean status) {
-        String sql = "SELECT * FROM [dbo].[Company] where verificationStatus = ?";
+    public List<Company> filterCompanyByStatus(boolean status, int page) {
+        String sql = "SELECT *\n"
+                + "  FROM [JobSeeker].[dbo].[Company]\n"
+                + "  where verificationStatus = ?\n"
+                + "  order by id\n"
+                + "  offset ? rows\n"
+                + "  fetch next ? rows only";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("verificationStatus", status);
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
         List<Company> list = queryGenericDAO(Company.class, sql, parameterMap);
         return list;
     }
@@ -76,12 +84,17 @@ public class CompanyDAO extends GenericDAO<Company> {
         updateGenericDAO(sql, parameterMap);
     }
 
-    public List<Company> searchCompaniesByName(String searchQuery) {
+    public List<Company> searchCompaniesByName(String searchQuery, int page) {
         String sql = "SELECT *\n"
                 + "FROM [dbo].[Company]\n"
-                + "WHERE name LIKE '%' + ? + '%'";
+                + "WHERE name LIKE '%' + ? + '%'"
+                + "order by id\n"
+                + "offset ? rows\n"
+                + "fetch next ? rows only";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("name", searchQuery);
+        parameterMap.put("offset", (page - 1)* RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
         return queryGenericDAO(Company.class, sql, parameterMap);
     }
 
@@ -97,5 +110,41 @@ public class CompanyDAO extends GenericDAO<Company> {
         parameterMap.put("location", companyEdit.getLocation());
         parameterMap.put("id", companyEdit.getId());
         updateGenericDAO(sql, parameterMap);
+    }
+
+    public int findAllTotalRecord() {
+        String sql = "SELECT count(*) FROM [dbo].[Company]\n";
+        parameterMap = new LinkedHashMap<>();
+        return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public int findTotalRecordByStatus(boolean verificationStatus) {
+        String sql = "SELECT count(*)\n"
+                + "  FROM [dbo].[Company]\n"
+                + "  where verificationStatus = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("verificationStatus", verificationStatus);
+        return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public List<Company> findAllCompany(int page) {
+        String sql = "SELECT *\n"
+                + "  FROM [JobSeeker].[dbo].[Company]\n"
+                + "  order by id\n"
+                + "  offset ? rows\n"
+                + "  fetch next ? rows only";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public int findTotalRecordByName(String searchQuery) {
+        String sql = "SELECT count(*)\n"
+                + "FROM [dbo].[Company]\n"
+                + "WHERE name LIKE '%' + ? + '%'";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", searchQuery);
+        return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
     }
 }

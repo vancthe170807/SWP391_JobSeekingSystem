@@ -62,7 +62,7 @@
                                     <!--drop-down filter seeker-->
                                     <div class="filter-dropdown">
                                         <form action="${pageContext.request.contextPath}/seekers" method="GET">
-                                        <label for="seeker-filter">Filter Seeker</label>
+                                        <label for="seeker-filter">Filter</label>
                                         <select id="seeker-filter" name="filter" onchange="this.form.submit()">
                                             <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Seekers</option>
                                             <option value="active" ${param.filter == 'active' ? 'selected' : ''}>Active Seekers</option>
@@ -115,6 +115,16 @@
                                         </tbody>
                                     </table>
 
+                                    <!-- Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                <li>
+                                                    <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
 
                                     <!-- Add more seekers here -->
                                 </div>

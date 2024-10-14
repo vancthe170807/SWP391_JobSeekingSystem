@@ -4,6 +4,7 @@
  */
 package controller.admin;
 
+import static constant.CommonConst.RECORD_PER_PAGE;
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 import model.Company;
+import model.PageControl;
 
 @WebServlet(name = "CompanyAdminController", urlPatterns = {"/companies"})
 public class CompanyAdminController extends HttpServlet {
@@ -24,33 +26,61 @@ public class CompanyAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get ve pageNumber
+        PageControl pageControl = new PageControl();
+        String pageRaw = request.getParameter("page");
+        //valid page
+        int page;
+        try {
+            page = Integer.parseInt(pageRaw);
+            if (page <= 1) {
+                page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
 //        get ve gia tri cua drop-down filter
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
-//        get ve gia tri tu thanh search
-        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
         List<Company> listCompanies;
-        if (!searchQuery.isEmpty()) {
-            // Tìm kiếm công ty dựa trên từ khóa
-            listCompanies = dao.searchCompaniesByName(searchQuery);  // Thực hiện tìm kiếm
-        } else {
+        //get ve request URL
+        String requestURL = request.getRequestURL().toString();
+        //total record
+        int totalRecord = 0;
+               
             switch (filter) {
                 case "all":
-                    listCompanies = dao.findAll();
+                    listCompanies = dao.findAllCompany(page);
+                    totalRecord = dao.findAllTotalRecord();
+                    pageControl.setUrlPattern(requestURL + "?");
                     break;
                 case "accept":
-                    listCompanies = dao.filterCompanyByStatus(true);
+                    listCompanies = dao.filterCompanyByStatus(true, page);
+                    totalRecord = dao.findTotalRecordByStatus(true);
+                    pageControl.setUrlPattern(requestURL + "?filter=accept" + "&");
                     break;
                 case "violate":
-                    listCompanies = dao.filterCompanyByStatus(false);
+                    listCompanies = dao.filterCompanyByStatus(false, page);
+                    totalRecord = dao.findTotalRecordByStatus(false);
+                    pageControl.setUrlPattern(requestURL + "?filter=violate" + "&");
                     break;
                 default:
-                    listCompanies = dao.findAll();
+                    listCompanies = dao.findAllCompany(page);
+                    totalRecord = dao.findAllTotalRecord();
+                    pageControl.setUrlPattern(requestURL + "?");
             }
-        }
+        
         request.setAttribute("listCompanies", listCompanies);
         // Handle GET requests based on the action
+        //total page
+        int totalPage = (totalRecord % RECORD_PER_PAGE) == 0 ? (totalRecord / RECORD_PER_PAGE) : (totalRecord / RECORD_PER_PAGE) + 1;
+        //set total record, total page, page to pageControl
+        pageControl.setPage(page);
+        pageControl.setTotalRecord(totalRecord);
+        pageControl.setTotalPages(totalPage);
+        //set attribute pageControl 
+        request.setAttribute("pageControl", pageControl);
         // SWT: CRITICAL(CODE_SMELL)
         switch (action) {
             case "add-company":
@@ -83,7 +113,7 @@ public class CompanyAdminController extends HttpServlet {
                 url = editCompany(request);
                 break;
             default:
-                url = "view/admin/companyManagement.jsp";
+                url = "companies";
         }
         response.sendRedirect(url);
     }

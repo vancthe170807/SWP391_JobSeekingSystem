@@ -82,13 +82,7 @@
                                 </div>
                                 <hr/>
                                 <!--search company-->
-                                <form action="${pageContext.request.contextPath}/companies" method="GET">
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <input type="hidden" name="filter" value="${param.filter != null ? param.filter : 'all'}"> <!-- Thay đổi tại đây -->
-                                        <input type="text" id="searchCompany"  name="searchQuery" class="form-control" style="width: 60%;" placeholder="Search for name...">
-                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
-                                    </div>
-                                </form>
+                               
 
                                 <!--search company end-->
                                 <div class="modal fade" id="addCompanyModal" tabindex="-1" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
@@ -225,7 +219,15 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
-
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                <li>
+                                                    <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
 
                                     <!-- Add more seekers here -->
                                 </div>

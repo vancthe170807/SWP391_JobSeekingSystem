@@ -17,6 +17,7 @@ public class PageControl {
     public PageControl() {
     }
 
+    
     public PageControl(int totalPages, int totalRecord, int page, String urlPattern) {
         this.totalPages = totalPages;
         this.totalRecord = totalRecord;
@@ -55,5 +56,8 @@ public class PageControl {
     public void setUrlPattern(String urlPattern) {
         this.urlPattern = urlPattern;
     }
-      
+    
+    
+    
+    
 }

@@ -1,9 +1,4 @@
-<%-- 
-    Document   : header-re
-    Created on : Oct 9, 2024, 4:08:20 PM
-    Author     : nhanh
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header>
     <!-- Navigation Links -->
@@ -30,6 +25,7 @@
         </a>
         <button class="btn dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
             <c:if test="${empty sessionScope.account.getAvatar()}">
+                <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle avatar-img">
             </c:if>
             <c:if test="${!empty sessionScope.account.getAvatar()}">
                 <img src="${sessionScope.account.getAvatar()}" alt="User Avatar" class="avatar-img">

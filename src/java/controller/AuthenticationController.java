@@ -3,6 +3,7 @@ package controller;
 import utils.Email;
 import constant.CommonConst;
 import dao.AccountDAO;
+import dao.JobPostingsDAO;
 import dao.JobSeekerDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.JobPostings;
 import validate.Validation;
 
 /**
@@ -192,13 +194,19 @@ public class AuthenticationController extends HttpServlet {
         } else {
             // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
-
+            session.setMaxInactiveInterval(60 * 60 * 24);
             switch (accFound.getRoleId()) {
                 case 1:
                     url = "view/admin/adminHome.jsp";
                     break;
                 case 2:
-                    url = "view/recruiter/recruiterHome.jsp";
+                    JobPostingsDAO dao = new JobPostingsDAO();
+                    List<JobPostings> listJobPostings = dao.getTop5RecentJobPostings();
+                    List<JobPostings> listAll = dao.findAll();
+                    
+                    request.setAttribute("listSize", listAll);
+                    request.setAttribute("listJobPostings", listJobPostings);
+                    url = "view/recruiter/dashboard.jsp";
                     break;
                 case 3:
                     url = "view/user/userHome.jsp";

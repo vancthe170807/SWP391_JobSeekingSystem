@@ -39,7 +39,8 @@ public class AuthenticationController extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
     private final JobSeekerDAO jobSeekerDAO = new JobSeekerDAO();
-    Validation valid = new Validation();
+    private final Validation valid = new Validation();
+    private final Random random = new Random();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -59,6 +60,9 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "change-password":
                 url = "view/authen/changePassword.jsp";
+                break;
+            case "change-password-re":
+                url = "view/recruiter/changePW-re.jsp";
                 break;
             case "sign-up":
                 url = "view/authen/register.jsp";
@@ -122,7 +126,9 @@ public class AuthenticationController extends HttpServlet {
                 url = logOut(request, response);
             case "change-password":
                 url = changePassword(request, response);
-
+                break;
+            case "change-password-re":
+                url = changePW(request, response);
                 break;
             case "edit-profile":
                 url = editProfile(request, response);
@@ -222,6 +228,7 @@ public class AuthenticationController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         // set sign-up information to request to save the data in the form
+        request.setAttribute("role", roleId);
         request.setAttribute("lname", lastname);
         request.setAttribute("fname", firstname);
         request.setAttribute("gender", gender);
@@ -285,7 +292,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
-            int sixDigitNumber = 100000 + new Random().nextInt(900000);
+            int sixDigitNumber = 100000 + random.nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in session
@@ -400,7 +407,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/forgotPassword.jsp"; // Stay on forgot password page
         } else {
             // Generate a 6-digit OTP and send it to the user's email
-            int sixDigitNumber = 100000 + new Random().nextInt(900000); //SWT: Bugs
+            int sixDigitNumber = 100000 + random.nextInt(900000); //SWT: Bugs
             Email.sendEmail(email, "OTP Reset Password", "Your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in the session
@@ -626,7 +633,7 @@ public class AuthenticationController extends HttpServlet {
                 // Cập nhật thông tin người dùng vào cơ sở dữ liệu
                 accountDAO.updateAccount(accountEdit);
                 request.setAttribute("successMessage", "Profile updated successfully.");
-                url = "view/recruiter/recruiterHome.jsp";
+                url = "view/recruiter/editRecruiterProfile.jsp";
             }
 
         } catch (Exception e) {
@@ -671,6 +678,57 @@ public class AuthenticationController extends HttpServlet {
             return "home";
         }
         return null;
+    }
+
+    private String changePW(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String currPass = request.getParameter("currentPassword");
+        String newPass = request.getParameter("newPassword");
+        String retypePass = request.getParameter("retypePassword");
+
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        String url = null;
+
+        int status = 0;
+
+        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
+            status = 3;
+        } else if (!currPass.equals(acc.getPassword())) {
+            status = 1;
+        } else if (!newPass.equals(retypePass)) {
+            status = 2;
+        } else if (!valid.checkPassword(newPass)) {
+            status = 4;
+        } else {
+            status = 5;
+        }
+
+        switch (status) {
+            case 1:
+                request.setAttribute("changePWrefail", "Incorrect current password.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 2:
+                request.setAttribute("changePWrefail", "New password and retype password do not match.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 3:
+                request.setAttribute("changePWrefail", "Both current password is incorrect and new password does not match.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 4:
+                request.setAttribute("changePWrefail", "The new password must be 8-20 characters long, and include at "
+                        + "least one letter and one special character.");
+                url = "view/recruiter/changePW-re.jsp";
+                break;
+            case 5:
+                acc.setPassword(newPass);
+                accountDAO.updatePasswordByUsername(acc);
+                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
+                url = "view/authen/login.jsp";
+                break;
+        }
+        return url;
     }
 
 }

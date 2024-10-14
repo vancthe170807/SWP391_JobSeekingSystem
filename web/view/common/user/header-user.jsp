@@ -43,7 +43,9 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa-solid fa-house me-2"></i> Dashboard</a></li>
-                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/view/user/userProfile.jsp"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/JobSeekerCheck"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/cv?action=update-cv"><i class="fa-solid fa-file me-2"></i> CV</a></li>
+                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/education?action=update-education"><i class="fa-solid fa-school me-2"></i> Education</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/alerts"><i class="fa-solid fa-bell me-2"></i> Job Alerts</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/authen?action=change-password"><i class="fa-solid fa-lock me-2"></i> Change Password</a></li>
                             <li><hr class="dropdown-divider"></li>

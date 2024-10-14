@@ -106,7 +106,7 @@ public class CompanyAdminController extends HttpServlet {
 //        get ve cac thuoc tinh cua company
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        String location = request.getParameter("name");
+        String location = request.getParameter("location");
         String verificationStatus = request.getParameter("verificationStatus");
 //        tao doi tuong company va set cac thuoc tinh
         Company company = new Company();

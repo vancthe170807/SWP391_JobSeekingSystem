@@ -11,61 +11,69 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="SWP291">
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/DBContext.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/authen/register.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/recruiterManagement.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/JobSeekerCheck.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/recruiterController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/viewDetailSeekers.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Company.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/addCompany.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobPostings.java</file>
+        </group>
+        <group name="SWP391_Project">
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/UploadCV.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/JobSeekerCheck.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CVDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/EducationDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/UpdateEducation.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/SeekerController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/JoinJobSeeking.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/JobSeekers.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/validate/Validation.java</file>
         </group>
         <group name="SWP391_Project">
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/register.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ResetPassword.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/GenericDAO.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/AccountDAO.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/HomeController.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/recruiter/sidebar-recruiter.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/companyManagement.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/CV.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/RecruiterAdminController.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/changePassword.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/adminHome.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/editUserProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CVDAO.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ConfirmOTP.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/user/sidebar-user.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/SeekerController.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/JoinJobSeeking.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/addCompany.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/JobSeekers.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ForgotPasswordOTP.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/Account.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/validate/Validation.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/recruiter/recruiterController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ForgotPasswordOTP.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/CompanyAdminController.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/home.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/admin/sidebar-admin.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/JobPostings.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/footer.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/recruiter/recruiterHome.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/edit.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/JobSeekerDAO.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/header-area.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/EducationServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/JobSeekerCheck.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/recruiter/editRecruiterProfile.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/EducationDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/Education.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/user/header-user.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/SeekerAdminController.java</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/forgotPassword.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/CV.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/CVServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userHome.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/Company.java</file>
         </group>
     </open-files>
 </project-private>

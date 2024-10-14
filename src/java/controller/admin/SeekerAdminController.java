@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controller.admin;
 
 import dao.AccountDAO;
@@ -12,28 +7,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 
-@WebServlet(name="SeekerAdminController", urlPatterns={"/seekers"})
+@WebServlet(name = "SeekerAdminController", urlPatterns = {"/seekers"})
 public class SeekerAdminController extends HttpServlet {
+
     AccountDAO dao = new AccountDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        ///get ve action 
+            throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url;
-        //lay ve id de view profile
-        // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
+
         List<Account> listSeekers;
         switch (filter) {
-            
-            case "all":
-                listSeekers = dao.findAllUserByRoleId(3);
-                break;
             case "active":
                 listSeekers = dao.filterSeekerByStatus(true);
                 break;
@@ -41,68 +30,54 @@ public class SeekerAdminController extends HttpServlet {
                 listSeekers = dao.filterSeekerByStatus(false);
                 break;
             default:
-                 listSeekers = dao.findAllUserByRoleId(3);
+                listSeekers = dao.findAllUserByRoleId(3);
         }
+
         request.setAttribute("listSeekers", listSeekers);
-        // Handle GET requests based on the action
-        
-        switch (action) {
-            case "view-list-seekers":
-                url = "view/admin/seekerManagement.jsp";
-                break;
-            default:
-                url = "view/admin/seekerManagement.jsp";
+
+        String url = "view/admin/seekerManagement.jsp";
+        if ("view-list-seekers".equals(action)) {
+            url = "view/admin/seekerManagement.jsp";
         }
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
-        
-    } 
-
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url;
-        int id = Integer.parseInt(request.getParameter("id-seeker"));
-        Account account = dao.findUserById(id);
-        switch (action) {
-            case "deactive":
-                url = deactive(request, response, account);
-                break;
-            case "active":
-                url = active(request, response, account);
-                break;
-            case "view-detail":
-                url = viewDetail(request, response, account);
-                request.getRequestDispatcher(url).forward(request, response);
-                break;
-                
-            default:
-                url = "view/admin/seekerManagement.jsp";
+        String url = "seekers";
+
+        try {
+            int id = Integer.parseInt(request.getParameter("id-seeker"));
+            Account account = dao.findUserById(id);
+
+            switch (action) {
+                case "deactive":
+                    dao.deactiveAccount(account);
+                    break;
+                case "active":
+                    dao.activeAccount(account);
+                    break;
+                case "view-detail":
+                    request.setAttribute("accountView", account);
+                    request.getRequestDispatcher("view/admin/viewDetailSeekers.jsp").forward(request, response);
+                    return;
+                default:
+                    break;
+            }
+
+        } catch (NumberFormatException e) {
+            // Handle invalid seeker ID format
+            request.setAttribute("error", "Invalid seeker ID format.");
+        } catch (Exception e) {
+            // Handle any other exceptions
+            request.setAttribute("error", "An error occurred: " + e.getMessage());
         }
-       response.sendRedirect(url);
+
+        // Redirect after action
+        response.sendRedirect(url);
     }
-
-    private String deactive(HttpServletRequest request, HttpServletResponse response, Account account) {
-        dao.deactiveAccount(account);
-        return "seekers";
-    }
-
-    private String active(HttpServletRequest request, HttpServletResponse response, Account account) {
-        dao.activeAccount(account);
-        return "seekers";
-    }
-
-    private String viewDetail(HttpServletRequest request, HttpServletResponse response, Account account) {
-        request.setAttribute("accountView", account);
-        return "view/admin/viewDetailSeekers.jsp";
-    }
-
-
-
-   
-    
-
 }

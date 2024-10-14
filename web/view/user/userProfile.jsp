@@ -20,27 +20,32 @@
         <!-- header area -->
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- header area end -->
-        <% 
-        JobSeekers jobSeeker = (JobSeekers) request.getAttribute("jobSeeker");
-        if (jobSeeker != null) {
-        %>
-        <div>
-            <h2>Thông tin JobSeeker</h2>
-            <p>JobSeeker ID của bạn: <%= jobSeeker.getJobSeekerID()%></p>
-        </div>
-        <% } else { %>
-        <div>
-            <h2>Bạn chưa là JobSeeker</h2>
-            <a href="JoinJobSeeking.jsp" class="btn btn-success">Tham gia ngay</a>
-        </div>
-        <% } %>
 
-        <% if (request.getAttribute("error") != null) { %>
-        <div style="color: red;">
-            <%= request.getAttribute("error") %>
-        </div>
-        <% } %>
-        <div class="container mt-5 mb-5">
+            <div class="container mt-5 mb-5">
+                <div>
+                <c:if test="${jobSeeker != null}">
+                    <div>
+                        <p>Your JobSeeker ID: <strong>#${jobSeeker.getJobSeekerID()}</strong></p>
+                    </div>
+                </c:if>
+
+                <!-- If jobSeeker is null, show the alternative content -->
+                <c:if test="${jobSeeker == null}">
+                    <div>
+                        <h2>Bạn chưa là JobSeeker</h2>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalJoinJobSeeker">
+                            Join Job Seeker
+                        </button>
+                    </div>
+                </c:if>
+
+                <!-- Display error message if available -->
+                <c:if test="${not empty errorJobSeeker}">
+                    <div style="color: red;">
+                        ${error}
+                    </div>
+                </c:if>
+            </div>
             <div class="row">
                 <!-- Sidebar Section -->
                 <div class="col-md-3 sidebar p-3">
@@ -119,19 +124,30 @@
                         <!--                                CV Tab-->
                         <div class="tab-pane fade" id="cv" role="tabpanel" aria-labelledby="cv-tab">
                             <h5 class="mb-3">Upload/Update CV (PDF format)</h5>
-                            <form action="${pageContext.request.contextPath}/uploadCV" method="POST" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label for="cvFile" class="form-label">Select your CV (PDF only):</label>
-                                    <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
-                                    <small class="form-text text-muted">Only PDF files are allowed (Max size: 5MB).</small>
-                                </div>
-                                <button type="submit" class="btn btn-success">Upload/Update CV</button>
-                            </form>
+
+                            <!-- Display the available CV link -->
+                            <c:if test="${!empty sessionScope.cvUrl}">
+                                <a href="${sessionScope.cvUrl}" target="_blank" class="btn btn-primary">
+                                    View CV
+                                </a>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateCV">
+                                    Launch demo modal
+                                </button>
+                            </c:if>
+
+                            <!-- Optional message when CV is not available -->
+                            <c:if test="${empty sessionScope.cvUrl}">
+                                <p>No CV available. Please upload your CV.</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUploadCV">
+                                    Upload CV
+                                </button>
+                            </c:if>
+
                         </div>
                         <!-- Education-->
                         <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
                             <h5 class="mb-3">Education</h5>
-                            <form action="/submit-education-info" method="POST">
+                            <form action="${pageContext.request.contextPath}/updateeducation" method="POST">
                                 <div class="mb-3">
                                     <label for="institution" class="form-label">Institution</label>
                                     <input type="text" class="form-control" id="institution" name="institution" required>
@@ -193,6 +209,78 @@
                                 <button type="submit" class="btn btn-danger">Deactivate Account</button>
                             </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal-->
+            <div class="modal fade" id="modalJoinJobSeeker" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Join Job Seeking</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Success message block -->
+                        <c:if test="${!empty requestScope.joinsuccess}">
+                            <div class="alert alert-success m-3">
+                                ${requestScope.joinsuccess}
+                            </div>
+                            <div class="modal-footer">
+                                <a href="${pageContext.request.contextPath}/view/user/userHome.jsp" class="btn btn-success">Go to Home</a>
+                            </div>
+                        </c:if>
+
+                        <!-- Error message block -->
+                        <c:if test="${!empty requestScope.joinerror}">
+                            <div class="alert alert-danger m-3">
+                                ${requestScope.joinerror}
+                            </div>
+                        </c:if>
+
+                        <!-- Form and confirmation button (displayed only if no success message) -->
+                        <c:if test="${empty requestScope.joinsuccess}">
+                            <div class="modal-body">
+                                <h5>Are you sure you want to join job seeking?</h5>
+                            </div>
+                            <form id="confirmForm" action="${pageContext.request.contextPath}/seeker?action=join-job-seeking" method="post" style="display: inline;">
+                                <input type="hidden" name="accountid" value="${sessionScope.account.id}">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Confirm</button>
+                                </div>
+                            </form>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal UpdateCV -->
+            <div class="modal fade" id="modalUploadCV" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="${pageContext.request.contextPath}/uploadcv" method="POST" enctype="multipart/form-data">
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <label for="cvFile" class="form-label">Select your CV (PDF only):</label>
+                                    <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
+                                    <small class="form-text text-muted">Only PDF files are allowed (Max size: 5MB).</small>
+                                </div>
+                                <!--                                <button type="submit" class="btn btn-success">Upload/Update CV</button>-->
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

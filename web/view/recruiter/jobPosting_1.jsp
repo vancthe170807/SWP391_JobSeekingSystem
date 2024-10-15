@@ -118,19 +118,19 @@
                     <!-- Title -->
                     <div class="form-group">
                         <label for="jobTitle">Title</label>
-                        <input type="text" id="jobTitle" name="jobTitle" class="form-control" placeholder="Enter job title" required>
+                        <input type="text" id="jobTitle" name="jobTitle" class="form-control" required>
                     </div>
 
                     <!-- Description -->
                     <div class="form-group">
                         <label for="jobDescription">Description</label>
-                        <textarea id="jobDescription" name="jobDescription" class="form-control" placeholder="Enter job description" rows="3" required></textarea>
+                        <textarea id="jobDescription" name="jobDescription" class="form-control" rows="3" required></textarea>
                     </div>
 
                     <!-- Requirements -->
                     <div class="form-group">
                         <label for="jobRequirements">Requirements</label>
-                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="3" required></textarea>
+                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" rows="3" required></textarea>
                     </div>
 
                     <!-- Two-column row for Location, Salary, Status, Posted Date, and Closing Date -->
@@ -139,14 +139,14 @@
                             <!-- Location -->
                             <div class="form-group">
                                 <label for="jobLocation">Location</label>
-                                <input type="text" id="jobLocation" name="jobLocation" class="form-control" required placeholder="Enter job location">
+                                <input type="text" id="jobLocation" name="jobLocation" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <!-- Salary -->
                             <div class="form-group">
                                 <label for="jobSalary">Salary</label>
-                                <input type="number" id="jobSalary" name="jobSalary" class="form-control" required placeholder="Enter job salary">
+                                <input type="number" id="jobSalary" name="jobSalary" class="form-control" required>
                             </div>
                         </div>
                     </div>

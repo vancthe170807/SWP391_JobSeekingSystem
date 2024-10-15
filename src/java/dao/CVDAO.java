@@ -33,7 +33,7 @@ public class CVDAO extends GenericDAO<CV> {
     
     //Tim CV cho Job Seeker
     public CV findCVbyJobSeekerID(int JobSeekerID) {
-        String sql = "select * from CVs by JobSeekerID = ?";
+        String sql = "select * from CVs where JobSeekerID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", JobSeekerID);
         List<CV> list = queryGenericDAO(CV.class, sql, parameterMap);
@@ -42,12 +42,16 @@ public class CVDAO extends GenericDAO<CV> {
     }
     
     public void updateCV(CV cv) {
-        String sql = "update CVs set FilePath = ?, LastUpdated = ? WHERE JobSeekerID = ?";
+        String sql = "update [CVs] set [FilePath] = ?"
+                + ", [UploadDate] = ?"
+                + ", [LastUpdated] = ? "
+                + "WHERE [JobSeekerID] = ?";
         
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("FilePath", cv.getFilePath());
-        parameterMap.put("JobSeekerID", cv.getJobSeekerID());
+        parameterMap.put("UploadDate", cv.getUploadDate());
         parameterMap.put("LastUpdated", cv.getLastUpdated());
+        parameterMap.put("JobSeekerID", cv.getJobSeekerID());
         
         updateGenericDAO(sql, parameterMap);
     }

@@ -12,7 +12,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 
 import model.Education;
@@ -28,18 +30,26 @@ public class EducationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url;
+        String url = null;
 
         switch (action) {
-            case "add-education":
-                url = "view/user/Education.jsp";
+            case "view-education":
+            {
+                try {
+                    url = viewEducation(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.getWriter().println("Database error.");
+                }
+            }
                 break;
+
             case "update-education":
                 url = "view/user/Education.jsp";
                 break;
 
             default:
-                url = "view/authen/login.jsp"; // Default page if no action matches
+                url = "view/user/Education.jsp"; // Default page if no action matches
                 break;
         }
 
@@ -166,6 +176,44 @@ public class EducationServlet extends HttpServlet {
         }
 
         return url; // Return the URL to navigate to
+    }
+
+    private String viewEducation(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+        if (account == null) {
+            return "view/authen/login.jsp"; // Redirect if user is not logged in
+        }
+
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
+        if (jobSeeker == null) {
+            request.setAttribute("error", "No Job Seeker found for the current account.");
+            return "view/authen/login.jsp"; // Redirect to login page
+        }
+
+        Education edu = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (edu == null) {
+            request.setAttribute("errorEducation", "No Education found for this Job Seeker.");
+            return "view/user/Education.jsp";
+        }
+
+        // Set attributes to pass the education details to the JSP
+        request.setAttribute("institution", edu.getInstitution());
+        request.setAttribute("degree", edu.getDegree());
+        request.setAttribute("fieldOfStudy", edu.getFieldOfStudy());
+
+        // Format dates if needed, for display in the JSP
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedStartDate = edu.getStartDate() != null ? dateFormat.format(edu.getStartDate()) : "";
+        String formattedEndDate = edu.getEndDate() != null ? dateFormat.format(edu.getEndDate()) : "";
+
+        request.setAttribute("startDate", formattedStartDate);
+        request.setAttribute("endDate", formattedEndDate);
+
+        // Forward to the education view page
+        return "view/user/Education.jsp";
     }
 
 }

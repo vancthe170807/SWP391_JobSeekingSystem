@@ -12,7 +12,8 @@
     </div>
     <a href="${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp"><i class="fas fa-home"></i> Dashboard</a>
     <a href="${pageContext.request.contextPath}/view/recruiter/viewRecruiterProfile.jsp"><i class="fas fa-user"></i> Profile</a>
-    <a href="${pageContext.request.contextPath}/view/recruiter/jobPosting.jsp"><i class="fas fa-users"></i> Job Posting</a>
+<!--    <a href="${pageContext.request.contextPath}/view/recruiter/jobPosting.jsp"><i class="fas fa-users"></i> Job Posting</a>-->
+    <a href="${pageContext.request.contextPath}/view/recruiter/jobPost-manager.jsp"><i class="fas fa-users"></i> Job Posting</a>
     <a href="#"><i class="fas fa-envelope"></i> Messages</a>
     <a href="#"><i class="fas fa-cog"></i> Settings</a>
 </div>

@@ -37,7 +37,7 @@ public class EducationDAO extends GenericDAO<Education> {
     
     //Tim CV cho Job Seeker
     public Education findEducationbyJobSeekerID(int JobSeekerID) {
-        String sql = "select * from CVs by JobSeekerID = ?";
+        String sql = "select * from Education where JobSeekerID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", JobSeekerID);
         List<Education> list = queryGenericDAO(Education.class, sql, parameterMap);

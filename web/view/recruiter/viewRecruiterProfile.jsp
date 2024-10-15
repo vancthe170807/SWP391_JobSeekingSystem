@@ -97,21 +97,6 @@
                 background-color: #218838;
             }
 
-            @media (max-width: 768px) {
-                .main-content {
-                    margin-left: 0;
-                }
-
-                .profile-card {
-                    max-width: 100%;
-                    padding: 20px;
-                }
-
-                .profile-avatar img {
-                    width: 150px;
-                    height: 150px;
-                }
-            }
         </style>
     </head>
     <body>

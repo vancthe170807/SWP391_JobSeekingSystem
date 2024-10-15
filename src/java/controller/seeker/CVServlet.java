@@ -4,9 +4,11 @@ import constant.CommonConst;
 import dao.CVDAO;
 import dao.JobSeekerDAO;
 import model.CV;
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.time.LocalDate;
+import java.nio.file.Files;
 import model.Account;
 import model.JobSeekers;
 
@@ -32,22 +34,32 @@ public class CVServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url;
-
         switch (action) {
-            case "upload-cv":
-                url = "view/user/CV.jsp";
+            case "view-cv":
+                viewCV(request, response);
                 break;
             case "update-cv":
-                url = "view/user/CV.jsp";
+                request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
                 break;
-
-            default:
-                url = "view/authen/login.jsp"; // Default page if no action matches
-                break;
+            default: {
+                // Default action to display the CV page
+                HttpSession session = request.getSession();
+                Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+                if (account == null) {
+                    response.sendRedirect("view/authen/login.jsp"); // Redirect if not logged in
+                    return;
+                }
+                JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+                if (jobSeeker != null) {
+                    CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
+                    if (cv != null) {
+                        request.setAttribute("cvFilePath", cv.getFilePath());
+                    }
+                }
+            }
+            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response); // Default page
+            break;
         }
-
-        request.getRequestDispatcher(url).forward(request, response);
     }
 
     @Override
@@ -55,7 +67,6 @@ public class CVServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
-
         switch (action) {
             case "upload-cv":
                 url = uploadCV(request);
@@ -64,136 +75,161 @@ public class CVServlet extends HttpServlet {
                 url = updateCV(request);
                 break;
             default:
-                url = "home"; // Default URL if no action matches
+                url = "view/user/CV.jsp"; // Default URL if no action matches
         }
-
-        request.getRequestDispatcher(url).forward(request, response);
+        if (url != null) {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
 
     // Upload CV
     public String uploadCV(HttpServletRequest request) throws IOException, ServletException {
-        String url; // URL to navigate to after processing
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        if (account == null) {
+            return "view/authen/login.jsp"; // Redirect if user is not logged in
+        }
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-        CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
-        if (jobSeeker != null && cv == null) {
-            try {
-                Part part = request.getPart("cvFile");
-                String cvFilePath = null;
+        if (jobSeeker == null) {
+            request.setAttribute("error", "No Job Seeker found for the current account.");
+            return "view/authen/login.jsp"; // Redirect to login page
+        }
+        CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (existingCV != null) {
+            request.setAttribute("error", "CV already exists. Please update instead.");
+            return "view/user/CV.jsp"; // Redirect if CV already exists
+        }
 
-                // Check if the uploaded file is valid
-                if (part != null && part.getSize() > 0 && part.getSubmittedFileName() != null && !part.getSubmittedFileName().trim().isEmpty()) {
-                    String path = request.getServletContext().getRealPath("cvFiles");
-                    File dir = new File(path);
-
-                    // Create directory if it doesn't exist
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-
-                    // Create file object for the CV
-                    File cvFile = new File(dir, part.getSubmittedFileName());
-                    part.write(cvFile.getAbsolutePath()); // Write file to the server
-
-                    // Store the file path for database insertion
-                    cvFilePath = request.getContextPath() + "/cvFiles/" + cvFile.getName();
-                } else {
-                    // Handle case where no file was uploaded
-                    request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
-                    return "view/user/CV.jsp"; // Redirect back to CV upload page with error
-                }
-
-                // Create CV object for update
-                CV cvUpdate = new CV();
-                cvUpdate.setJobSeekerID(jobSeeker.getJobSeekerID());
-                cvUpdate.setFilePath(cvFilePath);
-                cvUpdate.setUploadDate(Date.valueOf(LocalDate.now())); // Set the last updated date
-
-                // Update the CV in the database
-                cvDAO.insert(cvUpdate);
-                request.setAttribute("successCV", "Profile uploaded successfully.");
-                request.setAttribute("cv", cv);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "view/user/CV.jsp"; // Navigate to CV page
-            } catch (Exception e) {
-                e.printStackTrace(); // Log the exception for debugging
-                request.setAttribute("errorCV", "An error occurred while uploading the CV. Please try again.");
-                url = "view/user/CV.jsp"; // Redirect back to CV upload page with error
+        try {
+            Part part = request.getPart("cvFile");
+            if (part == null || part.getSize() <= 0) {
+                request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
+                return "view/user/CV.jsp";
             }
-            request.setAttribute("cv", cv);
-            request.setAttribute("jobSeeker", jobSeeker);
-        } else {
-            // If no JobSeeker is found, handle the error
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
-
+            String path = request.getServletContext().getRealPath("cvFiles");
+            File dir = new File(path);
+            // Create directory if it doesn't exist
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            // Save uploaded file
+            File cvFile = new File(dir, part.getSubmittedFileName());
+            part.write(cvFile.getAbsolutePath());
+            // Insert CV record into database
+            CV newCV = new CV();
+            newCV.setJobSeekerID(jobSeeker.getJobSeekerID());
+            newCV.setFilePath(request.getContextPath() + "/cvFiles/" + cvFile.getName());
+            newCV.setUploadDate(Date.valueOf(LocalDate.now()));
+            cvDAO.insert(newCV);
+            request.setAttribute("successCV", "CV uploaded successfully.");
+            return "view/user/CV.jsp"; // Success page
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorCV", "An error occurred while uploading the CV: " + e.getMessage());
+            return "view/user/CV.jsp"; // Redirect back with error
         }
-
-        return url; // Return the URL to navigate to
     }
 
-//Update CV
+    // Update CV
     public String updateCV(HttpServletRequest request) throws IOException, ServletException {
-        String url; // URL to navigate to after processing
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        if (account == null) {
+            return "view/authen/login.jsp";
+        }
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-        CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
-
-        if (jobSeeker != null && cv != null) {
-                try {
-                    Part part = request.getPart("cvFile");
-                    String cvFilePath = null;
-
-                    // Check if the uploaded file is valid
-                    if (part != null && part.getSize() > 0 && part.getSubmittedFileName() != null && !part.getSubmittedFileName().trim().isEmpty()) {
-                        String path = request.getServletContext().getRealPath("cvFiles");
-                        File dir = new File(path);
-
-                        // Create directory if it doesn't exist
-                        if (!dir.exists()) {
-                            dir.mkdirs();
-                        }
-
-                        // Create file object for the CV
-                        File cvFile = new File(dir, part.getSubmittedFileName());
-                        part.write(cvFile.getAbsolutePath()); // Write file to the server
-
-                        // Store the file path for database insertion
-                        cvFilePath = request.getContextPath() + "/cvFiles/" + cvFile.getName();
-                    } else {
-                        // Handle case where no file was uploaded
-                        request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
-                        return "view/user/CV.jsp"; // Redirect back to CV upload page with error
-                    }
-
-                    // Create CV object for update
-                    CV cvUpdate = new CV();
-                    cvUpdate.setJobSeekerID(jobSeeker.getJobSeekerID());
-                    cvUpdate.setFilePath(cvFilePath);
-                    cvUpdate.setLastUpdated(Date.valueOf(LocalDate.now())); // Set the last updated date
-
-                    // Update the CV in the database
-                    cvDAO.updateCV(cvUpdate);
-                    request.setAttribute("successCV", "Profile updated successfully.");
-                    request.setAttribute("cv", cv);
-                    request.setAttribute("jobSeeker", jobSeeker);
-                    url = "view/user/CV.jsp"; // Navigate to CV page
-                } catch (Exception e) {
-                    e.printStackTrace(); // Log the exception for debugging
-                    request.setAttribute("errorCV", "An error occurred while updating the CV. Please try again.");
-                    url = "view/user/CV.jsp"; // Redirect back to CV upload page with error
-                }
-                request.setAttribute("cv", cv);
-            request.setAttribute("jobSeeker", jobSeeker);
-        } else {
-            // If no JobSeeker is found, handle the error
+        if (jobSeeker == null) {
             request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
+            return "view/authen/login.jsp";
+        }
+        CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (existingCV == null) {
+            request.setAttribute("errorCV", "No CV found. Please upload one first.");
+            return "view/user/CV.jsp";
         }
 
-        return url; // Return the URL to navigate to
+        try {
+            Part part = request.getPart("cvFile");
+            if (part == null || part.getSize() <= 0) {
+                request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
+                return "view/user/CV.jsp";
+            }
+            String path = request.getServletContext().getRealPath("cvFiles");
+            File dir = new File(path);
+            // Create directory if it doesn't exist
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            // Save updated file
+            File cvFile = new File(dir, part.getSubmittedFileName());
+            part.write(cvFile.getAbsolutePath());
+            // Update CV record in the database
+            existingCV.setFilePath(request.getContextPath() + "/cvFiles/" + cvFile.getName());
+            existingCV.setUploadDate(Date.valueOf(LocalDate.now()));
+            cvDAO.updateCV(existingCV);
+            
+            request.setAttribute("successCV", "CV updated successfully.");
+            return "view/user/CV.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorCV", "An error occurred while updating the CV: " + e.getMessage());
+            return "view/user/CV.jsp";
+        }
     }
 
+    // View CV
+    private void viewCV(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        if (account == null) {
+            response.sendRedirect("view/authen/login.jsp"); // Redirect if user is not logged in
+            return;
+        }
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        if (jobSeeker == null) {
+            request.setAttribute("error", "No Job Seeker found for the current account.");
+            request.getRequestDispatcher("view/authen/login.jsp").forward(request, response); // Redirect to login page
+            return;
+        }
+        CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (cv == null) {
+            request.setAttribute("errorCV", "No CV found for this Job Seeker.");
+            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
+            return;
+        }
+
+        // Get the file path from the database
+        String filePath = cv.getFilePath(); // Example: /cvFile/1721092306015_6454ae59431b066cbfda5ca4_PE1-SWR-Sample.pdf
+        String rootPath = request.getServletContext().getRealPath("/");
+
+        // Ensure the path uses the 'cvFile' directory
+        String relativeFilePath = filePath.replace("JobSeeker/cvFiles/", "cvFiles/");
+
+        // Concatenate root and file path
+        String absoluteFilePath = rootPath + relativeFilePath;
+
+        // Normalize the file path slashes for Windows systems
+        absoluteFilePath = absoluteFilePath.replace("/", "\\").replace("\\\\", "\\");
+
+        File file = new File(absoluteFilePath);
+        if (!file.exists()) {
+            request.setAttribute("errorCV", "File not found.");
+            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
+            return;
+        }
+
+        // Set response headers and content type for PDF viewing
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+
+        // Stream the file content to the browser
+        try {
+            Files.copy(file.toPath(), response.getOutputStream());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace(); // Log the error for debugging
+            request.setAttribute("errorCV", "Error displaying CV: " + e.getMessage());
+            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
+        }
+    }
 }

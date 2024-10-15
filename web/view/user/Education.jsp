@@ -16,77 +16,110 @@
     <body>
         <!-- Header Area -->
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
-        <!-- Header Area End -->
+            <!-- Header Area End -->
 
-        <div class='container mt-5 mb-5'>
-            <!-- Display Success or Error Messages -->
-            <c:if test="${not empty successEducation}">
-                <div class="alert alert-success">
-                    ${successEducation}
-                </div>
-            </c:if>
-            <c:if test="${not empty errorEducation}">
-                <div class="alert alert-danger">
-                    ${errorEducation}
-                </div>
-            </c:if>
+            <div class='container mt-5 mb-5'>
+                <h1 class="text-center">Education Profile</h1>
+
+                <!-- Display error messages if any -->
             <c:if test="${not empty error}">
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     ${error}
                 </div>
             </c:if>
 
-            <!-- Form for Adding or Updating Education -->
-            <c:if test="${jobSeeker != null}">
-                <form action="${pageContext.request.contextPath}/education" method="post">
-                    <input type="hidden" name="action" value="${param.action == 'update-education' ? 'update-education' : 'add-education'}">
-
-                    <div class="form-group mb-3">
-                        <label for="institution">Institution:</label>
-                        <input type="text" id="institution" name="institution" class="form-control" 
-                               value="${not empty institution ? institution : (edu != null ? edu.institution : '')}" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="degree">Degree:</label>
-                        <select id="degree" name="degree" class="form-control" required>
-                            <option value="Bachelor" ${not empty degree && degree == 'Bachelor' ? 'selected' : (edu != null && edu.degree == 'Bachelor' ? 'selected' : '')}>Bachelor</option>
-                            <option value="Master" ${not empty degree && degree == 'Master' ? 'selected' : (edu != null && edu.degree == 'Master' ? 'selected' : '')}>Master</option>
-                            <option value="PhD" ${not empty degree && degree == 'PhD' ? 'selected' : (edu != null && edu.degree == 'PhD' ? 'selected' : '')}>PhD</option>
-                            <option value="Khác" ${not empty degree && degree == 'Khác' ? 'selected' : (edu != null && edu.degree == 'Khác' ? 'selected' : '')}>Khác</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="fieldofstudy">Field of Study:</label>
-                        <input type="text" id="fieldofstudy" name="fieldofstudy" class="form-control" 
-                               value="${not empty fieldofstudy ? fieldofstudy : (edu != null ? edu.fieldOfStudy : '')}" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" 
-                               value="${not empty startDate ? startDate : (edu != null ? edu.startDate : '')}" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control" 
-                               value="${not empty endDate ? endDate : (edu != null ? edu.endDate : '')}" ${edu != null && edu.endDate == null ? 'disabled' : ''}>
-                        <!-- Hidden field to capture End Date value when disabled -->
-                        <input type="hidden" id="hiddenEndDate" name="hiddenEndDate" value="${edu != null ? edu.endDate : ''}">
-                    </div>
-
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="studying" name="studying" 
-                               onclick="toggleEndDate()" ${edu != null && edu.endDate == null ? 'checked' : ''}>
-                        <label class="form-check-label" for="studying">Currently Studying (No End Date)</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">${param.action == 'update-education' ? 'Update' : 'Add'}</button>
-                </form>
+            <!-- Display success messages if any -->
+            <c:if test="${not empty successEducation}">
+                <div class="alert alert-success" role="alert">
+                    ${successEducation}
+                </div>
             </c:if>
+
+            <!-- Display education details -->
+            <c:if test="${not empty institution}">
+                <div class="card" style="max-width: 500px; align-self: center">
+                    <div class="card-header">
+                        Education Details
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Institution:</strong> ${institution}</p>
+                        <p><strong>Degree:</strong> ${degree}</p>
+                        <p><strong>Field of Study:</strong> ${fieldOfStudy}</p>
+                        <p><strong>Start Date:</strong> ${startDate}</p>
+                        <c:if test="${not empty endDate}">
+                            <p><strong>End Date:</strong> ${endDate}</p>
+                        </c:if>
+                        <c:if test="${empty endDate}">
+                            <p><strong>End Date:</strong> N/A</p>
+                        </c:if>
+                    </div>
+                </div>
+            </c:if>
+
+            <!-- Button to trigger the modal for adding/updating education -->
+            <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#educationModal">
+                ${institution != null ? "Update Education" : "Add Education"}
+            </button>
         </div>
+
+        <!-- Modal for adding/updating education -->
+        <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="educationModalLabel">${institution != null ? "Update Education" : "Add Education"}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="${pageContext.request.contextPath}/education" method="post" id="educationForm">
+                            <input type="hidden" name="action" value="${institution != null ? 'update-education' : 'add-education'}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                <label for="institution">Institution</label>
+                                <input type="text" class="form-control" id="institution" name="institution" value="${institution}" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="degree">Degree</label>
+                                <select class="form-select" id="degree" name="degree" required>
+                                    <option value="Bachelor" ${degree == 'Bachelor' ? 'selected' : ''}>Bachelor</option>
+                                    <option value="Master" ${degree == 'Master' ? 'selected' : ''}>Master</option>
+                                    <option value="PhD" ${degree == 'PhD' ? 'selected' : ''}>PhD</option>
+                                    <option value="Different" ${degree == 'Different' ? 'selected' : ''}>Different</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="fieldofstudy">Field of Study</label>
+                                <input type="text" class="form-control" id="fieldofstudy" name="fieldofstudy" value="${fieldOfStudy}" required>
+                            </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate" value="${startDate}" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate" value="${endDate}">
+                                <input type="hidden" name="hiddenEndDate" value="${endDate == null ? 'N/A' : endDate}">
+                            </div>
+                            <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here. You may update this information at a later time if your completion date changes. Regards</span>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="educationForm" class="btn btn-success">${institution != null ? "Update Education" : "Add Education"}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
@@ -108,7 +141,7 @@
             }
 
             // Initialize the form based on the checkbox state on page load
-            window.onload = function() {
+            window.onload = function () {
                 toggleEndDate();
             };
 
@@ -126,5 +159,4 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    </html>
-    
+</html>

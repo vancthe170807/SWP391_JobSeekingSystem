@@ -29,7 +29,7 @@ public class SeekerController extends HttpServlet {
         // Handle GET requests based on the action
         switch (action) {
             case "join-job-seeking":
-                url = "view/user/userProfile.jsp";
+                url = "JobSeekerCheck";
                 break;
 
 //            case "checkJobSeeker":

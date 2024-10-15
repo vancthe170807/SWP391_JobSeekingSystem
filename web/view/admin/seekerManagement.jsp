@@ -62,7 +62,7 @@
                                     <!--drop-down filter seeker-->
                                     <div class="filter-dropdown">
                                         <form action="${pageContext.request.contextPath}/seekers" method="GET">
-                                        <label for="seeker-filter">Filter Seeker</label>
+                                        <label for="seeker-filter">Filter</label>
                                         <select id="seeker-filter" name="filter" onchange="this.form.submit()">
                                             <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Seekers</option>
                                             <option value="active" ${param.filter == 'active' ? 'selected' : ''}>Active Seekers</option>
@@ -115,6 +115,16 @@
                                         </tbody>
                                     </table>
 
+                                    <!-- Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                <li>
+                                                    <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
 
                                     <!-- Add more seekers here -->
                                 </div>
@@ -133,7 +143,7 @@
                 </div>
             </div>
         </div>
-                                        
+
 
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
@@ -215,7 +225,6 @@
                                                 });
                                             });
         </script>   
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

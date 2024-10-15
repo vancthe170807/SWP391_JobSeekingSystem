@@ -43,27 +43,12 @@ public class CompanyAdminController extends HttpServlet {
         String url;
 //        get ve gia tri cua drop-down filter
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
-//        get ve gia tri tu thanh search
-        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
         List<Company> listCompanies;
         //get ve request URL
         String requestURL = request.getRequestURL().toString();
         //total record
         int totalRecord = 0;
-        if (!searchQuery.isEmpty()) {
-            // Tìm kiếm công ty dựa trên từ khóa
-            listCompanies = dao.searchCompaniesByName(searchQuery, page);  // Thực hiện tìm kiếm
-            totalRecord = dao.findTotalRecordByName(searchQuery);
-            if(filter == null){
-                pageControl.setUrlPattern(requestURL + "?");
-            }else if(filter.equalsIgnoreCase("all")){
-                pageControl.setUrlPattern(requestURL + "?filter=all" + "&" + "searchQuery=" + searchQuery + "&");
-            }else if (filter.equalsIgnoreCase("accept")) {
-                pageControl.setUrlPattern(requestURL + "?filter=accept" + "&" + "searchQuery=" + searchQuery + "&");
-            }else if (filter.equalsIgnoreCase("violate")) {
-                pageControl.setUrlPattern(requestURL + "?filter=violate" + "&" + "searchQuery=" + searchQuery + "&");
-            }
-        } else {       
+               
             switch (filter) {
                 case "all":
                     listCompanies = dao.findAllCompany(page);
@@ -85,7 +70,7 @@ public class CompanyAdminController extends HttpServlet {
                     totalRecord = dao.findAllTotalRecord();
                     pageControl.setUrlPattern(requestURL + "?");
             }
-        }
+        
         request.setAttribute("listCompanies", listCompanies);
         // Handle GET requests based on the action
         //total page
@@ -128,7 +113,7 @@ public class CompanyAdminController extends HttpServlet {
                 url = editCompany(request);
                 break;
             default:
-                url = "view/admin/companyManagement.jsp";
+                url = "companies";
         }
         response.sendRedirect(url);
     }

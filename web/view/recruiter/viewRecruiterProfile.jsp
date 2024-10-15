@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -92,7 +94,7 @@
                 text-decoration: none;
                 transition: background-color 0.3s ease;
             }
-
+            
             .edit-profile-btn a:hover {
                 background-color: #218838;
             }
@@ -111,8 +113,11 @@
             <div class="profile-card">
                 <!-- Profile Avatar -->
                 <div class="profile-avatar">
-                    <c:if test="${!empty sessionScope.account.getAvatar()}">
-                        <img src="${sessionScope.account.getAvatar()}" alt="Avatar">
+                    <c:if test="${empty sessionScope.account.avatar}">
+                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
+                    </c:if>
+                    <c:if test="${!empty sessionScope.account.avatar}">
+                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
                     </c:if>
                     <h4>${sessionScope.account.getFullName()}</h4>
                     <p>Recruiter Information</p>
@@ -159,6 +164,6 @@
 
         <!-- Footer -->
         <%@ include file="../recruiter/footer-re.jsp" %>
- 
+
     </body>
 </html>

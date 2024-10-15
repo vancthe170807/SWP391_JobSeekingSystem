@@ -4,6 +4,8 @@
  */
 package validate;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.Year;
 
 /**
@@ -13,7 +15,7 @@ import java.time.Year;
 public class Validation {
 
     public boolean checkPassword(String password) {
-       // Biểu thức chính quy kiểm tra mật khẩu:
+        // Biểu thức chính quy kiểm tra mật khẩu:
         // - Phải có ít nhất 1 chữ cái hoa
         // - Phải có ít nhất 1 ký tự đặc biệt
         // - Phải có từ 8 đến 20 ký tự
@@ -45,7 +47,7 @@ public class Validation {
         return phone.matches(regex);
     }
 
-    public static boolean checkUserName(String username) {
+    public boolean checkUserName(String username) {
         // Biểu thức chính quy: chỉ cho phép chữ cái, số và dấu gạch dưới
         String regex = "^[a-zA-Z0-9_]+$";
 
@@ -58,4 +60,48 @@ public class Validation {
         return input.matches("\\S+");
     }
 
+    // Method to check if the input has at least 30 characters
+    public boolean checkAtLeast30Chars(String input) {
+        // Check if input meets the minimum length requirement
+        if (input.length() >= 30) {
+            return true; // Input is valid
+        } else {
+            return false; // Input is not valid
+        }
+    }
+
+    // Method to check if the date is between 1990 and 2500 using java.sql.Date
+    public boolean isValidDateRange(Date inputDate) {
+        // Define the valid date range (from 1990-01-01 to 2500-12-31)
+        Date startDate = Date.valueOf("1990-01-01");
+        Date endDate = Date.valueOf("2500-12-31");
+
+        // Check if the input date is within the valid range
+        return !inputDate.before(startDate) && !inputDate.after(endDate);
+    }
+
+    // Method to check if startDate is before endDate
+    public boolean isStartDateBeforeEndDate(Date startDate, Date endDate) {
+        // Return true if startDate is before endDate
+        return startDate.before(endDate);
+    }
+
+    // Method to check if the input date is the current date
+    public boolean isToday(Date inputDate) {
+        // Get the current date (system date)
+        Date currentDate = Date.valueOf(LocalDate.now());
+
+        // Compare the input date with the current date
+        return inputDate.equals(currentDate);
+    }
+
+    // Hàm kiểm tra mật khẩu hiện tại và mật khẩu mới có khác nhau hay không
+    public boolean isPasswordDifferent(String currentPassword, String newPassword) {
+        if (currentPassword == null || newPassword == null) {
+            throw new IllegalArgumentException("Passwords cannot be null");
+        }
+
+        // Kiểm tra mật khẩu mới có khác mật khẩu hiện tại hay không
+        return !currentPassword.equals(newPassword);
+    }
 }

@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -65,6 +68,39 @@
                 margin: 0 auto;
             }
 
+            .recent-postings {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+            }
+
+            .table-container, .chart-container {
+                flex: 1;
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+
+            table thead th {
+                background-color: #007bff;
+                color: white;
+                padding: 10px;
+                text-align: center;
+            }
+
+            table tbody td {
+                text-align: center;
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
             @media (max-width: 768px) {
                 .top-metrics {
                     flex-direction: column;
@@ -92,7 +128,7 @@
             <div class="top-metrics">
                 <div class="metric-box">
                     <h4>Job Postings</h4>
-                    <p>5</p>
+                    <p>${listSize.size()}</p>
                     <a href="#">View details</a>
                 </div>
                 <div class="metric-box">
@@ -112,11 +148,39 @@
                 </div>
             </div>
 
-            <!-- Applicants Statistics Chart Section -->
-            <div class="chart-container my-5">
-                <h4>Applicants Registered Statistics</h4>
-                <canvas id="applicantChart"></canvas>
+
+            <!-- Top 5 Recent Job Postings and Chart section -->
+            <div class="recent-postings">
+                <!-- Recent Job Postings Table -->
+                <div class="table-container">
+                    <h5>Top 5 Recent Job Postings</h5>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Posted Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="jobPosting" items="${listJobPostings}">
+                                <tr>
+                                    <td>${jobPosting.getTitle()}</td>
+                                    <td><fmt:formatDate value="${jobPosting.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
+                            </tr>
+                        </c:forEach>                      
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Chart Section -->
+                <div class="chart-container">
+                    <canvas id="applicantChart"></canvas>
+                </div>
             </div>
+
+
+
+
         </div>
 
         <!-- Footer -->
@@ -129,7 +193,7 @@
             var applicantChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Tháng 1', 'Tháng 3', 'Tháng 5', 'Tháng 7', 'Tháng 9', 'Tháng 11'],
+                    labels: ['ThÃ¡ng 1', 'ThÃ¡ng 3', 'ThÃ¡ng 5', 'ThÃ¡ng 7', 'ThÃ¡ng 9', 'ThÃ¡ng 11'],
                     datasets: [{
                             label: 'Sessions',
                             data: [0, 1, 0, 0, 0, 0],

@@ -14,4 +14,5 @@ public class CommonConst {
     public static final String SESSION_CATEGORY = "listCategory";
     public static final String SESSION_ACCOUNT = "account";
     public static final String SESSION_JOBSEEKER = "jobseeker";
+    public static final String SESSION_RECRUITER = "re";
 }

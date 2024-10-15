@@ -196,7 +196,7 @@
                 if (role === 1) {
                     window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
                 } else if (role === 2) {
-                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp";
+                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/dashboard.jsp";
                 } else if (role === 3) {
                     window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
                 }

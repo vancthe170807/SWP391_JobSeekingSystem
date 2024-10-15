@@ -25,8 +25,18 @@ public class recruiterController extends HttpServlet {
             throws ServletException, IOException {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+        String pageRaw = request.getParameter("page");
         String url;
         // get ve danh sach list seeker
+        int page;
+        try {
+            page = Integer.parseInt(pageRaw);
+            if (page <= 1) {
+                page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
         List<Account> listSeekers;
         switch (filter) {
@@ -35,10 +45,10 @@ public class recruiterController extends HttpServlet {
                 listSeekers = dao.findAllUserByRoleId(3, page);
                 break;
             case "active":
-                listSeekers = dao.filterSeekerByStatus(true);
+                listSeekers = dao.filterUserByStatus(true, 3, page);
                 break;
             case "inactive":
-                listSeekers = dao.filterSeekerByStatus(false);
+                listSeekers = dao.filterUserByStatus(false, 3, page);
                 break;
             default:
                 listSeekers = dao.findAllUserByRoleId(3, page);

@@ -1,28 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
+import static constant.CommonConst.RECORD_PER_PAGE;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import model.Company;
 import model.JobPostings;
+import model.WeeklyPostings;
 
-/**
- *
- * @author nhanh
- */
 public class JobPostingsDAO extends GenericDAO<JobPostings> {
 
     @Override
     public List<JobPostings> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return queryGenericDAO(JobPostings.class);
     }
 
     @Override
     public int insert(JobPostings t) {
         String sql = "INSERT INTO [dbo].[JobPostings]\n"
-                + "           ,[Title]\n"
+                + "           ([Title]\n"
                 + "           ,[Description]\n"
                 + "           ,[Requirements]\n"
                 + "           ,[Salary]\n"
@@ -30,8 +26,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "           ,[PostedDate]\n"
                 + "           ,[ClosingDate]\n"
                 + "           ,[Status])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?)";
+                + "          VALUES(?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("Title", t.getTitle());
         parameterMap.put("Description", t.getDescription());
@@ -76,11 +71,11 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         updateGenericDAO(sql, parameterMap);
     }
 
-    public void deleteJobPosting(JobPostings jobPostingEdit) {
+    public void deleteJobPosting(String jobPostingEdit) {
         String sql = "DELETE FROM [dbo].[JobPostings]\n"
                 + "      WHERE JobPostingID = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("JobPostingID", jobPostingEdit.getJobPostingID());
+        parameterMap.put("JobPostingID", jobPostingEdit);
         deleteGenericDAO(sql, parameterMap);
     }
 
@@ -92,5 +87,116 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Title", title);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
+
+    public List<JobPostings> getListBookByPage(List<JobPostings> list, int start, int end) {
+        List<JobPostings> arr = new ArrayList<>();
+        for (int i = start; i < end; ++i) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
+    public List<JobPostings> findByTitle(String keyword) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "WHERE Title LIKE ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", "%" + keyword + "%");
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public int findTotalRecordByTitle(String searchQuery) {
+        String sql = "SELECT count(*)\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "WHERE Title LIKE '%' + ? + '%'";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchQuery);
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> searchJobPostingByTitle1(String searchJP, int page) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "WHERE Title LIKE '%' + ? + '%'"
+                + "order by id\n"
+                + "offset ? rows\n"
+                + "fetch next ? rows only";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchJP);
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public int findAllTotalRecord() {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings]\n";
+        parameterMap = new LinkedHashMap<>();
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> sortJobPostingsByTitle(int page) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "ORDER BY Title ASC\n"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> sortJobPostingsByPostedDate(int page) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "ORDER BY PostedDate DESC\n"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> sortJobPostingsByStatus(int page) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "ORDER BY Status ASC\n"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> searchJobPostingByTitle(String searchJP, int page) {
+        String sql = "SELECT * FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' ORDER BY JobPostingID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchJP);
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public int countTotalJobPostings() {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings]";
+        return findTotalRecordGenericDAO(JobPostings.class, sql, new LinkedHashMap<>());
+    }
+
+    public List<JobPostings> findJobPostingsWithFilter(String sortField, int page, int pageSize) {
+        String sql = "SELECT * FROM [dbo].[JobPostings] ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("offset", (page - 1) * pageSize);
+        parameterMap.put("fetch", pageSize);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> getTop5RecentJobPostings() {
+        String sql = "SELECT TOP 5 *\n"
+                + "FROM [dbo].[JobPostings]\n"
+                + "ORDER BY PostedDate DESC";
+        parameterMap = new LinkedHashMap<>();
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    
 
 }

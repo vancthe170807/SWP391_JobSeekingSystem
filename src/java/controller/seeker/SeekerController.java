@@ -29,12 +29,12 @@ public class SeekerController extends HttpServlet {
         // Handle GET requests based on the action
         switch (action) {
             case "join-job-seeking":
-                url = "view/user/JoinJobSeeking.jsp";
+                url = "JobSeekerCheck";
                 break;
 
-            case "checkJobSeeker":
-                url = checkJobSeeker(request);
-                break;
+//            case "checkJobSeeker":
+//                url = checkJobSeeker(request);
+//                break;
 
             default:
                 url = "view/authen/login.jsp"; // Default page if no action matches
@@ -58,9 +58,9 @@ public class SeekerController extends HttpServlet {
                 url = joinJobSeeking(request);
                 break;
 
-            case "checkJobSeeker":
-                url = checkJobSeeker(request);
-                break;
+//            case "checkJobSeeker":
+//                url = checkJobSeeker(request);
+//                break;
 
             default:
                 url = "home"; // Default URL if no action matches
@@ -80,7 +80,7 @@ public class SeekerController extends HttpServlet {
         // Log để kiểm tra Account có được nhận từ session không
         if (account == null) {
             System.out.println("Account is null. User might not be logged in.");
-            request.setAttribute("joinerror", "Unable to join job seeking. Please log in first.");
+            request.setAttribute("error", "Unable to join job seeking. Please log in first.");
             url= "view/authen/login.jsp";
         }
 
@@ -96,7 +96,7 @@ public class SeekerController extends HttpServlet {
             jobSeekerDAO.insert(jobSeeker);
             System.out.println("Job seeker inserted successfully with AccountID: " + accountId);
             request.setAttribute("joinsuccess", "Confirmed! You have successfully joined Job Seeking.");
-            url = "view/user/JoinJobSeeking.jsp";
+            url = "view/user/userProfile.jsp";
         } catch (Exception e) {
             // Log ngoại lệ khi xảy ra lỗi
             System.out.println("Error inserting job seeker: " + e.getMessage());
@@ -105,34 +105,9 @@ public class SeekerController extends HttpServlet {
 
         return url;
     }
-
-    // Hàm để kiểm tra người dùng có phải là Job Seeker
-    private String checkJobSeeker(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        String url = "view/common/user/header-user.jsp"; // Default URL to forward to
-
-        if (account != null) {
-            int accountId = account.getId();
-            JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerByAccountID(accountId);
-
-            if (jobSeeker != null) {
-                // Nếu đã tham gia, đặt thông tin JobSeeker vào request
-                request.setAttribute("jobSeekerInfo", jobSeeker.getJobSeekerID());
-            } else {
-                // Nếu chưa tham gia, đặt flag hiển thị nút Join Job Seeking
-                request.setAttribute("showJoinJobSeekingButton", true);
-            }
-        } else {
-            // Nếu chưa đăng nhập, điều hướng đến trang login
-            url = "view/authen/login.jsp";
-        }
-
-        return url;
-    }
     
     //Nhap CV
-
+    
     
     //Nhap thong tin hoc van
     

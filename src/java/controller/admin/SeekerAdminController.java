@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.admin;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
@@ -12,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 import model.PageControl;
@@ -28,6 +23,7 @@ public class SeekerAdminController extends HttpServlet {
         //get ve page
         PageControl pageControl = new PageControl();
         String pageRaw = request.getParameter("page");
+        String url;
         //valid page
         int page;
         try {
@@ -40,9 +36,6 @@ public class SeekerAdminController extends HttpServlet {
         }
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url;
-        //lay ve id de view profile
-        // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
         //get ve gia tri search by name
         String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
@@ -96,6 +89,7 @@ public class SeekerAdminController extends HttpServlet {
                     pageControl.setUrlPattern(requestURL + "?");
             }
         }
+
         request.setAttribute("listSeekers", listSeekers);
         //total page
         int totalPage = (totalRecord % RECORD_PER_PAGE) == 0 ? (totalRecord / RECORD_PER_PAGE) : (totalRecord / RECORD_PER_PAGE) + 1;
@@ -117,7 +111,6 @@ public class SeekerAdminController extends HttpServlet {
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
-
     }
 
     @Override

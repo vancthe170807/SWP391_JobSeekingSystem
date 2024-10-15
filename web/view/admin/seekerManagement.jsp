@@ -70,13 +70,24 @@
                                         </select>
                                     </form>
                                 </div>
+                                <hr/>
+                                <!--search seeker-->
+                                <form action="${pageContext.request.contextPath}/seekers" method="GET">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <input type="hidden" name="filter" value="${param.filter != null ? param.filter : 'all'}"> <!-- Thay đổi tại đây -->
+                                        <input type="text" id="searchSeeker"  name="searchQuery" class="form-control" style="width: 60%;" placeholder="Search for name...">
+                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                    </div>
+                                </form>
+
+                                <!--search seeker end-->
                                 <div class="seeker-list">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Avatar</th>
                                                 <th>Full Name</th>
-                                                <th>Status</th>
+                                                <th>Status Account</th>
                                                 <th>View</th>
                                             </tr>
                                         </thead>

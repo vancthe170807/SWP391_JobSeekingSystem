@@ -275,4 +275,42 @@ public class AccountDAO extends GenericDAO<Account> {
         return findTotalRecordGenericDAO(Account.class, sql, parameterMap);
     }
 
+    public List<Account> searchUserByName(String searchQuery, int roleId, int page) {
+        String sql = "SELECT * FROM [dbo].[Account] WHERE roleId = ? AND lastName + ' ' +firstName LIKE ? ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("roleId", roleId);
+        parameterMap.put("username", "%" + searchQuery + "%");
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(Account.class, sql, parameterMap);
+    }
+
+    public int findTotalRecordByName(String searchQuery, int roleId) {
+        String sql = "SELECT count(*) FROM [dbo].[Account] WHERE roleId = ? AND lastName + ' ' +firstName LIKE ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("roleId", roleId);
+        parameterMap.put("username", "%" + searchQuery + "%");
+        return findTotalRecordGenericDAO(Account.class, sql, parameterMap);
+    }
+
+    public List<Account> searchUserByNameAndStatus(String searchQuery, boolean status, int roleId, int page) {
+        String sql = "SELECT * FROM [dbo].[Account] WHERE roleId = ? AND lastName + ' ' +firstName LIKE ? AND isActive = ? ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("roleId", roleId);
+        parameterMap.put("username", "%" + searchQuery + "%");
+        parameterMap.put("isActive", status);
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(Account.class, sql, parameterMap);
+    }
+
+    public int findTotalRecordByNameAndStatus(String searchQuery, boolean status, int roleId) {
+        String sql = "SELECT count(*) FROM [dbo].[Account] WHERE roleId = ? AND lastName + ' ' +firstName LIKE ? AND isActive = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("roleId", roleId);
+        parameterMap.put("username", "%" + searchQuery + "%");
+        parameterMap.put("isActive", status);
+        return findTotalRecordGenericDAO(Account.class, sql, parameterMap);
+    }
+
 }

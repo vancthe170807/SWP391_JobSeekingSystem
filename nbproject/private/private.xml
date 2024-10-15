@@ -20,10 +20,10 @@
         </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/recruiterManagement.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/common/admin/sidebar-admin.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/AdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/validate/Validation.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
@@ -35,7 +35,6 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/PageControl.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/createAdmin.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Account.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/adminHome.jsp</file>

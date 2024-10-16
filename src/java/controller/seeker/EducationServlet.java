@@ -33,24 +33,22 @@ public class EducationServlet extends HttpServlet {
         String url = null;
 
         switch (action) {
-            case "view-education":
-            {
+            case "update-education":
+                url = "view/user/Education.jsp";
+                break;
+
+            default: {
                 try {
                     url = viewEducation(request, response);
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.getWriter().println("Database error.");
+                    url = "view/user/Education.jsp";
+
                 }
             }
-                break;
-
-            case "update-education":
-                url = "view/user/Education.jsp";
-                break;
-
-            default:
-                url = "view/user/Education.jsp"; // Default page if no action matches
-                break;
+            // Default page if no action matches
+            break;
         }
 
         request.getRequestDispatcher(url).forward(request, response);
@@ -73,7 +71,7 @@ public class EducationServlet extends HttpServlet {
                 url = "home"; // Default URL if no action matches
         }
 
-        request.getRequestDispatcher(url).forward(request, response);
+        response.sendRedirect(url);
     }
 
     // Upload CV
@@ -114,7 +112,7 @@ public class EducationServlet extends HttpServlet {
                 request.setAttribute("successEducation", "Profile uploaded successfully.");
                 request.setAttribute("edu", edu);
                 request.setAttribute("jobSeeker", jobSeeker);
-                url = "view/user/Education.jsp"; // Điều hướng đến trang Education
+                url = "education"; // Điều hướng đến trang Education
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 request.setAttribute("errorEducation", "An error occurred while uploading the profile. Please try again.");
@@ -164,7 +162,7 @@ public class EducationServlet extends HttpServlet {
                 request.setAttribute("successEducation", "Profile updated successfully.");
                 request.setAttribute("edu", edu);
                 request.setAttribute("jobSeeker", jobSeeker);
-                url = "view/user/Education.jsp"; // Điều hướng đến trang Education
+                url = "education"; // Điều hướng đến trang Education
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 request.setAttribute("errorEducation", "An error occurred while updating the profile. Please try again.");

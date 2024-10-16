@@ -43,12 +43,13 @@
             <!-- Check if there's a CV -->
             <c:if test="${not empty cvFilePath}">
                 <!-- Display View CV button -->
+                <div class="d-grid gap-2 mb-1">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
                     Update CV
                 </button>
-
+                </div>
                 <div class="mb-4">
-                    <iframe src="cv?action=view-cv" height="1200px" width="1200px" allowfullscreen="" frameborder="0"></iframe>
+                    <iframe src="cv?action=view-cv" height="1200px" width="100%" allowfullscreen="" frameborder="0"></iframe>
                 </div>
 
                 <!-- Form to update CV -->
@@ -61,9 +62,10 @@
                 <form action="${pageContext.request.contextPath}/cv?action=upload-cv" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="cvFile" class="form-label">Upload CV</label>
-                        <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
+                        <input type="file" class="form-control" id="cvFile" name="cvUploadFile" accept=".pdf" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Upload CV</button>
+                    <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span><br/>
+                    <button type="submit" class="btn btn-success">Upload CV</button>
                 </form>
             </c:if>
         </div>
@@ -83,6 +85,7 @@
                         <label for="cvFile" class="form-label">Update CV</label>
                         <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
                     </div>
+                        <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
                 
                     </div>
                     <div class="modal-footer">

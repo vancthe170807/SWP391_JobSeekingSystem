@@ -67,6 +67,7 @@
                                     <h6 class="fw-medium mb-30 text-center fs-2">COMPANY MANAGEMENT</h6>
                                     <!--drop-down filter company-->
                                     <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <!-- Form filter -->
                                         <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
                                         <label for="company-filter" class="me-2">Filter</label>
                                         <select id="company-filter" name="filter" class="form-select me-3" onchange="this.form.submit()">
@@ -75,11 +76,19 @@
                                             <option value="violate" ${param.filter == 'violate' ? 'selected' : ''}>Inactive Companies</option>
                                         </select>
                                     </form>
-                                    <!--button add-->
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
-                                        <i class="fas fa-plus"></i> Add New Company
-                                    </button>
+
+                                    <!-- Error message and Add button -->
+                                    <div class="d-flex align-items-center">
+                                        <!-- Error message (displayed in red) -->
+                                        <span class="text-danger me-3">${requestScope.error}</span>
+
+                                        <!-- Button add new company -->
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                                            <i class="fas fa-plus"></i> Add New Company
+                                        </button>
+                                    </div>
                                 </div>
+
                                 <hr/>
                                 <!--search company-->
                                 <form action="${pageContext.request.contextPath}/companies" method="GET">
@@ -308,29 +317,29 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
-                                            $(document).ready(function () {
-                                                $('.form-check-input').change(function () {
-                                                    var companyId = $(this).data('company-id');
-                                                    var isActive = this.checked;
-                                                    var label = $(this).siblings('.form-check-label');
+            $(document).ready(function () {
+                $('.form-check-input').change(function () {
+                    var companyId = $(this).data('company-id');
+                    var isActive = this.checked;
+                    var label = $(this).siblings('.form-check-label');
 
-                                                    $.ajax({
-                                                        url: '${pageContext.request.contextPath}/companies',
-                                                        type: 'POST',
-                                                        data: {
-                                                            action: isActive ? 'accept' : 'violate',
-                                                            'id-company': companyId
-                                                        },
-                                                        success: function (response) {
-                                                            console.log('Company status updated successfully');
-                                                        },
-                                                        error: function (xhr, status, error) {
-                                                            console.error('Error updating company status');
-                                                            $(this).prop('checked', !isActive);
-                                                        }
-                                                    });
-                                                });
-                                            });
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/companies',
+                        type: 'POST',
+                        data: {
+                            action: isActive ? 'accept' : 'violate',
+                            'id-company': companyId
+                        },
+                        success: function (response) {
+                            console.log('Company status updated successfully');
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error updating company status');
+                            $(this).prop('checked', !isActive);
+                        }
+                    });
+                });
+            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 

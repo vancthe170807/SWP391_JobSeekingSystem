@@ -58,7 +58,7 @@
                                 <!-- sidebar menu end -->
                                 <div class="dash__overview">
 
-                                    <h6 class="fw-medium mb-30 text-center fs-2">SEEKER MANAGEMENT</h6>
+                                    <h6 class="fw-medium mb-30 text-center fs-2">SEEKER ACCOUNT MANAGEMENT</h6>
                                     <!--drop-down filter seeker-->
                                     <div class="filter-dropdown">
                                         <form action="${pageContext.request.contextPath}/seekers" method="GET">

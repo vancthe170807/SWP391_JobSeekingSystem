@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import model.Account;
 import model.Company;
+import org.eclipse.jdt.internal.compiler.lookup.TypeConstants;
 
 /**
  *
@@ -177,7 +178,7 @@ public class CompanyDAO extends GenericDAO<Company> {
 
     public List<Company> getCompanyNameByAccountId(int id) {
         String sql = "select\n"
-                + "	c.id, c.name, c.description, c.location, c.verificationStatus, c.adminId\n"
+                + "	c.*\n"
                 + "from \n"
                 + "	Account as acc\n"
                 + "	, Recruiters as rc\n"
@@ -190,9 +191,19 @@ public class CompanyDAO extends GenericDAO<Company> {
         parameterMap.put("accId", id);
         return queryGenericDAO(Company.class, sql, parameterMap);
     }
+
     public static void main(String[] args) {
         CompanyDAO dao = new CompanyDAO();
         List<Company> companies = dao.getCompanyNameByAccountId(2);
         System.out.println(companies.size());
+    }
+
+    public boolean checkExistNameCompany(String name) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Company]\n"
+                + "  where name = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", name);
+        return !queryGenericDAO(Company.class, sql, parameterMap).isEmpty();
     }
 }

@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import model.Account;
 import model.Company;
@@ -26,6 +28,9 @@ public class CompanyAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //get ve error đã xử lí ở doPost
+        String error = request.getParameter("error") != null ?  request.getParameter("error") : "";
+        request.setAttribute("error", error);
         // get ve pageNumber
         PageControl pageControl = new PageControl();
         String pageRaw = request.getParameter("page");
@@ -138,7 +143,7 @@ public class CompanyAdminController extends HttpServlet {
                 url = accepetCompany(request);
                 break;
             case "add-company":
-                url = addCompany(request);
+                url = addCompany(request, response);
                 break;
             case "edit-company":
                 url = editCompany(request);
@@ -163,7 +168,7 @@ public class CompanyAdminController extends HttpServlet {
         return "companies";
     }
 
-    private String addCompany(HttpServletRequest request) {
+    private String addCompany(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 //        get ve cac thuoc tinh cua company
         String name = request.getParameter("name");
         String description = request.getParameter("description");
@@ -184,8 +189,12 @@ public class CompanyAdminController extends HttpServlet {
             default:
                 company.setVerificationStatus(true);
         }
+        if (dao.checkExistNameCompany(name)) {
+            return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+        }else{
         dao.insert(company);
         return "companies";
+        }
     }
 
     private String editCompany(HttpServletRequest request) {

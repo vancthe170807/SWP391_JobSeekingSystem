@@ -6,6 +6,7 @@ package controller.admin;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
 import dao.AccountDAO;
+import dao.RecruitersDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 import model.PageControl;
+import model.Recruiters;
 
 @WebServlet(name = "RecruiterAdminController", urlPatterns = {"/recruiters"})
 public class RecruiterAdminController extends HttpServlet {
@@ -40,6 +42,13 @@ public class RecruiterAdminController extends HttpServlet {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
+        switch (action) {
+            case "view-list-seekers":
+                url = "view/admin/recruiterManagement.jsp";
+                break;
+            default:
+                url = "view/admin/recruiterManagement.jsp";
+        }
         //lay ve id de view profile
         // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
@@ -106,13 +115,7 @@ public class RecruiterAdminController extends HttpServlet {
         pageControl.setTotalPages(totalPage);
         //set attribute pageControl 
         request.setAttribute("pageControl", pageControl);
-        switch (action) {
-            case "view-list-seekers":
-                url = "view/admin/recruiterManagement.jsp";
-                break;
-            default:
-                url = "view/admin/recruiterManagement.jsp";
-        }
+        
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
@@ -161,4 +164,6 @@ public class RecruiterAdminController extends HttpServlet {
         request.setAttribute("accountView", account);
         return "view/admin/viewDetailUser.jsp";
     }
+
+    
 }

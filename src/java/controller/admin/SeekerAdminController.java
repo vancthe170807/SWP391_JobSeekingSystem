@@ -36,6 +36,13 @@ public class SeekerAdminController extends HttpServlet {
         }
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+        switch (action) {
+            case "view-list-seekers":
+                url = "view/admin/seekerManagement.jsp";
+                break;
+            default:
+                url = "view/admin/seekerManagement.jsp";
+        }
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
         //get ve gia tri search by name
         String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
@@ -101,13 +108,7 @@ public class SeekerAdminController extends HttpServlet {
         request.setAttribute("pageControl", pageControl);
         // Handle GET requests based on the action
 
-        switch (action) {
-            case "view-list-seekers":
-                url = "view/admin/seekerManagement.jsp";
-                break;
-            default:
-                url = "view/admin/seekerManagement.jsp";
-        }
+        
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);

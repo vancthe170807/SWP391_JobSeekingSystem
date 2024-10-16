@@ -81,7 +81,7 @@
                         
                     <div class="mb-3">
                         <label for="cvFile" class="form-label">Update CV</label>
-                        <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
+                        <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
                     </div>
                 
                     </div>

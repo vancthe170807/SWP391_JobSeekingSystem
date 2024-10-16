@@ -64,7 +64,8 @@
                         <label for="cvFile" class="form-label">Upload CV</label>
                         <input type="file" class="form-control" id="cvFile" name="cvUploadFile" accept=".pdf" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Upload CV</button>
+                    <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span><br/>
+                    <button type="submit" class="btn btn-success">Upload CV</button>
                 </form>
             </c:if>
         </div>
@@ -84,6 +85,7 @@
                         <label for="cvFile" class="form-label">Update CV</label>
                         <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
                     </div>
+                        <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
                 
                     </div>
                     <div class="modal-footer">

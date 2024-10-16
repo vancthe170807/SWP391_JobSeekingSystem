@@ -63,11 +63,11 @@ public class SeekerController extends HttpServlet {
 //                break;
 
             default:
-                url = "home"; // Default URL if no action matches
+                url = "JobSeekerCheck"; // Default URL if no action matches
         }
 
         // Forward to the appropriate page
-        request.getRequestDispatcher(url).forward(request, response);
+        response.sendRedirect(url);
     }
 
     // Bật chức năng tìm việc để ghi vào DB JobSeeker
@@ -96,7 +96,7 @@ public class SeekerController extends HttpServlet {
             jobSeekerDAO.insert(jobSeeker);
             System.out.println("Job seeker inserted successfully with AccountID: " + accountId);
             request.setAttribute("joinsuccess", "Confirmed! You have successfully joined Job Seeking.");
-            url = "view/user/userProfile.jsp";
+            url = "JobSeekerCheck";
         } catch (Exception e) {
             // Log ngoại lệ khi xảy ra lỗi
             System.out.println("Error inserting job seeker: " + e.getMessage());

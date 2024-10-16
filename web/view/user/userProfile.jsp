@@ -190,6 +190,7 @@
         <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
             <i class="fas fa-arrow-up"></i>
         </button>
+            </div>
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>

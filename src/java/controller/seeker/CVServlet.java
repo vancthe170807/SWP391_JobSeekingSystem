@@ -188,6 +188,10 @@ public class CVServlet extends HttpServlet {
 
             request.setAttribute("successCV", "CV updated successfully.");
             return "cv";
+        } catch (IllegalStateException e) {
+            // Handle file size exceeding the limit
+            request.setAttribute("errorCV", "File upload exceeds the maximum allowed size (10MB).");
+            return "view/user/CV.jsp"; // Redirect with size error
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorCV", "An error occurred while updating the CV: " + e.getMessage());

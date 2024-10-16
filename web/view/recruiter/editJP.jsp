@@ -32,6 +32,8 @@
                 display: flex;
                 justify-content: center; /* Center the form horizontally */
                 align-items: flex-start; /* Align to the top of the page */
+                min-height: calc(100vh - 80px); /* Ensure minimum height to push footer */
+                overflow: auto; /* Allow scrolling if content is too large */
             }
 
             .job-posting-content {
@@ -115,6 +117,7 @@
             }
 
             /* Footer */
+            /* Footer */
             footer {
                 background-color: #389354;
                 color: white;
@@ -122,7 +125,10 @@
                 padding: 20px 0;
                 width: calc(100% - 260px); /* Adjusting for sidebar width */
                 margin-left: 260px;
-                margin-top: auto; /* Push footer to bottom */
+                position: relative;
+                bottom: 0;
+                flex-shrink: 0;
+                z-index: 1;
             }
 
             footer a {

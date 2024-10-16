@@ -19,40 +19,19 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
         </group>
         <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/WeeklyPostings.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/seeker-manager.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/header-re.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/constant/CommonConst.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DeleteJP.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/Top5JP.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobPostings.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewJP.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/addJobPosting.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/changePW-re.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/addJobPosting.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/sidebar-re.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DetailsJP.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/dashboard.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/EditDetail.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewRecruiterProfile.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/footer-re.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/x.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/home-re.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/PageControl.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/seeker-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DeleteJP.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/Dashboard.java</file>
         </group>
     </open-files>

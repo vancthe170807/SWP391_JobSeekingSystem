@@ -162,10 +162,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="jobPosting" items="${listJobPostings}">
+                            <c:forEach var="i" items="${listTop5}">
                                 <tr>
-                                    <td>${jobPosting.getTitle()}</td>
-                                    <td><fmt:formatDate value="${jobPosting.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
+                                    <td>${i.getTitle()}</td>
+                                    <td><fmt:formatDate value="${i.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
                             </tr>
                         </c:forEach>                      
                         </tbody>

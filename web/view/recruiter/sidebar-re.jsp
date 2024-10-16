@@ -9,6 +9,7 @@
     <a href="${pageContext.request.contextPath}/view/recruiter/viewRecruiterProfile.jsp"><i class="fas fa-user"></i> Profile</a>
     <a href="${pageContext.request.contextPath}/jobPost"><i class="fas fa-user"></i> Job Posting</a>
     <a href="${pageContext.request.contextPath}/view/recruiter/seeker-manager.jsp"><i class="fas fa-user"></i> Seeker manager</a>
+    <a href="${pageContext.request.contextPath}/view/recruiter/feedback-re.jsp"><i class="fas fa-user"></i> Feed Back</a>
 
     <!--    <a href="#" onclick="submitForm(); return false;" class="job-posting-link">
             <i class="fas fa-users"></i> Job Posting

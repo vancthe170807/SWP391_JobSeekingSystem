@@ -41,5 +41,4 @@ public class DetailsJP extends HttpServlet {
         url = "view/recruiter/viewJP.jsp";
         return url;
     }
-
 }

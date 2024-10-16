@@ -18,7 +18,7 @@ import model.JobPostings;
 
 @WebServlet(name = "DeleteJP", urlPatterns = {"/deleteJP"})
 public class DeleteJP extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,10 +27,4 @@ public class DeleteJP extends HttpServlet {
         dao.deleteJobPosting(id);
         response.sendRedirect("jobPost");
     }    
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-    
 }

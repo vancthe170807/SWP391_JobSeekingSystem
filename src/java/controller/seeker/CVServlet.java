@@ -101,7 +101,7 @@ public class CVServlet extends HttpServlet {
         }
 
         try {
-            Part part = request.getPart("cvFile");
+            Part part = request.getPart("cvUploadFile");
             if (part == null || part.getSize() <= 0) {
                 request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
                 return "view/user/CV.jsp";

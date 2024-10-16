@@ -54,15 +54,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="cv-tab" data-bs-toggle="tab" href="#cv" role="tab" aria-controls="cv" aria-selected="false">Upload / Update CV</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab" aria-controls="education" aria-selected="false">Education</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="skill-experience-tab" data-bs-toggle="tab" href="#skill-experience" role="tab" aria-controls="skill-experience" aria-selected="false">Skill & Experience</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" id="deactivate-account-tab" data-bs-toggle="tab" href="#deactivate-account" role="tab" aria-controls="deactivate-account" aria-selected="false">Deactivate Account</a>
                         </li>
@@ -121,68 +113,6 @@
                             </form>
                         </div>
 
-                        <!--                                CV Tab-->
-                        <div class="tab-pane fade" id="cv" role="tabpanel" aria-labelledby="cv-tab">
-                            <h5 class="mb-3">Upload/Update CV (PDF format)</h5>
-
-                            <!-- Display the available CV link -->
-                            <c:if test="${!empty sessionScope.cvUrl}">
-                                <a href="${sessionScope.cvUrl}" target="_blank" class="btn btn-primary">
-                                    View CV
-                                </a>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateCV">
-                                    Launch demo modal
-                                </button>
-                            </c:if>
-
-                            <!-- Optional message when CV is not available -->
-                            <c:if test="${empty sessionScope.cvUrl}">
-                                <p>No CV available. Please upload your CV.</p>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUploadCV">
-                                    Upload CV
-                                </button>
-                            </c:if>
-
-                        </div>
-                        <!-- Education-->
-                        <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
-                            <h5 class="mb-3">Education</h5>
-                            <form action="${pageContext.request.contextPath}/updateeducation" method="POST">
-                                <div class="mb-3">
-                                    <label for="institution" class="form-label">Institution</label>
-                                    <input type="text" class="form-control" id="institution" name="institution" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="degree" class="form-label">Degree</label>
-                                    <input type="text" class="form-control" id="degree" name="degree" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fieldOfStudy" class="form-label">Field of Study</label>
-                                    <input type="text" class="form-control" id="fieldOfStudy" name="fieldOfStudy" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="startDate" class="form-label">Start Date</label>
-                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="endDate" class="form-label">End Date</label>
-                                    <input type="date" class="form-control" id="endDate" name="endDate">
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" class="form-check-input" id="currentlyStudying" name="currentlyStudying" onclick="toggleEndDate()">
-                                    <label class="form-check-label" for="currentlyStudying">Studying</label>
-                                </div>
-                                <button type="submit" class="btn btn-success">Save</button>
-                            </form>
-
-                        </div>
-
-                        <!-- Education-->
-                        <div class="tab-pane fade" id="skill-experience" role="tabpanel" aria-labelledby="skill-experience-tab">
-
-
-                        </div>
-
                         <!-- Deactivate Account Tab -->
                         <div class="tab-pane fade" id="deactivate-account" role="tabpanel" aria-labelledby="deactivate-account-tab">
                             <h6>Deactivate Your Account</h6>
@@ -212,7 +142,6 @@
                     </div>
                 </div>
             </div>
-
             <!--Modal-->
             <div class="modal fade" id="modalJoinJobSeeker" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -254,36 +183,9 @@
                         </c:if>
                     </div>
                 </div>
-            </div>
 
 
-            <!-- Modal UpdateCV -->
-            <div class="modal fade" id="modalUploadCV" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="${pageContext.request.contextPath}/uploadcv" method="POST" enctype="multipart/form-data">
-                            <div class="modal-body">
-
-                                <div class="mb-3">
-                                    <label for="cvFile" class="form-label">Select your CV (PDF only):</label>
-                                    <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf" required>
-                                    <small class="form-text text-muted">Only PDF files are allowed (Max size: 5MB).</small>
-                                </div>
-                                <!--                                <button type="submit" class="btn btn-success">Upload/Update CV</button>-->
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
             <i class="fas fa-arrow-up"></i>

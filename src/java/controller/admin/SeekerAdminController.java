@@ -37,32 +37,57 @@ public class SeekerAdminController extends HttpServlet {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
-
-        List<Account> listSeekers;
+        //get ve gia tri search by name
+        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
+        List<Account> listSeekers = null;
         //get ve request URL
         String requestURL = request.getRequestURL().toString();
         //total record
         int totalRecord = 0;
-        switch (filter) {
-            case "all":
-                listSeekers = dao.findAllUserByRoleId(3, page);
-                totalRecord = dao.findAllTotalRecord(3);
-                pageControl.setUrlPattern(requestURL + "?");
-                break;
-            case "active":
-                listSeekers = dao.filterUserByStatus(true, 3, page);
-                totalRecord = dao.findTotalRecordByStatus(true, 3);
-                pageControl.setUrlPattern(requestURL + "?filter=active" + "&");
-                break;
-            case "inactive":
-                listSeekers = dao.filterUserByStatus(false, 3, page);
-                totalRecord = dao.findTotalRecordByStatus(false, 3);
-                pageControl.setUrlPattern(requestURL + "?filter=inactive" + "&");
-                break;
-            default:
-                listSeekers = dao.findAllUserByRoleId(3, page);
-                totalRecord = dao.findAllTotalRecord(3);
-                pageControl.setUrlPattern(requestURL + "?");
+        if (!searchQuery.isEmpty()) {
+            switch (filter) {
+                case "all":
+                    listSeekers = dao.searchUserByName(searchQuery, 3, page); // Tìm tất cả
+                    totalRecord = dao.findTotalRecordByName(searchQuery, 3);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+                    break;
+                case "active":
+                    listSeekers = dao.searchUserByNameAndStatus(searchQuery, true, 3, page); // Chỉ tìm active
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, true, 3);
+                    pageControl.setUrlPattern(requestURL + "?filter=active&searchQuery=" + searchQuery + "&");
+                    break;
+                case "inactive":
+                    listSeekers = dao.searchUserByNameAndStatus(searchQuery, false, 3, page); // Chỉ tìm inactive
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, false, 3);
+                    pageControl.setUrlPattern(requestURL + "?filter=inactive&searchQuery=" + searchQuery + "&");
+                    break;
+                default:
+                    listSeekers = dao.searchUserByName(searchQuery, 3, page); // Mặc định là tất cả
+                    totalRecord = dao.findTotalRecordByName(searchQuery, 3);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+            }
+        } else {
+            switch (filter) {
+                case "all":
+                    listSeekers = dao.findAllUserByRoleId(3, page);
+                    totalRecord = dao.findAllTotalRecord(3);
+                    pageControl.setUrlPattern(requestURL + "?");
+                    break;
+                case "active":
+                    listSeekers = dao.filterUserByStatus(true, 3, page);
+                    totalRecord = dao.findTotalRecordByStatus(true, 3);
+                    pageControl.setUrlPattern(requestURL + "?filter=active" + "&");
+                    break;
+                case "inactive":
+                    listSeekers = dao.filterUserByStatus(false, 3, page);
+                    totalRecord = dao.findTotalRecordByStatus(false, 3);
+                    pageControl.setUrlPattern(requestURL + "?filter=inactive" + "&");
+                    break;
+                default:
+                    listSeekers = dao.findAllUserByRoleId(3, page);
+                    totalRecord = dao.findAllTotalRecord(3);
+                    pageControl.setUrlPattern(requestURL + "?");
+            }
         }
 
         request.setAttribute("listSeekers", listSeekers);

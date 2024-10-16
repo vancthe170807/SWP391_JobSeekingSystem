@@ -6,6 +6,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.CompanyDAO"%>
+<%@page import="model.Company"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,33 +32,36 @@
     <body>
         <!-- header area -->
         <jsp:include page="../common/admin/header-admin.jsp"></jsp:include>
-        <!-- header area end -->
+            <!-- header area end -->
 
-        <!-- content area -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <!--Side bar-->
+            <!-- content area -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
-                    <!--side bar-end-->
-                </div>
+                        <!--side bar-end-->
+                    </div>
 
-                <div class="col-md-9">
-                    <!--content-main can fix-->
-                    <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">
-                        <div class="dash__content">
-                            <!-- sidebar menu -->
-                            <div class="sidebar__menu d-md-block d-lg-none">
-                                <div class="sidebar__action"><i class="fa-sharp fa-regular fa-bars"></i> Sidebar</div>
-                            </div>
-                            <!-- sidebar menu end -->
-                            <div class="dash__overview">
-                                <h6 class="fw-medium mb-30 text-center fs-2">RECRUITER MANAGEMENT</h6>
-                                
-                                <!--drop-down filter recruiter-->
-                                <div class="filter-dropdown">
-                                    <form action="${pageContext.request.contextPath}/recruiters" method="GET">
-                                        <label for="recruiter-filter">Filter</label>
+                    <div class="col-md-9">
+                        <!--content-main can fix-->
+                        <!--tao doi tuong companyDao de lay ve ten company-->
+
+                        <!--end-->
+                        <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">
+                            <div class="dash__content">
+                                <!-- sidebar menu -->
+                                <div class="sidebar__menu d-md-block d-lg-none">
+                                    <div class="sidebar__action"><i class="fa-sharp fa-regular fa-bars"></i> Sidebar</div>
+                                </div>
+                                <!-- sidebar menu end -->
+                                <div class="dash__overview">
+                                    <h6 class="fw-medium mb-30 text-center fs-2">RECRUITER MANAGEMENT</h6>
+
+                                    <!--drop-down filter recruiter-->
+                                    <div class="filter-dropdown">
+                                        <form action="${pageContext.request.contextPath}/recruiters" method="GET">
+                                        <label for="recruiter-filter">Filter </label>
                                         <select id="recruiter-filter" name="filter" onchange="this.form.submit()">
                                             <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Recruiters</option>
                                             <option value="active" ${param.filter == 'active' ? 'selected' : ''}>Active Recruiters</option>
@@ -63,19 +69,34 @@
                                         </select>
                                     </form>
                                 </div>
-                                
+                                <hr/>
+                                <!--search recruiter-->
+                                <form action="${pageContext.request.contextPath}/recruiters" method="GET">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <input type="hidden" name="filter" value="${param.filter != null ? param.filter : 'all'}"> <!-- Thay đổi tại đây -->
+                                        <input type="text" id="searchRecruiter"  name="searchQuery" class="form-control" style="width: 60%;" placeholder="Search for name...">
+                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                    </div>
+                                </form>
+
+                                <!--search recruiter end-->
                                 <div class="recruiter-list">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Avatar</th>
                                                 <th>Full Name</th>
-                                                <th>Status</th>
+                                                <th>Company</th>
+                                                <th>Status Account</th>
                                                 <th>View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <!-- Table rows will go here (populated dynamically) -->
+                                            <%
+                                             // Tạo một đối tượng CompanyDAO
+                                                CompanyDAO companyDao = new CompanyDAO();
+                                            %>
                                             <c:forEach items="${listRecruiters}" var="recruiter">
                                                 <tr>
                                                     <!-- Avatar Column -->
@@ -85,6 +106,19 @@
 
                                                     <!-- Full Name Column -->
                                                     <td>${recruiter.getFullName()}</td>
+                                                    <!--Company Name Column-->
+                                                    <td>
+                                                        <c:set var="recruiterId" value="${recruiter.getId()}" />
+                                                        <%
+                                                            int recruiterId = (Integer) pageContext.getAttribute("recruiterId");
+                                                            List<Company> companies = companyDao.getCompanyNameByAccountId(recruiterId);
+                                                            String companyName = "";
+                                                            if (companies != null && !companies.isEmpty()) {
+                                                                companyName = companies.get(0).getName(); // Lấy tên công ty từ danh sách
+                                                            }
+                                                        %>
+                                                        <%= companyName %> <!-- Hiển thị tên công ty -->
+                                                    </td>
 
                                                     <!-- Status Column -->
                                                     <td>
@@ -93,7 +127,7 @@
                                                             <label class="form-check-label" for="flexSwitchCheck${recruiter.id}"></label>
                                                         </div>
                                                     </td>
-                                                    
+
                                                     <!-- Action Column -->
                                                     <td>
                                                         <form action="recruiters?action=view-detail" method="POST">
@@ -185,35 +219,35 @@
         <!-- Include common JavaScript files -->
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
 
-        <!-- Custom script for recruiter status switcher -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('.form-check-input').change(function () {
-                    var recruiterId = $(this).data('recruiter-id');
-                    var isActive = this.checked;
-                    
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/recruiters',
-                        type: 'POST',
-                        data: {
-                            action: isActive ? 'active' : 'deactive',
-                            'id-recruiter': recruiterId
-                        },
-                        success: function (response) {
-                            console.log('Recruiter status updated successfully');
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error updating recruiter status');
-                            $(this).prop('checked', !isActive);
-                        }
-                    });
-                });
-            });
+            <!-- Custom script for recruiter status switcher -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                                            $(document).ready(function () {
+                                                $('.form-check-input').change(function () {
+                                                    var recruiterId = $(this).data('recruiter-id');
+                                                    var isActive = this.checked;
+
+                                                    $.ajax({
+                                                        url: '${pageContext.request.contextPath}/recruiters',
+                                                        type: 'POST',
+                                                        data: {
+                                                            action: isActive ? 'active' : 'deactive',
+                                                            'id-recruiter': recruiterId
+                                                        },
+                                                        success: function (response) {
+                                                            console.log('Recruiter status updated successfully');
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                            console.error('Error updating recruiter status');
+                                                            $(this).prop('checked', !isActive);
+                                                        }
+                                                    });
+                                                });
+                                            });
         </script>
 
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -43,12 +43,42 @@ public class CompanyAdminController extends HttpServlet {
         String url;
 //        get ve gia tri cua drop-down filter
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
+        //        get ve gia tri tu thanh search
+        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
         List<Company> listCompanies;
-        //get ve request URL
+        //get ve url
         String requestURL = request.getRequestURL().toString();
-        //total record
         int totalRecord = 0;
-               
+        if (!searchQuery.isEmpty()) {
+            switch (filter) {
+                case "all":
+                    // Tìm tất cả các công ty theo từ khóa
+                    listCompanies = dao.searchCompaniesByName(searchQuery, page);
+                    totalRecord = dao.findTotalRecordByName(searchQuery);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+                    break;
+                case "accept":
+                    // Tìm các công ty đã được chấp nhận theo từ khóa
+                    listCompanies = dao.searchCompaniesByNameAndStatus(searchQuery, true, page);
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, true);
+                    pageControl.setUrlPattern(requestURL + "?filter=accept&searchQuery=" + searchQuery + "&");
+                    break;
+                case "violate":
+                    // Tìm các công ty vi phạm theo từ khóa
+                    listCompanies = dao.searchCompaniesByNameAndStatus(searchQuery, false, page);
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, false);
+                    pageControl.setUrlPattern(requestURL + "?filter=violate&searchQuery=" + searchQuery + "&");
+                    break;
+                default:
+                    // Mặc định sẽ tìm tất cả các công ty theo từ khóa
+                    listCompanies = dao.searchCompaniesByName(searchQuery, page);
+                    totalRecord = dao.findTotalRecordByName(searchQuery);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+            }
+        } else {
+            //get ve request URL
+            //total record
+
             switch (filter) {
                 case "all":
                     listCompanies = dao.findAllCompany(page);
@@ -70,7 +100,8 @@ public class CompanyAdminController extends HttpServlet {
                     totalRecord = dao.findAllTotalRecord();
                     pageControl.setUrlPattern(requestURL + "?");
             }
-        
+        }
+
         request.setAttribute("listCompanies", listCompanies);
         // Handle GET requests based on the action
         //total page

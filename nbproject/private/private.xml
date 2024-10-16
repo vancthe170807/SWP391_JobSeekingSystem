@@ -33,7 +33,9 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/sidebar-re.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DetailsJP.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/dashboard.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/seeker-manager.jsp</file>

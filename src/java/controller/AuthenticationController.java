@@ -296,7 +296,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
-            int sixDigitNumber = 100000 + random.nextInt(900000);
+            int sixDigitNumber = 100000 + new Random().nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in session
@@ -411,7 +411,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/forgotPassword.jsp"; // Stay on forgot password page
         } else {
             // Generate a 6-digit OTP and send it to the user's email
-            int sixDigitNumber = 100000 + random.nextInt(900000); //SWT: Bugs
+            int sixDigitNumber = 100000 + new Random().nextInt(900000); //SWT: Bugs
             Email.sendEmail(email, "OTP Reset Password", "Your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in the session

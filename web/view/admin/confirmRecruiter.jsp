@@ -95,10 +95,13 @@
                                                             <%= account.getFullName() %>
                                                         </td>
                                                         <td>
-                                                            <form action="${pageContext.request.contextPath}/confirm" method="POST">
+                                                        <td>
+                                                            <form action="${pageContext.request.contextPath}/confirm" method="POST" onsubmit="return confirmAction()">
                                                                 <input type="hidden" name="recruiterId" value="${recruiter.getRecruiterID()}">
                                                                 <button type="submit" class="btn btn-success">Confirm</button>
                                                             </form>
+                                                        </td>
+
                                                         </td>
                                                         <td>
 
@@ -151,6 +154,11 @@
         <!-- all plugin js -->
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        function confirmAction() {
+                return confirm("Are you sure you want to confirm this recruiter?");
+         }
+        </script>
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

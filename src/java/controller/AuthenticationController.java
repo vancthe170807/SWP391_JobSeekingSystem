@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.JobPostings;
-import model.Recruiters;
 import validate.Validation;
+
 
 /**
  *
@@ -146,78 +146,6 @@ public class AuthenticationController extends HttpServlet {
         request.getRequestDispatcher(url).forward(request, response);
     }
 
-//    private String loginDoPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String url = null;
-//
-//        // Get login credentials from request
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//        String remember = request.getParameter("rememberMe");
-//
-//        // Create cookies for username, password, and remember me
-//        Cookie cUser = new Cookie("cu", username);
-//        Cookie cPass = new Cookie("cp", password);
-//        Cookie cRem = new Cookie("cr", remember);
-//
-//        // Set cookie max age (persistent for 1 day if "remember me" is checked)
-//        if (remember != null) {
-//            cUser.setMaxAge(60 * 60 * 24);
-//            cPass.setMaxAge(60 * 60 * 24);
-//            cRem.setMaxAge(60 * 60 * 24);
-//        } else {
-//            cUser.setMaxAge(0);
-//            cPass.setMaxAge(0);
-//            cRem.setMaxAge(0);
-//        }
-//
-//        // Add cookies to the response
-//        response.addCookie(cUser);
-//        response.addCookie(cPass);
-//        response.addCookie(cRem);
-//
-//        // Check credentials in the database
-//        Account account = new Account();
-//        account.setUsername(username);
-//        account.setPassword(password);
-//        Account accFound = accountDAO.findUserByUsernameAndPassword(account);
-//        JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerByAccountID(account.getId());
-//        //boolean activeAccount = account.isIsActive();
-//
-//        HttpSession session = request.getSession();
-//
-//        if (accFound == null) {
-//            // If no account is found, show the incorrect username/password message
-//            request.setAttribute("messLogin", "Username or Password Incorrect!");
-//            url = "view/authen/login.jsp";
-//        } else if (!accFound.isIsActive()) {
-//            // If the account is found but inactive
-//            request.setAttribute("messLogin", "Your account is deactivated. Please contact Admin by email to resolve this.");
-//            url = "view/authen/login.jsp";
-//        } else {
-//            // If the account is found and active
-//            session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
-//            session.setMaxInactiveInterval(60 * 60 * 24);
-//            switch (accFound.getRoleId()) {
-//                case 1:
-//                    url = "view/admin/adminHome.jsp";
-//                    break;
-//                case 2:
-//                    JobPostingsDAO dao = new JobPostingsDAO();
-//                    List<JobPostings> listJobPostings = dao.getTop5RecentJobPostings();
-//                    List<JobPostings> listAll = dao.findAll();
-//                    
-//                    request.setAttribute("listSize", listAll);
-//                    request.setAttribute("listJobPostings", listJobPostings);
-//                    url = "view/recruiter/dashboard.jsp";
-//                    break;
-//                case 3:
-//                    url = "view/user/userHome.jsp";
-//                    break;
-//            }
-//
-//        }
-//        return url;
-//    }
     private String loginDoPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
 

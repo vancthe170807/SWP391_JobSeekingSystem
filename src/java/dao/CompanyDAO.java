@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import model.Account;
 import model.Company;
+import org.eclipse.jdt.internal.compiler.lookup.TypeConstants;
 
 /**
  *
@@ -87,13 +88,13 @@ public class CompanyDAO extends GenericDAO<Company> {
     public List<Company> searchCompaniesByName(String searchQuery, int page) {
         String sql = "SELECT *\n"
                 + "FROM [dbo].[Company]\n"
-                + "WHERE name LIKE '%' + ? + '%'"
+                + "WHERE name LIKE ?\n"
                 + "order by id\n"
                 + "offset ? rows\n"
                 + "fetch next ? rows only";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("name", searchQuery);
-        parameterMap.put("offset", (page - 1)* RECORD_PER_PAGE);
+        parameterMap.put("name", "%" + searchQuery + "%");
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
         parameterMap.put("fetch", RECORD_PER_PAGE);
         return queryGenericDAO(Company.class, sql, parameterMap);
     }
@@ -142,9 +143,67 @@ public class CompanyDAO extends GenericDAO<Company> {
     public int findTotalRecordByName(String searchQuery) {
         String sql = "SELECT count(*)\n"
                 + "FROM [dbo].[Company]\n"
-                + "WHERE name LIKE '%' + ? + '%'";
+                + "WHERE name LIKE ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("name", searchQuery);
+        parameterMap.put("name", "%" + searchQuery + "%");
         return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
+    }
+    // Tìm công ty theo từ khóa và trạng thái (chấp nhận hoặc vi phạm)
+
+    public List<Company> searchCompaniesByNameAndStatus(String searchQuery, boolean status, int page) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[Company]\n"
+                + "WHERE name LIKE ? AND verificationStatus = ?\n"
+                + "ORDER BY id\n"
+                + "OFFSET ? ROWS\n"
+                + "FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", "%" + searchQuery + "%");
+        parameterMap.put("verificationStatus", status);
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(Company.class, sql, parameterMap);
+    }
+
+// Đếm tổng số bản ghi theo từ khóa và trạng thái
+    public int findTotalRecordByNameAndStatus(String searchQuery, boolean status) {
+        String sql = "SELECT count(*)\n"
+                + "FROM [dbo].[Company]\n"
+                + "WHERE name LIKE ? AND verificationStatus = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", "%" + searchQuery + "%");
+        parameterMap.put("verificationStatus", status);
+        return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public List<Company> getCompanyNameByAccountId(int id) {
+        String sql = "select\n"
+                + "	c.*\n"
+                + "from \n"
+                + "	Account as acc\n"
+                + "	, Recruiters as rc\n"
+                + "	, Company as c\n"
+                + "where \n"
+                + "	acc.id = rc.AccountID\n"
+                + "	AND rc.CompanyID = c.id\n"
+                + "	AND acc.id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("accId", id);
+        return queryGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public static void main(String[] args) {
+        CompanyDAO dao = new CompanyDAO();
+        List<Company> companies = dao.getCompanyNameByAccountId(2);
+        System.out.println(companies.size());
+    }
+
+    public boolean checkExistNameCompany(String name) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Company]\n"
+                + "  where name = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", name);
+        return !queryGenericDAO(Company.class, sql, parameterMap).isEmpty();
     }
 }

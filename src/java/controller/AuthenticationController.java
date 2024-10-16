@@ -252,6 +252,8 @@ public class AuthenticationController extends HttpServlet {
         account.setUsername(username);
         account.setPassword(password);
         Account accFound = accountDAO.findUserByUsernameAndPassword(account);
+//        JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId());
+        //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
 
@@ -302,6 +304,7 @@ public class AuthenticationController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         // set sign-up information to request to save the data in the form
+        request.setAttribute("role", roleId);
         request.setAttribute("lname", lastname);
         request.setAttribute("fname", firstname);
         request.setAttribute("gender", gender);
@@ -365,7 +368,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
-            int sixDigitNumber = 100000 + new Random().nextInt(900000);
+            int sixDigitNumber = 100000 + random.nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in session
@@ -480,7 +483,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/forgotPassword.jsp"; // Stay on forgot password page
         } else {
             // Generate a 6-digit OTP and send it to the user's email
-            int sixDigitNumber = 100000 + new Random().nextInt(900000); //SWT: Bugs
+            int sixDigitNumber = 100000 + random.nextInt(900000); //SWT: Bugs
             Email.sendEmail(email, "OTP Reset Password", "Your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in the session
@@ -732,19 +735,19 @@ public class AuthenticationController extends HttpServlet {
                 accountDAO.deactiveAccount(account);
 
                 // Chuyển hướng đến trang đăng nhập sau khi vô hiệu hoá thành công
-                request.setAttribute("message", "Your account has deactive successfully.");
+                request.setAttribute("message", "Your account has deactivated successfully.");
                 return "view/authen/login.jsp";
             } else {
-                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại
+                // Nếu mật khẩu không đúng, yêu cầu người dùng nhập lại và lưu trạng thái tab
+                request.setAttribute("error", "Incorrect password. Please try again.");
+                request.setAttribute("activeTab", "#deactivate-account"); // Đặt tab Deactivate là tab đang mở
+
                 if (account.getRoleId() == 3) {
-                    request.setAttribute("error", "Incorrect password. Please try again.");
                     return "view/user/userProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
                 if (account.getRoleId() == 2) {
-                    request.setAttribute("error", "Incorrect password. Please try again.");
                     return "view/recruiter/recruiterProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
-
             }
         } else {
             // Nếu không có tài khoản trong session, quay lại trang chủ

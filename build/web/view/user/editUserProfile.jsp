@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <!-- CSS -->
+    <title>Edit Seeker Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -77,7 +78,7 @@
                         </div>
                     </div>
                     <div class="text-center mb-3">
-                        <button type="submit" class="btn btn-primary" onclick="document.querySelector('#profile-form').submit()">Save Profile</button>
+                        <button type="submit" class="btn btn-success" onclick="document.querySelector('#profile-form').submit()">Save Profile</button>
                     </div>
                 </form>
             </div>

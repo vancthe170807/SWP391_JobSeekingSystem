@@ -58,7 +58,7 @@
                                 <!-- sidebar menu end -->
                                 <div class="dash__overview">
 
-                                    <h6 class="fw-medium mb-30 text-center fs-2">SEEKER MANAGEMENT</h6>
+                                    <h6 class="fw-medium mb-30 text-center fs-2">SEEKER ACCOUNT MANAGEMENT</h6>
                                     <!--drop-down filter seeker-->
                                     <div class="filter-dropdown">
                                         <form action="${pageContext.request.contextPath}/seekers" method="GET">
@@ -70,13 +70,24 @@
                                         </select>
                                     </form>
                                 </div>
+                                <hr/>
+                                <!--search seeker-->
+                                <form action="${pageContext.request.contextPath}/seekers" method="GET">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <input type="hidden" name="filter" value="${param.filter != null ? param.filter : 'all'}"> <!-- Thay đổi tại đây -->
+                                        <input type="text" id="searchSeeker"  name="searchQuery" class="form-control" style="width: 60%;" placeholder="Search for name...">
+                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                    </div>
+                                </form>
+
+                                <!--search seeker end-->
                                 <div class="seeker-list">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Avatar</th>
                                                 <th>Full Name</th>
-                                                <th>Status</th>
+                                                <th>Status Account</th>
                                                 <th>View</th>
                                             </tr>
                                         </thead>
@@ -225,7 +236,6 @@
                                                 });
                                             });
         </script>   
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

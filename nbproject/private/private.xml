@@ -12,11 +12,20 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="SWP391_Project">
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/ResetPassword.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/footer.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/authen/forgotPassword.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/admin/header-admin.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/CompanyAdminController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/admin/sidebar-admin.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/CV.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/EducationServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userProfile.jsp</file>
-            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CVDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/Education.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/EducationDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/common/user/header-user.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/CV.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/CVServlet.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/x.jsp</file>
         </group>
         <group>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/changePW-re.jsp</file>
@@ -28,7 +37,9 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/seeker-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/HomeController.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DeleteJP.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>

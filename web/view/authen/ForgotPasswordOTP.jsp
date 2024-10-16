@@ -30,7 +30,7 @@
                                 ${requestScope.error}
                             </div>
                         </c:if>
-                        <button type="submit" class="btn btn-sucess w-100">Reset Password</button>
+                        <button type="submit" class="btn btn-success w-100">Reset Password</button>
                     </form>
                     <div class="text-center mt-3">
                         <span>Remember Your Password? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></span>

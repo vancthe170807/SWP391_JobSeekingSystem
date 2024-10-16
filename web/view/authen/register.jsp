@@ -20,8 +20,8 @@
                             <p class="text-center">Choose your Account Type</p>
 
                             <div class="d-flex justify-content-center mb-3">
-                                <button class="btn btn-outline-primary me-2 active" data-role="seeker">Seeker</button>
-                                <button class="btn btn-outline-primary" data-role="recruiter">Recruiter</button>
+                                <button class="btn btn-outline-success me-2 active" data-role="seeker">Seeker</button>
+                                <button class="btn btn-outline-success" data-role="recruiter">Recruiter</button>
                             </div>
 
                             <form action="${pageContext.request.contextPath}/authen?action=sign-up" method="POST" class="d-flex flex-column gap-3">
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                    <button type="submit" class="btn btn-success w-100">Register</button>
                                 </div>
                             </form>
                             <p class="text-center">Have an account? <a href="${pageContext.request.contextPath}/view/authen/login.jsp" class="text-primary">Login</a></p>

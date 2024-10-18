@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-between py-3">
             <div class="rts__logo">
-                <a href="${pageContext.request.contextPath}/view/user/userHome.jsp">
+                <a href="${pageContext.request.contextPath}/HomeSeeker">
                     <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                 </a>
             </div>
@@ -12,7 +12,7 @@
                 <div class="navigation d-none d-lg-block">
                     <nav class="navigation__menu" id="offcanvas__menu">
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/view/user/userHome.jsp">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/HomeSeeker">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>

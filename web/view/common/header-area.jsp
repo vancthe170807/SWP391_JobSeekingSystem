@@ -2,7 +2,7 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-between py-3">
             <div class="rts__logo">
-                <a href="${pageContext.request.contextPath}/view/home.jsp">
+                <a href="${pageContext.request.contextPath}/home">
                     <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
                 </a>
             </div>
@@ -12,7 +12,7 @@
                         <ul class="nav">
                             <!-- Add your navigation items here -->
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/home">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">About</a>

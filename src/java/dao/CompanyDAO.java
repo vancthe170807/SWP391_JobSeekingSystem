@@ -206,4 +206,13 @@ public class CompanyDAO extends GenericDAO<Company> {
         parameterMap.put("name", name);
         return !queryGenericDAO(Company.class, sql, parameterMap).isEmpty();
     }
+    
+    public List<Company> getTop3RecentCompanysByOpen() {
+        String sql = "select top 3 * from Company where verificationStatus = ? order by id desc";
+  
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("verificationStatus", 1);
+
+        return queryGenericDAO(Company.class, sql, parameterMap);
+    }
 }

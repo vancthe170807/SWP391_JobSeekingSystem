@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import model.Account;
 import model.Company;
@@ -26,6 +28,9 @@ public class CompanyAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //get ve error đã xử lí ở doPost
+        String error = request.getParameter("error") != null ?  request.getParameter("error") : "";
+        request.setAttribute("error", error);
         // get ve pageNumber
         PageControl pageControl = new PageControl();
         String pageRaw = request.getParameter("page");
@@ -43,12 +48,42 @@ public class CompanyAdminController extends HttpServlet {
         String url;
 //        get ve gia tri cua drop-down filter
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
+        //        get ve gia tri tu thanh search
+        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
         List<Company> listCompanies;
-        //get ve request URL
+        //get ve url
         String requestURL = request.getRequestURL().toString();
-        //total record
         int totalRecord = 0;
-               
+        if (!searchQuery.isEmpty()) {
+            switch (filter) {
+                case "all":
+                    // Tìm tất cả các công ty theo từ khóa
+                    listCompanies = dao.searchCompaniesByName(searchQuery, page);
+                    totalRecord = dao.findTotalRecordByName(searchQuery);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+                    break;
+                case "accept":
+                    // Tìm các công ty đã được chấp nhận theo từ khóa
+                    listCompanies = dao.searchCompaniesByNameAndStatus(searchQuery, true, page);
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, true);
+                    pageControl.setUrlPattern(requestURL + "?filter=accept&searchQuery=" + searchQuery + "&");
+                    break;
+                case "violate":
+                    // Tìm các công ty vi phạm theo từ khóa
+                    listCompanies = dao.searchCompaniesByNameAndStatus(searchQuery, false, page);
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, false);
+                    pageControl.setUrlPattern(requestURL + "?filter=violate&searchQuery=" + searchQuery + "&");
+                    break;
+                default:
+                    // Mặc định sẽ tìm tất cả các công ty theo từ khóa
+                    listCompanies = dao.searchCompaniesByName(searchQuery, page);
+                    totalRecord = dao.findTotalRecordByName(searchQuery);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+            }
+        } else {
+            //get ve request URL
+            //total record
+
             switch (filter) {
                 case "all":
                     listCompanies = dao.findAllCompany(page);
@@ -70,7 +105,8 @@ public class CompanyAdminController extends HttpServlet {
                     totalRecord = dao.findAllTotalRecord();
                     pageControl.setUrlPattern(requestURL + "?");
             }
-        
+        }
+
         request.setAttribute("listCompanies", listCompanies);
         // Handle GET requests based on the action
         //total page
@@ -107,7 +143,7 @@ public class CompanyAdminController extends HttpServlet {
                 url = accepetCompany(request);
                 break;
             case "add-company":
-                url = addCompany(request);
+                url = addCompany(request, response);
                 break;
             case "edit-company":
                 url = editCompany(request);
@@ -132,7 +168,7 @@ public class CompanyAdminController extends HttpServlet {
         return "companies";
     }
 
-    private String addCompany(HttpServletRequest request) {
+    private String addCompany(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 //        get ve cac thuoc tinh cua company
         String name = request.getParameter("name");
         String description = request.getParameter("description");
@@ -153,8 +189,12 @@ public class CompanyAdminController extends HttpServlet {
             default:
                 company.setVerificationStatus(true);
         }
+        if (dao.checkExistNameCompany(name)) {
+            return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+        }else{
         dao.insert(company);
         return "companies";
+        }
     }
 
     private String editCompany(HttpServletRequest request) {

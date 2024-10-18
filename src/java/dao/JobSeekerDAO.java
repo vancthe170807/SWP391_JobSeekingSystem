@@ -25,16 +25,8 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
         return insertGenericDAO(sql, parameterMap);
     }
 
-    // Check if an AccountID exists in JobSeekers table
-    public boolean checkAccountIDExist(int AccountID) {
-        String sql = "SELECT * FROM [dbo].[JobSeekers] WHERE AccountID = ?";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("AccountID", AccountID);
-        return !queryGenericDAO(JobSeekers.class, sql, parameterMap).isEmpty();
-    }
-
     // Find JobSeeker by AccountID
-    public JobSeekers findJobSeekerByAccountID(int accountID) {
+    public JobSeekers findJobSeekerIDByAccountID(String accountID) {
         String sql = "SELECT * FROM [dbo].[JobSeekers] WHERE AccountID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("AccountID", accountID);
@@ -47,12 +39,12 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
         // Test findJobSeekerByAccountID method
         JobSeekerDAO dao = new JobSeekerDAO();
         Scanner sc = new Scanner(System.in);
-        int accountID = sc.nextInt();
-        JobSeekers jobSeeker = dao.findJobSeekerByAccountID(accountID);
+        String accountIDStr = sc.nextLine();
+        JobSeekers jobSeeker = dao.findJobSeekerIDByAccountID(accountIDStr);
         if (jobSeeker != null) {
             System.out.println("Job Seeker ID: " + jobSeeker.getJobSeekerID());
         } else {
-            System.out.println("No Job Seeker found with AccountID" + accountID);
+            System.out.println("No Job Seeker found with AccountID" + accountIDStr);
         }
     }
 }

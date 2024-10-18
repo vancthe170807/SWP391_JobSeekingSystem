@@ -78,6 +78,18 @@ public class JobPost extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/jobPost-manager.jsp");
         dispatcher.forward(request, response);
     }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+//        Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+//        List<JobPostings> list = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+//        request.setAttribute("listJobPosting", list);
+//        // Chuyển hướng đến trang quản lý Job Posting
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("view/recruiter/jobPost-manager.jsp");
+//        dispatcher.forward(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -101,19 +113,16 @@ public class JobPost extends HttpServlet {
 
     private String addJobPosting(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
-
         // Get the session and retrieve the accountID from it
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         if (account == null) {
             return "view/authen/login.jsp";
         }
-
         Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
         if (recruiters == null) {
             return "view/authen/login.jsp";
         }
-
         try {
             // Lấy các tham số từ request
             String jobTitle = request.getParameter("jobTitle");
@@ -165,7 +174,6 @@ public class JobPost extends HttpServlet {
             if (!valid.isValidInput(jobSalary)) {
                 erMess.add("Salary must be greater than 0");
             }
-
             if (!erMess.isEmpty()) {
                 request.setAttribute("erMess", erMess);
                 url = "view/recruiter/addJobPosting.jsp";

@@ -6,6 +6,7 @@ package controller.admin;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
 import dao.AccountDAO;
+import dao.RecruitersDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import model.Account;
 import model.PageControl;
+import model.Recruiters;
 
 @WebServlet(name = "RecruiterAdminController", urlPatterns = {"/recruiters"})
 public class RecruiterAdminController extends HttpServlet {
@@ -40,35 +42,68 @@ public class RecruiterAdminController extends HttpServlet {
         ///get ve action 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
+        switch (action) {
+            case "view-list-seekers":
+                url = "view/admin/recruiterManagement.jsp";
+                break;
+            default:
+                url = "view/admin/recruiterManagement.jsp";
+        }
         //lay ve id de view profile
         // get ve danh sach list seeker
         String filter = request.getParameter("filter") != null ? request.getParameter("filter") : "";
-        List<Account> listRecruiters;
+        //get ve gia tri search by name
+        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
+        List<Account> listRecruiters = null;
         //get ve request URL
         String requestURL = request.getRequestURL().toString();
         //total record
         int totalRecord = 0;
-        switch (filter) {
+        if (!searchQuery.isEmpty()) {
+            switch (filter) {
+                case "all":
+                    listRecruiters = dao.searchUserByName(searchQuery, 2, page); // Tìm tất cả
+                    totalRecord = dao.findTotalRecordByName(searchQuery, 2);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+                    break;
+                case "active":
+                    listRecruiters = dao.searchUserByNameAndStatus(searchQuery, true, 2, page); // Chỉ tìm active
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, true, 2);
+                    pageControl.setUrlPattern(requestURL + "?filter=active&searchQuery=" + searchQuery + "&");
+                    break;
+                case "inactive":
+                    listRecruiters = dao.searchUserByNameAndStatus(searchQuery, false, 2, page); // Chỉ tìm inactive
+                    totalRecord = dao.findTotalRecordByNameAndStatus(searchQuery, false, 2);
+                    pageControl.setUrlPattern(requestURL + "?filter=inactive&searchQuery=" + searchQuery + "&");
+                    break;
+                default:
+                    listRecruiters = dao.searchUserByName(searchQuery, 2, page); // Mặc định là tất cả
+                    totalRecord = dao.findTotalRecordByName(searchQuery, 2);
+                    pageControl.setUrlPattern(requestURL + "?searchQuery=" + searchQuery + "&");
+            }
+        } else {
+            switch (filter) {
 
-            case "all":
-                listRecruiters = dao.findAllUserByRoleId(2, page);
-                totalRecord = dao.findAllTotalRecord(2);
-                pageControl.setUrlPattern(requestURL + "?");
-                break;
-            case "active":
-                listRecruiters = dao.filterUserByStatus(true, 2, page);
-                totalRecord = dao.findTotalRecordByStatus(true, 2);
-                pageControl.setUrlPattern(requestURL + "?filter=active" + "&");
-                break;
-            case "inactive":
-                listRecruiters = dao.filterUserByStatus(false, 2, page);
-                totalRecord = dao.findTotalRecordByStatus(false, 2);
-                pageControl.setUrlPattern(requestURL + "?filter=inactive" + "&");
-                break;
-            default:
-                listRecruiters = dao.findAllUserByRoleId(2, page);
-                totalRecord = dao.findAllTotalRecord(2);
-                pageControl.setUrlPattern(requestURL + "?");
+                case "all":
+                    listRecruiters = dao.findAllUserByRoleId(2, page);
+                    totalRecord = dao.findAllTotalRecord(2);
+                    pageControl.setUrlPattern(requestURL + "?");
+                    break;
+                case "active":
+                    listRecruiters = dao.filterUserByStatus(true, 2, page);
+                    totalRecord = dao.findTotalRecordByStatus(true, 2);
+                    pageControl.setUrlPattern(requestURL + "?filter=active" + "&");
+                    break;
+                case "inactive":
+                    listRecruiters = dao.filterUserByStatus(false, 2, page);
+                    totalRecord = dao.findTotalRecordByStatus(false, 2);
+                    pageControl.setUrlPattern(requestURL + "?filter=inactive" + "&");
+                    break;
+                default:
+                    listRecruiters = dao.findAllUserByRoleId(2, page);
+                    totalRecord = dao.findAllTotalRecord(2);
+                    pageControl.setUrlPattern(requestURL + "?");
+            }
         }
         request.setAttribute("listRecruiters", listRecruiters);
         // Handle GET requests based on the action
@@ -80,13 +115,7 @@ public class RecruiterAdminController extends HttpServlet {
         pageControl.setTotalPages(totalPage);
         //set attribute pageControl 
         request.setAttribute("pageControl", pageControl);
-        switch (action) {
-            case "view-list-seekers":
-                url = "view/admin/recruiterManagement.jsp";
-                break;
-            default:
-                url = "view/admin/recruiterManagement.jsp";
-        }
+        
 
         // Forward to the appropriate page
         request.getRequestDispatcher(url).forward(request, response);
@@ -135,4 +164,6 @@ public class RecruiterAdminController extends HttpServlet {
         request.setAttribute("accountView", account);
         return "view/admin/viewDetailUser.jsp";
     }
+
+    
 }

@@ -22,14 +22,12 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
     @Override
     public int insert(Recruiters t) {
         String sql = "INSERT INTO [dbo].[Recruiters]\n"
-                + "           ([isVerify]\n"
                 + "           ,[AccountID]\n"
                 + "           ,[CompanyID]\n"
                 + "           ,[Position])\n"
                 + "     VALUES\n"
                 + "           (?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("isVerify", t.isIsVerify());
         parameterMap.put("AccountID", t.getAccountID());
         parameterMap.put("CompanyID", t.getCompanyID());
         parameterMap.put("Position", t.getPosition());
@@ -64,6 +62,16 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
         parameterMap.put("AccountID", t.getAccountID());
         parameterMap.put("CompanyID", t.getCompanyID());
         parameterMap.put("Position", t.getPosition());
+        updateGenericDAO(sql, parameterMap);
+    }
+
+    public void updateVerification(String recruiterId, boolean verify) {
+        String sql = "UPDATE [dbo].[Recruiters]\n"
+                + "   SET [isVerify] = ?\n"
+                + " WHERE RecruiterID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("isVerify", verify);
+        parameterMap.put("RecruiterID", recruiterId);
         updateGenericDAO(sql, parameterMap);
     }
 

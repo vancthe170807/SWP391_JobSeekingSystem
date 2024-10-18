@@ -12,15 +12,27 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
+            /* Main layout using flexbox */
+            .page-container {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh; /* Ensure the container takes full height */
+            }
 
             /* Main content layout */
             .job-posting-container {
-                flex: 1;
+                flex: 1; /* Allows this section to expand */
                 padding: 20px;
                 margin-left: 240px; /* Adjust for sidebar */
                 padding-top: 60px; /* Adjust for header */
-                box-sizing: border-box;
                 background-color: #f5f5f5; /* Light background */
+                display: flex;
+                flex-direction: column; /* Ensure content is stacked vertically */
+            }
+
+            /* Ensure table takes available space */
+            .table-wrapper {
+                flex: 1; /* Table section will expand to take up available space */
             }
 
             /* Center and style header section */
@@ -148,15 +160,6 @@
                 font-size: 14px;
             }
 
-            /* Set specific width for Job Title column */
-/*            table th:nth-child(2),
-            table td:nth-child(2) {
-                width: 200px;  Adjust the width of the Job Title column 
-                white-space: nowrap;  Prevent text from wrapping 
-                overflow: hidden;  Hide overflow 
-                text-overflow: ellipsis;  Show ellipsis if text is too long 
-            }*/
-
             /* Action buttons styling */
             .btn-action {
                 margin-right: 20px; /* Increase spacing between action buttons */
@@ -189,6 +192,7 @@
                 justify-content: center;
                 align-items: center;
                 margin-top: 20px;
+                padding-bottom: 20px;
             }
 
             .pagination button, .pagination span {
@@ -223,152 +227,148 @@
                 margin-top: 20px;
                 font-weight: bold;
             }
-            /*css cho phân trang*/
-            .pagination .page-item.active .page-link {
-                background-color: #007bff;
-                color: white;
-                border-color: #007bff;
-            }
 
-            .pagination .page-link {
-                color: #007bff;
+            /* Ensure pagination stays at the bottom */
+            .footer-container {
+                margin-top: auto; /* Pushes footer to the bottom */
             }
-
-            .pagination .page-link:hover {
-                background-color: #e9ecef;
-                color: #0056b3;
-            }
-
         </style>
     </head>
     <body>
-        <!-- Include Sidebar -->
-        <%@ include file="../recruiter/sidebar-re.jsp" %>
+        <div class="page-container">
+            <!-- Include Sidebar -->
+            <%@ include file="../recruiter/sidebar-re.jsp" %>
 
-        <!-- Include Header -->
-        <%@ include file="../recruiter/header-re.jsp" %>
+            <!-- Include Header -->
+            <%@ include file="../recruiter/header-re.jsp" %>
 
-        <!-- Main content for Job Posting Management -->
-        <div class="job-posting-container">
-            <!-- Centered Header section -->
-            <div class="header-section">
-                <h2>Job Posting Management</h2>
-            </div>
-
-            <!-- Search bar, Add New Job, and Filters -->
-            <div class="controls-container">
-                <!-- Add New Job Button -->
-                <a href="${pageContext.request.contextPath}/view/recruiter/addJobPosting.jsp" class="btn-add-job">
-                    <i class="fas fa-plus"></i> Add New Job
-                </a>
-
-                <!-- Filter Buttons -->
-                <div class="filter-buttons">
-                    <a href="${pageContext.request.contextPath}/jobPost?sort=title&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Title A-Z</a>
-                    <a href="${pageContext.request.contextPath}/jobPost?sort=postedDate&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Post Date</a>
-                    <a href="${pageContext.request.contextPath}/jobPost?sort=status&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Status</a>
+            <!-- Main content for Job Posting Management -->
+            <div class="job-posting-container">
+                <!-- Centered Header section -->
+                <div class="header-section">
+                    <h2>Job Posting Management</h2>
                 </div>
-                <!-- Search bar -->
-                <form action="${pageContext.request.contextPath}/jobPost" method="get" class="search-container">
-                    <input type="text" name="searchJP" class="search-box" placeholder="Search by job title">
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+
+                <!-- Search bar, Add New Job, and Filters -->
+                <div class="controls-container">
+                    <!-- Add New Job Button -->
+                    <a href="${pageContext.request.contextPath}/view/recruiter/addJobPosting.jsp" class="btn-add-job">
+                        <i class="fas fa-plus"></i> Add New Job
+                    </a>
+
+                    <!-- Filter Buttons -->
+                    <div class="filter-buttons">
+                        <a href="${pageContext.request.contextPath}/jobPost?sort=title&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Title A-Z</a>
+                        <a href="${pageContext.request.contextPath}/jobPost?sort=postedDate&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Post Date</a>
+                        <a href="${pageContext.request.contextPath}/jobPost?sort=status&page=1&searchJP=${searchJP}" class="btn-filter">Filter by Status</a>
+                    </div>
+                    <!-- Search bar -->
+                    <form action="${pageContext.request.contextPath}/jobPost" method="get" class="search-container">
+                        <input type="text" name="searchJP" class="search-box" placeholder="Search by job title">
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Table for displaying job postings -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Job</th>
+                                <th>Job Title</th>
+                                <th>Date Posted</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="i" items="${listJobPosting}">
+                                <tr>
+                                    <td>${i.getJobPostingID()}</td>
+                                    <td>${i.getTitle()}</td>
+                                    <td><fmt:formatDate value="${i.getPostedDate()}" pattern="dd-MM-yyyy"/></td>
+                                    <td>${i.getStatus()}</td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/detailsJP?action=details&idJP=${i.getJobPostingID()}" class="btn-action"><i class="fas fa-eye"></i></a>
+                                        <a href="${pageContext.request.contextPath}/updateJP?idJP=${i.getJobPostingID()}" class="btn-action"><i class="fas fa-edit"></i></a>                              
+                                        <a href="javascript:void(0);" class="btn-action text-danger" 
+                                           onclick="confirmDelete('${i.getJobPostingID()}')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Error message if no job postings found -->
+                <c:if test="${not empty requestScope.NoJP}">
+                    <div class="error-message">${requestScope.NoJP}</div>
+                </c:if>
+
+                <!-- Pagination controls -->
+                <nav aria-label="Page navigation" class="footer-container">
+                    <ul class="pagination justify-content-center">
+                        <!-- Nút Previous để quay lại nhóm trang trước đó -->
+                        <c:if test="${currentPage > 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${currentPage - 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo; Previous</span>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <!-- Tính toán để chỉ hiển thị 5 trang tại một thời điểm -->
+                        <c:set var="startPage" value="${currentPage - 2 > 0 ? currentPage - 2 : 1}" />
+                        <c:set var="endPage" value="${startPage + 4 <= totalPages ? startPage + 4 : totalPages}" />
+
+                        <!-- Nút để quay lại nhóm trang trước (nếu có) -->
+                        <c:if test="${startPage > 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${startPage - 1}&sort=${sortField}&searchJP=${searchJP}">...</a>
+                            </li>
+                        </c:if>
+
+                        <!-- Hiển thị các trang trong khoảng từ startPage đến endPage -->
+                        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                            <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                                <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${i}&sort=${sortField}&searchJP=${searchJP}">${i}</a>
+                            </li>
+                        </c:forEach>
+
+                        <!-- Nút để chuyển sang nhóm trang tiếp theo (nếu có) -->
+                        <c:if test="${endPage < totalPages}">
+                            <li class="page-item">
+                                <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${endPage + 1}&sort=${sortField}&searchJP=${searchJP}">...</a>
+                            </li>
+                        </c:if>
+
+                        <!-- Nút Next để đi đến nhóm trang tiếp theo -->
+                        <c:if test="${currentPage < totalPages}">
+                            <li class="page-item">
+                                <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${currentPage + 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Next">
+                                    <span aria-hidden="true">Next &raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
             </div>
 
-            <!-- Table for displaying job postings -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID Job</th>
-                        <th>Job Title</th>
-                        <th>Date Posted</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="i" items="${listJobPosting}">
-                        <tr>
-                            <td>${i.getJobPostingID()}</td>
-                            <td>${i.getTitle()}</td>
-                            <td><fmt:formatDate value="${i.getPostedDate()}" pattern="dd-MM-yyyy"/></td>
-                            <td>${i.getStatus()}</td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/detailsJP?action=details&idJP=${i.getJobPostingID()}" class="btn-action"><i class="fas fa-eye"></i></a>
-                                <a href="${pageContext.request.contextPath}/updateJP?idJP=${i.getJobPostingID()}" class="btn-action"><i class="fas fa-edit"></i></a>                              
-                                <a href="javascript:void(0);" class="btn-action text-danger" 
-                                   onclick="confirmDelete('${i.getJobPostingID()}')">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-
-            <!-- Error message if no job postings found -->
-            <c:if test="${not empty requestScope.NoJP}">
-                <div class="error-message">${requestScope.NoJP}</div>
-            </c:if>
-
-            <!-- Pagination controls -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${currentPage > 1}">
-                        <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${currentPage - 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo; Previous</span>
-                            </a>
-                        </li>
-                    </c:if>
-
-                    <c:forEach begin="1" end="${totalPages}" var="i">
-                        <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                            <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${i}&sort=${sortField}&searchJP=${searchJP}">${i}</a>
-                        </li>
-                    </c:forEach>
-
-                    <c:if test="${currentPage < totalPages}">
-                        <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}/jobPost?page=${currentPage + 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Next">
-                                <span aria-hidden="true">Next &raquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                </ul>
-            </nav>
+            <!-- Include Footer -->
+            <%@ include file="../recruiter/footer-re.jsp" %>
         </div>
 
-        <!-- Include Footer -->
-        <%@ include file="../recruiter/footer-re.jsp" %>
-        <!-- JavaScript for sorting -->
+        <!-- JavaScript for sorting and delete confirmation -->
         <script>
-            function sortTitleAZ() {
-                // Code to handle sorting by title A-Z
-                console.log('Sorting by Title A-Z');
-            }
-
-            function sortPostDate() {
-                // Code to handle sorting by post date
-                console.log('Sorting by Post Date');
-            }
-
-            function sortStatus() {
-                // Code to handle sorting by status
-                console.log('Sorting by Status');
-            }
             function confirmDelete(jobId) {
-                // Hiển thị hộp thoại xác nhận
                 var confirmed = confirm("Are you sure you want to delete this job posting?");
-
-                // Nếu người dùng chọn "OK", tiếp tục xóa
                 if (confirmed) {
-                    // Chuyển hướng tới URL xóa
                     window.location.href = 'deleteJP?idJP=' + jobId;
                 }
-                // Nếu người dùng chọn "Cancel", không làm gì cả
             }
         </script>
     </body>

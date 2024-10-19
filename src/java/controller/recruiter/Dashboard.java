@@ -27,18 +27,6 @@ import model.Recruiters;
 public class Dashboard extends HttpServlet {
     JobPostingsDAO jobPostingsDAO = new JobPostingsDAO();
     RecruitersDAO RecruitersDAO = new RecruitersDAO();
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        JobPostingsDAO dao = new JobPostingsDAO();
-//        List<JobPostings> listJobPostings = dao.getTop5RecentJobPostings();
-//        List<JobPostings> listAll = dao.findAll();
-//        request.setAttribute("listSize", listAll);
-//        request.setAttribute("listJobPostings", listJobPostings);
-//        
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/dashboard.jsp");
-//        dispatcher.forward(request, response);
-//    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +40,6 @@ public class Dashboard extends HttpServlet {
         // Gửi dữ liệu đến JSP
         request.setAttribute("listSize", listSize);
         request.setAttribute("listTop5", listTop5);
-        //request.setAttribute("listJobPostings", listJobPostings);
 
         // Chuyển hướng đến trang dashboard.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/dashboard.jsp");

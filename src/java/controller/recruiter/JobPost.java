@@ -40,7 +40,7 @@ public class JobPost extends HttpServlet {
         String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
         String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int pageSize = 3;  // Số lượng bản ghi trên mỗi trang
+        int pageSize = 10;  // Số lượng bản ghi trên mỗi trang
 
         List<JobPostings> jobList;
         int totalRecords;
@@ -48,7 +48,7 @@ public class JobPost extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
-        jobList = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+        jobList = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());       
 
         // Kiểm tra nếu có từ khóa tìm kiếm
         if (!searchJP.isEmpty()) {
@@ -78,18 +78,6 @@ public class JobPost extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/jobPost-manager.jsp");
         dispatcher.forward(request, response);
     }
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-//        Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
-//        List<JobPostings> list = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
-//        request.setAttribute("listJobPosting", list);
-//        // Chuyển hướng đến trang quản lý Job Posting
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("view/recruiter/jobPost-manager.jsp");
-//        dispatcher.forward(request, response);
-//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -185,7 +173,7 @@ public class JobPost extends HttpServlet {
                 String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
                 String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
                 int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-                int pageSize = 3; // Số lượng bản ghi trên mỗi trang
+                int pageSize = 10; // Số lượng bản ghi trên mỗi trang
 
                 // Gọi phương thức để phân trang
                 List<JobPostings> jobList;
@@ -305,7 +293,7 @@ public class JobPost extends HttpServlet {
             String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
 
 // Số lượng bản ghi trên mỗi trang
-            int pageSize = 3;
+            int pageSize = 10;
 
 // Gọi phương thức phân trang
             List<JobPostings> listJobPosting;

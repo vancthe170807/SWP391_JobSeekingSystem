@@ -12,25 +12,27 @@
         <div class="container mt-5">
             <h2>Submit Verification Request</h2>
             <form action="${pageContext.request.contextPath}/verifyRecruiter" method="post">
+                <!-- Nhập ID công ty thay vì chọn từ danh sách -->
                 <div class="mb-3">
-                    <label for="company" class="form-label">Select Company</label>
-                    <select class="form-control" name="companyId" id="company">
-                        <c:forEach var="company" items="${companyList}">
-                            <option value="${company.getId()}">${company.getName()}</option>
-                        </c:forEach>
-                    </select>
+                    <label for="companyId" class="form-label">Enter Company ID</label>
+                    <input type="text" class="form-control" id="companyId" name="companyId" required>
                 </div>
+                
                 <div class="mb-3">
                     <label for="position" class="form-label">Position</label>
                     <input type="text" class="form-control" id="position" name="position" required>
                 </div>
+                
                 <button type="submit" class="btn btn-primary">Submit Request</button>
+                
                 <div class="mt-3">
                     <a href="${pageContext.request.contextPath}/home" class="btn btn-secondary">
                         <i class="fas fa-home"></i> Back to Home
                     </a>
                 </div>
             </form>
+
+            <!-- Hiển thị thông báo sau khi submit -->
             <c:if test="${requestScope.verify != null}">
                 <div class="alert alert-success" role="alert">
                     ${requestScope.verify}

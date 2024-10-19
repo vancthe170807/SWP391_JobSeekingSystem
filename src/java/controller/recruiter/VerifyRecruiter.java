@@ -25,7 +25,8 @@ import model.Recruiters;
 public class VerifyRecruiter extends HttpServlet {
 
     RecruitersDAO reDAO = new RecruitersDAO();
-    CompanyDAO companyDao = new CompanyDAO();  
+    CompanyDAO companyDao = new CompanyDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,25 +37,38 @@ public class VerifyRecruiter extends HttpServlet {
         List<Company> companies = companyDao.findAll();
         request.setAttribute("companyList", companies);
         request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-    }    
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        //Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+        // Lấy ID công ty và vị trí từ form
         int companyId = Integer.parseInt(request.getParameter("companyId"));
         String position = request.getParameter("position");
-        
-        Recruiters re = new Recruiters();
-        re.setAccountID(account.getId());
-        re.setCompanyID(companyId);
-        re.setPosition(position);
-        re.setIsVerify(false);
-        reDAO.insert(re);
-        request.setAttribute("verify", "Your verification request has been sent.");
-        request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+
+        // Lấy account từ session
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+        // Kiểm tra nếu recruiter đã xác nhận chưa
+        Recruiters recruiter = reDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+        if (recruiter != null && recruiter.isIsVerify()) {
+            // Nếu đã xác nhận, quay về dashboard
+            response.sendRedirect("Dashboard");
+        } else {
+            // Nếu chưa, tạo request mới
+            Recruiters re = new Recruiters();
+            re.setAccountID(account.getId());
+            re.setCompanyID(companyId);
+            re.setPosition(position);
+            re.setIsVerify(false); // Đặt trạng thái là chưa xác minh
+            reDAO.insert(re);
+
+            // Gửi thông báo xác nhận thành công
+            request.setAttribute("verify", "Your verification request has been sent.");
+            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+        }
     }
-    
+
 }
+

@@ -69,8 +69,10 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/userHome.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/WeeklyPostings.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/constant/CommonConst.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Recruiters.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/userProfile.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/EditDetail.java</file>
@@ -80,8 +82,10 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Account.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/EducationDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/ConfirmRecruiterController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/recruiterManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
@@ -98,7 +102,9 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Company.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/Education.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/viewDetailUser.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/recruiterController.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/confirmRecruiter.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/CV.jsp</file>
         </group>
     </open-files>

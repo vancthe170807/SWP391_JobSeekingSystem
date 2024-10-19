@@ -22,12 +22,13 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
     @Override
     public int insert(Recruiters t) {
         String sql = "INSERT INTO [dbo].[Recruiters]\n"
+                + "           ([isVerify]\n"
                 + "           ,[AccountID]\n"
                 + "           ,[CompanyID]\n"
                 + "           ,[Position])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?)";
+                + "     VALUES (?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
+        parameterMap.put("isVerify", false);
         parameterMap.put("AccountID", t.getAccountID());
         parameterMap.put("CompanyID", t.getCompanyID());
         parameterMap.put("Position", t.getPosition());
@@ -48,7 +49,23 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
         List<Recruiters> list = queryGenericDAO(Recruiters.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);
     }
+    
+    
 
+    public List<Recruiters> listRecruiterByRecruiterID(int recruiterID){
+        String sql = "select * from [dbo].[Recruiters] where RecruiterID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("RecruiterID", recruiterID);
+        List<Recruiters> list = queryGenericDAO(Recruiters.class, sql, parameterMap);
+        return queryGenericDAO(Recruiters.class, sql, parameterMap);
+    }
+    public List<Recruiters> listRecruiterByAccountID(int accountID){
+        String sql = "select * from [dbo].[Recruiters] where AccountID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("AccountID", accountID);
+        List<Recruiters> list = queryGenericDAO(Recruiters.class, sql, parameterMap);
+        return queryGenericDAO(Recruiters.class, sql, parameterMap);
+    }
     //Update thong tin hoc van
     public void updateRecruiters(Recruiters t) {
         String sql = "UPDATE [dbo].[Recruiters]\n"

@@ -221,7 +221,6 @@ public class AuthenticationController extends HttpServlet {
                         // Gửi dữ liệu đến JSP
                         request.setAttribute("listSize", listSize);
                         request.setAttribute("listTop5", listTop5);
-
                         url = "view/recruiter/dashboard.jsp";
                     }
                     break;

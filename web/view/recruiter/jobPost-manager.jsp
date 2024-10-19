@@ -266,10 +266,6 @@
                                 <i class="fas fa-plus"></i> Add New Job
                             </a>
 
-                            <!-- Export/Import Excel Button -->
-                            <a href="${pageContext.request.contextPath}/view/recruiter/excelExportImport.jsp" class="btn-add-job">
-                                <i class="fas fa-file-excel"></i> Export/Import Excel
-                            </a>
                             <!-- Filter Buttons -->
                             <div class="filter-buttons">
                                 <a
@@ -311,7 +307,6 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>ID Job</th>
                                         <th>Job Title</th>
                                         <th>Date Posted</th>
                                         <th>Status</th>
@@ -321,7 +316,6 @@
                                 <tbody>
                                     <c:forEach var="i" items="${listJobPosting}">
                                         <tr>
-                                            <td>${i.getJobPostingID()}</td>
                                             <td>${i.getTitle()}</td>
                                             <td>
                                                 <fmt:formatDate

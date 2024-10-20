@@ -215,4 +215,13 @@ public class CompanyDAO extends GenericDAO<Company> {
 
         return queryGenericDAO(Company.class, sql, parameterMap);
     }
+
+    public boolean isCompanyExist(int companyId) {
+        // Gọi phương thức findCompanyById để kiểm tra xem công ty có tồn tại không
+        Company company = findCompanyById(companyId);
+
+        // Nếu company khác null thì công ty tồn tại, ngược lại thì không
+        return company != null;
+    }
+
 }

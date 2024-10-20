@@ -95,14 +95,12 @@
                                                             <%= account.getFullName() %>
                                                         </td>
                                                         <td>
-                                                        <td>
                                                             <form action="${pageContext.request.contextPath}/confirm" method="POST" onsubmit="return confirmAction()">
                                                                 <input type="hidden" name="recruiterId" value="${recruiter.getRecruiterID()}">
                                                                 <button type="submit" class="btn btn-success">Confirm</button>
                                                             </form>
                                                         </td>
 
-                                                        </td>
                                                         <td>
 
                                                             <%

@@ -59,6 +59,7 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/EducationServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/ViewJobPosting.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/model/Applications.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/confirmRecruiter.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/ViewDetailJobPostingServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/EducationDAO.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CompanyDAO.java</file>
@@ -68,6 +69,7 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/userHome.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/ViewDetailJobServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/RecruitersDAO.java</file>
         </group>
     </open-files>
 </project-private>

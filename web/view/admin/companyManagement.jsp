@@ -107,14 +107,22 @@
                                                 <h5 class="modal-title" id="addCompanyModalLabel">Add New Company</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
+                                            <!--                                            <div class="modal-body">
+                                                                                            form add company
+                                                                                            <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies?action=add-company" method="POST">
+                                            
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="companyName" class="form-label">Company Name</label>
+                                                                                                    <input type="text" class="form-control" id="companyName" name="name" required>
+                                                                                                </div>-->
                                             <div class="modal-body">
-                                                <!--form add company-->
-                                                <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies?action=add-company" method="POST">
-
+                                                <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies" method="POST">
+                                                    <input type="hidden" name="action" value="add-company">
                                                     <div class="mb-3">
                                                         <label for="companyName" class="form-label">Company Name</label>
                                                         <input type="text" class="form-control" id="companyName" name="name" required>
-                                                    </div>
+                                                        <div id="addCompanyError" class="text-danger mt-2"></div>
+                                                    </div>    
                                                     <div class="mb-3">
                                                         <label for="companyDescription" class="form-label">Description</label>
                                                         <textarea class="form-control" id="companyDescription" name="description" rows="3"></textarea>
@@ -203,15 +211,24 @@
                                                             <h5 class="modal-title" id="editCompanyModalLabel${company.id}">Edit Company Profile</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
+                                                        <!--                                                        <div class="modal-body">
+                                                                                                                     Form to edit company details 
+                                                                                                                    <form action="${pageContext.request.contextPath}/companies?action=edit-company" method="POST">
+                                                                                                                        <input type="hidden" name="id-company" value="${company.id}">
+                                                        
+                                                                                                                        <div class="mb-3">
+                                                                                                                            <label for="companyName${company.id}" class="form-label">Company Name</label>
+                                                                                                                            <input type="text" class="form-control" id="companyName${company.id}" name="name" value="${company.getName()}" required>
+                                                                                                                        </div>-->
                                                         <div class="modal-body">
-                                                            <!-- Form to edit company details -->
-                                                            <form action="${pageContext.request.contextPath}/companies?action=edit-company" method="POST">
+                                                            <form id="editCompanyForm${company.id}" action="${pageContext.request.contextPath}/companies" method="POST">
+                                                                <input type="hidden" name="action" value="edit-company">
                                                                 <input type="hidden" name="id-company" value="${company.id}">
-
                                                                 <div class="mb-3">
                                                                     <label for="companyName${company.id}" class="form-label">Company Name</label>
                                                                     <input type="text" class="form-control" id="companyName${company.id}" name="name" value="${company.getName()}" required>
-                                                                </div>
+                                                                    <div id="editCompanyError${company.id}" class="text-danger mt-2"></div>
+                                                                </div>    
 
                                                                 <div class="mb-3">
                                                                     <label for="companyDescription${company.id}" class="form-label">Description</label>
@@ -317,29 +334,79 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
-            $(document).ready(function () {
-                $('.form-check-input').change(function () {
-                    var companyId = $(this).data('company-id');
-                    var isActive = this.checked;
-                    var label = $(this).siblings('.form-check-label');
+                                            $(document).ready(function () {
+                                                $('.form-check-input').change(function () {
+                                                    var companyId = $(this).data('company-id');
+                                                    var isActive = this.checked;
+                                                    var label = $(this).siblings('.form-check-label');
 
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/companies',
-                        type: 'POST',
-                        data: {
-                            action: isActive ? 'accept' : 'violate',
-                            'id-company': companyId
-                        },
-                        success: function (response) {
-                            console.log('Company status updated successfully');
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error updating company status');
-                            $(this).prop('checked', !isActive);
-                        }
-                    });
-                });
-            });
+                                                    $.ajax({
+                                                        url: '${pageContext.request.contextPath}/companies',
+                                                        type: 'POST',
+                                                        data: {
+                                                            action: isActive ? 'accept' : 'violate',
+                                                            'id-company': companyId
+                                                        },
+                                                        success: function (response) {
+                                                            console.log('Company status updated successfully');
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                            console.error('Error updating company status');
+                                                            $(this).prop('checked', !isActive);
+                                                        }
+                                                    });
+                                                });
+                                            });
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+                                                    $(document).ready(function () {
+                                                        // Handle Add Company form submission
+                                                        $('#addCompanyForm').submit(function (e) {
+                                                            e.preventDefault();
+                                                            $.ajax({
+                                                                url: $(this).attr('action'),
+                                                                type: 'POST',
+                                                                data: $(this).serialize(),
+                                                                success: function (response) {
+                                                                    if (response.error) {
+                                                                        $('#addCompanyError').text(response.error);
+                                                                    } else {
+                                                                        // Close modal and refresh page or update table
+                                                                        $('#addCompanyModal').modal('hide');
+                                                                        location.reload();
+                                                                    }
+                                                                },
+                                                                error: function () {
+                                                                    $('#addCompanyError').text('This name already exist!');
+                                                                }
+                                                            });
+                                                        });
+
+                                                        // Handle Edit Company form submission
+                                                        $('[id^=editCompanyForm]').submit(function (e) {
+                                                            e.preventDefault();
+                                                            var formId = $(this).attr('id');
+                                                            var companyId = formId.replace('editCompanyForm', '');
+                                                            $.ajax({
+                                                                url: $(this).attr('action'),
+                                                                type: 'POST',
+                                                                data: $(this).serialize(),
+                                                                success: function (response) {
+                                                                    if (response.error) {
+                                                                        $('#editCompanyError' + companyId).text(response.error);
+                                                                    } else {
+                                                                        // Close modal and refresh page or update table
+                                                                        $('#editCompanyModal' + companyId).modal('hide');
+                                                                        location.reload();
+                                                                    }
+                                                                },
+                                                                error: function () {
+                                                                    $('#editCompanyError' + companyId).text('This name already exist!');
+                                                                }
+                                                            });
+                                                        });
+                                                    });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 

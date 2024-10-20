@@ -5,6 +5,7 @@
 package dao;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import model.Account;
@@ -206,4 +207,17 @@ public class CompanyDAO extends GenericDAO<Company> {
         parameterMap.put("name", name);
         return !queryGenericDAO(Company.class, sql, parameterMap).isEmpty();
     }
+
+    public boolean checkExistOther(String name, int id) {
+        List<Company> list = findAll();
+        for (Company company : list) {
+            //lay ra id cua thang company do
+            if ((id != company.getId()) && name.equalsIgnoreCase(company.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
 }

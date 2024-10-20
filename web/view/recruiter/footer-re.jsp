@@ -8,20 +8,13 @@
 </footer>
 
 <style>
-    /* Setup flexbox layout for body and html */
-    html, body {
-        height: 100%; /* Ensure the body takes full height */
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
     /* Main container to push the footer down */
     .job-posting-container {
-        flex: 1; /* Make sure content area grows to fill available space */
+        flex: 1;
         padding: 20px;
         margin-left: 260px; /* Adjust for sidebar */
         background-color: #f5f5f5;
+        min-height: calc(100vh - 80px); /* Ensures content stretches to push footer */
     }
 
     /* Footer styling */
@@ -29,22 +22,19 @@
         background-color: #389354;
         color: white;
         text-align: center;
-        padding: 20px 0;
-        width: calc(100% - 260px); /* Adjusting for sidebar width */
-        margin-left: 260px; /* Prevent footer from overlapping the sidebar */
-        position: relative;
-        bottom: 0;
+        padding: 10px 0; /* Reduced padding for smaller footer */
+        width: calc(100% - 260px);
+        margin-left: 260px;
+        flex-shrink: 0; /* Ensures footer stays at the bottom when content is short */
     }
 
     footer a {
         color: white;
         text-decoration: none;
-        margin: 0 15px;
+        margin: 0 10px;
     }
 
     footer a:hover {
         text-decoration: underline;
     }
 </style>
-
-

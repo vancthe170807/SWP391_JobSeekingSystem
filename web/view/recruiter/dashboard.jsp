@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Recruiter Dashboard</title>
         <!-- Bootstrap CSS -->
@@ -129,7 +128,7 @@
                 <div class="metric-box">
                     <h4>Job Postings</h4>
                     <p>${listSize.size()}</p>
-                    <a href="#">View details</a>
+                    <a href="${pageContext.request.contextPath}/exportExcel">View details</a>
                 </div>
                 <div class="metric-box">
                     <h4>Pending Approvals</h4>
@@ -162,10 +161,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="jobPosting" items="${listJobPostings}">
+                            <c:forEach var="i" items="${listTop5}">
                                 <tr>
-                                    <td>${jobPosting.getTitle()}</td>
-                                    <td><fmt:formatDate value="${jobPosting.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
+                                    <td>${i.getTitle()}</td>
+                                    <td><fmt:formatDate value="${i.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
                             </tr>
                         </c:forEach>                      
                         </tbody>
@@ -177,10 +176,6 @@
                     <canvas id="applicantChart"></canvas>
                 </div>
             </div>
-
-
-
-
         </div>
 
         <!-- Footer -->

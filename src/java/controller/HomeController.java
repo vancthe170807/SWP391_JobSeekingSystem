@@ -5,6 +5,9 @@
 
 package controller;
 
+import dao.CompanyDAO;
+import dao.JobPostingsDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,37 +15,34 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import model.Company;
+import model.JobPostings;
 
 @WebServlet(name="HomeController", urlPatterns={"/home"})
 
 public class HomeController extends HttpServlet {
+    
+    private final JobPostingsDAO jobPostingsDAO = new JobPostingsDAO();
+    private final CompanyDAO companyDAO = new CompanyDAO();
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("view/home.jsp").forward(request, response);
+        List<JobPostings> listTop6 = jobPostingsDAO.getTop6RecentJobPostingsByOpen();
+        List<Company> listTop3Company = companyDAO.getTop3RecentCompanysByOpen();
+        request.setAttribute("listTop6", listTop6);
+        request.setAttribute("listTop3Company", listTop3Company);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/home.jsp");
+        dispatcher.forward(request, response);
     } 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
+    
 }

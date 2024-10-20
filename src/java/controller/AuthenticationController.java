@@ -3,8 +3,10 @@ package controller;
 import utils.Email;
 import constant.CommonConst;
 import dao.AccountDAO;
+import dao.CompanyDAO;
 import dao.JobPostingsDAO;
 import dao.JobSeekerDAO;
+import dao.RecruitersDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,7 +30,9 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Company;
 import model.JobPostings;
+import model.Recruiters;
 import validate.Validation;
 
 /**
@@ -41,8 +45,10 @@ public class AuthenticationController extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
     private final JobSeekerDAO jobSeekerDAO = new JobSeekerDAO();
-    private final Validation valid = new Validation();
-    private final Random random = new Random();
+    JobPostingsDAO jobPostingsDAO = new JobPostingsDAO();
+    RecruitersDAO reDAO = new RecruitersDAO();
+    CompanyDAO cdao = new CompanyDAO();
+    Validation valid = new Validation();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -179,8 +185,6 @@ public class AuthenticationController extends HttpServlet {
         account.setUsername(username);
         account.setPassword(password);
         Account accFound = accountDAO.findUserByUsernameAndPassword(account);
-//        JobSeekers jobSeekerFound = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId());
-        //boolean activeAccount = account.isIsActive();
 
         HttpSession session = request.getSession();
 
@@ -196,24 +200,34 @@ public class AuthenticationController extends HttpServlet {
             // If the account is found and active
             session.setAttribute(CommonConst.SESSION_ACCOUNT, accFound);
             session.setMaxInactiveInterval(60 * 60 * 24);
+
+            // Handle based on role
             switch (accFound.getRoleId()) {
-                case 1:
+                case 1: // Admin role
                     url = "view/admin/adminHome.jsp";
                     break;
-                case 2:
-                    JobPostingsDAO dao = new JobPostingsDAO();
-                    List<JobPostings> listJobPostings = dao.getTop5RecentJobPostings();
-                    List<JobPostings> listAll = dao.findAll();
-                    
-                    request.setAttribute("listSize", listAll);
-                    request.setAttribute("listJobPostings", listJobPostings);
-                    url = "view/recruiter/dashboard.jsp";
+                case 2: // Recruiter role;
+                    Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(accFound.getId()));
+                    if (recruiters == null || !recruiters.isIsVerify()) {
+                        // Nếu Recruiter chưa xác nhận, chuyển đến trang verify.jsp
+                        CompanyDAO companyDAO = new CompanyDAO();
+                        List<Company> companyList = cdao.findAll();
+                        request.setAttribute("companyList", companyList);
+                        url = "view/recruiter/verifyRecruiter.jsp";
+                    } else {
+                        List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+                        List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
+
+                        // Gửi dữ liệu đến JSP
+                        request.setAttribute("listSize", listSize);
+                        request.setAttribute("listTop5", listTop5);
+                        url = "view/recruiter/dashboard.jsp";
+                    }
                     break;
-                case 3:
+                case 3: // Job seeker role
                     url = "view/user/userHome.jsp";
                     break;
             }
-
         }
         return url;
     }
@@ -221,7 +235,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "home";
+        return "view/home.jsp";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
@@ -300,7 +314,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/register.jsp";
         } else {
             // Generate OTP and send email
-            int sixDigitNumber = 100000 + random.nextInt(900000);
+            int sixDigitNumber = 100000 + new Random().nextInt(900000);
             Email.sendEmail(email, "OTP Register Account", "Hello, your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in session
@@ -415,7 +429,7 @@ public class AuthenticationController extends HttpServlet {
             url = "view/authen/forgotPassword.jsp"; // Stay on forgot password page
         } else {
             // Generate a 6-digit OTP and send it to the user's email
-            int sixDigitNumber = 100000 + random.nextInt(900000); //SWT: Bugs
+            int sixDigitNumber = 100000 + new Random().nextInt(900000); //SWT: Bugs
             Email.sendEmail(email, "OTP Reset Password", "Your OTP code is: " + sixDigitNumber);
 
             // Store OTP and account info in the session

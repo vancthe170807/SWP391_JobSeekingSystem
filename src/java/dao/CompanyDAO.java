@@ -220,4 +220,22 @@ public class CompanyDAO extends GenericDAO<Company> {
     }
 
     
+    
+    public List<Company> getTop3RecentCompanysByOpen() {
+        String sql = "select top 3 * from Company where verificationStatus = ? order by id desc";
+  
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("verificationStatus", 1);
+
+        return queryGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public boolean isCompanyExist(int companyId) {
+        // Gọi phương thức findCompanyById để kiểm tra xem công ty có tồn tại không
+        Company company = findCompanyById(companyId);
+
+        // Nếu company khác null thì công ty tồn tại, ngược lại thì không
+        return company != null;
+    }
+
 }

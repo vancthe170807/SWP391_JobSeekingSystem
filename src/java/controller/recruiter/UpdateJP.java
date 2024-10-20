@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controller.recruiter;
 
 import dao.JobPostingsDAO;
@@ -13,13 +8,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.JobPostings;
 
-@WebServlet(name="UpdateJP", urlPatterns={"/updateJP"})
+@WebServlet(name = "UpdateJP", urlPatterns = {"/updateJP"})
 public class UpdateJP extends HttpServlet {
-   
-    @Override
+   @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("idJP"));

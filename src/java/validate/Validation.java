@@ -104,4 +104,13 @@ public class Validation {
         // Kiểm tra mật khẩu mới có khác mật khẩu hiện tại hay không
         return !currentPassword.equals(newPassword);
     }
+    
+    // Hàm kiểm tra xem giá trị có nhỏ hơn 0 hay không
+    public boolean isValidInput(double number) {
+        if (number < 0) {
+            System.out.println("Error: Input cannot be a negative number.");
+            return false; // Trả về false nếu số nhỏ hơn 0
+        }
+        return true; // Trả về true nếu số hợp lệ
+    }
 }

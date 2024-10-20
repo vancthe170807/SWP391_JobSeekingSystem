@@ -235,7 +235,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "home";
+        return "view/home.jsp";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {

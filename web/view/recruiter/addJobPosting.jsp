@@ -51,7 +51,7 @@
                 font-weight: bold;
                 margin-bottom: 5px;
                 font-size: 15px;
-                color: #333;
+                color: #389354;
             }
 
             .form-control {

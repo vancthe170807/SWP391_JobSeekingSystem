@@ -43,8 +43,24 @@ public class VerifyRecruiter extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy ID công ty và vị trí từ form
-        int companyId = Integer.parseInt(request.getParameter("companyId"));
+        int companyId;
+        try {
+            companyId = Integer.parseInt(request.getParameter("companyId"));
+        } catch (NumberFormatException e) {
+            // Nếu companyId không hợp lệ, gửi thông báo lỗi
+            request.setAttribute("error", "Invalid company ID format.");
+            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+            return;
+        }
         String position = request.getParameter("position");
+
+        // Kiểm tra nếu companyId có tồn tại trong database
+        if (!companyDao.isCompanyExist(companyId)) {
+            // Nếu không tồn tại, gửi thông báo lỗi
+            request.setAttribute("error", "Company ID does not exist.");
+            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+            return;
+        }
 
         // Lấy account từ session
         HttpSession session = request.getSession();
@@ -67,8 +83,8 @@ public class VerifyRecruiter extends HttpServlet {
             // Gửi thông báo xác nhận thành công
             request.setAttribute("verify", "Your verification request has been sent.");
             request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+
         }
     }
 
 }
-

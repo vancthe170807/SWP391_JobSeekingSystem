@@ -137,7 +137,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("fetch", RECORD_PER_PAGE);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> searchJobPostingByTitle(String searchJP, int page) {
         String sql = "SELECT * FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND Status = ? ORDER BY JobPostingID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         parameterMap = new LinkedHashMap<>();
@@ -155,7 +155,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public int findTotalRecordByTitle(String searchQuery) {
         String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND Status = ?";
         parameterMap = new LinkedHashMap<>();
@@ -172,7 +172,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("fetch", pageSize);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> findJobPostingsWithFilter(String sortField, int page, int pageSize) {
         String sql = "SELECT * FROM [dbo].[JobPostings] WHERE Status = ? ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         parameterMap = new LinkedHashMap<>();
@@ -188,4 +188,31 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
+
+    //Top 5 cong viec moi nhat
+    public List<JobPostings> getTop6RecentJobPostingsByOpen() {
+        String sql = "SELECT TOP 6 * FROM [dbo].[JobPostings] WHERE [Status] = ? order by PostedDate desc";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public int countTotalJobPostings() {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE Status = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> getJobPostingsByOpen() {
+        String sql = "SELECT * FROM [dbo].[JobPostings] WHERE [Status] = ? order by PostedDate desc";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
 }

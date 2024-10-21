@@ -236,7 +236,6 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        session.removeAttribute("isRecruiterVerified");
         return "view/home.jsp";
     }
 

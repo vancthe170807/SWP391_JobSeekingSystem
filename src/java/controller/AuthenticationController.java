@@ -693,7 +693,7 @@ public class AuthenticationController extends HttpServlet {
                     return "view/user/userProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
                 if (account.getRoleId() == 2) {
-                    return "view/recruiter/recruiterProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
+                    return "view/recruiter/deactiveAccountRecruiter.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
             }
         } else {

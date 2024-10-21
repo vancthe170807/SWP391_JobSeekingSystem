@@ -7,10 +7,13 @@ package controller.admin;
 import static constant.CommonConst.RECORD_PER_PAGE;
 import dao.CompanyDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -21,7 +24,7 @@ import java.util.logging.Logger;
 import model.Account;
 import model.Company;
 import model.PageControl;
-
+@MultipartConfig
 @WebServlet(name = "CompanyAdminController", urlPatterns = {"/companies"})
 public class CompanyAdminController extends HttpServlet {
 
@@ -124,6 +127,9 @@ public class CompanyAdminController extends HttpServlet {
             case "add-company":
                 url = "view/admin/addCompany.jsp";
                 break;
+            case "view":
+                url = viewDetailCompany(request);
+                break;
             default:
                 url = "view/admin/companyManagement.jsp";
         }
@@ -172,38 +178,63 @@ public class CompanyAdminController extends HttpServlet {
     }
 
     private String addCompany(HttpServletRequest request, HttpServletResponse response) {
+        String url = "";
+        try {
 //        get ve cac thuoc tinh cua company
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String location = request.getParameter("location");
-        String verificationStatus = request.getParameter("verificationStatus");
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String location = request.getParameter("location");
+            String verificationStatus = request.getParameter("verificationStatus");
+            // get ve businessLicense
+            Part part = request.getPart("businessLicense");
+            String imagePath = null;
+//SWT: MAJOR (CODE_SMELL)            
+            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
+                imagePath = null;
+            } else {
+//        duong dan lưu ảnh
+                String path = request.getServletContext().getRealPath("images");
+                File dir = new File(path);
+//        xem duong dan nay ton tai chua
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+//        ghi file vao trong duong dan
+                part.write(image.getAbsolutePath());
+//        lay ra contextPath cua project
+                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
 //        tao doi tuong company va set cac thuoc tinh
-        Company company = new Company();
-        company.setName(name);
-        company.setDescription(description);
-        company.setLocation(location);
-        switch (verificationStatus) {
-            case "accept":
-                company.setVerificationStatus(true);
-                break;
-            case "violate":
-                company.setVerificationStatus(false);
-                break;
-            default:
-                company.setVerificationStatus(true);
-        }
-        if (dao.checkExistNameCompany(name)) {
-            try {
-                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
+                Company company = new Company();
+                company.setName(name);
+                company.setDescription(description);
+                company.setLocation(location);
+                company.setBusinessLicenseImage(imagePath);
+                switch (verificationStatus) {
+                    case "accept":
+                        company.setVerificationStatus(true);
+                        break;
+                    case "violate":
+                        company.setVerificationStatus(false);
+                        break;
+                    default:
+                        company.setVerificationStatus(true);
+                }
+                if (dao.checkExistNameCompany(name)) {
+                   
+                        url = "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+                    
+                } else {
+                    dao.insert(company);
+                    url = "companies";
+                }
             }
-        }else{
-        dao.insert(company);
-        return "companies";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            url = "companies";
         }
-        return "companies";
-        
+        return url;
     }
 
     private String editCompany(HttpServletRequest request, HttpServletResponse response) {
@@ -220,7 +251,7 @@ public class CompanyAdminController extends HttpServlet {
         companyEdit.setDescription(description);
         companyEdit.setLocation(location);
         if (dao.checkExistOther(name, companyEdit.getId())) {
-             try {
+            try {
                 return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
             } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,5 +259,12 @@ public class CompanyAdminController extends HttpServlet {
         }
         dao.updateCompany(companyEdit);
         return "companies";
+    }
+
+    private String viewDetailCompany(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Company companyDetail = dao.findCompanyById(id);
+        request.setAttribute("CompanyDetail", companyDetail);
+        return "view/admin/viewDetailCompany.jsp";
     }
 }

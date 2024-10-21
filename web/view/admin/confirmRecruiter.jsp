@@ -59,6 +59,21 @@
                 background-color: #dc3545;
                 color: white;
             }
+            .notification-box {
+                padding: 15px;
+                border-radius: 5px;
+                margin: 20px 0;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .notification-box.error {
+                background-color: #f8d7da; /* Nền đỏ nhạt */
+                color: #721c24; /* Màu chữ đỏ đậm */
+                border: 1px solid #f5c6cb; /* Viền đỏ nhạt */
+            }
+
         </style>
     </head>
     <body>
@@ -143,6 +158,16 @@
                                                     </tr>
                                                 </c:if>
                                             </c:forEach>
+                                            <c:if test="${not empty notice}">
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div class="notification-box error">
+                                                            <p>${notice}</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </c:if>
+
                                         </tbody>
                                     </table>
                                 </div>

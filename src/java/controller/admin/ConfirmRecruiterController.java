@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +33,11 @@ public class ConfirmRecruiterController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "view/admin/confirmRecruiter.jsp";
+        //get ve thong bao neu co
+        String notice = request.getParameter("notice") != null ? request.getParameter("notice") : "";
         List<Recruiters> listConfirm = dao.findAll();
         request.setAttribute("listConfirm", listConfirm);
+        request.setAttribute("notice", notice);
         request.getRequestDispatcher(url).forward(request, response);
     }
 
@@ -54,8 +60,13 @@ public class ConfirmRecruiterController extends HttpServlet {
     }
 
     private String confirm(HttpServletRequest request, HttpServletResponse response) {
-        String recruiterId = request.getParameter("recruiterId");
-        dao.updateVerification(recruiterId, true);
+        try {
+            String recruiterId = request.getParameter("recruiterId");
+            dao.updateVerification(recruiterId, true);
+            return "confirm?notice=" + URLEncoder.encode("Confirm successfully!!", "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ConfirmRecruiterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "confirm";
     }
 
@@ -70,12 +81,11 @@ public class ConfirmRecruiterController extends HttpServlet {
             //gui email ve email cua account vua tim duoc
             Email.sendEmail(accountFound.getEmail(), "RESPONE FOR YOUR REQUEST!!!", "Your request to become recruiter was reject!!");
             dao.deleteRecruiter(recruiterId);
-            return "confirm";
+            
         } catch (MessagingException ex) {
-            request.setAttribute("errorSendEmail", "Email can not send!!");
-            request.getRequestDispatcher("view/admin/confirmRecruiter.jsp").forward(request, response);
+            return "confirm?notice=" + URLEncoder.encode("Exist error in send email and reject process!!", "UTF-8");
         }
-        return "confirm";
+        return "confirm?notice=" + URLEncoder.encode("Send email and reject recruiter successfully!!", "UTF-8");
     }
 
 }

@@ -148,15 +148,22 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
-                                            <li>
-                                                <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </nav>
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center" id="pagination">
+                                                <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                    <li>
+                                                        <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                    </li>
+                                                </c:forEach>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" id="next-page" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                
+
                                 <!-- Add more recruiters here -->
                             </div>
                         </div>
@@ -229,29 +236,61 @@
         <!-- Custom script for recruiter status switcher -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                $(document).ready(function () {
-                    $('.form-check-input').change(function () {
-                        var recruiterId = $(this).data('recruiter-id');
-                        var isActive = this.checked;
+                                            $(document).ready(function () {
+                                                $('.form-check-input').change(function () {
+                                                    var recruiterId = $(this).data('recruiter-id');
+                                                    var isActive = this.checked;
 
-                        $.ajax({
-                            url: '${pageContext.request.contextPath}/recruiters',
-                            type: 'POST',
-                            data: {
-                                action: isActive ? 'active' : 'deactive',
-                                'id-recruiter': recruiterId
-                            },
-                            success: function (response) {
-                                console.log('Recruiter status updated successfully');
-                            },
-                            error: function (xhr, status, error) {
-                                console.error('Error updating recruiter status');
-                                $(this).prop('checked', !isActive);
-                            }
-                        });
-                    });
-                });
+                                                    $.ajax({
+                                                        url: '${pageContext.request.contextPath}/recruiters',
+                                                        type: 'POST',
+                                                        data: {
+                                                            action: isActive ? 'active' : 'deactive',
+                                                            'id-recruiter': recruiterId
+                                                        },
+                                                        success: function (response) {
+                                                            console.log('Recruiter status updated successfully');
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                            console.error('Error updating recruiter status');
+                                                            $(this).prop('checked', !isActive);
+                                                        }
+                                                    });
+                                                });
+                                            });
     </script>
+        <script>
+            // Get the current page parameter from the URL
+            function getCurrentPage() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return parseInt(urlParams.get('page')) || 1;
+            }
+    
+            // Add click event listener to the "Next" button
+            document.getElementById('next-page').addEventListener('click', function (event) {
+                event.preventDefault();
+                const currentPage = getCurrentPage();
+                const totalPages = ${pageControl.getTotalPages()};
+                if (currentPage < totalPages) {
+                    window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
+                }
+            });
+    
+            // Highlight the current page
+            const pageLinks = document.querySelectorAll('.page-number');
+            const currentPage = getCurrentPage();
+            pageLinks.forEach(function (link, index) {
+                if (index + 1 === currentPage) {
+                    link.parentElement.classList.add('active');
+                } else {
+                    link.parentElement.classList.remove('active');
+                }
+            });
+        </script>
+    
+
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

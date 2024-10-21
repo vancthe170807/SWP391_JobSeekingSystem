@@ -29,13 +29,15 @@ public class CompanyDAO extends GenericDAO<Company> {
                 + "           ([name]\n"
                 + "           ,[description]\n"
                 + "           ,[location]\n"
-                + "           ,[verificationStatus])\n"
-                + "     VALUES(?,?,?,?)";
+                + "           ,[verificationStatus]\n"
+                + "           ,[BusinessLicenseImage])\n"
+                + "     VALUES(?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("name", t.getName());
         parameterMap.put("description", t.getDescription());
         parameterMap.put("location", t.getLocation());
         parameterMap.put("verificationStatus", t.isVerificationStatus());
+        parameterMap.put("BusinessLicenseImage", t.getBusinessLicenseImage());
         return insertGenericDAO(sql, parameterMap);
     }
 

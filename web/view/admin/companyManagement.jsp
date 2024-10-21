@@ -19,7 +19,8 @@
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <head>
+        
+
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -109,7 +110,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!--form add company-->
-                                                <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies?action=add-company" method="POST">
+                                                <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies?action=add-company" method="POST" enctype="multipart/form-data">
 
                                                     <div class="mb-3">
                                                         <label for="companyName" class="form-label">Company Name</label>
@@ -130,10 +131,9 @@
                                                             <option value="violate">Violate</option>
                                                         </select>
                                                     </div>
-
                                                     <div class="mb-3">
-                                                        <label for="adminName" class="form-label">Admin Name</label>
-                                                        <input type="text" class="form-control" id="adminName" name="adminName" value="${sessionScope.account.getFullName()}" readonly>
+                                                        <label for="businessLicense" class="form-label">Business License</label>
+                                                        <input type="file" class="form-control" id="businessLicense" name="businessLicense" accept="image/*" required="">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -149,11 +149,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>
-                                                <th>Description</th>
-                                                <th>Action</th>
                                                 <th>Status</th>
-                                                <th>Location</th>
-                                                <th>Create By</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -165,18 +162,6 @@
                                                     <td>
                                                         ${company.getName()}
                                                     </td>
-
-
-                                                    <!-- Description Column -->
-                                                    <td>
-                                                        ${company.getDescription()}
-                                                    </td>
-                                                    <!--Edit Column-->
-                                                    <td>
-                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCompanyModal${company.id}">
-                                                            Edit
-                                                        </button>
-                                                    </td>
                                                     <!-- Status Column -->
                                                     <td>
                                                         <div class="form-check form-switch">
@@ -187,15 +172,21 @@
                                                             <label class="form-check-label" for="flexSwitchCheck${company.id}"></label>
                                                         </div>
                                                     </td>
-                                                    <!-- Location Column -->
+                                                    <!--Edit Column-->
                                                     <td>
-                                                        ${company.getLocation()}
+                                                        <!-- Nút Edit với biểu tượng búa -->
+                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCompanyModal${company.id}">
+                                                            <i class="fas fa-hammer"></i> 
+                                                        </button>
+
+                                                        <!-- Nút View với biểu tượng con mắt -->
+                                                        <a href="${pageContext.request.contextPath}/companies?action=view&id=${company.id}" class="btn btn-primary me-2">
+                                                            <i class="fas fa-eye"></i> 
+                                                        </a>
                                                     </td>
-                                                    <td>
-                                                        ${sessionScope.account.getFullName()}
-                                                    </td>
+
                                                 </tr>
-                                                <!-- Modal Edit Company -->
+                                                <!--Modal Edit Company--> 
                                             <div class="modal fade" id="editCompanyModal${company.id}" tabindex="-1" aria-labelledby="editCompanyModalLabel${company.id}" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
@@ -214,12 +205,12 @@
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="companyDescription${company.id}" class="form-label">Description</label>
-                                                                    <textarea class="form-control" id="companyDescription${company.id}" name="description" rows="3">${company.getDescription()}</textarea>
+                                                                    <textarea class="form-control" id="companyDescription${company.id}" name="description" rows="3" required>${company.getDescription()}</textarea>
                                                                 </div>
 
                                                                 <div class="mb-3">
                                                                     <label for="companyLocation${company.id}" class="form-label">Location</label>
-                                                                    <input type="text" class="form-control" id="companyLocation${company.id}" name="location" value="${company.getLocation()}">
+                                                                    <input type="text" class="form-control" id="companyLocation${company.id}" name="location" value="${company.getLocation()}" required>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -234,12 +225,17 @@
                                         </tbody>
                                     </table>
                                     <nav aria-label="Page navigation">
-                                        <ul class="pagination justify-content-center">
+                                        <ul class="pagination justify-content-center" id="pagination">
                                             <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
                                                 <li>
-                                                    <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                    <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
                                                 </li>
                                             </c:forEach>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" id="next-page" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </nav>
 
@@ -339,6 +335,34 @@
                                                     });
                                                 });
                                             });
+        </script>
+        <script>
+            // Get the current page parameter from the URL
+            function getCurrentPage() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return parseInt(urlParams.get('page')) || 1;
+            }
+
+            // Add click event listener to the "Next" button
+            document.getElementById('next-page').addEventListener('click', function (event) {
+                event.preventDefault();
+                const currentPage = getCurrentPage();
+                const totalPages = ${pageControl.getTotalPages()};
+                if (currentPage < totalPages) {
+                    window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
+                }
+            });
+
+            // Highlight the current page
+            const pageLinks = document.querySelectorAll('.page-number');
+            const currentPage = getCurrentPage();
+            pageLinks.forEach(function (link, index) {
+                if (index + 1 === currentPage) {
+                    link.parentElement.classList.add('active');
+                } else {
+                    link.parentElement.classList.remove('active');
+                }
+            });
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

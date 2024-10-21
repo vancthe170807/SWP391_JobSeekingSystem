@@ -12,7 +12,7 @@
 
         .hero {
             background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)), 
-                        url('path/to/your/background/image.jpg') no-repeat center center/cover; /* Add a background image */
+                        url('../assets/img/istockphoto-475352876-612x612.jpg') no-repeat center center/cover; /* Add a background image */
             color: white;
             padding: 120px 0;
             text-align: center;
@@ -81,7 +81,7 @@
         <div class="container">
             <h2>Welcome to JobPath</h2>
             <p>Your path to finding the perfect job starts here.</p>
-            <a href="explore.jsp" class="btn explore-btn">Explore Jobs</a>
+            <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">Explore Jobs</a>
         </div>
     </section>
 

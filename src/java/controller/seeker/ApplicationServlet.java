@@ -76,7 +76,7 @@ public class ApplicationServlet extends HttpServlet {
     
     //Tao 1 don xin viec
     public String addApplication(HttpServletRequest request, HttpServletResponse response) {
-        String url;
+        String url = null;
         
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
@@ -109,11 +109,7 @@ public class ApplicationServlet extends HttpServlet {
         application.setJobPostingID(jobPostingID);
         application.setJobSeekerID(jobSeeker.getJobSeekerID());
         application.setCVID(cv.getCVID());
-        application.setStatus("");
-        
-        
-        
-        
+        application.setStatus("");   
         return url;
     }
 

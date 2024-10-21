@@ -103,6 +103,8 @@
                                                     <th>Name</th>
                                                     <th>Verify</th>
                                                     <th>Company</th>
+                                                    <th>Front Citizen</th>
+                                                    <th>Back Citizen</th>
                                                     <th>Position</th>
                                                 </tr>
                                             </thead>
@@ -154,6 +156,16 @@
                                                             %>
                                                             <%= companyName %> <!-- Hiển thị tên công ty -->
                                                         </td>
+                                                        <td>
+                                                            <img src="${recruiter.getFrontCitizenImage()}" alt="Front Citizen Image" class="img-fluid img-thumbnail" style="max-width: 100px;" 
+                                                                 data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('${recruiter.getFrontCitizenImage()}')">
+                                                        </td>
+                                                        <td>
+                                                            <img src="${recruiter.getBackCitizenImage()}" alt="Back Citizen Image" class="img-fluid img-thumbnail" style="max-width: 100px;" 
+                                                                 data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('${recruiter.getBackCitizenImage()}')">
+                                                        </td>
+
+
                                                         <td>${recruiter.getPosition()}</td>
                                                     </tr>
                                                 </c:if>
@@ -189,7 +201,22 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
             <!-- Offcanvas content remains unchanged -->
         </div>
-
+        <!--modal hien thi anh citizen-->
+        <!-- Modal to display image -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel">Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" alt="Image" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end modal-->
         <!-- THEME PRELOADER START -->
         <div class="loader-wrapper">
             <div class="loader">
@@ -205,9 +232,14 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                                                    function confirmAction() {
-                                                                        return confirm("Are you sure you want to confirm this recruiter?");
-                                                                    }
+             function confirmAction() {
+                 return confirm("Are you sure you want to confirm this recruiter?");
+              }
+        </script>
+        <script>
+            function showImage(imageUrl) {
+                document.getElementById('modalImage').src = imageUrl;
+            }
         </script>
 
     </body>

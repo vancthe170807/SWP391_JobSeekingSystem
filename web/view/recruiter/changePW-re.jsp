@@ -12,75 +12,92 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            /* Container for the password change form */
+            /* Main container styling */
             .password-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                min-height: calc(100vh - 80px); /* Adjust for full height excluding header */
+                min-height: calc(100vh - 100px); /* Adjust for full height excluding header */
                 padding: 20px;
                 margin-left: 260px; /* Ensure it does not overlap the sidebar */
-                padding-top: 80px; /* Ensure it does not overlap the header */
-                background-color: #f8f9fa; /* Light background to differentiate the form */
+                background-color: #f8f9fa; /* Light background */
             }
 
-            /* Card styling for the password form */
+            /* Card styling for password form */
             .password-card {
                 background-color: #ffffff;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-                max-width: 400px; /* Reduced width for smaller input fields */
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+                max-width: 450px;
                 width: 100%;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            /* Card hover effect */
+            .password-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
             }
 
             /* Centering the title */
             .password-card h2 {
                 text-align: center;
                 margin-bottom: 30px;
-                color: red;
+                color: #39874e; /* Bright red for emphasis */
+                font-weight: bold;
+                font-size: 24px;
             }
 
             /* Styling for form labels */
             .password-card label {
-                font-weight: bold;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
             }
 
             /* General form input styling */
             .password-card .form-control {
                 border: 1px solid #ced4da;
-                border-radius: 5px;
-                padding: 8px;
-                font-size: 14px;
-                width: 100%; /* Ensure the input fills the width */
+                border-radius: 8px;
+                padding: 12px;
+                font-size: 15px;
+                transition: border-color 0.3s;
+            }
+
+            .password-card .form-control:focus {
+                border-color: #28a745;
+                box-shadow: 0 0 8px rgba(40, 167, 69, 0.2); /* Green glow effect */
             }
 
             /* Button styling */
             .password-card .btn {
-                padding: 8px;
-                font-size: 14px;
-                border-radius: 5px;
+                padding: 10px;
+                font-size: 15px;
+                border-radius: 50px;
+                transition: background-color 0.3s ease, transform 0.2s ease;
             }
 
             /* Primary button style */
             .password-card .btn-success {
                 background-color: #28a745;
                 border: none;
+                width: 100%;
             }
 
             .password-card .btn-success:hover {
                 background-color: #218838;
+                transform: translateY(-3px);
             }
 
             /* Secondary button style */
             .password-card .btn-secondary {
                 background-color: #6c757d;
                 border: none;
+                width: 100%;
             }
 
             .password-card .btn-secondary:hover {
                 background-color: #5a6268;
+                transform: translateY(-3px);
             }
 
             /* Password visibility toggle */
@@ -99,9 +116,15 @@
 
             /* Error message styling */
             .error-message {
-                color: red;
+                color: #ff6b6b;
                 margin-top: 10px;
                 font-size: 14px;
+                background-color: #ffecec;
+                border: 1px solid #f5c6cb;
+                padding: 12px;
+                border-radius: 8px;
+                font-weight: bold;
+                text-align: center;
             }
 
             /* Password note styling */
@@ -114,26 +137,16 @@
 
             /* Form group spacing */
             .form-group {
-                margin-bottom: 15px;
+                margin-bottom: 20px;
                 position: relative;
             }
 
             /* Align buttons on the same row */
             .btn-group {
                 display: flex;
-                justify-content: space-between;
+                gap: 10px;
             }
-            
-            .error-message {
-                color: #f08080;
-                background-color: #ffecec;
-                border: 1px solid #f5c6cb;
-                padding: 20px;
-                border-radius: 5px;
-                font-size: 13px;
-                margin-bottom: 20px;
-                font-weight: bold;
-            }
+
         </style>
     </head>
     <body>
@@ -157,7 +170,7 @@
                         <label for="newPassword">New Password</label>
                         <input type="password" id="newPassword" name="newPassword" class="form-control" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('newPassword', this)">Show</span>
-                        <p id="passwordNote" class="password-note">Passwords must be 8 to 20 characters long and include numbers, letters and special characters.</p>
+                        <p id="passwordNote" class="password-note">Passwords must be 8 to 20 characters long and include numbers, letters, and special characters.</p>
                     </div>
                     <div class="form-group position-relative">
                         <label for="retypePassword">Retype Password</label>
@@ -192,14 +205,7 @@
             }
 
             function cancelChangePassword() {
-               var role = ${sessionScope.account.getRoleId()};
-                if (role === 1) {
-                    window.location.href = "${pageContext.request.contextPath}/view/admin/adminHome.jsp";
-                } else if (role === 2) {
-                    window.location.href = "${pageContext.request.contextPath}/view/recruiter/dashboard.jsp";
-                } else if (role === 3) {
-                    window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
-                }
+                window.history.back();
             }
 
             var newPasswordInput = document.getElementById('newPassword');

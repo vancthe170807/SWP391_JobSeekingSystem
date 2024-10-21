@@ -17,30 +17,40 @@
                 padding: 0;
                 height: 100%;
                 background-color: #f8f9fa;
-                display: flex;
-                flex-direction: column;
             }
 
+            /* Profile container styling */
             .profile-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                flex-grow: 1;
+                min-height: calc(100vh - 80px); /* Adjust for full height excluding header */
                 padding: 30px;
+                margin-left: 260px; /* Ensure it does not overlap the sidebar */
+                padding-top: 80px; /* Ensure it does not overlap the header */
+                background-color: #f8f9fa; /* Light background */
             }
 
+            /* Card styling for the profile section */
             .profile-card {
                 background-color: white;
-                padding: 80px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 60px;
+                border-radius: 15px;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+                max-width: 800px;
                 width: 100%;
-                max-width: 750px;
                 display: flex;
-                flex-direction: row;
                 justify-content: space-between;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
 
+            /* Hover effect for card */
+            .profile-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Styling for avatar and user details */
             .profile-sidebar {
                 text-align: center;
                 margin-right: 40px;
@@ -52,46 +62,102 @@
                 border-radius: 50%;
                 object-fit: cover;
                 margin-bottom: 15px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .profile-sidebar img:hover {
+                transform: scale(1.1);
             }
 
             .profile-sidebar h4 {
                 font-weight: bold;
                 margin-bottom: 5px;
+                font-size: 20px;
+                color: #2c3e50;
             }
 
             .form-section {
                 flex: 1;
-                max-width: 600px;
             }
 
             .form-section h2 {
-                font-size: 24px;
+                font-size: 26px;
                 font-weight: bold;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
+                color: #16a085;
             }
 
-            .form-group {
-                margin-bottom: 15px;
-            }
-
+            /* Styling for input fields and buttons */
             .form-group label {
                 font-weight: bold;
                 margin-bottom: 5px;
+                color: #2c3e50;
             }
 
             .form-control {
-                padding: 10px;
+                padding: 12px;
                 height: 45px;
+                border-radius: 8px;
+                border: 1px solid #ced4da;
+                transition: border-color 0.3s;
+            }
+
+            .form-control:focus {
+                border-color: #16a085;
+                box-shadow: 0 0 8px rgba(22, 160, 133, 0.2);
             }
 
             .btn-success {
-                padding: 12px 20px;
-                font-size: 18px;
-                width: 100%;
+                margin-top: 20px;
+                padding: 12px 30px;
+                font-size: 16px;
+                border-radius: 50px;
+                background-color: #28a745;
+                border: none;
+                transition: background-color 0.3s ease, transform 0.2s ease;
             }
 
+            .btn-success:hover {
+                background-color: #148f77;
+                transform: translateY(-3px);
+            }
+
+            /* Success and error message styling */
             .alert {
                 margin-top: 20px;
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            .alert-success {
+                background-color: #e9f7ef;
+                color: #2e7d32;
+                border-left: 5px solid #2e7d32;
+            }
+
+            .alert-danger {
+                background-color: #f8d7da;
+                color: #721c24;
+                border-left: 5px solid #721c24;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .profile-card {
+                    flex-direction: column;
+                    padding: 40px;
+                }
+
+                .profile-sidebar {
+                    margin-right: 0;
+                    margin-bottom: 30px;
+                }
+
+                .profile-container {
+                    margin-left: 0;
+                    padding-top: 120px;
+                }
             }
         </style>
     </head>
@@ -125,7 +191,7 @@
                             <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" onchange="previewAvatar(event)">
                         </div>
 
-                        <!-- Full Name (Two fields on one row) -->
+                        <!-- Full Name -->
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for="lastName">Last Name</label>
@@ -166,7 +232,7 @@
 
                         <!-- Date of Birth -->
                         <div class="form-group">
-                            <label for="dob">Date of birth</label>
+                            <label for="dob">Date of Birth</label>
                             <input type="date" class="form-control" id="dob" name="date" value="${sessionScope.account.getDob()}" required>
                         </div>
 

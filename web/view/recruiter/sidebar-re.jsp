@@ -1,92 +1,124 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@page
-    contentType="text/html" pageEncoding="UTF-8"%>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="brand">Job<span>Path</span></div>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 
-        <a href="${pageContext.request.contextPath}/Dashboard"
-           ><i class="fa-solid fa-home"></i> Dashboard</a
-        >
-        <a
-            href="${pageContext.request.contextPath}/view/recruiter/viewRecruiterProfile.jsp"
-            ><i class="fa-duotone fa-solid fa-address-card"></i> Profile</a
-        >
-        <a href="${pageContext.request.contextPath}/jobPost"
-           ><i class="fa-solid fa-list"></i> Job Posting</a
-        >
-        <a href="${pageContext.request.contextPath}/view/recruiter/seeker-manager.jsp"
-           ><i class="fas fa-envelope"></i> Seeker manager</a
-        >
-        <a href="${pageContext.request.contextPath}/view/recruiter/feedback-re.jsp"
-           ><i class="fas fa-user"></i> Feed Back</a
-        >
-
-        <!--    <a href="#" onclick="submitForm(); return false;" class="job-posting-link">
-                  <i class="fas fa-users"></i> Job Posting
-              </a>
-              <form id="jobPostingForm" action="${pageContext.request.contextPath}/jobPost?action=listJobPosting" method="post" style="display:none;">
-                  <input type="hidden" name="action" value="listJobPosting" />
-              </form>-->
+<!-- Sidebar -->
+<div class="sidebar">
+    <!-- User Info Section (Avatar & Name at the top) -->
+    <div class="user-info">
+        <c:if test="${empty sessionScope.account.getAvatar()}">
+            <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle avatar-img">
+        </c:if>
+        <c:if test="${!empty sessionScope.account.getAvatar()}">
+            <img src="${sessionScope.account.getAvatar()}" alt="User Avatar" class="avatar-img">
+        </c:if>
+        <div class="user-name">
+            <span>${sessionScope.account.getFullName()}</span>
+        </div>
     </div>
-    <header>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-            />
-    </header>
-    <style>
-        .sidebar {
-            height: 100vh;
-            width: 260px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #fff;
-            padding-top: 20px;
-            overflow-y: auto;
-            border-right: 1px solid #ddd;
-        }
 
-        .sidebar .brand {
-            font-size: 36px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    <!-- Navigation Links -->
+    <a href="${pageContext.request.contextPath}/Dashboard">
+        <i class="fa-solid fa-home"></i> Dashboard
+    </a>
+    <a href="${pageContext.request.contextPath}/view/recruiter/viewRecruiterProfile.jsp">
+        <i class="fa-duotone fa-solid fa-address-card"></i> Profile
+    </a>
+    <a href="${pageContext.request.contextPath}/jobPost">
+        <i class="fa-solid fa-list"></i> Job Posting
+    </a>
+    <a href="${pageContext.request.contextPath}/view/recruiter/changePW-re.jsp"><i class="fas fa-lock"></i> Change Password</a>
+    <a href="${pageContext.request.contextPath}/view/recruiter/changePW-re.jsp"><i class="fa-solid fa-eraser"></i> Deactive Account</a>
+    <a href="#"><i class="fas fa-user"></i> Feed Back</a>
 
-        .sidebar .brand span {
-            color: #28a745;
-        }
+    <a href="${pageContext.request.contextPath}/view/authen/logout.jsp" style="color: red;">
+        <i class="fas fa-sign-out-alt" style="color: red;"></i> Log Out
+    </a>
+</div>
 
-        .sidebar a {
-            padding: 15px 20px; /* Điều chỉnh padding giữa icon và chữ */
-            text-decoration: none;
-            font-size: 16px;
-            color: #333;
-            display: flex;
-            align-items: center; /* Căn giữa theo chiều dọc */
-        }
+<!-- Include styles -->
+<header>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+</header>
 
-        .sidebar a i {
-            margin-right: 15px; /* Điều chỉnh khoảng cách giữa icon và chữ */
-            font-size: 15px;
-            display: inline-block;
-        }
+<style>
+    .sidebar {
+        height: 100vh;
+        width: 260px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        padding-top: 20px;
+        overflow-y: auto;
+        border-right: 1px solid #ddd;
+    }
 
-        .sidebar a:hover {
-            background-color: #f0f0f0;
-        }
+    /* Remove JobPath brand section */
+    /* User Info Section */
+    .user-info {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px; /* Ensure it aligns with the top of the sidebar */
+    }
 
-        /* Đảm bảo icon và chữ thẳng hàng */
-        .sidebar a i,
-        .sidebar a span {
-            display: flex;
-            align-items: center; /* Đảm bảo icon và text được căn giữa */
-        }
-    </style>
+    .user-info .avatar-img {
+        width: 60px; /* Reduced size for smaller avatar */
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
 
-    <script>
-        //    function submitForm() {
-        //        document.getElementById("jobPostingForm").submit();
-        //    }
-    </script>
+    .user-info .user-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Navigation Links */
+    .sidebar a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        color: #333;
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar a i {
+        margin-right: 15px;
+        font-size: 15px;
+        display: inline-block;
+    }
+
+    .sidebar a:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Account Actions */
+    .account-actions {
+        margin-top: 20px;
+        padding: 0 20px;
+    }
+
+    .account-actions a {
+        padding: 10px 0;
+        display: block;
+        font-size: 16px;
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        align-items: center;
+    }
+
+    .account-actions a i {
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .account-actions a:hover {
+        background-color: #f0f0f0;
+    }
+</style>

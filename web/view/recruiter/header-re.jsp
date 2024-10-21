@@ -17,34 +17,12 @@
         </div>
     </div>
 
-    <!-- User Profile Menu with Notification -->
-    <div class="user-menu">
-        <a href="#" class="notification">
-            <i class="fas fa-bell"></i>
-            <span class="badge">5</span>
-        </a>
-        <button class="btn dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-            <c:if test="${empty sessionScope.account.getAvatar()}">
-                <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle avatar-img">
-            </c:if>
-            <c:if test="${!empty sessionScope.account.getAvatar()}">
-                <img src="${sessionScope.account.getAvatar()}" alt="User Avatar" class="avatar-img">
-            </c:if>
-            ${sessionScope.account.getFullName()}
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i> Deactive account</a></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/view/recruiter/changePW-re.jsp"><i class="fas fa-lock"></i> Change Password</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-                <a class="dropdown-item logout" href="${pageContext.request.contextPath}/view/authen/logout.jsp" style="color: red;">
-                    <i class="fas fa-sign-out-alt" style="color: red;"></i> Log Out
-                </a>
-            </li>
-        </ul>
+    <!-- JobPath Logo/Text -->
+    <div class="jobpath-logo">
+        <span>Job</span><span class="green-text">Path</span>
     </div>
 </header>
+
 <style>
     /* Header styling */
     header {
@@ -52,13 +30,15 @@
         padding: 15px 30px;
         color: white;
         display: flex;
-        justify-content: space-between; /* Space between navigation links and user menu */
+        justify-content: space-between; /* Space between navigation links and JobPath */
         align-items: center;
         position: fixed;
         top: 0;
-        left: 260px; /* This leaves room for the sidebar */
-        width: calc(100% - 260px); /* Adjust the header width to not overlap the sidebar */
+        left: 260px; /* Leaves room for the sidebar */
+        width: calc(100% - 260px); /* Adjust the header width to avoid sidebar overlap */
+        height: 70px; /* Fixed height for the header */
         z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a slight shadow to separate header */
     }
 
     /* Sidebar styling */
@@ -94,35 +74,29 @@
         color: #f8f9fa;
     }
 
-    /* User Profile Menu */
-    .user-menu {
-        display: flex;
-        align-items: center;
-        gap: 15px;
+    /* JobPath Logo/Text */
+    .jobpath-logo {
+        font-size: 24px;
+        font-weight: bold;
     }
 
-    .user-menu .notification {
-        position: relative;
+    .green-text {
+        color: #28a745; /* Green color for the word 'Path' */
     }
 
-    .user-menu .notification .badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 5px;
+    /* Add margin-top to main content to avoid overlapping header */
+    .main-content {
+        margin-top: 90px; /* Adjust this value if needed based on header height */
     }
 
-    .avatar-img {
-        width: 30px; /* Adjust the width of the avatar */
-        height: 30px; /* Adjust the height of the avatar */
-        border-radius: 50%; /* Makes the avatar circular */
-        object-fit: cover; /* Ensures the image covers the area without distortion */
-        margin-right: 10px; /* Optional: Adds some space between the avatar and the name */
+    /* General page styling for conflict-free content */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
     }
 </style>
+
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

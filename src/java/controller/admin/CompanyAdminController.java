@@ -192,23 +192,18 @@ public class CompanyAdminController extends HttpServlet {
             default:
                 company.setVerificationStatus(true);
         }
-//        if (dao.checkExistNameCompany(name)) {
-//            try {
-//                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
-//            } catch (UnsupportedEncodingException ex) {
-//                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }else{
-//        dao.insert(company);
-//        return "companies";
-//        }
-//        return "companies";
         if (dao.checkExistNameCompany(name)) {
-            return "{\"error\": \"Company name already exists!\"}";
-        } else {
-            dao.insert(company);
-            return "{\"success\": true}";
+            try {
+                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+        dao.insert(company);
+        return "companies";
         }
+        return "companies";
+        
     }
 
     private String editCompany(HttpServletRequest request, HttpServletResponse response) {
@@ -225,9 +220,13 @@ public class CompanyAdminController extends HttpServlet {
         companyEdit.setDescription(description);
         companyEdit.setLocation(location);
         if (dao.checkExistOther(name, companyEdit.getId())) {
-            return "{\"error\": \"Company name already exists!\"}";
+             try {
+                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         dao.updateCompany(companyEdit);
-        return "{\"success\": true}";
+        return "companies";
     }
 }

@@ -109,11 +109,7 @@ public class ApplicationServlet extends HttpServlet {
         application.setJobPostingID(jobPostingID);
         application.setJobSeekerID(jobSeeker.getJobSeekerID());
         application.setCVID(cv.getCVID());
-        application.setStatus("");
-        
-        
-        
-        
+        application.setStatus("");   
         return url;
     }
 

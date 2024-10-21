@@ -44,6 +44,21 @@
                 text-align: center;
                 margin-bottom: 20px;
             }
+            .btn-verify {
+                padding: 5px 10px;
+                margin: 0 5px;
+                border: none;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+            .btn-confirm {
+                background-color: #28a745;
+                color: white;
+            }
+            .btn-reject {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -94,15 +109,25 @@
                                                             %>
                                                             <%= account.getFullName() %>
                                                         </td>
-                                                       
+
                                                         <td>
-                                                            <form action="${pageContext.request.contextPath}/confirm" method="POST" onsubmit="return confirmAction()">
+                                                            <form action="${pageContext.request.contextPath}/confirm" method="POST" class="d-inline">
                                                                 <input type="hidden" name="recruiterId" value="${recruiter.getRecruiterID()}">
-                                                                <button type="submit" class="btn btn-success">Confirm</button>
+                                                                <input type="hidden" name="action" value="confirm">
+                                                                <button type="submit" class="btn-verify btn-confirm" onclick="return confirmAction('confirm')">
+                                                                    <i class="fas fa-check"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form action="${pageContext.request.contextPath}/confirm" method="POST" class="d-inline">
+                                                                <input type="hidden" name="recruiterId" value="${recruiter.getRecruiterID()}">
+                                                                <input type="hidden" name="action" value="reject">
+                                                                <button type="submit" class="btn-verify btn-reject" onclick="return confirmAction('reject')">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
                                                             </form>
                                                         </td>
 
-                                                        
+
                                                         <td>
 
                                                             <%
@@ -155,9 +180,9 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-        function confirmAction() {
-                return confirm("Are you sure you want to confirm this recruiter?");
-         }
+                                                                    function confirmAction() {
+                                                                        return confirm("Are you sure you want to confirm this recruiter?");
+                                                                    }
         </script>
 
     </body>

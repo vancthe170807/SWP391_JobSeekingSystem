@@ -4,7 +4,9 @@
  */
 package controller.admin;
 
+import dao.AccountDAO;
 import dao.RecruitersDAO;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Account;
 import model.Recruiters;
+import utils.Email;
 
 @WebServlet(name = "ConfirmRecruiterController", urlPatterns = {"/confirm"})
 public class ConfirmRecruiterController extends HttpServlet {
@@ -53,9 +59,22 @@ public class ConfirmRecruiterController extends HttpServlet {
         return "confirm";
     }
 
-    private String reject(HttpServletRequest request, HttpServletResponse response) {
-        String recruiterId = request.getParameter("recruiterId");
-        dao.deleteRecruiter(recruiterId);
+    private String reject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            //tao doi tuong account de lay ve mail
+            AccountDAO accountDao = new AccountDAO();
+            String recruiterId = request.getParameter("recruiterId");
+            //lay recruiter theo id de lay ve id cua account do
+            Recruiters recruiter =  dao.findById(recruiterId);
+            Account accountFound = accountDao.findUserById(recruiter.getAccountID());
+            //gui email ve email cua account vua tim duoc
+            Email.sendEmail(accountFound.getEmail(), "RESPONE FOR YOUR REQUEST!!!", "Your request to become recruiter was reject!!");
+            dao.deleteRecruiter(recruiterId);
+            return "confirm";
+        } catch (MessagingException ex) {
+            request.setAttribute("errorSendEmail", "Email can not send!!");
+            request.getRequestDispatcher("view/admin/confirmRecruiter.jsp").forward(request, response);
+        }
         return "confirm";
     }
 

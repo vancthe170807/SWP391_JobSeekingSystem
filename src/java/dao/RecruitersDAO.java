@@ -99,5 +99,11 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
         parameterMap.put("RecruiterID", recruiterId);
         deleteGenericDAO(sql, parameterMap);
     }
+    public Recruiters findById(String recruiterId) {
+        String sql = "Select * from [dbo].[Recruiters] where RecruiterID = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("RecruiterID", recruiterId);
+        return queryGenericDAO(Recruiters.class, sql, parameterMap).get(0);
+    }
 
 }

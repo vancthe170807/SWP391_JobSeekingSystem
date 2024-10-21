@@ -45,54 +45,37 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/SeekerAdminController.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/x.jsp</file>
         </group>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
+        </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/common/admin/sidebar-admin.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/validate/Validation.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/CVServlet.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/DetailsJP.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/userHome.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/WeeklyPostings.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/constant/CommonConst.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Recruiters.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/userProfile.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/EditDetail.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/PageControl.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/common/user/sidebar-user.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/utils/Email.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Account.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/EducationDAO.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/viewDetailCompany.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/editUserProfile.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/ConfirmRecruiterController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/recruiterManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/DBContext.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/SeekerController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/GenericDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/seekerManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/JobSeekerCheck.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/dao/CVDAO.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/seeker/EducationServlet.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/Dashboard.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/JobPostings.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/DeleteJP.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Company.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/Education.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/viewDetailUser.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/recruiterController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/confirmRecruiter.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/CV.jsp</file>
-        </group>
-        <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -36,12 +36,12 @@ public class EducationDAO extends GenericDAO<Education> {
     }
     
     //Tim CV cho Job Seeker
-    public Education findEducationbyJobSeekerID(int JobSeekerID) {
+    public List<Education> findEducationbyJobSeekerID(int JobSeekerID) {
         String sql = "select * from Education where JobSeekerID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", JobSeekerID);
-        List<Education> list = queryGenericDAO(Education.class, sql, parameterMap);
-        return list.isEmpty() ? null : list.get(0);
+//        List<Education> list = queryGenericDAO(Education.class, sql, parameterMap);
+        return queryGenericDAO(Education.class, sql, parameterMap);
         
     }
     
@@ -53,7 +53,7 @@ public class EducationDAO extends GenericDAO<Education> {
                 + "      ,[FieldOfStudy] = ?\n"
                 + "      ,[StartDate] = ?\n"
                 + "      ,[EndDate] = ?\n"
-                + " WHERE JobSeekerID = ?";
+                + " WHERE EducationID = ?";
 
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("Institution", education.getInstitution());
@@ -61,9 +61,17 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("FieldOfStudy", education.getFieldOfStudy());
         parameterMap.put("StartDate", education.getStartDate());
         parameterMap.put("EndDate", education.getEndDate());
-        parameterMap.put("JobSeekerID", education.getJobSeekerID());
+        parameterMap.put("EducationID", education.getEducationID());
         
         updateGenericDAO(sql, parameterMap);
+    }
+    
+    public void deleteEducation(int educationID) {
+        String sql = "DELETE FROM [dbo].[Education]\n"
+                + "      WHERE EducationID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("EducationID", educationID);
+        deleteGenericDAO(sql, parameterMap);
     }
 
 }

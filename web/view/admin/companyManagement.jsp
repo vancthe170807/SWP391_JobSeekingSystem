@@ -204,7 +204,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <!-- Form to edit company details -->
+                                                            <!--Form to edit company details--> 
                                                             <form action="${pageContext.request.contextPath}/companies?action=edit-company" method="POST">
                                                                 <input type="hidden" name="id-company" value="${company.id}">
 
@@ -212,7 +212,6 @@
                                                                     <label for="companyName${company.id}" class="form-label">Company Name</label>
                                                                     <input type="text" class="form-control" id="companyName${company.id}" name="name" value="${company.getName()}" required>
                                                                 </div>
-
                                                                 <div class="mb-3">
                                                                     <label for="companyDescription${company.id}" class="form-label">Description</label>
                                                                     <textarea class="form-control" id="companyDescription${company.id}" name="description" rows="3">${company.getDescription()}</textarea>
@@ -317,30 +316,32 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
-            $(document).ready(function () {
-                $('.form-check-input').change(function () {
-                    var companyId = $(this).data('company-id');
-                    var isActive = this.checked;
-                    var label = $(this).siblings('.form-check-label');
+                                            $(document).ready(function () {
+                                                $('.form-check-input').change(function () {
+                                                    var companyId = $(this).data('company-id');
+                                                    var isActive = this.checked;
+                                                    var label = $(this).siblings('.form-check-label');
 
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/companies',
-                        type: 'POST',
-                        data: {
-                            action: isActive ? 'accept' : 'violate',
-                            'id-company': companyId
-                        },
-                        success: function (response) {
-                            console.log('Company status updated successfully');
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error updating company status');
-                            $(this).prop('checked', !isActive);
-                        }
-                    });
-                });
-            });
+                                                    $.ajax({
+                                                        url: '${pageContext.request.contextPath}/companies',
+                                                        type: 'POST',
+                                                        data: {
+                                                            action: isActive ? 'accept' : 'violate',
+                                                            'id-company': companyId
+                                                        },
+                                                        success: function (response) {
+                                                            console.log('Company status updated successfully');
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                            console.error('Error updating company status');
+                                                            $(this).prop('checked', !isActive);
+                                                        }
+                                                    });
+                                                });
+                                            });
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     </body>

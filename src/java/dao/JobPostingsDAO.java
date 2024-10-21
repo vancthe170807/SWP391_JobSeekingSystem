@@ -137,6 +137,16 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("fetch", RECORD_PER_PAGE);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
+    
+    public List<JobPostings> searchJobPostingByTitle(String searchJP, int page) {
+        String sql = "SELECT * FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND Status = ? ORDER BY JobPostingID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchJP);
+        parameterMap.put("Status", "Open");
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 
     public int findTotalRecordByTitleAndRecruiterID(String searchQuery, int recruiterID) {
         String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND RecruiterID = ?";
@@ -145,11 +155,28 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
+    
+    public int findTotalRecordByTitle(String searchQuery) {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND Status = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchQuery);
+        parameterMap.put("Status", "Opened");  // Thêm RecruiterID vào truy vấn
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 
     public List<JobPostings> findJobPostingsWithFilterAndRecruiterID(String sortField, int recruiterID, int page, int pageSize) {
         String sql = "SELECT * FROM [dbo].[JobPostings] WHERE RecruiterID = ? ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
+        parameterMap.put("offset", (page - 1) * pageSize);
+        parameterMap.put("fetch", pageSize);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+    
+    public List<JobPostings> findJobPostingsWithFilter(String sortField, int page, int pageSize) {
+        String sql = "SELECT * FROM [dbo].[JobPostings] WHERE Status = ? ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
         parameterMap.put("offset", (page - 1) * pageSize);
         parameterMap.put("fetch", pageSize);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);

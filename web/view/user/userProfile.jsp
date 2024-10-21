@@ -25,7 +25,7 @@
                 <div>
                 <c:if test="${jobSeeker != null}">
                     <div>
-                        <p class="btn btn-success">Your JobSeeker ID: <strong >#${jobSeeker.getJobSeekerID()}</strong></p>
+                        <p class="btn btn-outline-success">Your JobSeeker ID: <strong >#${jobSeeker.getJobSeekerID()}</strong></p>
                     </div>
                 </c:if>
 

@@ -9,10 +9,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.util.Calendar;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
@@ -67,6 +68,9 @@ public class EducationServlet extends HttpServlet {
             case "update-education":
                 url = updateEducation(request);
                 break;
+            case "delete-education": // New case for delete action
+                url = deleteEducation(request);
+                break;
             default:
                 url = "home"; // Default URL if no action matches
         }
@@ -80,39 +84,53 @@ public class EducationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-        Education edu = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
-        if (jobSeeker != null && edu == null) {
+        List<Education> edus = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (jobSeeker != null) {
             try {
                 String institution = request.getParameter("institution");
                 String degree = request.getParameter("degree");
                 String fieldofstudy = request.getParameter("fieldofstudy");
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
-                String hiddenEndDate = request.getParameter("hiddenEndDate"); // Lấy giá trị từ hidden field
 
                 Date startDate = Date.valueOf(startDateStr);
-                Date endDate = null; // Mặc định là null
+                Date endDate = Date.valueOf(endDateStr);
 
-                if (hiddenEndDate == null || !hiddenEndDate.equals("N/A")) {
-                    // Nếu người dùng có nhập End Date, chuyển đổi thành kiểu Date
-                    endDate = Date.valueOf(endDateStr);
+                Calendar startCal = Calendar.getInstance();
+                startCal.setTime(startDate);
+
+                Calendar endCal = Calendar.getInstance();
+                endCal.setTime(endDate);
+
+                // Tính số năm giữa 2 ngày
+                int yearsDiff = endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR);
+                int monthsDiff = endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
+
+                // Tính tổng số tháng giữa startDate và endDate
+                int totalMonths = yearsDiff * 12 + monthsDiff;
+
+                // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
+                if (totalMonths < 24) {
+                    request.setAttribute("errorEducation", "End date must be at least 2 years after the start date.");
+                    url = "education"; // Điều hướng lại trang education với thông báo lỗi
+                } else {
+
+                    // Tạo đối tượng Education
+                    Education eduAdd = new Education();
+                    eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
+                    eduAdd.setInstitution(institution);
+                    eduAdd.setDegree(degree);
+                    eduAdd.setFieldOfStudy(fieldofstudy);
+                    eduAdd.setStartDate(startDate);
+                    eduAdd.setEndDate(endDate);
+
+                    // Thêm bản ghi vào CSDL
+                    eduDAO.insert(eduAdd);
+                    request.setAttribute("successEducation", "Profile uploaded successfully.");
+                    request.setAttribute("edus", edus);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "education"; // Điều hướng đến trang Education
                 }
-
-                // Tạo đối tượng Education
-                Education eduAdd = new Education();
-                eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
-                eduAdd.setInstitution(institution);
-                eduAdd.setDegree(degree);
-                eduAdd.setFieldOfStudy(fieldofstudy);
-                eduAdd.setStartDate(startDate);
-                eduAdd.setEndDate(endDate);
-
-                // Thêm bản ghi vào CSDL
-                eduDAO.insert(eduAdd);
-                request.setAttribute("successEducation", "Profile uploaded successfully.");
-                request.setAttribute("edu", edu);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "education"; // Điều hướng đến trang Education
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 request.setAttribute("errorEducation", "An error occurred while uploading the profile. Please try again.");
@@ -132,9 +150,10 @@ public class EducationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-        Education edu = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
-        if (jobSeeker != null && edu != null) { // Thay đổi để check đúng edu khác null
+        List<Education> edus = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
+        if (jobSeeker != null && edus != null) { // Thay đổi để check đúng edu khác null
             try {
+                String educationIDStr = request.getParameter("educationID");
                 String institution = request.getParameter("institution");
                 String degree = request.getParameter("degree");
                 String fieldofstudy = request.getParameter("fieldofstudy");
@@ -142,27 +161,47 @@ public class EducationServlet extends HttpServlet {
                 String endDateStr = request.getParameter("endDate");
                 String hiddenEndDate = request.getParameter("hiddenEndDate"); // Lấy giá trị từ hidden field
 
+                int educationID = Integer.parseInt(educationIDStr);
                 Date startDate = Date.valueOf(startDateStr);
-                Date endDate = null; // Mặc định là null
+                Date endDate = Date.valueOf(endDateStr); // Mặc định là null
 
-                if (hiddenEndDate == null || !hiddenEndDate.equals("N/A")) {
-                    // Nếu người dùng có nhập End Date, chuyển đổi thành kiểu Date
-                    endDate = Date.valueOf(endDateStr);
+                Calendar startCal = Calendar.getInstance();
+                startCal.setTime(startDate);
+
+                Calendar endCal = Calendar.getInstance();
+                endCal.setTime(endDate);
+
+                // Tính số năm giữa 2 ngày
+                int yearsDiff = endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR);
+                int monthsDiff = endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
+
+                // Tính tổng số tháng giữa startDate và endDate
+                int totalMonths = yearsDiff * 12 + monthsDiff;
+
+                // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
+                if (totalMonths < 24) {
+                    request.setAttribute("errorEducation", "End date must be at least 2 years after the start date.");
+                    url = "education"; // Điều hướng lại trang education với thông báo lỗi
+                } else {
+
+                    Education edu = new Education();
+
+                    // Tạo đối tượng Education
+                    edu.setEducationID(educationID);
+                    edu.setInstitution(institution);
+                    edu.setDegree(degree);
+                    edu.setFieldOfStudy(fieldofstudy);
+                    edu.setStartDate(startDate);
+                    edu.setEndDate(endDate);
+
+                    // Cập nhật bản ghi trong CSDL
+                    eduDAO.updateEducation(edu);
+                    request.setAttribute("successEducation", "Profile updated successfully.");
+                    request.setAttribute("edus", edus);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "education"; // Điều hướng đến trang Education
                 }
 
-                // Tạo đối tượng Education
-                edu.setInstitution(institution);
-                edu.setDegree(degree);
-                edu.setFieldOfStudy(fieldofstudy);
-                edu.setStartDate(startDate);
-                edu.setEndDate(endDate);
-
-                // Cập nhật bản ghi trong CSDL
-                eduDAO.updateEducation(edu);
-                request.setAttribute("successEducation", "Profile updated successfully.");
-                request.setAttribute("edu", edu);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "education"; // Điều hướng đến trang Education
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 request.setAttribute("errorEducation", "An error occurred while updating the profile. Please try again.");
@@ -191,27 +230,46 @@ public class EducationServlet extends HttpServlet {
             return "view/authen/login.jsp"; // Redirect to login page
         }
 
-        Education edu = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
-        if (edu == null) {
+        // Lấy danh sách học vấn thay vì một đối tượng học vấn đơn lẻ
+        List<Education> educationList = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
+
+        if (educationList == null || educationList.isEmpty()) {
             request.setAttribute("errorEducation", "No Education found for this Job Seeker.");
             return "view/user/Education.jsp";
         }
 
-        // Set attributes to pass the education details to the JSP
-        request.setAttribute("institution", edu.getInstitution());
-        request.setAttribute("degree", edu.getDegree());
-        request.setAttribute("fieldOfStudy", edu.getFieldOfStudy());
-
-        // Format dates if needed, for display in the JSP
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedStartDate = edu.getStartDate() != null ? dateFormat.format(edu.getStartDate()) : "";
-        String formattedEndDate = edu.getEndDate() != null ? dateFormat.format(edu.getEndDate()) : "";
-
-        request.setAttribute("startDate", formattedStartDate);
-        request.setAttribute("endDate", formattedEndDate);
+        // Set danh sách học vấn vào request attribute
+        request.setAttribute("edus", educationList);
 
         // Forward to the education view page
         return "view/user/Education.jsp";
+    }
+
+    // New method to delete education
+    public String deleteEducation(HttpServletRequest request) throws IOException, ServletException {
+        String url; // URL to navigate to after processing
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
+        if (jobSeeker != null) {
+            try {
+                String educationIDStr = request.getParameter("educationID");
+                int educationID = Integer.parseInt(educationIDStr);
+
+                // Delete the education record
+                eduDAO.deleteEducation(educationID);
+                request.setAttribute("successEducation", "Education deleted successfully.");
+            } catch (Exception e) {
+                e.printStackTrace(); // Log the exception for debugging
+                request.setAttribute("errorEducation", "An error occurred while deleting the education record. Please try again.");
+            }
+        } else {
+            request.setAttribute("error", "No Job Seeker found for the current account.");
+        }
+
+        url = "education"; // Redirect back to the education page
+        return url; // Return the URL to navigate to
     }
 
 }

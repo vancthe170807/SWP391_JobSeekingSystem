@@ -16,6 +16,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 import model.Company;
 import model.PageControl;
@@ -29,7 +31,7 @@ public class CompanyAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //get ve error đã xử lí ở doPost
-        String error = request.getParameter("error") != null ?  request.getParameter("error") : "";
+        String error = request.getParameter("error") != null ? request.getParameter("error") : "";
         request.setAttribute("error", error);
         // get ve pageNumber
         PageControl pageControl = new PageControl();
@@ -135,6 +137,7 @@ public class CompanyAdminController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
+        response.setContentType("application/json");
         switch (action) {
             case "violate":
                 url = violateCompany(request);
@@ -146,7 +149,7 @@ public class CompanyAdminController extends HttpServlet {
                 url = addCompany(request, response);
                 break;
             case "edit-company":
-                url = editCompany(request);
+                url = editCompany(request, response);
                 break;
             default:
                 url = "companies";
@@ -168,7 +171,7 @@ public class CompanyAdminController extends HttpServlet {
         return "companies";
     }
 
-    private String addCompany(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    private String addCompany(HttpServletRequest request, HttpServletResponse response) {
 //        get ve cac thuoc tinh cua company
         String name = request.getParameter("name");
         String description = request.getParameter("description");
@@ -190,14 +193,20 @@ public class CompanyAdminController extends HttpServlet {
                 company.setVerificationStatus(true);
         }
         if (dao.checkExistNameCompany(name)) {
-            return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            try {
+                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
         dao.insert(company);
         return "companies";
         }
+        return "companies";
+        
     }
 
-    private String editCompany(HttpServletRequest request) {
+    private String editCompany(HttpServletRequest request, HttpServletResponse response) {
 //        get ve cac gia tri cua company de edit
         int id = Integer.parseInt(request.getParameter("id-company"));
         String name = request.getParameter("name");
@@ -206,9 +215,17 @@ public class CompanyAdminController extends HttpServlet {
 //        tim company theo id 
         Company companyEdit = dao.findCompanyById(id);
 //        set cac gia tri moi
+
         companyEdit.setName(name);
         companyEdit.setDescription(description);
         companyEdit.setLocation(location);
+        if (dao.checkExistOther(name, companyEdit.getId())) {
+             try {
+                return "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         dao.updateCompany(companyEdit);
         return "companies";
     }

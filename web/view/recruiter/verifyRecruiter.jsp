@@ -156,7 +156,7 @@
                         <div class="col-md-8">
                             <div class="card shadow">
                                 <div class="card-header">
-                                    Please Authenticate Your Recruiter
+                                    Verify your account to use this service
                                 </div>
                                 <div class="card-body">
                                     <!-- Display error message -->

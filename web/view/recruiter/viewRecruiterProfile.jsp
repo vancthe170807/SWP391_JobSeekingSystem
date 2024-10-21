@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,9 +28,9 @@
                 background-color: #fff;
                 border-radius: 15px;
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-                max-width: 800px; /* Increase width of the profile card */
+                max-width: 700px; /* Reduced width of the profile card */
                 width: 100%;
-                padding: 40px;
+                padding: 35px; /* Adjust padding */
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Center avatar and content */
@@ -40,8 +43,8 @@
             }
 
             .profile-avatar img {
-                width: 200px; /* Increase avatar size */
-                height: 200px;
+                width: 180px; /* Adjust avatar size */
+                height: 180px;
                 border-radius: 50%;
                 object-fit: cover;
                 margin-bottom: 15px;
@@ -49,14 +52,14 @@
             }
 
             .profile-avatar h4 {
-                font-size: 28px; /* Larger font size */
+                font-size: 24px; /* Adjust font size */
                 font-weight: bold;
                 color: #333;
                 margin-bottom: 10px;
             }
 
             .profile-avatar p {
-                font-size: 18px; /* Larger font size */
+                font-size: 16px; /* Adjust font size */
                 color: #666;
             }
 

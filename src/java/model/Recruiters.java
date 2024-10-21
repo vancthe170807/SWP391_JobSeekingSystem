@@ -1,29 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author nhanh
- */
 public class Recruiters {
     private int RecruiterID;
     private boolean isVerify;
     private int AccountID;
     private int CompanyID;
     private String Position;
+    private String FrontCitizenImage;
+    private String BackCitizenImage;
 
     public Recruiters() {
     }
 
-    public Recruiters(int RecruiterID, boolean isVerify, int AccountID, int CompanyID, String Position) {
+    public Recruiters(int RecruiterID, boolean isVerify, int AccountID, int CompanyID, String Position, String FrontCitizenImage, String BackCitizenImage) {
         this.RecruiterID = RecruiterID;
         this.isVerify = isVerify;
         this.AccountID = AccountID;
         this.CompanyID = CompanyID;
         this.Position = Position;
+        this.FrontCitizenImage = FrontCitizenImage;
+        this.BackCitizenImage = BackCitizenImage;
     }
 
     public int getRecruiterID() {
@@ -65,6 +61,21 @@ public class Recruiters {
     public void setPosition(String Position) {
         this.Position = Position;
     }
-    
+
+    public String getFrontCitizenImage() {
+        return FrontCitizenImage;
+    }
+
+    public void setFrontCitizenImage(String FrontCitizenImage) {
+        this.FrontCitizenImage = FrontCitizenImage;
+    }
+
+    public String getBackCitizenImage() {
+        return BackCitizenImage;
+    }
+
+    public void setBackCitizenImage(String BackCitizenImage) {
+        this.BackCitizenImage = BackCitizenImage;
+    }
     
 }

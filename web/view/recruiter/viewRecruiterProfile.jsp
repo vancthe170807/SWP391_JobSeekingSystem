@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,8 +15,9 @@
             /* Styling for the profile container */
             .main-content {
                 margin-left: 260px; /* Account for the sidebar */
-                padding: 70px 20px 20px; /* Account for the fixed header */
-                min-height: 100vh;
+                padding: 14px 20px 20px; /* Account for the fixed header */
+                min-height: calc(100vh - 100px); /* Adjust height to ensure space for footer */
+                background-color: #f8f9fa; /* Light background */
                 display: flex;
                 justify-content: center; /* Center the content horizontally */
                 align-items: center; /* Center the content vertically */
@@ -24,37 +26,40 @@
 
             .profile-card {
                 background-color: #fff;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                max-width: 700px; /* Width of the profile card */
+                border-radius: 15px;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                max-width: 700px; /* Reduced width of the profile card */
                 width: 100%;
-                padding: 40px;
+                padding: 35px; /* Adjust padding */
                 display: flex;
-                flex-direction: column; /* Stack avatar on top of the info */
-                align-items: center; /* Center avatar and form */
+                flex-direction: column;
+                align-items: center; /* Center avatar and content */
+                position: relative;
             }
 
             .profile-avatar {
-                margin-bottom: 20px; /* Space between avatar and form */
+                margin-bottom: 20px;
                 text-align: center;
             }
 
             .profile-avatar img {
-                width: 180px;
+                width: 180px; /* Adjust avatar size */
                 height: 180px;
                 border-radius: 50%;
                 object-fit: cover;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             }
 
             .profile-avatar h4 {
-                font-size: 24px;
+                font-size: 24px; /* Adjust font size */
                 font-weight: bold;
-                margin-bottom: 5px;
+                color: #333;
+                margin-bottom: 10px;
             }
 
             .profile-avatar p {
-                font-size: 16px;
+                font-size: 16px; /* Adjust font size */
                 color: #666;
             }
 
@@ -69,8 +74,8 @@
             }
 
             .profile-info td {
-                padding: 10px;
-                font-size: 16px;
+                padding: 12px; /* Increased padding */
+                font-size: 16px; /* Larger font size */
                 color: #333;
             }
 
@@ -78,6 +83,7 @@
                 font-weight: bold;
                 width: 30%;
                 color: #555;
+                text-transform: uppercase;
             }
 
             .edit-profile-btn {
@@ -86,7 +92,7 @@
             }
 
             .edit-profile-btn a {
-                padding: 12px 25px;
+                padding: 12px 30px; /* Larger padding for button */
                 font-size: 16px;
                 background-color: #28a745;
                 color: #fff;
@@ -99,6 +105,24 @@
                 background-color: #218838;
             }
 
+            /* Profile card hover effect */
+            .profile-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            /* Additional responsive styling */
+            @media (max-width: 768px) {
+                .main-content {
+                    margin-left: 0;
+                    padding-top: 80px;
+                }
+
+                header {
+                    width: 100%;
+                    left: 0;
+                }
+            }
         </style>
     </head>
     <body>
@@ -114,10 +138,10 @@
                 <!-- Profile Avatar -->
                 <div class="profile-avatar">
                     <c:if test="${empty sessionScope.account.avatar}">
-                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
+                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle">
                     </c:if>
                     <c:if test="${!empty sessionScope.account.avatar}">
-                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
+                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle">
                     </c:if>
                     <h4>${sessionScope.account.getFullName()}</h4>
                     <p>Recruiter Information</p>
@@ -147,7 +171,7 @@
                             <td>${sessionScope.account.getAddress()}</td>
                         </tr>
                         <tr>
-                            <td>Date of birth:</td>
+                            <td>Birth:</td>
                             <td>${sessionScope.account.getDob()}</td>
                         </tr>
                     </table>

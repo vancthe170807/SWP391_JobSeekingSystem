@@ -25,25 +25,23 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
                 + "           ([isVerify]\n"
                 + "           ,[AccountID]\n"
                 + "           ,[CompanyID]\n"
-                + "           ,[Position])\n"
-                + "     VALUES (?,?,?,?)";
+                + "           ,[Position]\n"
+                + "           ,[FrontCitizenImage]\n"
+                + "           ,[BackCitizenImage])\n"
+                + "     VALUES (?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("isVerify", false);
         parameterMap.put("AccountID", t.getAccountID());
         parameterMap.put("CompanyID", t.getCompanyID());
         parameterMap.put("Position", t.getPosition());
+        parameterMap.put("FrontCitizenImage", t.getFrontCitizenImage());
+        parameterMap.put("BackCitizenImage", t.getBackCitizenImage());
 
         return insertGenericDAO(sql, parameterMap);
     }
 
     public Recruiters findRecruitersbyAccountID(String AccountID) {
-        String sql = "SELECT [RecruiterID]\n"
-                + "      ,[isVerify]\n"
-                + "      ,[AccountID]\n"
-                + "      ,[CompanyID]\n"
-                + "      ,[Position]\n"
-                + "  FROM [dbo].[Recruiters]\n"
-                + "  where AccountID = ?";
+        String sql = "SELECT * FROM Recruiters WHERE AccountID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("AccountID", AccountID);
         List<Recruiters> list = queryGenericDAO(Recruiters.class, sql, parameterMap);

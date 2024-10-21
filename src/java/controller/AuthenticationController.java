@@ -209,23 +209,24 @@ public class AuthenticationController extends HttpServlet {
                 case 2: // Recruiter role;
                     Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(accFound.getId()));
                     if (recruiters == null || !recruiters.isIsVerify()) {
-                        // Nếu Recruiter chưa xác nhận, chuyển đến trang verify.jsp
-                        CompanyDAO companyDAO = new CompanyDAO();
-                        List<Company> companyList = cdao.findAll();
-                        request.setAttribute("companyList", companyList);
-                        url = "view/recruiter/verifyRecruiter.jsp";
+                        url = "view/recruiter/viewRecruiterProfile.jsp";
                     } else {
                         List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
                         List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
-
                         // Gửi dữ liệu đến JSP
                         request.setAttribute("listSize", listSize);
                         request.setAttribute("listTop5", listTop5);
                         url = "view/recruiter/dashboard.jsp";
                     }
                     break;
+
                 case 3: // Job seeker role
                     url = "view/user/userHome.jsp";
+                    break;
+                default:
+                    // If role is not recognized, redirect to login with error
+                    request.setAttribute("messLogin", "Invalid user role. Please contact support.");
+                    url = "view/authen/login.jsp";
                     break;
             }
         }
@@ -692,7 +693,7 @@ public class AuthenticationController extends HttpServlet {
                     return "view/user/userProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
                 if (account.getRoleId() == 2) {
-                    return "view/recruiter/recruiterProfile.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
+                    return "view/recruiter/deactiveAccountRecruiter.jsp"; // Trở lại trang yêu cầu nhập lại mật khẩu
                 }
             }
         } else {

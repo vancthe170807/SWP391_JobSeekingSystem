@@ -175,8 +175,8 @@
                                 <label for="jobStatus">Status:</label>
                                 <select id="jobStatus" name="jobStatus" class="form-control" required>
                                     <option value="Open" <c:if test="${jobStatus == 'Open'}">selected</c:if>>Open</option>
-                                    <option value="Filled" <c:if test="${jobStatus == 'Filled'}">selected</c:if>>Filled</option>
-                                    <option value="Closed" <c:if test="${jobStatus == 'Closed'}">selected</c:if>>Closed</option>
+<!--                                    <option value="Filled" <c:if test="${jobStatus == 'Filled'}">selected</c:if>>Filled</option>
+                                    <option value="Closed" <c:if test="${jobStatus == 'Closed'}">selected</c:if>>Closed</option>-->
                                     </select>
                                 </div>
                             </div>

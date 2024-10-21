@@ -147,7 +147,6 @@
                 </div>
             </div>
 
-
             <!-- Top 5 Recent Job Postings and Chart section -->
             <div class="recent-postings">
                 <!-- Recent Job Postings Table -->

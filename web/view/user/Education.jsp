@@ -124,7 +124,7 @@
                             <td>${edu.startDate}</td>
                             <td><c:if test="${not empty edu.endDate}">${edu.endDate}</c:if><c:if test="${empty edu.endDate}">N/A</c:if></td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateEducationModal-${edu.educationID}" 
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#updateEducationModal-${edu.educationID}" 
                                         onclick="populateUpdateModal('${edu.educationID}', '${edu.institution}', '${edu.degree}', '${edu.fieldOfStudy}', '${edu.startDate}', '${edu.endDate}')">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
@@ -138,7 +138,7 @@
                         <div class="modal fade" id="updateEducationModal-${edu.educationID}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-xl">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-warning text-white">
+                                    <div class="modal-header bg-sucess text-white">
                                         <h5 class="modal-title" id="updateModalLabel">Update Education</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" form="updateEducationForm-${edu.educationID}" class="btn btn-warning">Update Education</button>
+                                        <button type="submit" form="updateEducationForm-${edu.educationID}" class="btn btn-success">Update Education</button>
                                     </div>
                                 </div>
                             </div>

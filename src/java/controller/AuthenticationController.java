@@ -135,14 +135,8 @@ public class AuthenticationController extends HttpServlet {
             case "change-password":
                 url = changePassword(request, response);
                 break;
-            case "change-password-re":
-                url = changePW(request, response);
-                break;
             case "edit-profile":
                 url = editProfile(request, response);
-                break;
-            case "edit-recruiter-profile":
-                url = editRecruiterProfile(request, response);
                 break;
             default:
                 url = "home";
@@ -355,20 +349,40 @@ public class AuthenticationController extends HttpServlet {
         switch (status) {
             case 1:
                 request.setAttribute("changePWfail", "Incorrect current password.");
-                url = "view/authen/changePassword.jsp";
+                if (acc.getRoleId() == 2) {
+                    return "view/recruiter/changePW-re.jsp";
+                }
+                if (acc.getRoleId() == 1 || acc.getRoleId() == 3) {
+                    return "view/authen/changePassword.jsp";
+                }
                 break;
             case 2:
                 request.setAttribute("changePWfail", "New password and retype password do not match.");
-                url = "view/authen/changePassword.jsp";
+                if (acc.getRoleId() == 2) {
+                    return "view/recruiter/changePW-re.jsp";
+                }
+                if (acc.getRoleId() == 1 || acc.getRoleId() == 3) {
+                    return "view/authen/changePassword.jsp";
+                }
                 break;
             case 3:
                 request.setAttribute("changePWfail", "Both current password is incorrect and new password does not match.");
-                url = "view/authen/changePassword.jsp";
+                if (acc.getRoleId() == 2) {
+                    return "view/recruiter/changePW-re.jsp";
+                }
+                if (acc.getRoleId() == 1 || acc.getRoleId() == 3) {
+                    return "view/authen/changePassword.jsp";
+                }
                 break;
             case 4:
                 request.setAttribute("changePWfail", "The new password must be 8-20 characters long, and include at "
                         + "least one letter and one special character.");
-                url = "view/authen/changePassword.jsp";
+                if (acc.getRoleId() == 2) {
+                    return "view/recruiter/changePW-re.jsp";
+                }
+                if (acc.getRoleId() == 1 || acc.getRoleId() == 3) {
+                    return "view/authen/changePassword.jsp";
+                }
                 break;
             case 5:
                 acc.setPassword(newPass);
@@ -589,13 +603,24 @@ public class AuthenticationController extends HttpServlet {
 
             // Nếu có lỗi, đặt thông báo lỗi vào request và quay lại trang chỉnh sửa hồ sơ
             if (!errorsMessage.isEmpty()) {
-                request.setAttribute("errorsMessage", errorsMessage);
-                url = "view/user/editUserProfile.jsp";
+                if (accountEdit.getRoleId() == 2) {
+                    request.setAttribute("errorsMessage", errorsMessage);
+                    url = "view/recruiter/editRecruiterProfile.jsp";
+                }
+                if (accountEdit.getRoleId() == 3) {
+                    request.setAttribute("errorsMessage", errorsMessage);
+                    url = "view/user/editUserProfile.jsp";
+                }
+
             } else {
-                // Cập nhật thông tin người dùng vào cơ sở dữ liệu
                 accountDAO.updateAccount(accountEdit);
                 request.setAttribute("successMessage", "Profile updated successfully.");
-                url = "view/user/editUserProfile.jsp";
+                if (accountEdit.getRoleId() == 2) { 
+                    url = "view/recruiter/editRecruiterProfile.jsp";
+                }
+                if (accountEdit.getRoleId() == 3) {
+                    url = "view/user/editUserProfile.jsp";
+                }
             }
 
         } catch (Exception e) {
@@ -605,94 +630,6 @@ public class AuthenticationController extends HttpServlet {
         return url;
     }
 
-    private String editRecruiterProfile(HttpServletRequest request, HttpServletResponse response) {
-        String url = "";
-        try {
-            // Lấy các thông tin từ form
-            String lastName = request.getParameter("lastName");
-            String firstName = request.getParameter("firstName");
-            String phone = request.getParameter("phone");
-            Date dob = Date.valueOf(request.getParameter("date"));
-            int yearofbirth = dob.toLocalDate().getYear();
-            String gender = request.getParameter("gender");
-            String address = request.getParameter("address");
-            String email = request.getParameter("email");
-
-            // Lấy ảnh avatar từ form (nếu có)
-            Part part = request.getPart("avatar");
-            String imagePath = null;
-
-            // Nếu có ảnh mới thì xử lý tải lên
-            if (part != null && part.getSize() > 0 && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
-                // Đường dẫn lưu ảnh
-                String path = request.getServletContext().getRealPath("/images");
-                File dir = new File(path);
-
-                // Kiểm tra xem thư mục có tồn tại không, nếu không thì tạo mới
-                if (!dir.exists()) {
-                    dir.mkdirs(); // Tạo thư mục nếu chưa tồn tại
-                }
-
-                // Tạo file ảnh trong thư mục images
-                File image = new File(dir, part.getSubmittedFileName());
-
-                // Ghi file ảnh vào đường dẫn
-                part.write(image.getAbsolutePath());
-
-                // Lấy đường dẫn tương đối của ảnh để lưu vào database
-                imagePath = request.getContextPath() + "/images/" + image.getName();
-            }
-
-            // Lấy session và đối tượng Account hiện tại
-            HttpSession session = request.getSession();
-            Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-
-            // Cập nhật thông tin trong đối tượng Account
-            accountEdit.setLastName(lastName);
-            accountEdit.setFirstName(firstName);
-            accountEdit.setPhone(phone);
-            accountEdit.setDob(dob);
-            accountEdit.setGender(gender.equalsIgnoreCase("male"));
-            accountEdit.setAddress(address);
-            accountEdit.setEmail(email);
-
-            // Nếu có ảnh mới, cập nhật ảnh avatar, nếu không, giữ lại ảnh hiện tại
-            if (imagePath != null) {
-                accountEdit.setAvatar(imagePath);
-            }
-
-            // Kiểm tra điều kiện hợp lệ cho ngày sinh và số điện thoại
-            List<String> errorsMessage = new ArrayList<>();
-            if (!valid.checkYearOfBirth(yearofbirth)) {
-                errorsMessage.add("You must be between 17 and 50 years old!");
-            }
-            if (!valid.CheckPhoneNumber(phone)) {
-                errorsMessage.add("Phone number is not valid!");
-            }
-            if (!valid.checkName(lastName)) {
-                errorsMessage.add("Last name is invalid!");
-            }
-            if (!valid.checkName(firstName)) {
-                errorsMessage.add("First name is invalid!");
-            }
-
-            // Nếu có lỗi, đặt thông báo lỗi vào request và quay lại trang chỉnh sửa hồ sơ
-            if (!errorsMessage.isEmpty()) {
-                request.setAttribute("errorsMessage", errorsMessage);
-                url = "view/recruiter/editRecruiterProfile.jsp";
-            } else {
-                // Cập nhật thông tin người dùng vào cơ sở dữ liệu
-                accountDAO.updateAccount(accountEdit);
-                request.setAttribute("successMessage", "Profile updated successfully.");
-                url = "view/recruiter/editRecruiterProfile.jsp";
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            url = "view/recruiter/editRecruiterProfile.jsp";
-        }
-        return url;
-    }
 
     // Vo hieu hoa tai khoan
     private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -729,57 +666,6 @@ public class AuthenticationController extends HttpServlet {
             return "home";
         }
         return null;
-    }
-
-    private String changePW(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String currPass = request.getParameter("currentPassword");
-        String newPass = request.getParameter("newPassword");
-        String retypePass = request.getParameter("retypePassword");
-
-        HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        String url = null;
-
-        int status = 0;
-
-        if (!currPass.equals(acc.getPassword()) && !newPass.equals(retypePass)) {
-            status = 3;
-        } else if (!currPass.equals(acc.getPassword())) {
-            status = 1;
-        } else if (!newPass.equals(retypePass)) {
-            status = 2;
-        } else if (!valid.checkPassword(newPass)) {
-            status = 4;
-        } else {
-            status = 5;
-        }
-
-        switch (status) {
-            case 1:
-                request.setAttribute("changePWrefail", "Incorrect current password.");
-                url = "view/recruiter/changePW-re.jsp";
-                break;
-            case 2:
-                request.setAttribute("changePWrefail", "New password and retype password do not match.");
-                url = "view/recruiter/changePW-re.jsp";
-                break;
-            case 3:
-                request.setAttribute("changePWrefail", "Both current password is incorrect and new password does not match.");
-                url = "view/recruiter/changePW-re.jsp";
-                break;
-            case 4:
-                request.setAttribute("changePWrefail", "The new password must be 8-20 characters long, and include at "
-                        + "least one letter and one special character.");
-                url = "view/recruiter/changePW-re.jsp";
-                break;
-            case 5:
-                acc.setPassword(newPass);
-                accountDAO.updatePasswordByUsername(acc);
-                request.setAttribute("changePWsuccess", "Password Changed Successfully. Please Login Again.");
-                url = "view/authen/login.jsp";
-                break;
-        }
-        return url;
     }
 
 }

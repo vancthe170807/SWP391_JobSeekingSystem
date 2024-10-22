@@ -25,19 +25,19 @@
                 justify-content: center;
                 align-items: center;
                 min-height: calc(100vh - 80px); /* Adjust for full height excluding header */
-                padding: 30px;
-                margin-left: 260px; /* Ensure it does not overlap the sidebar */
-                padding-top: 80px; /* Ensure it does not overlap the header */
-                background-color: #f8f9fa; /* Light background */
+                padding: 20px; 
+                margin-left: 240px; 
+                padding-top: 80px; 
+                background-color: #f8f9fa; 
             }
 
             /* Card styling for the profile section */
             .profile-card {
                 background-color: white;
-                padding: 60px;
-                border-radius: 15px;
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-                max-width: 800px;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+                max-width: 600px; /* Tăng kích thước khung */
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
@@ -53,16 +53,16 @@
             /* Styling for avatar and user details */
             .profile-sidebar {
                 text-align: center;
-                margin-right: 40px;
+                margin-right: 30px;
             }
 
             .profile-sidebar img {
-                width: 160px;
-                height: 160px;
+                width: 140px;
+                height: 140px;
                 border-radius: 50%;
                 object-fit: cover;
                 margin-bottom: 15px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
                 transition: transform 0.3s ease;
             }
 
@@ -82,9 +82,9 @@
             }
 
             .form-section h2 {
-                font-size: 26px;
+                font-size: 22px; /* Slightly bigger title */
                 font-weight: bold;
-                margin-bottom: 25px;
+                margin-bottom: 15px;
                 color: #16a085;
             }
 
@@ -92,12 +92,13 @@
             .form-group label {
                 font-weight: bold;
                 margin-bottom: 5px;
+                font-size: 14px; /* Bigger label text */
                 color: #2c3e50;
             }
 
             .form-control {
-                padding: 12px;
-                height: 45px;
+                padding: 10px; /* Increased padding for better spacing */
+                height: 40px; /* Increased input height */
                 border-radius: 8px;
                 border: 1px solid #ced4da;
                 transition: border-color 0.3s;
@@ -109,10 +110,10 @@
             }
 
             .btn-success {
-                margin-top: 20px;
-                padding: 12px 30px;
-                font-size: 16px;
-                border-radius: 50px;
+                margin-top: 16px;
+                padding: 12px 18px;
+                font-size: 16px; /* Adjusted button text size */
+                border-radius: 30px;
                 background-color: #28a745;
                 border: none;
                 transition: background-color 0.3s ease, transform 0.2s ease;
@@ -125,8 +126,8 @@
 
             /* Success and error message styling */
             .alert {
-                margin-top: 20px;
-                padding: 15px;
+                margin-top: 15px;
+                padding: 12px;
                 border-radius: 8px;
             }
 
@@ -142,23 +143,6 @@
                 border-left: 5px solid #721c24;
             }
 
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
-                .profile-card {
-                    flex-direction: column;
-                    padding: 40px;
-                }
-
-                .profile-sidebar {
-                    margin-right: 0;
-                    margin-bottom: 30px;
-                }
-
-                .profile-container {
-                    margin-left: 0;
-                    padding-top: 120px;
-                }
-            }
         </style>
     </head>
     <body>
@@ -178,13 +162,12 @@
                         <img id="avatar-preview" src="${sessionScope.account.getAvatar()}" alt="User Avatar">
                     </c:if>
                     <h4>${sessionScope.account.getFullName()}</h4>
-                    <p>Recruiter Information</p>
                 </div>
 
                 <!-- Profile content (Form) -->
                 <div class="form-section">
                     <h2>Edit Profile</h2>
-                    <form action="${pageContext.request.contextPath}/authen?action=edit-recruiter-profile" method="POST" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/authen?action=edit-profile" method="POST" enctype="multipart/form-data">
                         <!-- Avatar Upload -->
                         <div class="form-group">
                             <label for="avatar">Change Avatar</label>

@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <script src="https://cdn.tiny.cloud/1/53ut7fzuyhgm5focoer48e79kvtszi2zu5jfylvwl3tskfqv/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/ygxzbqd4ej8z1yjswkp0ljn56qm4r6luix9l83auaajk3h3q/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -81,7 +81,7 @@
                                     <!-- Error message and Add button -->
                                     <div class="d-flex align-items-center">
                                         <!-- Error message (displayed in red) -->
-                                        <span class="text-danger me-3">${requestScope.error}</span>
+                                        <span class="text-danger me-3">${requestScope.notice}</span>
 
                                         <!-- Button add new company -->
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
@@ -366,22 +366,17 @@
         </script>
         <script>
             tinymce.init({
-                selector: 'textarea',
-                plugins: [
-                    // Core editing features
-                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Your account includes a free trial of TinyMCE premium features
-                    // Try the most popular premium features until Nov 5, 2024:
-                    'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-                ],
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                tinycomments_mode: 'embedded',
-                tinycomments_author: 'Author name',
-                mergetags_list: [
-                    {value: 'First.Name', title: 'First Name'},
-                    {value: 'Email', title: 'Email'},
-                ],
-                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                selector: 'textarea', // Initialize TinyMCE for all text areas
+                plugins: 'advlist autolink lists link image charmap print preview anchor',
+                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+                menubar: true, // Disable the menubar
+                branding: false, // Disable the TinyMCE branding
+                height: 300, // Set the height of the editor
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+                    });
+                }
             });
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

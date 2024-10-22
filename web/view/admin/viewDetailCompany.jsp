@@ -55,9 +55,9 @@
                     <div class="col-md-9">
 
                         <!--content-main can fix-->
-                        <h2 class="text-center mb-4" style="background-color: #d1e7dd; padding: 10px; border-radius: 5px;">Company Details</h2>
                         
                         <div class="container mt-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+                        <h2 class="text-center mb-4" style="background-color: #d1e7dd; padding: 20px; border-radius: 5px;">Company Details</h2>
                             <form>
                                 <div class="mb-3 row">
                                     <label for="companyName" class="col-sm-3 col-form-label fw-bold">Company Name:</label>
@@ -65,18 +65,21 @@
                                         <p class="form-control-plaintext">${CompanyDetail.getName()}</p>
                                 </div>
                             </div>
+                                <hr>
                             <div class="mb-3 row">
                                 <label for="companyDescription" class="col-sm-3 col-form-label fw-bold">Description:</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" id="companyDescription" rows="3">${CompanyDetail.getDescription()}</textarea>
                                 </div>
                             </div>
+                                <hr>
                             <div class="mb-3 row">
                                 <label for="companyLocation" class="col-sm-3 col-form-label fw-bold">Location:</label>
                                 <div class="col-sm-9">
                                     <p class="form-control-plaintext">${CompanyDetail.getLocation()}</p>
                                 </div>
                             </div>
+                                <hr>
                             <div class="mb-3 row">
                                 <label for="verificationStatus" class="col-sm-3 col-form-label fw-bold">Verification Status:</label>
                                 <div class="col-sm-9">
@@ -85,6 +88,7 @@
                                     </p>
                                 </div>
                             </div>
+                                    <hr>
                             <div class="mb-3 row">
                                 <label for="businessLicense" class="col-sm-3 col-form-label fw-bold">Business License:</label>
                                 <div class="col-sm-9">

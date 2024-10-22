@@ -39,7 +39,7 @@ public class Validation {
     // Hàm kiểm tra số điện thoại
     public boolean CheckPhoneNumber(String phone) {
         // Biểu thức chính quy để kiểm tra số điện thoại
-        String regex = "^(\\+\\d{1,3})?\\d{9,15}$";
+        String regex = "^(\\+\\d{1,3})?\\d{10}$";
         return phone.matches(regex);
     }
 

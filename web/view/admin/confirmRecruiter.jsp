@@ -97,18 +97,27 @@
                                 <div class="col-md-12">
                                     <h2 class="mt-4 mb-4 table-title">Recruiter Confirm</h2>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
-                                            <thead class="table-success">
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Verify</th>
-                                                    <th>Company</th>
-                                                    <th>Front Citizen</th>
-                                                    <th>Back Citizen</th>
-                                                    <th>Position</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                        <!--search recruiter-->
+                                        <form action="${pageContext.request.contextPath}/confirm" method="GET">
+                                        <div class="d-flex justify-content-center mb-3">
+                                            <input type="text" id="searchRecruiter"  name="searchQuery" class="form-control" style="width: 60%;" placeholder="Search for name...">
+                                            <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                        </div>
+                                    </form>
+
+                                    <!--search recruiter end-->       
+                                    <table class="table table-striped table-hover">
+                                        <thead class="table-success">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Verify</th>
+                                                <th>Company</th>
+                                                <th>Front Citizen</th>
+                                                <th>Back Citizen</th>
+                                                <th>Position</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <%
                                          // Tạo một đối tượng CompanyDAO
                                             CompanyDAO companyDao = new CompanyDAO();
@@ -170,18 +179,25 @@
                                                     </tr>
                                                 </c:if>
                                             </c:forEach>
-                                            <c:if test="${not empty notice}">
-                                                <tr>
-                                                    <td colspan="4">
-                                                        <div class="notification-box error">
-                                                            <p>${notice}</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </c:if>
 
                                         </tbody>
                                     </table>
+                                    <!--hien thi thong bao-->
+                                    <c:if test="${not empty notice}">
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="notification-box error">
+                                                    <p>${notice}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                    <!--button back-->
+                                    <div class="d-flex justify-content-start mt-3 mb-3">
+                                        <a href="recruiters" class="btn btn-success">
+                                            <i class="fas fa-arrow-left me-2"></i>Back
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -232,9 +248,9 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-             function confirmAction() {
-                 return confirm("Are you sure you want to confirm this recruiter?");
-              }
+                                                                     function confirmAction() {
+                                                                         return confirm("Are you sure you want to confirm this recruiter?");
+                                                                     }
         </script>
         <script>
             function showImage(imageUrl) {

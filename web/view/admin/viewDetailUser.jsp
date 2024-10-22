@@ -50,13 +50,19 @@
 
                         <!--content-main can fix-->
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <c:if test="${requestScope.accountView.getRoleId() == 3}">
                             <h4 class="mb-3 text-center fs-2">Profile Seeker</h4>
-                            <form class="p-4 rounded shadow-sm bg-light">
-                                <div class="author__image mb-3 text-center">
-                                <c:if test="${empty sessionScope.account.avatar}">
+                        </c:if>
+                        <c:if test="${requestScope.accountView.getRoleId() == 2}">
+                            <h4 class="mb-3 text-center fs-2">Profile Recruiter</h4>
+                        </c:if>
+
+                        <form class="p-4 rounded shadow-sm bg-light">
+                            <div class="author__image mb-3 text-center">
+                                <c:if test="${empty requestScope.accountView.avatar}">
                                     <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
                                 </c:if>
-                                <c:if test="${!empty sessionScope.account.avatar}">
+                                <c:if test="${!empty requestScope.accountView.avatar}">
                                     <img src="${requestScope.accountView.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
                                 </c:if>
                             </div>

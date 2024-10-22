@@ -58,8 +58,10 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Recruiters.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/RecruiterAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/PageControl.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/utils/Email.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/recruiter/ExcelServlet.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Account.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/viewDetailCompany.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/user/editUserProfile.jsp</file>
@@ -76,6 +78,8 @@
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/model/Company.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/adminHome.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/viewDetailUser.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/admin/confirmRecruiter.jsp</file>
         </group>
     </open-files>
 </project-private>

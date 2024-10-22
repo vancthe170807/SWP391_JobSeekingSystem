@@ -81,7 +81,7 @@
                                     <!-- Error message and Add button -->
                                     <div class="d-flex align-items-center">
                                         <!-- Error message (displayed in red) -->
-                                        <span class="text-danger me-3">${requestScope.error}</span>
+                                        <span class="text-danger me-3">${requestScope.notice}</span>
 
                                         <!-- Button add new company -->
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">

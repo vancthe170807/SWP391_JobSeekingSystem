@@ -163,11 +163,18 @@
                                 <input type="text" id="jobLocation" name="jobLocation" class="form-control" placeholder="Enter job location" value="${jobLocation}" required>
                             </div>
                         </div>
+                        <!--                        <div class="col-md-6">
+                                                     Salary 
+                                                    <div class="form-group">
+                                                        <label for="jobSalary">Salary:</label>
+                                                        <input type="number" id="jobSalary" name="jobSalary" class="form-control" placeholder="Enter job salary" value="${jobSalary}" required>
+                                                    </div>
+                                                </div>-->
                         <div class="col-md-6">
                             <!-- Salary -->
                             <div class="form-group">
-                                <label for="jobSalary">Salary:</label>
-                                <input type="number" id="jobSalary" name="jobSalary" class="form-control" placeholder="Enter job salary" value="${jobSalary}" required>
+                                <label for="jobSalary">Salary $:</label>                             
+                                <input type="text" id="jobSalary" name="jobSalary" value="${jobSalary}" class="form-control" placeholder="Enter job salary" required oninput="formatSalary(this)">                              
                             </div>
                         </div>
                     </div>
@@ -180,14 +187,14 @@
                                     <option value="Open" <c:if test="${jobStatus == 'Open'}">selected</c:if>>Open</option>
 <!--                                    <option value="Filled" <c:if test="${jobStatus == 'Filled'}">selected</c:if>>Filled</option>
                                     <option value="Closed" <c:if test="${jobStatus == 'Closed'}">selected</c:if>>Closed</option>-->
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Posted Date -->
-                            <div class="form-group">
-                                <label for="postedDate">Posted Date:</label>
-                                <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
+                            <div class="col-md-6">
+                                <!-- Posted Date -->
+                                <div class="form-group">
+                                    <label for="postedDate">Posted Date:</label>
+                                    <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
                             </div>
                         </div>
                     </div>
@@ -214,7 +221,7 @@
                             <ul>
                                 <c:forEach var="error" items="${erMess}">
                                     <li>${error}</li>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                         </div>
                     </c:if>
@@ -258,8 +265,8 @@
 
             function validateForm() {
                 // Ensure job description and job requirements are not empty
-                const jobDescription = tinymce.get("jobDescription").getContent({ format: "text" }).trim();
-                const jobRequirements = tinymce.get("jobRequirements").getContent({ format: "text" }).trim();
+                const jobDescription = tinymce.get("jobDescription").getContent({format: "text"}).trim();
+                const jobRequirements = tinymce.get("jobRequirements").getContent({format: "text"}).trim();
 
                 if (!jobDescription) {
                     alert("Job Description cannot be empty.");
@@ -282,11 +289,39 @@
                 menubar: true, // Disable the menubar
                 branding: false, // Disable the TinyMCE branding
                 height: 300, // Set the height of the editor
-                setup: function(editor) {
-                    editor.on('change', function() {
+                setup: function (editor) {
+                    editor.on('change', function () {
                         tinymce.triggerSave(); // Synchronize TinyMCE content with the form
                     });
                 }
+            });
+
+            function formatSalary(input) {
+                let value = input.value;
+
+                // Remove all non-numeric characters except for dots
+                value = value.replace(/[^0-9]/g, '');
+
+                // Convert value to a number and check if it exceeds 10,000,000
+                let numericValue = parseInt(value, 10);
+                if (isNaN(numericValue)) {
+                    input.value = ''; // Clear input if it's not a valid number
+                    return;
+                }
+
+                // Ensure the value does not exceed 10,000,000
+                if (numericValue > 10000000) {
+                    numericValue = 10000000;
+                }
+
+                // Format the number with dots (thousands separator)
+                input.value = numericValue.toLocaleString('de-DE'); // Format number with dots
+            }
+
+            // Ensure correct format is submitted (remove formatting before submission)
+            document.getElementById('jobPostingForm').addEventListener('submit', function () {
+                const salaryInput = document.getElementById('jobSalary');
+                salaryInput.value = salaryInput.value.replace(/\./g, ''); // Remove dots before submitting
             });
 
         </script>

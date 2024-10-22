@@ -45,16 +45,6 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/SeekerAdminController.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/x.jsp</file>
         </group>
-        <group>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/viewRecruiterProfile.jsp</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/verifyRecruiter.jsp</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/Dashboard.java</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
-            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/sidebar-re.jsp</file>
-        </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/web/view/common/admin/sidebar-admin.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/swp391-jobseeker/src/java/validate/Validation.java</file>
@@ -195,6 +185,21 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/recruiter/DetailsJP.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/companyManagement.jsp</file>
+        </group>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/changePW-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/addJobPosting.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/user/editUserProfile.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/HomeController.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ExcelServlet.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewJP.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/validate/Validation.java</file>
         </group>
     </open-files>
 </project-private>

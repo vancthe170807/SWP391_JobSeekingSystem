@@ -14,7 +14,7 @@ public class WorkExperience {
     private int ExperienceID;
     private int JobSeekerID;
     private String CompanyName;
-    private String JobtTitle;
+    private String JobTitle;
     private Date StartDate;
     private Date EndDate;
     private String Description;
@@ -22,11 +22,11 @@ public class WorkExperience {
     public WorkExperience() {
     }
 
-    public WorkExperience(int ExperienceID, int JobSeekerID, String CompanyName, String JobtTitle, Date StartDate, Date EndDate, String Description) {
+    public WorkExperience(int ExperienceID, int JobSeekerID, String CompanyName, String JobTitle, Date StartDate, Date EndDate, String Description) {
         this.ExperienceID = ExperienceID;
         this.JobSeekerID = JobSeekerID;
         this.CompanyName = CompanyName;
-        this.JobtTitle = JobtTitle;
+        this.JobTitle = JobTitle;
         this.StartDate = StartDate;
         this.EndDate = EndDate;
         this.Description = Description;
@@ -56,12 +56,12 @@ public class WorkExperience {
         this.CompanyName = CompanyName;
     }
 
-    public String getJobtTitle() {
-        return JobtTitle;
+    public String getJobTitle() {
+        return JobTitle;
     }
 
-    public void setJobtTitle(String JobtTitle) {
-        this.JobtTitle = JobtTitle;
+    public void setJobTitle(String JobTitle) {
+        this.JobTitle = JobTitle;
     }
 
     public Date getStartDate() {

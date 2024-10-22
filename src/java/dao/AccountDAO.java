@@ -35,11 +35,10 @@ public class AccountDAO extends GenericDAO<Account> {
                 + "           ,[avatar]\n"
                 + "           ,[roleId]\n"
                 + "           ,[isActive]\n"
-                + "           ,[createAt]\n"
                 + "           ,[updatedAt]\n"
                 + "           ,[gender])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("username", t.getUsername());
         parameterMap.put("password", t.getPassword());
@@ -52,7 +51,6 @@ public class AccountDAO extends GenericDAO<Account> {
         parameterMap.put("avatar", t.getAvatar());
         parameterMap.put("roleId", t.getRoleId());
         parameterMap.put("isActive", true);
-        parameterMap.put("createAt", t.getCreateAt());
         parameterMap.put("updatedAt", t.getUpdatedAt());
         parameterMap.put("gender", t.isGender());
 

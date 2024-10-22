@@ -167,7 +167,7 @@
                 <!-- Profile content (Form) -->
                 <div class="form-section">
                     <h2>Edit Profile</h2>
-                    <form action="${pageContext.request.contextPath}/authen?action=edit-recruiter-profile" method="POST" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/authen?action=edit-profile" method="POST" enctype="multipart/form-data">
                         <!-- Avatar Upload -->
                         <div class="form-group">
                             <label for="avatar">Change Avatar</label>

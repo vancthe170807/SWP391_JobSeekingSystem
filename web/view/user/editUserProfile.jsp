@@ -31,7 +31,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="file" class="form-label">Upload New Photo</label>
-                                <input type="file" class="form-control" id="file" name="image" onchange="previewImage(event)">
+                                <input type="file" class="form-control" id="file" name="avatar" onchange="previewImage(event)">
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">

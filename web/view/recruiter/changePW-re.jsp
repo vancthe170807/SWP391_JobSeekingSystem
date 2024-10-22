@@ -205,7 +205,7 @@
             }
 
             function cancelChangePassword() {
-                window.history.back();
+                window.location.href = 'view/recruiter/viewRecruiterProfile.jsp';
             }
 
             var newPasswordInput = document.getElementById('newPassword');

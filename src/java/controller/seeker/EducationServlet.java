@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -30,6 +32,9 @@ public class EducationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //get ve error đã xử lí ở doPost
+        String error = request.getParameter("error") != null ? request.getParameter("error") : "";
+        request.setAttribute("error", error);
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url = null;
 
@@ -80,10 +85,10 @@ public class EducationServlet extends HttpServlet {
 
     // Upload CV
     public String addEducation(HttpServletRequest request) throws IOException, ServletException {
-        String url; // URL to navigate to after processing
+        String url = null; // URL to navigate to after processing
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId()+"");
         List<Education> edus = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (jobSeeker != null) {
             try {
@@ -111,8 +116,11 @@ public class EducationServlet extends HttpServlet {
 
                 // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
                 if (totalMonths < 24) {
-                    request.setAttribute("errorEducation", "End date must be at least 2 years after the start date.");
-                    url = "education"; // Điều hướng lại trang education với thông báo lỗi
+                    try {
+                        url = "education?error=" + URLEncoder.encode("End date must be at least 2 years after the start date.", "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
 
                     // Tạo đối tượng Education
@@ -138,7 +146,7 @@ public class EducationServlet extends HttpServlet {
             }
         } else {
             request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
+            url = "JobSeekerCheck";
         }
 
         return url; // Return the URL to navigate to
@@ -146,7 +154,7 @@ public class EducationServlet extends HttpServlet {
 
 //Update CV
     public String updateEducation(HttpServletRequest request) throws IOException, ServletException {
-        String url; // URL to navigate to after processing
+        String url = null; // URL to navigate to after processing
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
@@ -180,8 +188,11 @@ public class EducationServlet extends HttpServlet {
 
                 // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
                 if (totalMonths < 24) {
-                    request.setAttribute("errorEducation", "End date must be at least 2 years after the start date.");
-                    url = "education"; // Điều hướng lại trang education với thông báo lỗi
+                    try {
+                        url = "education?error=" + URLEncoder.encode("End date must be at least 2 years after the start date.", "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
 
                     Education edu = new Education();
@@ -209,7 +220,7 @@ public class EducationServlet extends HttpServlet {
             }
         } else {
             request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
+            url = "JobSeekerCheck";
         }
 
         return url; // Return the URL to navigate to
@@ -227,7 +238,7 @@ public class EducationServlet extends HttpServlet {
 
         if (jobSeeker == null) {
             request.setAttribute("error", "No Job Seeker found for the current account.");
-            return "view/authen/login.jsp"; // Redirect to login page
+            return "JobSeekerCheck"; // Redirect to login page
         }
 
         // Lấy danh sách học vấn thay vì một đối tượng học vấn đơn lẻ
@@ -266,6 +277,7 @@ public class EducationServlet extends HttpServlet {
             }
         } else {
             request.setAttribute("error", "No Job Seeker found for the current account.");
+            url = "JobSeekerCheck";
         }
 
         url = "education"; // Redirect back to the education page

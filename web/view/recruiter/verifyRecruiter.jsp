@@ -70,8 +70,7 @@
                 color: #fff;
                 text-align: center;
                 padding: 15px;
-                font-size: 20px;
-                font-weight: bold;
+                font-size: 18px;
                 border-radius: 10px 10px 0 0;
             }
 
@@ -158,24 +157,19 @@
                                 <div class="card-header">
                                     Verify your account to use this service
                                 </div>
-                                <div class="card-body">
-                                    <!-- Display error message -->
-                                    <c:if test="${not empty error}">
-                                        <div class="alert alert-danger text-center">${error}</div>
-                                    </c:if>
-
+                                <div class="card-body">                                                                      
                                     <!-- Form starts -->
                                     <form action="${pageContext.request.contextPath}/verifyRecruiter" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
                                         <!-- Company ID input -->
                                         <div class="mb-3">
                                             <label for="companyId" class="form-label">Enter Company ID</label>
-                                            <input type="text" class="form-control" id="companyId" name="companyId" placeholder="e.g. 12345" required>
+                                            <input type="text" class="form-control" id="companyId" name="companyId" placeholder="e.g. 12345" value="${param.companyId != null ? param.companyId : ''}" required>
                                         </div>
 
                                         <!-- Position input -->
                                         <div class="mb-3">
                                             <label for="position" class="form-label">Position</label>
-                                            <input type="text" class="form-control" id="position" name="position" placeholder="e.g. Recruiter" required>
+                                            <input type="text" class="form-control" id="position" name="position" placeholder="e.g. Recruiter" value="${param.position != null ? param.position : ''}" required>
                                         </div>
 
                                         <!-- Upload Front of Citizen ID -->
@@ -192,17 +186,22 @@
                                             <img id="backPreview" class="preview-img" alt="Back Citizen ID">
                                         </div>
 
+                                        <!-- Error and success messages -->
+                                        <c:if test="${not empty error}">
+                                            <div class="alert alert-danger text-center">${error}</div>
+                                        </c:if>
+
+                                        <c:if test="${not empty verify}">
+                                            <div class="alert alert-success mt-3 text-center">${verify}</div>
+                                        </c:if>
+
                                         <!-- Submit button -->
                                         <div class="d-grid gap-2">
                                             <button type="submit" class="btn btn-primary">Submit Request</button>
                                         </div>
-
-                                        <!-- Display success message -->
-                                        <c:if test="${not empty verify}">
-                                            <div class="alert alert-success mt-3 text-center">${verify}</div>
-                                        </c:if>
                                     </form>
                                     <!-- Form ends -->
+
                                 </div>
                             </div>
                         </div>

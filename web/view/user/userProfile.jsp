@@ -32,7 +32,7 @@
                 <!-- If jobSeeker is null, show the alternative content -->
                 <c:if test="${jobSeeker == null}">
                     <div>
-                        <h2>Bạn chưa là JobSeeker</h2>
+                        <h2>Aren't you a Job Seeker yet?</h2>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalJoinJobSeeker">
                             Join Job Seeker
                         </button>

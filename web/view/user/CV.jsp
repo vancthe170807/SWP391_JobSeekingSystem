@@ -110,16 +110,16 @@
             <c:if test="${not empty cvFilePath}">
                 <!-- Display View CV button -->
                 <div class="d-grid gap-2 mb-1">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
-                    Update CV
-                </button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
+                        Update CV
+                    </button>
                 </div>
                 <div class="mb-4">
                     <iframe src="cv?action=view-cv" height="1200px" width="100%" allowfullscreen="" frameborder="0"></iframe>
                 </div>
 
                 <!-- Form to update CV -->
-                
+
 
             </c:if>
 
@@ -145,19 +145,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="${pageContext.request.contextPath}/cv?action=update-cv" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        
-                    <div class="mb-3">
-                        <label for="cvFile" class="form-label">Update CV</label>
-                        <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
-                    </div>
-                        <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
-                
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Update CV</button>
-                    </div>
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label for="cvFile" class="form-label">Update CV</label>
+                                <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
+                            </div>
+                            <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update CV</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -165,6 +165,23 @@
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
+        <script>
+            document.getElementById("cvFile").onchange = function () {
+                const file = this.files[0];
+                if (file.size > 10 * 1024 * 1024) {  // 10MB
+                    alert("File size exceeds the 10MB limit. Please choose a smaller file.");
+                    this.value = "";  // Reset the input
+                }
+            };
+            document.getElementById("cvFileU").onchange = function () {
+                const file = this.files[0];
+                if (file.size > 10 * 1024 * 1024) {  // 10MB
+                    alert("File size exceeds the 10MB limit. Please choose a smaller file.");
+                    this.value = "";  // Reset the input
+                }
+            };
+
+        </script>
 
         <!-- Bootstrap JS and Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

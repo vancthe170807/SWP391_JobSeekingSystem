@@ -87,6 +87,11 @@ public class VerifyRecruiter extends HttpServlet {
         if (recruiter != null && recruiter.isIsVerify()) {
             // Nếu đã xác nhận, quay về dashboard
             response.sendRedirect("Dashboard");
+        } else if (recruiter != null && !recruiter.isIsVerify()) {
+            // Nếu yêu cầu đang chờ, ngăn không cho gửi lại
+            request.setAttribute("error", "Your verification request is already pending approval.");
+            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+            return;
         } else {
             // Nếu chưa, tạo request mới
             Recruiters re = new Recruiters();

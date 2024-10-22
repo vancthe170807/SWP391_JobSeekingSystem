@@ -12,57 +12,85 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            /* Styling for the profile container */
-            .main-content {
-                margin-left: 260px; /* Account for the sidebar */
-                padding: 14px 20px 20px; /* Account for the fixed header */
-                min-height: calc(100vh - 100px); /* Adjust height to ensure space for footer */
-                background-color: #f8f9fa; /* Light background */
-                display: flex;
-                justify-content: center; /* Center the content horizontally */
-                align-items: center; /* Center the content vertically */
-                box-sizing: border-box;
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background-color: #f8f9fa;
             }
 
+            /* Profile container styling */
+            .profile-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: calc(100vh - 80px); /* Adjust for full height excluding header */
+                padding: 20px;
+                margin-left: 240px;
+                padding-top: 80px;
+                background-color: #f8f9fa;
+            }
+
+            /* Card styling for the profile section */
             .profile-card {
-                background-color: #fff;
-                border-radius: 15px;
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-                max-width: 700px; /* Reduced width of the profile card */
+                background-color: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+                max-width: 750px; /* Increased width for better content space */
                 width: 100%;
-                padding: 35px; /* Adjust padding */
                 display: flex;
-                flex-direction: column;
-                align-items: center; /* Center avatar and content */
-                position: relative;
+                justify-content: space-between;
+                flex-wrap: wrap; /* Allows wrapping of content */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
 
-            .profile-avatar {
-                margin-bottom: 20px;
+            /* Hover effect for card */
+            .profile-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Styling for avatar and user details */
+            .profile-sidebar {
                 text-align: center;
+                margin-right: 30px;
+                flex: 1 1 200px; /* Ensures flexibility and space for content */
             }
 
-            .profile-avatar img {
-                width: 180px; /* Adjust avatar size */
-                height: 180px;
+            .profile-sidebar img {
+                width: 140px;
+                height: 140px;
                 border-radius: 50%;
                 object-fit: cover;
                 margin-bottom: 15px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
             }
 
-            .profile-avatar h4 {
-                font-size: 24px; /* Adjust font size */
+            .profile-sidebar img:hover {
+                transform: scale(1.1);
+            }
+
+            .profile-sidebar h4 {
                 font-weight: bold;
-                color: #333;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
+                font-size: 22px;
+                color: #2c3e50;
             }
 
-            .profile-avatar p {
-                font-size: 16px; /* Adjust font size */
-                color: #666;
+            .form-section {
+                flex: 2 1 400px; /* Larger flex size to take up more space */
             }
 
+            .form-section h2 {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #16a085;
+            }
+
+            /* Styling for profile information */
             .profile-info {
                 width: 100%;
                 margin-top: 20px;
@@ -74,16 +102,21 @@
             }
 
             .profile-info td {
-                padding: 12px; /* Increased padding */
-                font-size: 16px; /* Larger font size */
+                padding: 12px;
+                font-size: 16px;
                 color: #333;
             }
 
             .profile-info td:first-child {
                 font-weight: bold;
-                width: 30%;
                 color: #555;
-                text-transform: uppercase;
+                text-align: right;
+                padding-right: 15px;
+                width: 35%;
+            }
+
+            .profile-info td:last-child {
+                text-align: left;
             }
 
             .edit-profile-btn {
@@ -92,102 +125,85 @@
             }
 
             .edit-profile-btn a {
-                padding: 12px 30px; /* Larger padding for button */
+                padding: 12px 18px;
                 font-size: 16px;
                 background-color: #28a745;
                 color: #fff;
-                border-radius: 5px;
+                border-radius: 30px;
                 text-decoration: none;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.3s ease, transform 0.2s ease;
             }
-            
+
             .edit-profile-btn a:hover {
-                background-color: #218838;
+                background-color: #148f77;
+                transform: translateY(-3px);
             }
 
-            /* Profile card hover effect */
-            .profile-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-            }
-
-            /* Additional responsive styling */
-            @media (max-width: 768px) {
-                .main-content {
-                    margin-left: 0;
-                    padding-top: 80px;
-                }
-
-                header {
-                    width: 100%;
-                    left: 0;
-                }
-            }
         </style>
     </head>
     <body>
         <!-- Sidebar -->
         <%@ include file="../recruiter/sidebar-re.jsp" %>
-
-        <!-- Header -->
         <%@ include file="../recruiter/header-re.jsp" %>
 
-        <!-- Main Content Section -->
-        <div class="main-content">
+        <!-- Profile Container -->
+        <div class="profile-container">
             <div class="profile-card">
-                <!-- Profile Avatar -->
-                <div class="profile-avatar">
-                    <c:if test="${empty sessionScope.account.avatar}">
-                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle">
+                <!-- Sidebar with avatar and introduction -->
+                <div class="profile-sidebar">
+                    <c:if test="${empty sessionScope.account.getAvatar()}">
+                        <img id="avatar-preview" src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="User Avatar">
                     </c:if>
-                    <c:if test="${!empty sessionScope.account.avatar}">
-                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle">
+                    <c:if test="${!empty sessionScope.account.getAvatar()}">
+                        <img id="avatar-preview" src="${sessionScope.account.getAvatar()}" alt="User Avatar">
                     </c:if>
                     <h4>${sessionScope.account.getFullName()}</h4>
                     <p>Recruiter Information</p>
                 </div>
 
                 <!-- Profile Information -->
-                <div class="profile-info">
-                    <table>
-                        <tr>
-                            <td>Name:</td>
-                            <td>${sessionScope.account.getFullName()}</td>
-                        </tr>
-                        <tr>
-                            <td>Email:</td>
-                            <td>${sessionScope.account.getEmail()}</td>
-                        </tr>
-                        <tr>
-                            <td>Phone:</td>
-                            <td>${sessionScope.account.getPhone()}</td>
-                        </tr>
-                        <tr>
-                            <td>Gender:</td>
-                            <td>${sessionScope.account.isGender() == true ? 'Male' : 'Female'}</td>
-                        </tr>
-                        <tr>
-                            <td>Address:</td>
-                            <td>${sessionScope.account.getAddress()}</td>
-                        </tr>
-                        <tr>
-                            <td>Birth:</td>
-                            <td>${sessionScope.account.getDob()}</td>
-                        </tr>
-                    </table>
-                </div>
+                <div class="form-section">
+                    <h2>Profile Details</h2>
+                    <div class="profile-info">
+                        <table>
+                            <tr>
+                                <td>Name:</td>
+                                <td>${sessionScope.account.getFullName()}</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>${sessionScope.account.getEmail()}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td>${sessionScope.account.getPhone()}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender:</td>
+                                <td>${sessionScope.account.isGender() == true ? 'Male' : 'Female'}</td>
+                            </tr>
+                            <tr>
+                                <td>Address:</td>
+                                <td>${sessionScope.account.getAddress()}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth:</td>
+                                <td>${sessionScope.account.getDob()}</td>
+                            </tr>
+                        </table>
+                    </div>
 
-                <!-- Edit Profile Button -->
-                <div class="edit-profile-btn">
-                    <a href="${pageContext.request.contextPath}/view/recruiter/editRecruiterProfile.jsp">
-                        <i class="fas fa-edit"></i> Edit Profile
-                    </a>
+                    <!-- Edit Profile Button -->
+                    <div class="edit-profile-btn">
+                        <a href="${pageContext.request.contextPath}/view/recruiter/editRecruiterProfile.jsp">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <%@ include file="../recruiter/footer-re.jsp" %>
-
     </body>
 </html>

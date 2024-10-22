@@ -160,7 +160,7 @@
         <div class="password-container">
             <div class="password-card">
                 <h2>Change Password</h2>
-                <form action="${pageContext.request.contextPath}/authen?action=change-password-re" method="POST" onsubmit="return validateForm()">
+                <form action="${pageContext.request.contextPath}/authen?action=change-password" method="POST" onsubmit="return validateForm()">
                     <div class="form-group position-relative">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" id="currentPassword" name="currentPassword" class="form-control" required onkeydown="preventSpaces(event)">
@@ -177,8 +177,8 @@
                         <input type="password" id="retypePassword" name="retypePassword" class="form-control" required onkeydown="preventSpaces(event)">
                         <span class="toggle-password" onclick="togglePasswordVisibility('retypePassword', this)">Show</span>
                     </div>
-                    <c:if test="${not empty requestScope.changePWrefail}">
-                        <div class="error-message">${requestScope.changePWrefail}</div>
+                    <c:if test="${not empty requestScope.changePWfail}">
+                        <div class="error-message">${requestScope.changePWfail}</div>
                     </c:if>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">Update</button>

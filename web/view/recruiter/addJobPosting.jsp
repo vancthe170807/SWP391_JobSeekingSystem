@@ -12,6 +12,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <!-- TinyMCE Script -->
+        <script src="https://cdn.tiny.cloud/1/ygxzbqd4ej8z1yjswkp0ljn56qm4r6luix9l83auaajk3h3q/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
         <style>
             /* General form container styles */
             .job-posting-container {
@@ -131,7 +134,7 @@
                 <a href="${pageContext.request.contextPath}/jobPost" class="btn btn-outline-secondary mb-3">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
-                <form id="jobPostingForm" action="${pageContext.request.contextPath}/jobPost?action=add-jp" method="POST">
+                <form id="jobPostingForm" action="${pageContext.request.contextPath}/jobPost?action=add-jp" method="POST" onsubmit="return validateForm()">
                     <h2>Add Job Posting</h2>
 
                     <!-- Title -->
@@ -177,14 +180,14 @@
                                     <option value="Open" <c:if test="${jobStatus == 'Open'}">selected</c:if>>Open</option>
 <!--                                    <option value="Filled" <c:if test="${jobStatus == 'Filled'}">selected</c:if>>Filled</option>
                                     <option value="Closed" <c:if test="${jobStatus == 'Closed'}">selected</c:if>>Closed</option>-->
-                                    </select>
-                                </div>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <!-- Posted Date -->
-                                <div class="form-group">
-                                    <label for="postedDate">Posted Date:</label>
-                                    <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Posted Date -->
+                            <div class="form-group">
+                                <label for="postedDate">Posted Date:</label>
+                                <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
                             </div>
                         </div>
                     </div>
@@ -211,7 +214,7 @@
                             <ul>
                                 <c:forEach var="error" items="${erMess}">
                                     <li>${error}</li>
-                                    </c:forEach>
+                                </c:forEach>
                             </ul>
                         </div>
                     </c:if>
@@ -231,16 +234,18 @@
             </div>
         </div>
 
-        <!-- JavaScript to handle form reset -->
+        <!-- JavaScript to handle form reset and validation -->
         <script>
             function clearForm() {
                 // Reset form fields to their default values
                 document.getElementById("jobPostingForm").reset();
 
-                // Manually clear the fields if they were pre-populated with request attributes
+                // Manually reset TinyMCE content for job description and requirements
+                tinymce.get("jobDescription").setContent('');
+                tinymce.get("jobRequirements").setContent('');
+
+                // Manually clear other input fields
                 document.getElementById("jobTitle").value = '';
-                document.getElementById("jobDescription").value = '';
-                document.getElementById("jobRequirements").value = '';
                 document.getElementById("jobLocation").value = '';
                 document.getElementById("jobSalary").value = '';
                 document.getElementById("jobStatus").value = 'Open'; // Default value
@@ -250,6 +255,40 @@
                 // Manually uncheck the checkbox if it was checked
                 document.getElementById("jobPathAgreement").checked = false;
             }
+
+            function validateForm() {
+                // Ensure job description and job requirements are not empty
+                const jobDescription = tinymce.get("jobDescription").getContent({ format: "text" }).trim();
+                const jobRequirements = tinymce.get("jobRequirements").getContent({ format: "text" }).trim();
+
+                if (!jobDescription) {
+                    alert("Job Description cannot be empty.");
+                    return false;
+                }
+
+                if (!jobRequirements) {
+                    alert("Job Requirements cannot be empty.");
+                    return false;
+                }
+
+                // All validation passed
+                return true;
+            }
+
+            tinymce.init({
+                selector: 'textarea', // Initialize TinyMCE for all text areas
+                plugins: 'advlist autolink lists link image charmap print preview anchor',
+                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+                menubar: true, // Disable the menubar
+                branding: false, // Disable the TinyMCE branding
+                height: 300, // Set the height of the editor
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+                    });
+                }
+            });
+
         </script>
 
         <!-- Include Footer -->

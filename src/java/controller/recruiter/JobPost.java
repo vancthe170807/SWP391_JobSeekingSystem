@@ -166,8 +166,8 @@ public class JobPost extends HttpServlet {
             if (!valid.isToday(postedDate)) {
                 erMess.add("Post date must be current date");
             }
-            if (!valid.isValidInput(jobSalary)) {
-                erMess.add("Salary must be greater than 0");
+            if (!valid.isValidSalary(jobSalary)) {
+                erMess.add("Invalid salary");
             }
             if (!erMess.isEmpty()) {
                 request.setAttribute("erMess", erMess);
@@ -274,8 +274,8 @@ public class JobPost extends HttpServlet {
         if (!valid.isStartDateBeforeEndDate(postedDate, closingDate)) {
             erMess.add("Expiration date must be greater than post date");
         }
-        if (!valid.isValidInput(jobSalary)) {
-            erMess.add("Salary must be greater than 0");
+        if (!valid.isValidSalary(jobSalary)) {
+            erMess.add("Invalid salary");
         }
         if (!valid.isToday(postedDate)) {
             erMess.add("Post date must be current date");

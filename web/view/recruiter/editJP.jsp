@@ -197,7 +197,7 @@
 
                         <!-- Job Salary -->
                         <div class="form-group">
-                            <label for="jobSalary" class="form-label">Salary</label>
+                            <label for="jobSalary" class="form-label">Salary $</label>
                             <input type="number" id="jobSalary" name="jobSalary" class="form-control" 
                                    value="${param.jobSalary != null ? param.jobSalary : jobPost.getSalary()}" required>
                         </div>

@@ -25,7 +25,7 @@
                                 <c:if test="${empty sessionScope.account.getAvatar()}">
                                     <img id="preview" src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="" width="150">
                                 </c:if>
-                                <c:if test="${!empty sessionScope.account.getAvatar()}">
+                                <c:if test="${not empty sessionScope.account.getAvatar()}">
                                     <img id="preview" src="${sessionScope.account.getAvatar()}" alt="" width="150">
                                 </c:if>
                             </div>
@@ -81,6 +81,21 @@
                         <button type="submit" class="btn btn-success" onclick="document.querySelector('#profile-form').submit()">Save Profile</button>
                     </div>
                 </form>
+                            <!-- Display success or error messages -->
+                    <c:if test="${not empty successMessage}">
+                        <div class="alert alert-success" role="alert">
+                            ${successMessage}
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty errorsMessage}">
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                <c:forEach var="error" items="${errorsMessage}">
+                                    <li>${error}</li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
             </div>
     <!-- Content Area End -->
 

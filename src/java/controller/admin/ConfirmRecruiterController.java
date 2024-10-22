@@ -32,11 +32,18 @@ public class ConfirmRecruiterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Recruiters> listConfirm = null;
         String url = "view/admin/confirmRecruiter.jsp";
         //get ve thong bao neu co
         String notice = request.getParameter("notice") != null ? request.getParameter("notice") : "";
-        List<Recruiters> listConfirm = dao.findAll();
-        request.setAttribute("listConfirm", listConfirm);
+        //get ve thong tin search
+        String searchQuery = request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "";
+        if (!searchQuery.isEmpty() ) {
+            listConfirm = dao.searchByName(searchQuery);
+        } else {
+            listConfirm = dao.findAll();
+        }
+            request.setAttribute("listConfirm", listConfirm);
         request.setAttribute("notice", notice);
         request.getRequestDispatcher(url).forward(request, response);
     }
@@ -76,12 +83,12 @@ public class ConfirmRecruiterController extends HttpServlet {
             AccountDAO accountDao = new AccountDAO();
             String recruiterId = request.getParameter("recruiterId");
             //lay recruiter theo id de lay ve id cua account do
-            Recruiters recruiter =  dao.findById(recruiterId);
+            Recruiters recruiter = dao.findById(recruiterId);
             Account accountFound = accountDao.findUserById(recruiter.getAccountID());
             //gui email ve email cua account vua tim duoc
             Email.sendEmail(accountFound.getEmail(), "RESPONE FOR YOUR REQUEST!!!", "Your request to become recruiter was reject!!");
             dao.deleteRecruiter(recruiterId);
-            
+
         } catch (MessagingException ex) {
             return "confirm?notice=" + URLEncoder.encode("Exist error in send email and reject process!!", "UTF-8");
         }

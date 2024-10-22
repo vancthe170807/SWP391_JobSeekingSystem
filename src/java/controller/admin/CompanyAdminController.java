@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import model.Account;
 import model.Company;
 import model.PageControl;
+
 @MultipartConfig
 @WebServlet(name = "CompanyAdminController", urlPatterns = {"/companies"})
 public class CompanyAdminController extends HttpServlet {
@@ -179,59 +180,39 @@ public class CompanyAdminController extends HttpServlet {
 
     private String addCompany(HttpServletRequest request, HttpServletResponse response) {
         String url = "";
-        try {
+
 //        get ve cac thuoc tinh cua company
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            String location = request.getParameter("location");
-            String verificationStatus = request.getParameter("verificationStatus");
-            // get ve businessLicense
-            Part part = request.getPart("businessLicense");
-            String imagePath = null;
-//SWT: MAJOR (CODE_SMELL)            
-            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
-                imagePath = null;
-            } else {
-//        duong dan lưu ảnh
-                String path = request.getServletContext().getRealPath("images");
-                File dir = new File(path);
-//        xem duong dan nay ton tai chua
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File image = new File(dir, part.getSubmittedFileName());
-//        ghi file vao trong duong dan
-                part.write(image.getAbsolutePath());
-//        lay ra contextPath cua project
-                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String location = request.getParameter("location");
+        String verificationStatus = request.getParameter("verificationStatus");
+        String businessLicense = getBusinessLicenseImg("businessLicense", request);
 //        tao doi tuong company va set cac thuoc tinh
-                Company company = new Company();
-                company.setName(name);
-                company.setDescription(description);
-                company.setLocation(location);
-                company.setBusinessLicenseImage(imagePath);
-                switch (verificationStatus) {
-                    case "accept":
-                        company.setVerificationStatus(true);
-                        break;
-                    case "violate":
-                        company.setVerificationStatus(false);
-                        break;
-                    default:
-                        company.setVerificationStatus(true);
-                }
-                if (dao.checkExistNameCompany(name)) {
-                   
-                        url = "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
-                    
-                } else {
-                    dao.insert(company);
-                    url = "companies";
-                }
+        Company company = new Company();
+        company.setName(name);
+        company.setDescription(description);
+        company.setLocation(location);
+        company.setBusinessLicenseImage(businessLicense);
+        switch (verificationStatus) {
+            case "accept":
+                company.setVerificationStatus(true);
+                break;
+            case "violate":
+                company.setVerificationStatus(false);
+                break;
+            default:
+                company.setVerificationStatus(true);
+        }
+        if (dao.checkExistNameCompany(name)) {
+
+            try {
+                url = "companies?error=" + URLEncoder.encode("Exist company name!", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            dao.insert(company);
             url = "companies";
         }
         return url;
@@ -266,5 +247,34 @@ public class CompanyAdminController extends HttpServlet {
         Company companyDetail = dao.findCompanyById(id);
         request.setAttribute("CompanyDetail", companyDetail);
         return "view/admin/viewDetailCompany.jsp";
+    }
+
+    private String getBusinessLicenseImg(String businessLicense, HttpServletRequest request) {
+        String imagePath = null;
+        try {
+            // get ve businessLicense
+            Part part = request.getPart(businessLicense);
+//SWT: MAJOR (CODE_SMELL)            
+            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
+                imagePath = null;
+            } else {
+//        duong dan lưu ảnh
+                String path = request.getServletContext().getRealPath("images");
+                File dir = new File(path);
+//        xem duong dan nay ton tai chua
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+//        ghi file vao trong duong dan
+                part.write(image.getAbsolutePath());
+//        lay ra contextPath cua project
+                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            imagePath = null;
+        }
+        return imagePath;
     }
 }

@@ -55,8 +55,9 @@
                     <div class="col-md-9">
 
                         <!--content-main can fix-->
-                        <div class="container mt-4">
-                            <h2 class="text-center mb-4">Company Details</h2>
+                        <h2 class="text-center mb-4" style="background-color: #d1e7dd; padding: 10px; border-radius: 5px;">Company Details</h2>
+                        
+                        <div class="container mt-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
                             <form>
                                 <div class="mb-3 row">
                                     <label for="companyName" class="col-sm-3 col-form-label fw-bold">Company Name:</label>
@@ -64,10 +65,10 @@
                                         <p class="form-control-plaintext">${CompanyDetail.getName()}</p>
                                 </div>
                             </div>
-                                <div class="mb-3 row">
-                                    <label for="companyDescription" class="col-sm-3 col-form-label fw-bold">Description:</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" id="companyDescription" rows="3">${CompanyDetail.getDescription()}</textarea>
+                            <div class="mb-3 row">
+                                <label for="companyDescription" class="col-sm-3 col-form-label fw-bold">Description:</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="companyDescription" rows="3">${CompanyDetail.getDescription()}</textarea>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -91,6 +92,7 @@
                                          alt="Business License" class="img-fluid img-thumbnail" style="max-width: 300px;">
                                 </div>
                             </div>
+                            <hr>
                             <div class="text-center mt-4">
                                 <a href="companies" class="btn btn-success">Back</a>
                             </div>

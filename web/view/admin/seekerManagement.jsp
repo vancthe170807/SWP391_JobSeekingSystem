@@ -97,7 +97,12 @@
                                                 <tr>
                                                     <!-- Avatar Column -->
                                                     <td>
-                                                        <img src="${seeker.getAvatar()}" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                        <c:if test="${empty seeker.getAvatar()}">
+                                                            <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                        </c:if>
+                                                        <c:if test="${not empty seeker.getAvatar()}">
+                                                            <img src="${seeker.getAvatar()}" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                        </c:if>    
                                                     </td>
 
                                                     <!-- Full Name Column -->
@@ -128,19 +133,19 @@
 
                                     <!-- Pagination -->
                                     <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center" id="pagination">
-                                        <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
-                                            <li>
-                                                <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                        <ul class="pagination justify-content-center" id="pagination">
+                                            <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                                <li>
+                                                    <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                                </li>
+                                            </c:forEach>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" id="next-page" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
                                             </li>
-                                        </c:forEach>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="next-page" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                        </ul>
+                                    </nav>
 
                                     <!-- Add more seekers here -->
                                 </div>
@@ -241,7 +246,7 @@
                                                 });
                                             });
         </script>   
-         <script>
+        <script>
             // Get the current page parameter from the URL
             function getCurrentPage() {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -252,9 +257,9 @@
             document.getElementById('next-page').addEventListener('click', function (event) {
                 event.preventDefault();
                 const currentPage = getCurrentPage();
-                const totalPages = ${pageControl.getTotalPages()};
+                 const totalPages = ${pageControl.getTotalPages()};
                 if (currentPage < totalPages) {
-                    window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
+                     window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
                 }
             });
 

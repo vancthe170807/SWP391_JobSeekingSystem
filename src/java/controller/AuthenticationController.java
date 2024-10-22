@@ -535,8 +535,8 @@ public class AuthenticationController extends HttpServlet {
 
     private String editProfile(HttpServletRequest request, HttpServletResponse response) {
         String url = "";
-//        get ve cac parameter
         try {
+            // Lấy các thông tin từ form
             String lastName = request.getParameter("lastName");
             String firstName = request.getParameter("firstName");
             String phone = request.getParameter("phone");
@@ -544,49 +544,77 @@ public class AuthenticationController extends HttpServlet {
             int yearofbirth = dob.toLocalDate().getYear();
             String gender = request.getParameter("gender");
             String address = request.getParameter("address");
-//        get về image
-            Part part = request.getPart("image");
+            String email = request.getParameter("email");
+
+            // Lấy ảnh avatar từ form (nếu có)
+            Part part = request.getPart("avatar");
             String imagePath = null;
-//SWT: MAJOR (CODE_SMELL)            
-            if (part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty() || part == null) {
-                imagePath = null;
-            } else {
-//        duong dan lưu ảnh
-                String path = request.getServletContext().getRealPath("images");
+
+            // Nếu có ảnh mới thì xử lý tải lên
+            if (part != null && part.getSize() > 0 && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
+                // Đường dẫn lưu ảnh
+                String path = request.getServletContext().getRealPath("/images");
                 File dir = new File(path);
-//        xem duong dan nay ton tai chua
+
+                // Kiểm tra xem thư mục có tồn tại không, nếu không thì tạo mới
                 if (!dir.exists()) {
-                    dir.mkdirs();
+                    dir.mkdirs(); // Tạo thư mục nếu chưa tồn tại
                 }
+
+                // Tạo file ảnh trong thư mục images
                 File image = new File(dir, part.getSubmittedFileName());
-//        ghi file vao trong duong dan
+
+                // Ghi file ảnh vào đường dẫn
                 part.write(image.getAbsolutePath());
-//        lay ra contextPath cua project
-                imagePath = request.getContextPath() + "/" + "/images/" + image.getName();
+
+                // Lấy đường dẫn tương đối của ảnh để lưu vào database
+                imagePath = request.getContextPath() + "/images/" + image.getName();
             }
 
-//        tạo đối tượng session và set các thuộc tính
+            // Lấy session và đối tượng Account hiện tại
             HttpSession session = request.getSession();
-
             Account accountEdit = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+            // Cập nhật thông tin trong đối tượng Account
             accountEdit.setLastName(lastName);
             accountEdit.setFirstName(firstName);
             accountEdit.setPhone(phone);
             accountEdit.setDob(dob);
-//SWT: MINOR (CODE_SMELL)            
-            accountEdit.setGender(gender.equalsIgnoreCase("male") ? true : false);
+            accountEdit.setGender(gender.equalsIgnoreCase("male"));
             accountEdit.setAddress(address);
-            accountEdit.setAvatar(imagePath);
+            accountEdit.setEmail(email);
+
+            // Nếu có ảnh mới, cập nhật ảnh avatar, nếu không, giữ lại ảnh hiện tại
+            if (imagePath != null) {
+                accountEdit.setAvatar(imagePath);
+            }
+
+            // Kiểm tra điều kiện hợp lệ cho ngày sinh và số điện thoại
+            List<String> errorsMessage = new ArrayList<>();
             if (!valid.checkYearOfBirth(yearofbirth)) {
-                request.setAttribute("error", "You must be between 17 and 50 years old!!");
-                url = "view/user/editUserProfile.jsp";
-            } else if (!valid.CheckPhoneNumber(phone)) {
-                request.setAttribute("error", "Phone number is not valid!!");
+                errorsMessage.add("You must be between 17 and 50 years old!");
+            }
+            if (!valid.CheckPhoneNumber(phone)) {
+                errorsMessage.add("Phone number is not valid!");
+            }
+            if (!valid.checkName(lastName)) {
+                errorsMessage.add("Last name is invalid!");
+            }
+            if (!valid.checkName(firstName)) {
+                errorsMessage.add("First name is invalid!");
+            }
+
+            // Nếu có lỗi, đặt thông báo lỗi vào request và quay lại trang chỉnh sửa hồ sơ
+            if (!errorsMessage.isEmpty()) {
+                request.setAttribute("errorsMessage", errorsMessage);
                 url = "view/user/editUserProfile.jsp";
             } else {
+                // Cập nhật thông tin người dùng vào cơ sở dữ liệu
                 accountDAO.updateAccount(accountEdit);
-                url = "view/user/userProfile.jsp";
+                request.setAttribute("successMessage", "Profile updated successfully.");
+                url = "view/user/editUserProfile.jsp";
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             url = "view/user/editUserProfile.jsp";

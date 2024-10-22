@@ -7,7 +7,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="dao.CompanyDAO"%>
+<%@page import="dao.RecruitersDAO"%>
 <%@page import="model.Company"%>
+<%@page import="model.Recruiters"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +28,21 @@
             .recruiter-status.inactive {
                 color: red; /* Inactive recruiters in red */
                 font-weight: bold;
+            }
+            .status-confirmed {
+                background-color: rgba(25, 135, 84, 0.1);
+                color: #198754;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+
+            .status-pending {
+                background-color: rgba(220, 53, 69, 0.1);
+                color: #dc3545;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-weight: 500;
             }
         </style>
     </head>
@@ -94,6 +111,7 @@
                                             <th>Avatar</th>
                                             <th>Full Name</th>
                                             <th>Company</th>
+                                            <th></th>
                                             <th>Status Account</th>
                                             <th>View</th>
                                         </tr>
@@ -103,22 +121,29 @@
                                         <%
                                          // Tạo một đối tượng CompanyDAO
                                             CompanyDAO companyDao = new CompanyDAO();
+                                         // Tao mot doi tuong Recruiter
+                                            RecruitersDAO recruitersDao = new RecruitersDAO();
                                         %>
                                         <c:forEach items="${listRecruiters}" var="recruiter">
+                                            <c:set var="recruiterId" value="${recruiter.getId()}" />
                                             <tr>
                                                 <!-- Avatar Column -->
                                                 <td>
-                                                    <img src="${recruiter.getAvatar()}" alt="Avatar" class="recruiter-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    <c:if test="${empty recruiter.getAvatar()}">
+                                                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    </c:if>
+                                                    <c:if test="${not empty recruiter.getAvatar()}">
+                                                        <img src="${recruiter.getAvatar()}" alt="Avatar" class="seeker-avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    </c:if>    
                                                 </td>
 
                                                 <!-- Full Name Column -->
                                                 <td>${recruiter.getFullName()}</td>
                                                 <!--Company Name Column-->
                                                 <td>
-                                                    <c:set var="recruiterId" value="${recruiter.getId()}" />
                                                     <%
-                                                        int recruiterId = (Integer) pageContext.getAttribute("recruiterId");
-                                                        List<Company> companies = companyDao.getCompanyNameByAccountId(recruiterId);
+                                                        int recruiterAccountId = (Integer) pageContext.getAttribute("recruiterId");
+                                                        List<Company> companies = companyDao.getCompanyNameByAccountId(recruiterAccountId);
                                                         String companyName = "";
                                                         if (companies != null && !companies.isEmpty()) {
                                                             companyName = companies.get(0).getName(); // Lấy tên công ty từ danh sách
@@ -126,7 +151,19 @@
                                                     %>
                                                     <%= companyName %> <!-- Hiển thị tên công ty -->
                                                 </td>
-
+                                                <!--verifiaction column-->
+                                                <td>
+                                                    <%
+                                                    Recruiters recruiters = recruitersDao.findRecruitersbyAccountID(String.valueOf(recruiterAccountId));
+                                                    String verification = "";
+                                                    String statusClass = "";
+                                                    if(recruiters != null){
+                                                        verification = recruiters.isIsVerify() == true ? "confirmed" : "Pending";
+                                                        statusClass = recruiters.isIsVerify() == true ? "status-confirmed" : "status-pending";
+                                                    }
+                                                    %>
+                                                    <span class="<%= statusClass %>"><%= verification %></span>
+                                                </td>
                                                 <!-- Status Column -->
                                                 <td>
                                                     <div class="form-check form-switch">
@@ -148,21 +185,21 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center" id="pagination">
-                                                <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
-                                                    <li>
-                                                        <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
-                                                    </li>
-                                                </c:forEach>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" id="next-page" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center" id="pagination">
+                                        <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
+                                            <li>
+                                                <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
+                                            </li>
+                                        </c:forEach>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" id="next-page" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
 
                                 <!-- Add more recruiters here -->
                             </div>
@@ -259,35 +296,35 @@
                                                 });
                                             });
     </script>
-        <script>
-            // Get the current page parameter from the URL
-            function getCurrentPage() {
-                const urlParams = new URLSearchParams(window.location.search);
-                return parseInt(urlParams.get('page')) || 1;
-            }
-    
-            // Add click event listener to the "Next" button
-            document.getElementById('next-page').addEventListener('click', function (event) {
-                event.preventDefault();
-                const currentPage = getCurrentPage();
-                const totalPages = ${pageControl.getTotalPages()};
-                if (currentPage < totalPages) {
-                    window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
-                }
-            });
-    
-            // Highlight the current page
-            const pageLinks = document.querySelectorAll('.page-number');
+    <script>
+        // Get the current page parameter from the URL
+        function getCurrentPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return parseInt(urlParams.get('page')) || 1;
+        }
+
+        // Add click event listener to the "Next" button
+        document.getElementById('next-page').addEventListener('click', function (event) {
+            event.preventDefault();
             const currentPage = getCurrentPage();
-            pageLinks.forEach(function (link, index) {
-                if (index + 1 === currentPage) {
-                    link.parentElement.classList.add('active');
-                } else {
-                    link.parentElement.classList.remove('active');
-                }
-            });
-        </script>
-    
+            const totalPages = ${pageControl.getTotalPages()};
+            if (currentPage < totalPages) {
+                window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
+            }
+        });
+
+        // Highlight the current page
+        const pageLinks = document.querySelectorAll('.page-number');
+        const currentPage = getCurrentPage();
+        pageLinks.forEach(function (link, index) {
+            if (index + 1 === currentPage) {
+                link.parentElement.classList.add('active');
+            } else {
+                link.parentElement.classList.remove('active');
+            }
+        });
+    </script>
+
 
 
 

@@ -129,7 +129,7 @@ public class SeekerAdminController extends HttpServlet {
             case "view-detail":
                 url = viewDetail(request);
                 request.getRequestDispatcher(url).forward(request, response);
-                break;
+                return;
 
             default:
                 url = "view/admin/seekerManagement.jsp";

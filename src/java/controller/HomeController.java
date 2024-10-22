@@ -29,6 +29,16 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        processRequest(request, response);
+    } 
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<JobPostings> listTop6 = jobPostingsDAO.getTop6RecentJobPostingsByOpen();
         List<Company> listTop3Company = companyDAO.getTop3RecentCompanysByOpen();
         request.setAttribute("listTop6", listTop6);
@@ -36,12 +46,6 @@ public class HomeController extends HttpServlet {
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/home.jsp");
         dispatcher.forward(request, response);
-    } 
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
     }
    
     

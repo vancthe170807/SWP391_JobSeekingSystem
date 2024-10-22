@@ -136,7 +136,7 @@ public class RecruiterAdminController extends HttpServlet {
             case "view-detail":
                 url = viewDetail(request);
                 request.getRequestDispatcher(url).forward(request, response);
-                break;
+                return;
 
             default:
                 url = "view/admin/recruiterManagement.jsp";

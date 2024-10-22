@@ -32,6 +32,7 @@
                 max-width: 450px;
                 width: 100%;
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                margin-top: 60px;
             }
 
             /* Card hover effect */

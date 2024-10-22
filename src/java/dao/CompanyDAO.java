@@ -220,8 +220,6 @@ public class CompanyDAO extends GenericDAO<Company> {
         }
         return false;
     }
-
-    
     
     public List<Company> getTop3RecentCompanysByOpen() {
         String sql = "select top 3 * from Company where verificationStatus = ? order by id desc";

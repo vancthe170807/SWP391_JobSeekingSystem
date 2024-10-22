@@ -17,14 +17,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import model.Account;
 import model.JobSeekers;
 
 @WebServlet(name = "CVServlet", urlPatterns = {"/cv"})
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB (dung luong toi da cho 1 tep)
-        maxRequestSize = 1024 * 1024 * 15)   // 15MB
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 10 * 1024 * 1024, // 10MB
+        maxRequestSize = 20 * 1024 * 1024 // 20MB
+)
+
 public class CVServlet extends HttpServlet {
 
     private final CVDAO cvDAO = new CVDAO();
@@ -33,6 +41,8 @@ public class CVServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String error = request.getParameter("error") != null ? request.getParameter("error") : "";
+        request.setAttribute("error", error);
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         switch (action) {
             case "view-cv":
@@ -82,37 +92,46 @@ public class CVServlet extends HttpServlet {
 
     // Upload CV
     public String uploadCV(HttpServletRequest request) throws IOException, ServletException {
+        String url;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
         if (account == null) {
-            return "view/authen/login.jsp"; // Redirect if the user is not logged in
+            url = "view/authen/login.jsp"; // Redirect if the user is not logged in
         }
 
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            return "view/user/CV.jsp"; // Redirect if no JobSeeker is found
+            url = "JobSeekerCheck"; // Redirect if no JobSeeker is found
         }
 
         CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (existingCV != null) {
-            request.setAttribute("error", "CV already exists. Please update it instead.");
-            return "view/user/CV.jsp"; // Redirect if CV already exists
+            try {
+                url = "cv?error=" + URLEncoder.encode("CV already exists. Please update it instead.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         try {
             Part part = request.getPart("cvUploadFile");
             if (part == null || part.getSize() <= 0) {
-                request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
-                return "view/user/CV.jsp"; // Redirect if no file is uploaded
+                try {
+                    url = "cv?error=" + URLEncoder.encode("No file uploaded. Please select a CV file.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             // Validate that the uploaded file is a PDF
             String fileName = part.getSubmittedFileName();
             if (!fileName.toLowerCase().endsWith(".pdf")) {
-                request.setAttribute("errorCV", "Invalid file type. Please upload a PDF file.");
-                return "view/user/CV.jsp"; // Redirect if the file is not a PDF
+                try {
+                    url = "cv?error=" + URLEncoder.encode("Invalid file type. Please upload a PDF file.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             // Define the directory path for storing CV files
@@ -135,43 +154,58 @@ public class CVServlet extends HttpServlet {
 
             // Set success message and return to the CV page
             request.setAttribute("successCV", "CV uploaded successfully.");
-            return "cv";
-        } catch (IllegalStateException e) {
-            // Handle file size exceeding the limit
-            request.setAttribute("errorCV", "File upload exceeds the maximum allowed size (10MB).");
-            return "view/user/CV.jsp"; // Redirect with size error
+            url = "cv";
         } catch (Exception e) {
             // Handle any other errors during the upload process
             e.printStackTrace();
-            request.setAttribute("errorCV", "An error occurred while uploading the CV: " + e.getMessage());
-            return "view/user/CV.jsp"; // Redirect with generic error
+            request.setAttribute("error", "File upload exceeds the maximum allowed size (10MB).");
+            url = "cv"; // Redirect with generic error
         }
+        return url;
     }
 
     // Update CV
     public String updateCV(HttpServletRequest request) throws IOException, ServletException {
+        String url;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         if (account == null) {
             return "view/authen/login.jsp";
         }
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
         if (jobSeeker == null) {
-            request.setAttribute("errorCV", "No Job Seeker found for the current account.");
-            return "view/user/CV.jsp";
+            request.setAttribute("error", "No Job Seeker found for the current account.");
+            return "JobSeekerCheck";
         }
         CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (existingCV == null) {
-            request.setAttribute("errorCV", "No CV found. Please upload one first.");
-            return "view/user/CV.jsp";
+            try {
+                url = "cv?error=" + URLEncoder.encode("No CV found. Please upload one first.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         try {
             Part part = request.getPart("cvFileU");
             if (part == null || part.getSize() <= 0) {
-                request.setAttribute("errorCV", "No file uploaded. Please select a CV file.");
-                return "view/user/CV.jsp";
+                try {
+                    url = "cv?error=" + URLEncoder.encode("No file uploaded. Please select a CV file.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            // Kiểm tra kích thước file (ví dụ giới hạn 10MB = 10 * 1024 * 1024 bytes)
+            long fileSize = part.getSize();
+            long maxSize = 10 * 1024 * 1024; // 10MB
+            if (fileSize > maxSize) {
+                try {
+                    url = "cv?error=" + URLEncoder.encode("File size exceeds the 10MB limit. Please upload a smaller file.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
             String path = request.getServletContext().getRealPath("cvFiles");
             File dir = new File(path);
             // Create directory if it doesn't exist
@@ -188,14 +222,10 @@ public class CVServlet extends HttpServlet {
 
             request.setAttribute("successCV", "CV updated successfully.");
             return "cv";
-        } catch (IllegalStateException e) {
-            // Handle file size exceeding the limit
-            request.setAttribute("errorCV", "File upload exceeds the maximum allowed size (10MB).");
-            return "view/user/CV.jsp"; // Redirect with size error
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorCV", "An error occurred while updating the CV: " + e.getMessage());
-            return "view/user/CV.jsp";
+            request.setAttribute("error", "File upload failed due to an unexpected error.");
+            return "cv";
         }
     }
 

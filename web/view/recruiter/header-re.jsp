@@ -19,7 +19,7 @@
 
     <!-- JobPath Logo/Text -->
     <div class="jobpath-logo">
-        <span>Job</span><span class="green-text">Path</span>
+        <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one_dark.svg" width="160" height="40" alt="logo">
     </div>
 </header>
 
@@ -93,7 +93,6 @@
     body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
     }
 </style>
 

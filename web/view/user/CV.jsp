@@ -12,6 +12,72 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            body {
+                background-color: #f4f4f9;
+            }
+            h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 30px;
+                text-transform: uppercase;
+                position: relative;
+            }
+            h1::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 5px;
+                background-color: #28a745;
+            }
+            table {
+                border-collapse: separate;
+                border-spacing: 0 15px;
+            }
+            thead th {
+                background-color: #28a745;
+                color: #fff;
+                text-transform: uppercase;
+                padding: 10px;
+            }
+            tbody tr {
+                background-color: #f9f9f9;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+            }
+            tbody tr:hover {
+                background-color: #e9ecef;
+            }
+            td {
+                padding: 15px;
+                vertical-align: middle;
+            }
+            button:hover {
+                transform: scale(1.05);
+                transition: transform 0.2s ease;
+            }
+            .btn-warning {
+                background-color: #ffc107;
+                border-color: #ffc107;
+            }
+            .btn-danger {
+                background-color: #dc3545;
+                border-color: #dc3545;
+            }
+            .modal-content {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+            }
+            .modal-header {
+                border-bottom: 0;
+                background-color: #28a745;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <!-- Header area -->
@@ -19,7 +85,7 @@
             <!-- Header area end -->
 
             <div class="container mt-5 mb-5">
-                <h2 class="mb-4">Manage Your CV</h2>
+                <h1 class="text-center">Manage Your CV</h1>
 
                 <!-- Display success or error messages -->
             <c:if test="${not empty successCV}">
@@ -44,16 +110,16 @@
             <c:if test="${not empty cvFilePath}">
                 <!-- Display View CV button -->
                 <div class="d-grid gap-2 mb-1">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
-                    Update CV
-                </button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
+                        Update CV
+                    </button>
                 </div>
                 <div class="mb-4">
                     <iframe src="cv?action=view-cv" height="1200px" width="100%" allowfullscreen="" frameborder="0"></iframe>
                 </div>
 
                 <!-- Form to update CV -->
-                
+
 
             </c:if>
 
@@ -75,23 +141,23 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-success text-white">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update CV</h1>
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">Update CV</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="${pageContext.request.contextPath}/cv?action=update-cv" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        
-                    <div class="mb-3">
-                        <label for="cvFile" class="form-label">Update CV</label>
-                        <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
-                    </div>
-                        <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
-                
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Update CV</button>
-                    </div>
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label for="cvFile" class="form-label">Update CV</label>
+                                <input type="file" class="form-control" id="cvFile" name="cvFileU" accept=".pdf" required>
+                            </div>
+                            <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update CV</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -99,6 +165,23 @@
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
+        <script>
+            document.getElementById("cvFile").onchange = function () {
+                const file = this.files[0];
+                if (file.size > 10 * 1024 * 1024) {  // 10MB
+                    alert("File size exceeds the 10MB limit. Please choose a smaller file.");
+                    this.value = "";  // Reset the input
+                }
+            };
+            document.getElementById("cvFileU").onchange = function () {
+                const file = this.files[0];
+                if (file.size > 10 * 1024 * 1024) {  // 10MB
+                    alert("File size exceeds the 10MB limit. Please choose a smaller file.");
+                    this.value = "";  // Reset the input
+                }
+            };
+
+        </script>
 
         <!-- Bootstrap JS and Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

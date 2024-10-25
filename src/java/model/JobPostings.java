@@ -8,25 +8,29 @@ public class JobPostings {
     private String Title;
     private String Description;
     private String Requirements;
-    private double Salary;
+    private double MinSalary;
+    private double MaxSalary;
     private String Location;
     private Date PostedDate;
     private Date ClosingDate;
+    private int Job_Posting_CategoryID;
     private String Status;
 
     public JobPostings() {
     }
 
-    public JobPostings(int JobPostingID, int RecruiterID, String Title, String Description, String Requirements, double Salary, String Location, Date PostedDate, Date ClosingDate, String Status) {
+    public JobPostings(int JobPostingID, int RecruiterID, String Title, String Description, String Requirements, double MinSalary, double MaxSalary, String Location, Date PostedDate, Date ClosingDate, int Job_Posting_CategoryID, String Status) {
         this.JobPostingID = JobPostingID;
         this.RecruiterID = RecruiterID;
         this.Title = Title;
         this.Description = Description;
         this.Requirements = Requirements;
-        this.Salary = Salary;
+        this.MinSalary = MinSalary;
+        this.MaxSalary = MaxSalary;
         this.Location = Location;
         this.PostedDate = PostedDate;
         this.ClosingDate = ClosingDate;
+        this.Job_Posting_CategoryID = Job_Posting_CategoryID;
         this.Status = Status;
     }
 
@@ -36,6 +40,14 @@ public class JobPostings {
 
     public void setJobPostingID(int JobPostingID) {
         this.JobPostingID = JobPostingID;
+    }
+
+    public int getRecruiterID() {
+        return RecruiterID;
+    }
+
+    public void setRecruiterID(int RecruiterID) {
+        this.RecruiterID = RecruiterID;
     }
 
     public String getTitle() {
@@ -62,12 +74,20 @@ public class JobPostings {
         this.Requirements = Requirements;
     }
 
-    public double getSalary() {
-        return Salary;
+    public double getMinSalary() {
+        return MinSalary;
     }
 
-    public void setSalary(double Salary) {
-        this.Salary = Salary;
+    public void setMinSalary(double MinSalary) {
+        this.MinSalary = MinSalary;
+    }
+
+    public double getMaxSalary() {
+        return MaxSalary;
+    }
+
+    public void setMaxSalary(double MaxSalary) {
+        this.MaxSalary = MaxSalary;
     }
 
     public String getLocation() {
@@ -94,6 +114,14 @@ public class JobPostings {
         this.ClosingDate = ClosingDate;
     }
 
+    public int getJob_Posting_CategoryID() {
+        return Job_Posting_CategoryID;
+    }
+
+    public void setJob_Posting_CategoryID(int Job_Posting_CategoryID) {
+        this.Job_Posting_CategoryID = Job_Posting_CategoryID;
+    }
+
     public String getStatus() {
         return Status;
     }
@@ -102,12 +130,5 @@ public class JobPostings {
         this.Status = Status;
     }
 
-    public int getRecruiterID() {
-        return RecruiterID;
-    }
-
-    public void setRecruiterID(int RecruiterID) {
-        this.RecruiterID = RecruiterID;
-    }
     
 }

@@ -1,25 +1,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Change password</title>
+        <title>Change Password</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            /* Main container styling */
+            /* Ensure the header is fixed */
+            header {
+                position: fixed;
+                top: 0;
+                left: 260px; /* Leave space for sidebar */
+                width: calc(100% - 260px); /* Adjust the width for header */
+                background-color: #389354;
+                height: 70px;
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                color: white;
+            }
+
+            /* Sidebar styling */
+            .sidebar {
+                height: 100vh;
+                width: 260px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: #fff;
+                padding-top: 20px;
+                border-right: 1px solid #ddd;
+            }
+
+            /* Ensure the content starts below the header */
             .password-container {
+                margin-left: 260px; /* Ensure it does not overlap the sidebar */
+                padding-top: 100px; /* Add top padding to avoid overlap with fixed header */
+                min-height: calc(100vh - 70px); /* Adjust for header height */
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                min-height: calc(100vh - 100px); /* Adjust for full height excluding header */
-                padding: 20px;
-                margin-left: 260px; /* Ensure it does not overlap the sidebar */
                 background-color: #f8f9fa; /* Light background */
             }
 
@@ -147,7 +174,6 @@
                 display: flex;
                 gap: 10px;
             }
-
         </style>
     </head>
     <body>
@@ -206,7 +232,7 @@
             }
 
             function cancelChangePassword() {
-                window.location.href = 'view/recruiter/viewRecruiterProfile.jsp';
+                window.location.href = "${pageContext.request.contextPath}/view/recruiter/viewRecruiterProfile.jsp";
             }
 
             var newPasswordInput = document.getElementById('newPassword');

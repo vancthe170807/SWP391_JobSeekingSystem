@@ -114,5 +114,14 @@ public class Validation {
         }
         return true;
     }
+    
+    // Hàm kiểm tra lương max có lớn hơn lương min
+    public boolean isMaxSalaryGreaterThanMin(double maxSalary, double minSalary) {
+        if (maxSalary > minSalary) {
+            return true;  // maxSalary lớn hơn minSalary
+        } else {
+            return false; // maxSalary không lớn hơn hoặc bằng minSalary
+        }
+    }
 
 }

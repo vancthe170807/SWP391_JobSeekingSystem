@@ -100,6 +100,14 @@
                 border: 1px solid #ddd;
             }
 
+            /* Page Title */
+            .page-title {
+                margin-top: -78px;
+                font-size: 22px;
+                font-weight: bold;
+                color: #34495e;
+                margin-bottom: 30px;
+            }
             @media (max-width: 768px) {
                 .top-metrics {
                     flex-direction: column;
@@ -114,6 +122,7 @@
                     flex-direction: column;
                 }
             }
+
         </style>
     </head>
     <body>
@@ -123,30 +132,47 @@
         <div class="main-content">
             <!-- Header with Bootstrap Navbar -->
             <%@ include file="../recruiter/header-re.jsp" %>
-            <!-- Main Dashboard Content -->
-            <div class="top-metrics">
-                <div class="metric-box">
-                    <h4>Job Postings</h4>
-                    <p>${listSize.size()}</p>
-                    <a href="${pageContext.request.contextPath}/exportExcel">View details</a>
+            <h1 class="page-title">Dashboard Overview</h1>
+
+            <div class="row">
+                <!-- Cards Section -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card text-center mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Posted Jobs</h5>
+                            <h3 class="text-primary">${listSize.size()}</h3>
+                            <p>Jobs posted this month</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-box">
-                    <h4>Pending Approvals</h4>
-                    <p>0</p>
-                    <a href="#">View details</a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card text-center mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Candidates</h5>
+                            <h3 class="text-success">Not yet</h3>
+                            <p>Candidates this month</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-box">
-                    <h4>Articles</h4>
-                    <p>0</p>
-                    <a href="#">View details</a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card text-center mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Interviews</h5>
+                            <h3 class="text-warning">Not yet</h3>
+                            <p>Interviews scheduled</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-box">
-                    <h4>CV Submissions</h4>
-                    <p>2</p>
-                    <a href="#">View details</a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card text-center mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Hires</h5>
+                            <h3 class="text-info">Not Yet</h3>
+                            <p>Hires this month</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <!-- Top 5 Recent Job Postings and Chart section -->
             <div class="recent-postings">
                 <!-- Recent Job Postings Table -->
@@ -164,8 +190,8 @@
                                 <tr>
                                     <td>${i.getTitle()}</td>
                                     <td><fmt:formatDate value="${i.getPostedDate()}" pattern="dd/MM/yyyy"/></td>
-                            </tr>
-                        </c:forEach>                      
+                                </tr>
+                            </c:forEach>                      
                         </tbody>
                     </table>
                 </div>

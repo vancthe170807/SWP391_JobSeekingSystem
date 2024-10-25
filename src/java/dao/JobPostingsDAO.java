@@ -2,6 +2,7 @@ package dao;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,19 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         return list.isEmpty() ? null : list.get(0);
     }
 
+    //Tính toán thời gian cách đây 1 tháng so với ngày hiện tại
+    public List<JobPostings> findJobPostingbyRecruitersIDandOneMonth(int recruiterID) {
+        // Thêm điều kiện tìm kiếm các bài đăng trong 1 tháng
+        String sql = "SELECT * FROM [dbo].[JobPostings] WHERE RecruiterID = ? AND PostedDate >= DATEADD(month, -1, GETDATE())";
+
+        // Tạo map chứa các tham số cho câu truy vấn
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("RecruiterID", recruiterID);
+
+        // Gọi hàm queryGenericDAO để truy vấn
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
     public List<JobPostings> findJobPostingbyRecruitersID(int recruiterID) {
         String sql = "select * from [dbo].[JobPostings] where RecruiterID = ?";
         parameterMap = new LinkedHashMap<>();
@@ -32,7 +46,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
 
     }
 
-    public void updateJobPosting(JobPostings jobPostingEdit) {
+    public void updateJobPosting(JobPostings t) {
         String sql = "UPDATE [dbo].[JobPostings]\n"
                 + "   SET [RecruiterID] = ?\n"
                 + "      ,[Title] = ?\n"
@@ -43,20 +57,21 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "      ,[Location] = ?\n"
                 + "      ,[PostedDate] = ?\n"
                 + "      ,[ClosingDate] = ?\n"
+                + "      ,[Job_Posting_CategoryID] = ?\n"
                 + "      ,[Status] = ?\n"
                 + " WHERE JobPostingID = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("RecruiterID", jobPostingEdit.getRecruiterID());
-        parameterMap.put("Title", jobPostingEdit.getTitle());
-        parameterMap.put("Description", jobPostingEdit.getDescription());
-        parameterMap.put("Requirements", jobPostingEdit.getRequirements());
-        parameterMap.put("MinSalary", jobPostingEdit.getMinSalary());
-        parameterMap.put("MaxSalary", jobPostingEdit.getMaxSalary());
-        parameterMap.put("Location", jobPostingEdit.getLocation());
-        parameterMap.put("PostedDate", jobPostingEdit.getPostedDate());
-        parameterMap.put("ClosingDate", jobPostingEdit.getClosingDate());
-        parameterMap.put("Status", jobPostingEdit.getStatus());
-        parameterMap.put("JobPostingID", jobPostingEdit.getJobPostingID());
+        parameterMap.put("RecruiterID", t.getRecruiterID());
+        parameterMap.put("Title", t.getTitle());
+        parameterMap.put("Description", t.getDescription());
+        parameterMap.put("Requirements", t.getRequirements());
+        parameterMap.put("MinSalary", t.getMinSalary());
+        parameterMap.put("MaxSalary", t.getMaxSalary());
+        parameterMap.put("Location", t.getLocation());
+        parameterMap.put("PostedDate", t.getPostedDate());
+        parameterMap.put("ClosingDate", t.getClosingDate());
+        parameterMap.put("Job_Posting_CategoryID", t.getJob_Posting_CategoryID());
+        parameterMap.put("Status", t.getStatus());
         updateGenericDAO(sql, parameterMap);
     }
 
@@ -88,8 +103,9 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "           ,[Location]\n"
                 + "           ,[PostedDate]\n"
                 + "           ,[ClosingDate]\n"
+                + "           ,[Job_Posting_CategoryID]\n"
                 + "           ,[Status])\n"
-                + "     VALUES(?,?,?,?,?,?,?,?,?)";
+                + "     VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", t.getRecruiterID());
         parameterMap.put("Title", t.getTitle());
@@ -100,6 +116,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Location", t.getLocation());
         parameterMap.put("PostedDate", t.getPostedDate());
         parameterMap.put("ClosingDate", t.getClosingDate());
+        parameterMap.put("Job_Posting_CategoryID", t.getJob_Posting_CategoryID());
         parameterMap.put("Status", t.getStatus());
         return insertGenericDAO(sql, parameterMap);
     }
@@ -193,7 +210,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
 
-    //Top 5 cong viec moi nhat
+    //Top 6 cong viec moi nhat
     public List<JobPostings> getTop6RecentJobPostingsByOpen() {
         String sql = "SELECT TOP 6 * FROM [dbo].[JobPostings] WHERE [Status] = ? order by PostedDate desc";
 

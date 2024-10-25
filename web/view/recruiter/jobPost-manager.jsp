@@ -259,12 +259,11 @@
                         <!-- Search bar, Add New Job, and Filters -->
                         <div class="controls-container">
                             <!-- Add New Job Button -->
-                            <a
-                                href="${pageContext.request.contextPath}/view/recruiter/addJobPosting.jsp"
-                                class="btn-add-job"
-                                >
+                            
+                            <a href="${pageContext.request.contextPath}/AddJobPosting?action=addJobPosting" class="btn-add-job">
                                 <i class="fas fa-plus"></i> Add New Job
                             </a>
+
 
                             <!-- Filter Buttons -->
                             <div class="filter-buttons">

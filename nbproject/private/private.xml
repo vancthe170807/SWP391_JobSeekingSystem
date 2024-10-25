@@ -57,13 +57,18 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
         </group>
         <group name="SWP291">
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/recruiter/CompanyController.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/CompanyAdminController.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/Company.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/recruiter/ExcelServlet.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/validate/Validation.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/JobPostings.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/recruiter/createCompany.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/DBContext.java</file>
         </group>
     </open-files>
 </project-private>

@@ -154,23 +154,31 @@
                         <label for="jobRequirements">Job Requirements:</label>
                         <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="3" required>${jobRequirements}</textarea>
                     </div>
-                    <!-- Two-column row for Location, Salary, Status, Posted Date, and Closing Date -->
+
+                    <!-- Two-column row for Min Salary, Max Salary -->
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- Location -->
+                            <!-- Min Salary -->
                             <div class="form-group">
-                                <label for="jobLocation">Location:</label>
-                                <input type="text" id="jobLocation" name="jobLocation" class="form-control" placeholder="Enter job location" value="${jobLocation}" required>
+                                <label for="minSalary">Min Salary $:</label>
+                                <input type="number" id="minSalary" name="minSalary" class="form-control" placeholder="Enter minimum salary" value="${minSalary}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <!-- Salary -->
+                            <!-- Max Salary -->
                             <div class="form-group">
-                                <label for="jobSalary">Salary $:</label>
-                                <input type="number" id="jobSalary" name="jobSalary" class="form-control" placeholder="Enter job salary" value="${jobSalary}" required>
+                                <label for="maxSalary">Max Salary $:</label>
+                                <input type="number" id="maxSalary" name="maxSalary" class="form-control" placeholder="Enter maximum salary" value="${maxSalary}" required>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Location -->
+                    <div class="form-group">
+                        <label for="jobLocation">Location:</label>
+                        <input type="text" id="jobLocation" name="jobLocation" class="form-control" placeholder="Enter job location" value="${jobLocation}" required>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <!-- Status -->
@@ -180,14 +188,14 @@
                                     <option value="Open" <c:if test="${jobStatus == 'Open'}">selected</c:if>>Open</option>
 <!--                                    <option value="Filled" <c:if test="${jobStatus == 'Filled'}">selected</c:if>>Filled</option>
                                     <option value="Closed" <c:if test="${jobStatus == 'Closed'}">selected</c:if>>Closed</option>-->
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Posted Date -->
-                            <div class="form-group">
-                                <label for="postedDate">Posted Date:</label>
-                                <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
+                            <div class="col-md-6">
+                                <!-- Posted Date -->
+                                <div class="form-group">
+                                    <label for="postedDate">Posted Date:</label>
+                                    <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
                             </div>
                         </div>
                     </div>
@@ -201,6 +209,21 @@
                         </div>
                     </div>
 
+                    <!-- Job Posting Category -->
+                    <div class="form-group">
+                        <label for="jobCategory">Job Category:</label>
+                        <select id="jobCategory" name="jobCategory" class="form-control" required onchange="showNewCategoryInput(this)">
+                            <option value="">Select Job Category</option>
+                            <c:forEach var="category" items="${jobCategories}">
+                                <option value="${category.id}">${category.getName()}</option>
+                            </c:forEach>
+                            <option value="new">Add New Category</option>
+                        </select>
+                        <!-- Input field for new category (hidden initially) -->
+                        <div id="newCategoryInput" style="display:none;">
+                            <input type="text" id="newCategory" name="newCategory" class="form-control" placeholder="Enter new category name">
+                        </div>
+                    </div>
                     <!-- Checkbox -->
                     <div class="form-check">
                         <input type="checkbox" id="jobPathAgreement" name="jobPathAgreement" class="form-check-input" required>
@@ -214,7 +237,7 @@
                             <ul>
                                 <c:forEach var="error" items="${erMess}">
                                     <li>${error}</li>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                         </div>
                     </c:if>
@@ -247,7 +270,8 @@
                 // Manually clear other input fields
                 document.getElementById("jobTitle").value = '';
                 document.getElementById("jobLocation").value = '';
-                document.getElementById("jobSalary").value = '';
+                document.getElementById("minSalary").value = '';
+                document.getElementById("maxSalary").value = '';
                 document.getElementById("jobStatus").value = 'Open'; // Default value
                 document.getElementById("postedDate").value = '';
                 document.getElementById("closingDate").value = '';
@@ -258,8 +282,8 @@
 
             function validateForm() {
                 // Ensure job description and job requirements are not empty
-                const jobDescription = tinymce.get("jobDescription").getContent({ format: "text" }).trim();
-                const jobRequirements = tinymce.get("jobRequirements").getContent({ format: "text" }).trim();
+                const jobDescription = tinymce.get("jobDescription").getContent({format: "text"}).trim();
+                const jobRequirements = tinymce.get("jobRequirements").getContent({format: "text"}).trim();
 
                 if (!jobDescription) {
                     alert("Job Description cannot be empty.");
@@ -282,13 +306,21 @@
                 menubar: true, // Disable the menubar
                 branding: false, // Disable the TinyMCE branding
                 height: 300, // Set the height of the editor
-                setup: function(editor) {
-                    editor.on('change', function() {
+                setup: function (editor) {
+                    editor.on('change', function () {
                         tinymce.triggerSave(); // Synchronize TinyMCE content with the form
                     });
                 }
             });
 
+            function showNewCategoryInput(selectElement) {
+                const newCategoryInput = document.getElementById('newCategoryInput');
+                if (selectElement.value === 'new') {
+                    newCategoryInput.style.display = 'block';
+                } else {
+                    newCategoryInput.style.display = 'none';
+                }
+            }
         </script>
 
         <!-- Include Footer -->

@@ -13,12 +13,13 @@ public class JobPostings {
     private String Location;
     private Date PostedDate;
     private Date ClosingDate;
+    private int Job_Posting_CategoryID;
     private String Status;
 
     public JobPostings() {
     }
 
-    public JobPostings(int JobPostingID, int RecruiterID, String Title, String Description, String Requirements, double MinSalary, double MaxSalary, String Location, Date PostedDate, Date ClosingDate, String Status) {
+    public JobPostings(int JobPostingID, int RecruiterID, String Title, String Description, String Requirements, double MinSalary, double MaxSalary, String Location, Date PostedDate, Date ClosingDate, int Job_Posting_CategoryID, String Status) {
         this.JobPostingID = JobPostingID;
         this.RecruiterID = RecruiterID;
         this.Title = Title;
@@ -29,6 +30,7 @@ public class JobPostings {
         this.Location = Location;
         this.PostedDate = PostedDate;
         this.ClosingDate = ClosingDate;
+        this.Job_Posting_CategoryID = Job_Posting_CategoryID;
         this.Status = Status;
     }
 
@@ -112,6 +114,14 @@ public class JobPostings {
         this.ClosingDate = ClosingDate;
     }
 
+    public int getJob_Posting_CategoryID() {
+        return Job_Posting_CategoryID;
+    }
+
+    public void setJob_Posting_CategoryID(int Job_Posting_CategoryID) {
+        this.Job_Posting_CategoryID = Job_Posting_CategoryID;
+    }
+
     public String getStatus() {
         return Status;
     }
@@ -120,6 +130,9 @@ public class JobPostings {
         this.Status = Status;
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> bd1ba365e21d8935b94c48d3a3f12e906c901778
     
 }

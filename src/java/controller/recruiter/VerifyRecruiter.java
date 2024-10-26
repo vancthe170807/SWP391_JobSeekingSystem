@@ -52,6 +52,14 @@ public class VerifyRecruiter extends HttpServlet {
         String position = request.getParameter("position");
 
         try {
+            // Check if a verification request has already been submitted => ko cho gui lan 2
+            Recruiters existingRecruiter = reDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+            if (existingRecruiter != null && !existingRecruiter.isIsVerify()) {
+                // If there's an existing unverified request, show error message
+                request.setAttribute("error", "Your verification request is already pending approval.");
+                request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+                return;
+            }
             // Check if the businessCode belongs to the recruiter's own active company
             if (!companyDao.isCompanyValidForVerification(businessCode, account.getId())) {
                 request.setAttribute("error", "Invalid Business Code or company is not active.");

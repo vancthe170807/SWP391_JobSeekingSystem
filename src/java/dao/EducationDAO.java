@@ -22,8 +22,8 @@ public class EducationDAO extends GenericDAO<Education> {
     // Nhap thong tin Dao tao
     @Override
     public int insert(Education t) {
-        String sql = "INSERT INTO Education(JobSeekerID, Institution, Degree, FieldOfStudy, StartDate, EndDate) values \n"
-                + "  (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Education(JobSeekerID, Institution, Degree, FieldOfStudy, StartDate, EndDate, DegreeImg) values \n"
+                + "  (?, ?, ?, ?, ?, ?, ?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", t.getJobSeekerID());
         parameterMap.put("Institution", t.getInstitution());
@@ -31,6 +31,7 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("FieldOfStudy", t.getFieldOfStudy());
         parameterMap.put("StartDate", t.getStartDate());
         parameterMap.put("EndDate", t.getEndDate());
+        parameterMap.put("DegreeImg", t.getDegreeImg());
         
         return insertGenericDAO(sql, parameterMap);
     }

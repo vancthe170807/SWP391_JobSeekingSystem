@@ -130,9 +130,6 @@ public class JobPostings {
         this.Status = Status;
     }
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> bd1ba365e21d8935b94c48d3a3f12e906c901778
+
     
 }

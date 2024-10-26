@@ -97,21 +97,21 @@ public class CompanyController extends HttpServlet {
         company.setAccountId(account.getId());
         //set data để hiển thị sang bên jsp
         request.setAttribute("company", company);
-        //check valid business code
-        if (!validate.checkCode(businessCode)) {
-            String error = "Business code is not valid!!";
-            request.setAttribute("errorCode", error);
-            url = "view/recruiter/createCompany.jsp";
-            return url;
-        } else if (companyDao.checkExistBusinessCode(businessCode)) {
-            request.setAttribute("duplicateCode", "Business code is existed !!");
-            url = "view/recruiter/createCompany.jsp";
-            return url;
-        }
         //kiem tra xem company nay da nguoi tao chua
         boolean check = companyDao.checkCompanyByAccountId(company);
         if (check) {
             //chua tao
+            //check valid business code
+            if (!validate.checkCode(businessCode)) {
+                String error = "Business code is not valid!!";
+                request.setAttribute("errorCode", error);
+                url = "view/recruiter/createCompany.jsp";
+                return url;
+            } else if (companyDao.checkExistBusinessCode(company.getAccountId(), businessCode)) {
+                request.setAttribute("duplicateCode", "Business code is existed !!");
+                url = "view/recruiter/createCompany.jsp";
+                return url;
+            }
             String notice = "Create successfully!!";
             request.setAttribute("notice", notice);
             companyDao.insert(company);
@@ -133,7 +133,7 @@ public class CompanyController extends HttpServlet {
             // get ve businessLicense
             Part part = request.getPart(businessLicense);
 //SWT: MAJOR (CODE_SMELL)            
-            if ( part == null ||part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty()) {
+            if (part == null || part.getSubmittedFileName() == null || part.getSubmittedFileName().trim().isEmpty()) {
                 imagePath = null;
             } else {
 //        duong dan lưu ảnh
@@ -160,7 +160,11 @@ public class CompanyController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         Company company = companyDao.findCompanyByAccountId(account.getId());
-        request.setAttribute("company", company);
+        if (company == null) {
+            request.setAttribute("error", "You must fill the company information firts!!");
+        } else {
+            request.setAttribute("company", company);
+        }
         return "view/recruiter/editCompany.jsp";
     }
 
@@ -183,7 +187,5 @@ public class CompanyController extends HttpServlet {
         //tra ve duong dan
         return "view/recruiter/editCompany.jsp";
     }
-
-    
 
 }

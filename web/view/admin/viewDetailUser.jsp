@@ -58,81 +58,132 @@
                         </c:if>
 
                         <form class="p-4 rounded shadow-sm bg-light">
-                            <div class="author__image mb-3 text-center">
-                                <c:if test="${empty requestScope.accountView.avatar}">
-                                    <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
-                                </c:if>
-                                <c:if test="${!empty requestScope.accountView.avatar}">
-                                    <img src="${requestScope.accountView.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
-                                </c:if>
-                            </div>
+                            <!-- Avatar và Thông tin người dùng -->
+                            <div class="d-flex align-items-start">
+                                <!-- Avatar -->
+                                <div class="me-4">
+                                    <c:if test="${empty requestScope.accountView.avatar}">
+                                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
+                                    </c:if>
+                                    <c:if test="${!empty requestScope.accountView.avatar}">
+                                        <img src="${requestScope.accountView.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
+                                    </c:if>
+                                    <!-- Nút Xem Chi Tiết Giáo Dục (chỉ hiển thị khi RoleId == 2) -->
+                                    <c:if test="${requestScope.accountView.getRoleId() == 3}">
+                                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#educationModal">
+                                            Detail Education
+                                        </button>
+                                    </c:if>
+                                </div>
 
+                                <!-- Thông tin người dùng -->
+                                <div class="w-100">
+                                    <div class="row">
+                                        <!-- Full Name -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" id="lastName" class="form-control" placeholder="Last Name" required readonly value="${requestScope.accountView.lastName}">
+                                        </div>
+                                        <!-- First Name -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" id="firstName" class="form-control" placeholder="First Name" required readonly value="${requestScope.accountView.firstName}">
+                                        </div>
+                                    </div>
 
-                            <div class="row">
-                                <!-- Full Name -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="fullName" class="form-label">Last Name</label>
-                                    <input type="text" id="name" class="form-control" placeholder="Full Name" required readonly value="${requestScope.accountView.lastName}">
-                                </div>
-                                <!-- Email -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">First Name</label>
-                                    <input type="email" id="email" class="form-control" placeholder="jobpath@gmail.com" required readonly value="${requestScope.accountView.firstName}">
-                                </div>
-                            </div>
+                                    <div class="row">
+                                        <!-- Phone -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="text" id="phone" class="form-control" placeholder="+84" required readonly value="${requestScope.accountView.phone}">
+                                        </div>
+                                        <!-- Date of Birth -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="dob" class="form-label">Date of Birth</label>
+                                            <input type="date" id="dob" class="form-control" required readonly value="${requestScope.accountView.dob}">
+                                        </div>
+                                    </div>
 
-                            <div class="row">
-                                <!-- Phone -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="text" id="phone" class="form-control" placeholder="+84" required readonly value="${requestScope.accountView.phone}">
-                                </div>
-                                <!-- Date of Birth -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" id="dob" class="form-control" required readonly value="${requestScope.accountView.dob}">
-                                </div>
-                            </div>
+                                    <div class="row">
+                                        <!-- Gender -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="genderDisplay" class="form-label">Gender</label>
+                                            <input type="text" id="genderDisplay" class="form-control" value="${requestScope.accountView.gender == true ? 'Male' : 'Female'}" readonly>
+                                        </div>
+                                        <!-- Address -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="address" class="form-label">Address</label>
+                                            <input type="text" id="address" class="form-control" placeholder="Your Address" required readonly value="${requestScope.accountView.address}">
+                                        </div>
+                                    </div>
 
-                            <div class="row">
-                                <!-- Gender -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="gender" class="form-label">Gender</label>
-                                    <input type="text" id="genderDisplay" class="form-control" value="${requestScope.accountView.gender == true ? 'Male' : 'Female'}" readonly>
-                                    <input type="hidden" name="gender" id="genderHidden">
-                                </div>
-                                <!-- Address -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="add" class="form-label">Address</label>
-                                    <input type="text" id="add" class="form-control" placeholder="Your Address" required readonly value="${requestScope.accountView.address}">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" class="form-control" placeholder="jobpath@gmail.com" required readonly value="${requestScope.accountView.email}">
-                                </div>
-                                <!-- Create At -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="add" class="form-label">Create At</label>
-                                    <input type="text" id="add" class="form-control" required readonly value="${requestScope.accountView.createAt}">
+                                    <div class="row">
+                                        <!-- Email -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" id="email" class="form-control" placeholder="jobpath@gmail.com" required readonly value="${requestScope.accountView.email}">
+                                        </div>
+                                        <!-- Create At -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="createAt" class="form-label">Create At</label>
+                                            <input type="text" id="createAt" class="form-control" required readonly value="${requestScope.accountView.createAt}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Back Button -->
-                            <div class="text-center">
+                            <div class="text-center mt-4">
                                 <c:if test="${requestScope.accountView.roleId == 3}">
-                                    <button type="button" class="btn btn-info" id="editProfile" onclick="location.href = '${pageContext.request.contextPath}/seekers'">Back</button>
+                                    <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.request.contextPath}/seekers'">Back</button>
                                 </c:if>
                                 <c:if test="${requestScope.accountView.roleId == 2}">
-                                    <button type="button" class="btn btn-info" id="editProfile" onclick="location.href = '${pageContext.request.contextPath}/recruiters'">Back</button>
+                                    <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.request.contextPath}/recruiters'">Back</button>
                                 </c:if>
-
-
                             </div>
                         </form>
                     </div>
+                    <!-- Modal để hiển thị thông tin Education -->
+                    <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="educationModalLabel">Education Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Table hiển thị thông tin Education -->
+                                    <table class="table table-bordered text-center">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Institution</th>
+                                                <th>Degree</th>
+                                                <th>Field Of Study</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Certificate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
 
                     <!-- Back to Top Button -->
                     <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">

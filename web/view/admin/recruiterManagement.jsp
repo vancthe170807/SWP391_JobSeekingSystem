@@ -29,7 +29,7 @@
                 color: red; /* Inactive recruiters in red */
                 font-weight: bold;
             }
-            .status-confirmed {
+            .status-approved {
                 background-color: rgba(25, 135, 84, 0.1);
                 color: #198754;
                 padding: 4px 8px;
@@ -44,6 +44,18 @@
                 border-radius: 4px;
                 font-weight: 500;
             }
+            .status-not-yet {
+                background-color: rgba(255, 193, 7, 0.1); /* Màu vàng nhạt cho nền */
+                color: #ffc107; /* Màu vàng cho chữ */
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            .table-bordered td .form-check {
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+            }   
         </style>
     </head>
     <body>
@@ -105,13 +117,13 @@
 
                             <!--search recruiter end-->
                             <div class="recruiter-list">
-                                <table class="table table-striped">
+                                <table class="table table-bordered" style="text-align: center; vertical-align: middle;">
                                     <thead>
                                         <tr>
                                             <th>Avatar</th>
                                             <th>Full Name</th>
                                             <th>Company</th>
-                                            <th></th>
+                                            <th>Approval Status</th>
                                             <th>Status Account</th>
                                             <th>View</th>
                                         </tr>
@@ -145,11 +157,15 @@
                                                         int recruiterAccountId = (Integer) pageContext.getAttribute("recruiterId");
                                                         List<Company> companies = companyDao.getCompanyNameByAccountId(recruiterAccountId);
                                                         String companyName = "";
+                                                        String statusClassCom = "";
                                                         if (companies != null && !companies.isEmpty()) {
                                                             companyName = companies.get(0).getName(); // Lấy tên công ty từ danh sách
+                                                        }else{
+                                                            companyName = "Not yet registered";
+                                                            statusClassCom = "status-not-yet";
                                                         }
                                                     %>
-                                                    <%= companyName %> <!-- Hiển thị tên công ty -->
+                                                    <span class="<%= statusClassCom %>"><%= companyName %></span> <!-- Hiển thị tên công ty -->
                                                 </td>
                                                 <!--verifiaction column-->
                                                 <td>
@@ -158,9 +174,12 @@
                                                     String verification = "";
                                                     String statusClass = "";
                                                     if(recruiters != null){
-                                                        verification = recruiters.isIsVerify() == true ? "confirmed" : "Pending";
-                                                        statusClass = recruiters.isIsVerify() == true ? "status-confirmed" : "status-pending";
-                                                    }
+                                                        verification = recruiters.isIsVerify() == true ? "Approved" : "Pending";
+                                                        statusClass = recruiters.isIsVerify() == true ? "status-approved" : "status-pending";
+                                                    }else{
+                                                        verification = "None";
+                                                        statusClass = "status-not-yet";
+                                                        }
                                                     %>
                                                     <span class="<%= statusClass %>"><%= verification %></span>
                                                 </td>

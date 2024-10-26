@@ -67,7 +67,7 @@
                 box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
             }
 
-            .form-control:disabled, 
+            .form-control:disabled,
             .form-control[readonly] {
                 background-color: #f8f9fa;
             }
@@ -137,11 +137,11 @@
                     margin-left: 0;
                     padding: 1rem;
                 }
-                
+
                 .card-body {
                     padding: 1rem;
                 }
-                
+
                 .row > div {
                     margin-bottom: 1rem;
                 }
@@ -153,7 +153,7 @@
 
         <div class="main-content">
             <%@ include file="../recruiter/header-re.jsp" %>
-             <c:if test="${not empty success}">
+            <c:if test="${not empty success}">
                 <div class="alert alert-success" role="alert">
                     ${success}
                 </div>
@@ -164,50 +164,57 @@
                     <i class="fas fa-edit"></i> Edit Your Company Information
                 </div>
                 <div class="card-body">
-                    <form id="editCompanyForm" action="${pageContext.request.contextPath}/company?action=edit" method="POST">
-                        <input type="hidden" name="companyId" value="${requestScope.company.getId()}">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="companyName" class="form-label">Company Name</label>
-                                <input type="text" class="form-control" id="companyName" name="name" 
-                                       value="${requestScope.company.getName()}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="companyLocation" class="form-label">Location</label>
-                                <input type="text" class="form-control" id="companyLocation" name="location" 
-                                       value="${requestScope.company.getLocation()}" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="companyDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="companyDescription" name="description" 
-                                          required>${requestScope.company.getDescription()}</textarea>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="businessCode" class="form-label">Business Code</label>
-                                <input type="text" class="form-control" id="businessCode" name="businessCode" 
-                                       value="${requestScope.company.getBusinessCode()}" readonly>
-                                <div class="alert alert-warning">
-                                    <i class="fas fa-exclamation-circle"></i> Business code cannot be edited.
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-warning" role="alert">
+                            ${error}
+                        </div>
+                    </c:if>
+                    <c:if test="${empty error}">
+                        <form id="editCompanyForm" action="${pageContext.request.contextPath}/company?action=edit" method="POST">
+                            <input type="hidden" name="companyId" value="${requestScope.company.getId()}">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="companyName" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" id="companyName" name="name" 
+                                           value="${requestScope.company.getName()}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="companyLocation" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="companyLocation" name="location" 
+                                           value="${requestScope.company.getLocation()}" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="companyDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="companyDescription" name="description" 
+                                              required>${requestScope.company.getDescription()}</textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="businessCode" class="form-label">Business Code</label>
+                                    <input type="text" class="form-control" id="businessCode" name="businessCode" 
+                                           value="${requestScope.company.getBusinessCode()}" readonly>
+                                    <div class="alert alert-warning">
+                                        <i class="fas fa-exclamation-circle"></i> Business code cannot be edited.
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Business License</label>
+                                    <div class="border rounded p-2 bg-light">
+                                        <img src="${requestScope.company.getBusinessLicenseImage()}" 
+                                             alt="Business License" class="img-thumbnail d-block mx-auto">
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="col-12">
-                                <label class="form-label">Business License</label>
-                                <div class="border rounded p-2 bg-light">
-                                    <img src="${requestScope.company.getBusinessLicenseImage()}" 
-                                         alt="Business License" class="img-thumbnail d-block mx-auto">
-                                </div>
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
                             </div>
-                        </div>
-                        
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Save Changes
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </c:if>
                 </div>
             </div>
         </div>

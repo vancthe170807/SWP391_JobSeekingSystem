@@ -6,6 +6,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Education"%>
+<%@page import="model.JobSeekers"%>
+<%@page import="dao.EducationDAO"%>
+<%@page import="dao.JobSeekerDAO"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -153,6 +158,14 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Table hiển thị thông tin Education -->
+                                    <c:set var="accountId" value="${requestScope.accountView.getId()}" />
+                                    <!--tạo các đối tượng cần dùng-->
+                                    <% 
+                                        Education education = new Education();
+                                        EducationDAO educationDao = new EducationDAO();
+                                        JobSeekers jobSeeker = new JobSeekers();
+                                        JobSeekerDAO jobSeekerDao = new JobSeekerDAO();
+                                    %>
                                     <table class="table table-bordered text-center">
                                         <thead class="table-light">
                                             <tr>
@@ -165,16 +178,39 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <!--lay ve education theo accountId-->
+                                            <%
+                                                //lay ve id cua jobseeker theo accountid
+                                                int accountId = (Integer) pageContext.getAttribute("accountId");
+                                                jobSeeker = jobSeekerDao.findJobSeekerIDByAccountID(String.valueOf(accountId));
+                                                if(jobSeeker != null){
+                                                List<Education> listEdu = educationDao.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
+                                                for(Education edu: listEdu){
+                                                
+                                                
+                                                // duyet listEdu
+                                            %>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                                 <td>
-                                                    
+                                                    <%= edu.getInstitution()%>
+                                                </td>
+                                                <td><%= edu.getDegree()%></td>
+                                                <td><%= edu.getFieldOfStudy()%></td>
+                                                <td><%= edu.getStartDate()%></td>
+                                                <td><%= edu.getEndDate()%></td>
+                                                <td>
+                                                    <img src="<%= edu.getDegreeImg() %>" alt="Certificate" style="max-width: 100px; height: auto;">
                                                 </td>
                                             </tr>
+                                            <%
+                                                }
+                                              }else{
+                                            %>    
+                                            <tr>
+                                                <td colspan="6">No education found.</td>
+                                            </tr>
+                                            <%}%> 
+
                                         </tbody>
                                     </table>
                                 </div>

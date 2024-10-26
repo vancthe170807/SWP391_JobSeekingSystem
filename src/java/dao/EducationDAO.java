@@ -74,5 +74,5 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("EducationID", educationID);
         deleteGenericDAO(sql, parameterMap);
     }
-
+    
 }

@@ -44,6 +44,14 @@ public class JobPostings {
         this.JobPostingID = JobPostingID;
     }
 
+    public int getRecruiterID() {
+        return RecruiterID;
+    }
+
+    public void setRecruiterID(int RecruiterID) {
+        this.RecruiterID = RecruiterID;
+    }
+
     public String getTitle() {
         return Title;
     }
@@ -115,8 +123,6 @@ public class JobPostings {
     public void setJob_Posting_CategoryID(int Job_Posting_CategoryID) {
         this.Job_Posting_CategoryID = Job_Posting_CategoryID;
     }
-    
-    
 
     public String getStatus() {
         return Status;
@@ -126,12 +132,5 @@ public class JobPostings {
         this.Status = Status;
     }
 
-    public int getRecruiterID() {
-        return RecruiterID;
-    }
-
-    public void setRecruiterID(int RecruiterID) {
-        this.RecruiterID = RecruiterID;
-    }
     
 }

@@ -98,7 +98,11 @@
                                         <div class="card-body">
                                             <h4 class="blog-title">${list.getTitle()}</h4>
                                             <p class="btn btn-outline-success btn-sm">${list.getLocation()}</p>
+<<<<<<< HEAD
                                             <p class="btn btn-success btn-sm">${list.getMinSalary()} $ - ${list.getMaxSalary()} $</p>
+=======
+                                            <p class="btn btn-success btn-sm">${list.getMinSalary()} $</p>
+>>>>>>> 88056e1b187f39314e41ed5a214a215522d7dc4c
                                             <p style="font-style: italic">Post Date: ${list.getPostedDate()}</p>
                                         </div>
                                     </a>

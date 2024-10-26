@@ -64,22 +64,6 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
         return queryGenericDAO(Recruiters.class, sql, parameterMap);
     }
 
-    //Update thong tin hoc van
-    public void updateRecruiters(Recruiters t) {
-        String sql = "UPDATE [dbo].[Recruiters]\n"
-                + "   SET [isVerify] = ?\n"
-                + "      ,[AccountID] = ?\n"
-                + "      ,[CompanyID] = ?\n"
-                + "      ,[Position] = ?\n"
-                + " WHERE RecruiterID = ?";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("isVerify", t.isIsVerify());
-        parameterMap.put("AccountID", t.getAccountID());
-        parameterMap.put("CompanyID", t.getCompanyID());
-        parameterMap.put("Position", t.getPosition());
-        updateGenericDAO(sql, parameterMap);
-    }
-
     public void updateVerification(String recruiterId, boolean verify) {
         String sql = "UPDATE [dbo].[Recruiters]\n"
                 + "   SET [isVerify] = ?\n"

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page import="model.Job_Posting_Category"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -146,20 +148,44 @@
                         <p>${jobPost.getLocation()}</p>
                     </div>
                 </div>
-                <!--                <div class="job-detail">
-                                    <div>
-                                        <h5>Salary $:</h5>
-                                        <p>${jobPost.getSalary()}</p>
-                                    </div>
-                                </div>-->
                 <div class="job-detail">
                     <div>
-                        <h5>Salary $:</h5>
+                        <h5>Min Salary $:</h5>
                         <p>
-                            <fmt:formatNumber value="${jobPost.getSalary()}" type="number" groupingUsed="true"/>
+                            <fmt:formatNumber value="${jobPost.getMinSalary()}" type="number" groupingUsed="true"/>
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Max Salary $:</h5>
+                        <p>
+                            <fmt:formatNumber value="${jobPost.getMaxSalary()}" type="number" groupingUsed="true"/>
                         </p>
                     </div>
                 </div>
+
+                <% 
+                    // Lấy thông tin category từ request
+                    Job_Posting_Category category = (Job_Posting_Category) request.getAttribute("category");
+
+                    // Kiểm tra nếu category không null
+                    if (category != null) {
+                %>
+                <div class="job-detail">
+                    <div>
+                        <h5>Job Category Name:</h5>
+                        <p><%= category.getName() %></p> <!-- Hiển thị tên danh mục công việc -->
+                    </div>
+                </div>
+                <% 
+                    } else { 
+                %>
+                <div class="job-detail">
+                    <h5>Job Category Name:</h5>
+                </div>
+                <% 
+                    } 
+                %>
+
                 <a href="javascript:window.history.back();" class="btn-apply">Back</a>
             </div>
         </div>

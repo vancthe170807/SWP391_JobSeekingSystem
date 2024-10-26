@@ -54,6 +54,7 @@
         padding-top: 20px;
         overflow-y: auto;
         border-right: 1px solid #ddd;
+        font-size: 22px;
     }
 
     /* Remove JobPath brand section */

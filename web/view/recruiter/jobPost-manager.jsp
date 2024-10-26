@@ -259,12 +259,11 @@
                         <!-- Search bar, Add New Job, and Filters -->
                         <div class="controls-container">
                             <!-- Add New Job Button -->
-                            <a
-                                href="${pageContext.request.contextPath}/view/recruiter/addJobPosting.jsp"
-                                class="btn-add-job"
-                                >
+
+                            <a href="${pageContext.request.contextPath}/AddJobPosting" class="btn-add-job">
                                 <i class="fas fa-plus"></i> Add New Job
                             </a>
+
 
                             <!-- Filter Buttons -->
                             <div class="filter-buttons">
@@ -325,11 +324,10 @@
                                             </td>
                                             <td>${i.getStatus()}</td>
                                             <td>
-                                                <a
-                                                    href="${pageContext.request.contextPath}/detailsJP?action=details&idJP=${i.getJobPostingID()}"
-                                                    class="btn-action"
-                                                    ><i class="fas fa-eye"></i
-                                                    ></a>
+                                                <a href="${pageContext.request.contextPath}/detailsJP?action=details&idJP=${i.getJobPostingID()}" class="btn-action">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+
                                                 <a
                                                     href="${pageContext.request.contextPath}/updateJP?idJP=${i.getJobPostingID()}"
                                                     class="btn-action"

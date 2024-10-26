@@ -615,7 +615,7 @@ public class AuthenticationController extends HttpServlet {
             } else {
                 accountDAO.updateAccount(accountEdit);
                 request.setAttribute("successMessage", "Profile updated successfully.");
-                if (accountEdit.getRoleId() == 2) { 
+                if (accountEdit.getRoleId() == 2) {
                     url = "view/recruiter/editRecruiterProfile.jsp";
                 }
                 if (accountEdit.getRoleId() == 3) {
@@ -629,7 +629,6 @@ public class AuthenticationController extends HttpServlet {
         }
         return url;
     }
-
 
     // Vo hieu hoa tai khoan
     private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

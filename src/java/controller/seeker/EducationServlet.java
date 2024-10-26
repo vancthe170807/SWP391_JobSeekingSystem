@@ -108,9 +108,9 @@ public class EducationServlet extends HttpServlet {
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
 
-                Part certificatePart = request.getPart("certificate");
-                String uploadDir = "uploads/certificates";
-                String certificateName = saveFile(certificatePart, uploadDir);
+                Part degreeImgPart = request.getPart("certificate");
+                String uploadDir = "uploads/degreeImgs";
+                String degreeImgName = saveFile(degreeImgPart, uploadDir);
 
                 Date startDate = Date.valueOf(startDateStr);
                 Date endDate = Date.valueOf(endDateStr);
@@ -144,8 +144,14 @@ public class EducationServlet extends HttpServlet {
                 eduAdd.setFieldOfStudy(fieldofstudy);
                 eduAdd.setStartDate(startDate);
                 eduAdd.setEndDate(endDate);
-                eduAdd.setCertificate(certificateName);
+                eduAdd.setDegreeImg(degreeImgName);
+                
+                eduDAO.insert(eduAdd);
                 // Continue processing eduAdd as needed (e.g., save to the database)
+                request.setAttribute("successEducation", "Profile add successfully.");
+                request.setAttribute("edus", edus);
+                request.setAttribute("jobSeeker", jobSeeker);
+                url = "education"; // Điều hướng đến trang Education
 
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
@@ -180,9 +186,9 @@ public class EducationServlet extends HttpServlet {
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
 
-                Part certificatePart = request.getPart("certificate");
-                String uploadDir = "uploads/certificates";
-                String certificateName = saveFile(certificatePart, uploadDir);
+                Part degreeImgPart = request.getPart("degreeImg");
+                String uploadDir = "uploads/degreeImgs";
+                String degreeImgName = saveFile(degreeImgPart, uploadDir);
 
                 int educationID = Integer.parseInt(educationIDStr);
                 Date startDate = Date.valueOf(startDateStr);
@@ -219,7 +225,7 @@ public class EducationServlet extends HttpServlet {
                 edu.setFieldOfStudy(fieldofstudy);
                 edu.setStartDate(startDate);
                 edu.setEndDate(endDate);
-                edu.setCertificate(certificateName);
+                edu.setDegreeImg(degreeImgName);
 
                 // Cập nhật bản ghi trong CSDL
                 eduDAO.updateEducation(edu);

@@ -112,7 +112,7 @@
                             <th>Field of Study</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Certificate</th>
+                            <th>Degree Image</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -124,11 +124,11 @@
                                 <td>${edu.fieldOfStudy}</td>
                                 <td>${edu.startDate}</td>
                                 <td><c:if test="${not empty edu.endDate}">${edu.endDate}</c:if><c:if test="${empty edu.endDate}">N/A</c:if></td>
-                                <td><img src="${edu.getCertificate()}" alt="Certificate" class="img-fluid img-thumbnail" style="max-width: 100px;"
-                                         data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('${edu.getCertificate()}')"></td>
+                                <td><img src="${edu.getDegreeImg()}" alt="Certificate" class="img-fluid img-thumbnail" style="max-width: 100px;"
+                                         data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('${edu.getDegreeImg()}')"></td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#updateEducationModal-${edu.educationID}" 
-                                            onclick="populateUpdateModal('${edu.educationID}', '${edu.institution}', '${edu.degree}', '${edu.fieldOfStudy}', '${edu.startDate}', '${edu.endDate}', '${edu.getCertificate()}')">
+                                            onclick="populateUpdateModal('${edu.educationID}', '${edu.institution}', '${edu.degree}', '${edu.fieldOfStudy}', '${edu.startDate}', '${edu.endDate}', '${edu.getDegreeImg()}')">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(${edu.educationID})">
@@ -141,12 +141,12 @@
                         <div class="modal fade" id="updateEducationModal-${edu.educationID}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-xl">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-sucess text-white">
+                                    <div class="modal-header bg-success text-white">
                                         <h5 class="modal-title" id="updateModalLabel">Update Education</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="${pageContext.request.contextPath}/education" method="post" id="updateEducationForm-${edu.educationID}">
+                                        <form action="${pageContext.request.contextPath}/education" method="post" id="updateEducationForm-${edu.educationID}" enctype="multipart/form-data">
                                             <input type="hidden" name="action" value="update-education">
                                             <input type="hidden" name="educationID" value="${edu.educationID}">
                                             <div class="row">
@@ -184,20 +184,21 @@
                                                     </div>
                                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                                     <div class="form-group mb-3">
-                                                        <label for="certificate">Certificate</label>
-                                                        <input type="file" class="form-control" id="certificate" name="certificate" value="${edu.getCertificate()}" accept="image/*" required>
+                                                        <label for="certificate">Degree Image</label>
+                                                        <input type="file" class="form-control" id="certificate" name="degreeImg" accept="image/*" required>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" form="updateEducationForm-${edu.educationID}" class="btn btn-success">Update Education</button>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
+
                     </c:forEach>
                     </tbody>
                 </table>
@@ -218,7 +219,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/education" method="post" id="educationForm">
+                        <form action="${pageContext.request.contextPath}/education" method="post" id="educationForm" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="add-education">
                             <div class="row">
                                 <div class="col-md-6">
@@ -255,8 +256,8 @@
                                     </div>
                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                     <div class="form-group mb-3">
-                                        <label for="certificate">Certificate</label>
-                                        <input type="file" class="form-control" id="certificate" name="certificate" accept="image/*" required>
+                                        <label for="degreeImg">Certificate</label>
+                                        <input type="file" class="form-control" id="degreeImg" name="degreeImg" accept="image/*" required>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +270,7 @@
                 </div>
             </div>
         </div>
-                            
+
         <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -283,6 +284,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>

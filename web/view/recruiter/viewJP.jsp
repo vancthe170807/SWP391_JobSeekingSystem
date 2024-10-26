@@ -146,10 +146,18 @@
                         <p>${jobPost.getLocation()}</p>
                     </div>
                 </div>
+                <!--                <div class="job-detail">
+                                    <div>
+                                        <h5>Salary $:</h5>
+                                        <p>${jobPost.getSalary()}</p>
+                                    </div>
+                                </div>-->
                 <div class="job-detail">
                     <div>
-                        <h5>Salary:</h5>
-                        <p>${jobPost.getSalary()}</p>
+                        <h5>Salary $:</h5>
+                        <p>
+                            <fmt:formatNumber value="${jobPost.getSalary()}" type="number" groupingUsed="true"/>
+                        </p>
                     </div>
                 </div>
                 <a href="javascript:window.history.back();" class="btn-apply">Back</a>

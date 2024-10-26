@@ -166,7 +166,7 @@
                         <div class="col-md-6">
                             <!-- Salary -->
                             <div class="form-group">
-                                <label for="jobSalary">Salary:</label>
+                                <label for="jobSalary">Salary $:</label>
                                 <input type="number" id="jobSalary" name="jobSalary" class="form-control" placeholder="Enter job salary" value="${jobSalary}" required>
                             </div>
                         </div>

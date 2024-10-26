@@ -124,7 +124,8 @@ public class JobPost extends HttpServlet {
             String jobDescription = request.getParameter("jobDescription");
             String jobRequirements = request.getParameter("jobRequirements");
             String jobLocation = request.getParameter("jobLocation");
-            double jobSalary = Double.parseDouble(request.getParameter("jobSalary"));
+            double jobMinSalary = Double.parseDouble(request.getParameter("jobMinSalary"));
+            double jobMaxSalary = Double.parseDouble(request.getParameter("jobMaxSalary"));
             String jobStatus = request.getParameter("jobStatus");
             Date postedDate = Date.valueOf(request.getParameter("postedDate"));
             Date closingDate = Date.valueOf(request.getParameter("closingDate"));
@@ -134,7 +135,8 @@ public class JobPost extends HttpServlet {
             request.setAttribute("jobDescription", jobDescription);
             request.setAttribute("jobRequirements", jobRequirements);
             request.setAttribute("jobLocation", jobLocation);
-            request.setAttribute("jobSalary", jobSalary);
+            request.setAttribute("jobMinSalary", jobMinSalary);
+            request.setAttribute("jobMaxSalary", jobMaxSalary);
             request.setAttribute("jobStatus", jobStatus);
             request.setAttribute("postedDate", postedDate);
             request.setAttribute("closingDate", closingDate);
@@ -145,7 +147,7 @@ public class JobPost extends HttpServlet {
             jobPost.setDescription(jobDescription);
             jobPost.setRequirements(jobRequirements);
             jobPost.setLocation(jobLocation);
-            jobPost.setSalary(jobSalary);
+            jobPost.setMinSalary(jobMinSalary);
             jobPost.setStatus(jobStatus);
             jobPost.setPostedDate(postedDate);
             jobPost.setClosingDate(closingDate);
@@ -166,8 +168,11 @@ public class JobPost extends HttpServlet {
             if (!valid.isToday(postedDate)) {
                 erMess.add("Post date must be current date");
             }
-            if (!valid.isValidInput(jobSalary)) {
-                erMess.add("Salary must be greater than 0");
+            if (!valid.isValidSalary(jobMinSalary)) {
+                erMess.add("Invalid salary");
+            }
+            if (!valid.isValidSalary(jobMaxSalary)) {
+                erMess.add("Invalid salary");
             }
             if (!erMess.isEmpty()) {
                 request.setAttribute("erMess", erMess);
@@ -234,7 +239,8 @@ public class JobPost extends HttpServlet {
         String jobDescription = request.getParameter("jobDescription");
         String jobRequirements = request.getParameter("jobRequirements");
         String jobLocation = request.getParameter("jobLocation");
-        double jobSalary = Double.parseDouble(request.getParameter("jobSalary"));
+        double jobMinSalary = Double.parseDouble(request.getParameter("jobMinSalary"));
+        double jobMaxSalary = Double.parseDouble(request.getParameter("jobMaxSalary"));
         String jobStatus = request.getParameter("jobStatus");
         Date postedDate = Date.valueOf(request.getParameter("postedDate"));
         Date closingDate = Date.valueOf(request.getParameter("closingDate"));
@@ -244,7 +250,8 @@ public class JobPost extends HttpServlet {
         request.setAttribute("jobDescription", jobDescription);
         request.setAttribute("jobRequirements", jobRequirements);
         request.setAttribute("jobLocation", jobLocation);
-        request.setAttribute("jobSalary", jobSalary);
+        request.setAttribute("jobMinSalary", jobMinSalary);
+        request.setAttribute("jobMaxSalary", jobMaxSalary);
         request.setAttribute("jobStatus", jobStatus);
         request.setAttribute("postedDate", postedDate);
         request.setAttribute("closingDate", closingDate);
@@ -255,7 +262,7 @@ public class JobPost extends HttpServlet {
         jobPost.setDescription(jobDescription);
         jobPost.setRequirements(jobRequirements);
         jobPost.setLocation(jobLocation);
-        jobPost.setSalary(jobSalary);
+        jobPost.setMinSalary(jobMinSalary);
         jobPost.setStatus(jobStatus);
         jobPost.setPostedDate(postedDate);
         jobPost.setClosingDate(closingDate);
@@ -274,8 +281,11 @@ public class JobPost extends HttpServlet {
         if (!valid.isStartDateBeforeEndDate(postedDate, closingDate)) {
             erMess.add("Expiration date must be greater than post date");
         }
-        if (!valid.isValidInput(jobSalary)) {
-            erMess.add("Salary must be greater than 0");
+        if (!valid.isValidSalary(jobMinSalary)) {
+            erMess.add("Invalid salary");
+        }
+        if (!valid.isValidSalary(jobMaxSalary)) {
+            erMess.add("Invalid salary");
         }
         if (!valid.isToday(postedDate)) {
             erMess.add("Post date must be current date");

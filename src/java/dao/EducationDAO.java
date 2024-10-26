@@ -22,8 +22,8 @@ public class EducationDAO extends GenericDAO<Education> {
     // Nhap thong tin Dao tao
     @Override
     public int insert(Education t) {
-        String sql = "INSERT INTO Education(JobSeekerID, Institution, Degree, FieldOfStudy, StartDate, EndDate) values \n"
-                + "  (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Education(JobSeekerID, Institution, Degree, FieldOfStudy, StartDate, EndDate, Certificate) values \n"
+                + "  (?, ?, ?, ?, ?, ?, ?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", t.getJobSeekerID());
         parameterMap.put("Institution", t.getInstitution());
@@ -31,6 +31,7 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("FieldOfStudy", t.getFieldOfStudy());
         parameterMap.put("StartDate", t.getStartDate());
         parameterMap.put("EndDate", t.getEndDate());
+        parameterMap.put("Certificate", t.getCertificate());
         
         return insertGenericDAO(sql, parameterMap);
     }
@@ -53,6 +54,7 @@ public class EducationDAO extends GenericDAO<Education> {
                 + "      ,[FieldOfStudy] = ?\n"
                 + "      ,[StartDate] = ?\n"
                 + "      ,[EndDate] = ?\n"
+                + "      ,[Certificate] = ?\n"
                 + " WHERE EducationID = ?";
 
         parameterMap = new LinkedHashMap<>();
@@ -61,7 +63,8 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("FieldOfStudy", education.getFieldOfStudy());
         parameterMap.put("StartDate", education.getStartDate());
         parameterMap.put("EndDate", education.getEndDate());
-        parameterMap.put("EducationID", education.getEducationID());
+        parameterMap.put("Certificate", education.getCertificate());
+        parameterMap.put("EducationID", education.getEducationID());        
         
         updateGenericDAO(sql, parameterMap);
     }

@@ -38,10 +38,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "      ,[Title] = ?\n"
                 + "      ,[Description] = ?\n"
                 + "      ,[Requirements] = ?\n"
-                + "      ,[Salary] = ?\n"
+                + "      ,[MinSalary] = ?\n"
+                + "      ,[MaxSalary] = ?\n"
                 + "      ,[Location] = ?\n"
                 + "      ,[PostedDate] = ?\n"
                 + "      ,[ClosingDate] = ?\n"
+                + "      ,[Job_Posting_CategoryID] = ?\n"
                 + "      ,[Status] = ?\n"
                 + " WHERE JobPostingID = ?";
         parameterMap = new LinkedHashMap<>();
@@ -49,10 +51,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Title", jobPostingEdit.getTitle());
         parameterMap.put("Description", jobPostingEdit.getDescription());
         parameterMap.put("Requirements", jobPostingEdit.getRequirements());
-        parameterMap.put("Salary", jobPostingEdit.getSalary());
+        parameterMap.put("MinSalary", jobPostingEdit.getMinSalary());
+        parameterMap.put("MaxSalary", jobPostingEdit.getMaxSalary());
         parameterMap.put("Location", jobPostingEdit.getLocation());
         parameterMap.put("PostedDate", jobPostingEdit.getPostedDate());
         parameterMap.put("ClosingDate", jobPostingEdit.getClosingDate());
+        parameterMap.put("Job_Posting_CategoryID", jobPostingEdit.getJob_Posting_CategoryID());
         parameterMap.put("Status", jobPostingEdit.getStatus());
         parameterMap.put("JobPostingID", jobPostingEdit.getJobPostingID());
         updateGenericDAO(sql, parameterMap);
@@ -81,21 +85,25 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "           ,[Title]\n"
                 + "           ,[Description]\n"
                 + "           ,[Requirements]\n"
-                + "           ,[Salary]\n"
+                + "           ,[MinSalary]\n"
+                + "           ,[MaxSalary]\n"
                 + "           ,[Location]\n"
                 + "           ,[PostedDate]\n"
                 + "           ,[ClosingDate]\n"
+                + "           ,[Job_Posting_CategoryID]\n"
                 + "           ,[Status])\n"
-                + "     VALUES(?,?,?,?,?,?,?,?,?)";
+                + "     VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", t.getRecruiterID());
         parameterMap.put("Title", t.getTitle());
         parameterMap.put("Description", t.getDescription());
         parameterMap.put("Requirements", t.getRequirements());
-        parameterMap.put("Salary", t.getSalary());
+        parameterMap.put("MinSalary", t.getMinSalary());
+        parameterMap.put("MaxSalary", t.getMaxSalary());
         parameterMap.put("Location", t.getLocation());
         parameterMap.put("PostedDate", t.getPostedDate());
         parameterMap.put("ClosingDate", t.getClosingDate());
+        parameterMap.put("Job_Posting_CategoryID", t.getJob_Posting_CategoryID());
         parameterMap.put("Status", t.getStatus());
         return insertGenericDAO(sql, parameterMap);
     }

@@ -101,12 +101,18 @@ public class Validation {
         return !currentPassword.equals(newPassword);
     }
     
-    // Hàm kiểm tra xem giá trị có nhỏ hơn 0 hay không
-    public boolean isValidInput(double number) {
-        if (number < 0) {
-            System.out.println("Error: Input cannot be a negative number.");
-            return false; // Trả về false nếu số nhỏ hơn 0
+    
+    // Hàm kiểm tra lương
+    public boolean isValidSalary(double salary) {
+        // Kiểm tra nếu lương là số âm hoặc vượt quá 10 triệu
+        if (salary < 0) {
+            System.out.println("Salary cannot be negative.");
+            return false;
+        } else if (salary > 10000000) {
+            System.out.println("Salary cannot exceed 10,000,000.");
+            return false;
         }
-        return true; // Trả về true nếu số hợp lệ
+        return true;
     }
+
 }

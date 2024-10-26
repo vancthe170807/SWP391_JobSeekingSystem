@@ -82,7 +82,7 @@
 
                                 <!--search seeker end-->
                                 <div class="seeker-list">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" style="border: 2px">
                                         <thead>
                                             <tr>
                                                 <th>Avatar</th>

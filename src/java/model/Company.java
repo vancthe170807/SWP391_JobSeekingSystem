@@ -14,18 +14,18 @@ public class Company {
     private String description;
     private String location;
     private boolean verificationStatus;
-    private int adminId;
+    private int accountId;
     private String BusinessLicenseImage;
     public Company() {
     }
 
-    public Company(int id, String name, String description, String location, boolean verificationStatus, int adminId, String BusinessLicenseImage) {
+    public Company(int id, String name, String description, String location, boolean verificationStatus, int accountId, String BusinessLicenseImage) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.location = location;
         this.verificationStatus = verificationStatus;
-        this.adminId = adminId;
+        this.accountId = accountId;
         this.BusinessLicenseImage = BusinessLicenseImage;
     }
 
@@ -71,12 +71,12 @@ public class Company {
         this.verificationStatus = verificationStatus;
     }
 
-    public int getAdminId() {
-        return adminId;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public String getBusinessLicenseImage() {

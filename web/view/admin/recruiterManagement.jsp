@@ -105,7 +105,7 @@
 
                             <!--search recruiter end-->
                             <div class="recruiter-list">
-                                <table class="table table-striped">
+                                <table class="table table-striped" style="border: 2px">
                                     <thead>
                                         <tr>
                                             <th>Avatar</th>

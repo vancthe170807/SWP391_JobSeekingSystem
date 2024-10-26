@@ -41,11 +41,13 @@ public class ExcelServlet extends HttpServlet {
         headerRow.createCell(0).setCellValue("Title");
         headerRow.createCell(1).setCellValue("Description");
         headerRow.createCell(2).setCellValue("Requirements");
-        headerRow.createCell(3).setCellValue("Salary");
-        headerRow.createCell(4).setCellValue("Location");
-        headerRow.createCell(5).setCellValue("PostedDate");
-        headerRow.createCell(6).setCellValue("ClosingDate");
-        headerRow.createCell(7).setCellValue("Status");
+        headerRow.createCell(3).setCellValue("MinSalary");
+        headerRow.createCell(4).setCellValue("MaxSalary");
+        headerRow.createCell(5).setCellValue("Location");
+        headerRow.createCell(6).setCellValue("PostedDate");
+        headerRow.createCell(7).setCellValue("ClosingDate");
+        headerRow.createCell(8).setCellValue("JobPostingCategoryID");
+        headerRow.createCell(9).setCellValue("Status");
 
         // Create a date format for the date cells
         CreationHelper createHelper = workbook.getCreationHelper();
@@ -66,8 +68,9 @@ public class ExcelServlet extends HttpServlet {
             row.createCell(0).setCellValue(job.getTitle());
             row.createCell(1).setCellValue(job.getDescription());
             row.createCell(2).setCellValue(job.getRequirements());
-            row.createCell(3).setCellValue(job.getSalary());
-            row.createCell(4).setCellValue(job.getLocation());
+            row.createCell(3).setCellValue(job.getMinSalary());
+            row.createCell(4).setCellValue(job.getMaxSalary());
+            row.createCell(5).setCellValue(job.getLocation());
 
             // Handle PostedDate (java.util.Date)
             if (job.getPostedDate() != null) {
@@ -75,7 +78,7 @@ public class ExcelServlet extends HttpServlet {
                 postedDateCell.setCellValue(job.getPostedDate());
                 postedDateCell.setCellStyle(dateCellStyle); // Apply date format
             } else {
-                row.createCell(5).setCellValue("N/A");
+                row.createCell(6).setCellValue("N/A");
             }
 
             // Handle ClosingDate (java.util.Date)
@@ -84,10 +87,10 @@ public class ExcelServlet extends HttpServlet {
                 closingDateCell.setCellValue(job.getClosingDate());
                 closingDateCell.setCellStyle(dateCellStyle); // Apply date format
             } else {
-                row.createCell(6).setCellValue("N/A");
+                row.createCell(7).setCellValue("N/A");
             }
-
-            row.createCell(7).setCellValue(job.getStatus());
+            row.createCell(8).setCellValue(job.getJob_Posting_CategoryID());
+            row.createCell(9).setCellValue(job.getStatus());
         }
 
         // Write the workbook to the response

@@ -215,7 +215,7 @@ public class AuthenticationController extends HttpServlet {
                     break;
 
                 case 3: // Job seeker role
-                    url = "view/user/userHome.jsp";
+                    url = "HomeSeeker";
                     break;
                 default:
                     // If role is not recognized, redirect to login with error
@@ -230,7 +230,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "view/home.jsp";
+        return "home";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {

@@ -115,5 +115,4 @@ public class RecruitersDAO extends GenericDAO<Recruiters> {
         parameterMap.put("fullname", "%" + searchQuery + "%");
         return queryGenericDAO(Recruiters.class, sql, parameterMap);
     }
-
 }

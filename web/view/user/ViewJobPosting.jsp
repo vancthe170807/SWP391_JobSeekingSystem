@@ -42,7 +42,7 @@
                                         <p><strong>Status: </strong>${jobPost.getStatus()}</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p><strong>Salary: </strong>${jobPost.getSalary()}</p>
+                                        <p><strong>Salary: </strong>${jobPost.getMinSalary()} $ - ${jobPost.getMaxSalary()} $</p>
                                     </div>
                                 </div>
                                 

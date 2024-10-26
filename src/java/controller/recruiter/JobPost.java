@@ -1,6 +1,7 @@
 package controller.recruiter;
 
 import constant.CommonConst;
+import dao.CompanyDAO;
 import dao.JobPostingsDAO;
 import dao.Job_Posting_CategoryDAO;
 import dao.RecruitersDAO;
@@ -16,6 +17,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Company;
 import model.JobPostings;
 import model.Job_Posting_Category;
 import model.Recruiters;
@@ -28,6 +30,7 @@ public class JobPost extends HttpServlet {
     RecruitersDAO recruitersDAO = new RecruitersDAO();
     Validation valid = new Validation();
     Job_Posting_CategoryDAO category = new Job_Posting_CategoryDAO();
+    CompanyDAO cdao = new CompanyDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,49 +47,55 @@ public class JobPost extends HttpServlet {
         // Fetch the recruiter info using the account ID
         Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
 
-        if (recruiters == null || !recruiters.isIsVerify()) {
-            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-        } else {
-            // Lấy tham số tìm kiếm và phân trang từ request
-            String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
-            String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
-            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-            int pageSize = 10;  // Số lượng bản ghi trên mỗi trang
-
-            List<JobPostings> jobList;
-            int totalRecords;
-
-            jobList = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
-
-            // Kiểm tra nếu có từ khóa tìm kiếm
-            if (!searchJP.isEmpty()) {
-                // Gọi DAO method để tìm kiếm và phân trang
-                jobList = dao.searchJobPostingByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID(), page);
-                totalRecords = dao.findTotalRecordByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID());  // Đếm tổng kết quả tìm kiếm
-                if (jobList.isEmpty()) {
-                    request.setAttribute("NoJP", "No found");
-                }
-            } else {
-                // Nếu không có từ khóa tìm kiếm, lấy tất cả dữ liệu và phân trang
-                jobList = dao.findJobPostingsWithFilterAndRecruiterID(sortField, recruiters.getRecruiterID(), page, pageSize);
-                totalRecords = dao.countTotalJobPostingsByRecruiterID(recruiters.getRecruiterID());  // Đếm tổng số bản ghi
-            }
-
-            // Tính toán tổng số trang
-            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-
-            // Gửi các thông tin cần thiết về JSP
-            request.setAttribute("listJobPosting", jobList);
-            request.setAttribute("totalPages", totalPages);
-            request.setAttribute("currentPage", page);
-            request.setAttribute("sortField", sortField);
-            request.setAttribute("searchJP", searchJP);  // Để giữ lại từ khóa tìm kiếm khi phân trang
-
-            // Chuyển hướng đến trang quản lý Job Posting
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/jobPost-manager.jsp");
+        if (recruiters == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/verifyRecruiter.jsp");
             dispatcher.forward(request, response);
-        }
+        } else {
+            Company company = cdao.findCompanyById(recruiters.getCompanyID());
+            if (company == null || !company.isVerificationStatus() || !recruiters.isIsVerify()) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/verifyRecruiter.jsp");
+                dispatcher.forward(request, response);
+            } else {
+// Lấy tham số tìm kiếm và phân trang từ request
+                String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
+                String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
+                int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int pageSize = 10;  // Số lượng bản ghi trên mỗi trang
 
+                List<JobPostings> jobList;
+                int totalRecords;
+
+                jobList = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+
+                // Kiểm tra nếu có từ khóa tìm kiếm
+                if (!searchJP.isEmpty()) {
+                    // Gọi DAO method để tìm kiếm và phân trang
+                    jobList = dao.searchJobPostingByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID(), page);
+                    totalRecords = dao.findTotalRecordByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID());  // Đếm tổng kết quả tìm kiếm
+                    if (jobList.isEmpty()) {
+                        request.setAttribute("NoJP", "No found");
+                    }
+                } else {
+                    // Nếu không có từ khóa tìm kiếm, lấy tất cả dữ liệu và phân trang
+                    jobList = dao.findJobPostingsWithFilterAndRecruiterID(sortField, recruiters.getRecruiterID(), page, pageSize);
+                    totalRecords = dao.countTotalJobPostingsByRecruiterID(recruiters.getRecruiterID());  // Đếm tổng số bản ghi
+                }
+
+                // Tính toán tổng số trang
+                int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+                // Gửi các thông tin cần thiết về JSP
+                request.setAttribute("listJobPosting", jobList);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("currentPage", page);
+                request.setAttribute("sortField", sortField);
+                request.setAttribute("searchJP", searchJP);  // Để giữ lại từ khóa tìm kiếm khi phân trang
+
+                // Chuyển hướng đến trang quản lý Job Posting
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/jobPost-manager.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
     }
 
     @Override

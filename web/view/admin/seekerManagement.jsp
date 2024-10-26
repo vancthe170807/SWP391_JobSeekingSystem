@@ -28,6 +28,15 @@
                 color: red; /* Inactive seekers in red */
                 font-weight: bold;
             }
+            .table-bordered td .form-check {
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+            }
+            .table-bordered thead th {
+                background-color: #28a745; /* Màu xanh lá cây */
+                color: #ffffff; /* Màu trắng cho chữ để dễ đọc */
+            }
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
@@ -82,7 +91,7 @@
 
                                 <!--search seeker end-->
                                 <div class="seeker-list">
-                                    <table class="table table-striped">
+                                    <table class="table table-bordered" style="text-align: center; vertical-align: middle;">
                                         <thead>
                                             <tr>
                                                 <th>Avatar</th>
@@ -257,9 +266,9 @@
             document.getElementById('next-page').addEventListener('click', function (event) {
                 event.preventDefault();
                 const currentPage = getCurrentPage();
-                 const totalPages = ${pageControl.getTotalPages()};
+                const totalPages = ${pageControl.getTotalPages()};
                 if (currentPage < totalPages) {
-                     window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
+                    window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
                 }
             });
 

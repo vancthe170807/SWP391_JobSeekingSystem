@@ -18,11 +18,11 @@ public class Education {
     private String FieldOfStudy;
     private Date StartDate;
     private Date EndDate;
-
+    private String DegreeImg;
     public Education() {
     }
 
-    public Education(int EducationID, int JobSeekerID, String Institution, String Degree, String FieldOfStudy, Date StartDate, Date EndDate) {
+    public Education(int EducationID, int JobSeekerID, String Institution, String Degree, String FieldOfStudy, Date StartDate, Date EndDate, String DegreeImg) {
         this.EducationID = EducationID;
         this.JobSeekerID = JobSeekerID;
         this.Institution = Institution;
@@ -30,6 +30,7 @@ public class Education {
         this.FieldOfStudy = FieldOfStudy;
         this.StartDate = StartDate;
         this.EndDate = EndDate;
+        this.DegreeImg = DegreeImg;
     }
 
     public int getEducationID() {
@@ -87,6 +88,16 @@ public class Education {
     public void setEndDate(Date EndDate) {
         this.EndDate = EndDate;
     }
+
+    public String getDegreeImg() {
+        return DegreeImg;
+    }
+
+    public void setDegreeImg(String DegreeImg) {
+        this.DegreeImg = DegreeImg;
+    }
+
+    
     
     
 }

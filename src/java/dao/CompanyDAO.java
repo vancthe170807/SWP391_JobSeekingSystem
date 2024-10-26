@@ -29,14 +29,16 @@ public class CompanyDAO extends GenericDAO<Company> {
                 + "           ([name]\n"
                 + "           ,[description]\n"
                 + "           ,[location]\n"
-                + "           ,[verificationStatus]\n"
+                + "           ,[accountId]\n"
+                + "           ,[BusinessCode]\n"
                 + "           ,[BusinessLicenseImage])\n"
-                + "     VALUES(?,?,?,?,?)";
+                + "     VALUES(?,?,?,?,?,?)";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("name", t.getName());
         parameterMap.put("description", t.getDescription());
         parameterMap.put("location", t.getLocation());
-        parameterMap.put("verificationStatus", t.isVerificationStatus());
+        parameterMap.put("acountId", String.valueOf(t.getAccountId()));
+        parameterMap.put("BusinessCode", t.getBusinessCode());
         parameterMap.put("BusinessLicenseImage", t.getBusinessLicenseImage());
         return insertGenericDAO(sql, parameterMap);
     }
@@ -180,18 +182,11 @@ public class CompanyDAO extends GenericDAO<Company> {
     }
 
     public List<Company> getCompanyNameByAccountId(int id) {
-        String sql = "select\n"
-                + "	c.*\n"
-                + "from \n"
-                + "	Account as acc\n"
-                + "	, Recruiters as rc\n"
-                + "	, Company as c\n"
-                + "where \n"
-                + "	acc.id = rc.AccountID\n"
-                + "	AND rc.CompanyID = c.id\n"
-                + "	AND acc.id = ?";
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Company]\n"
+                + "  where accountId = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("accId", id);
+        parameterMap.put("accountId", id);
         return queryGenericDAO(Company.class, sql, parameterMap);
     }
 
@@ -220,10 +215,10 @@ public class CompanyDAO extends GenericDAO<Company> {
         }
         return false;
     }
-    
+
     public List<Company> getTop3RecentCompanysByOpen() {
         String sql = "select top 3 * from Company where verificationStatus = ? order by id desc";
-  
+
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("verificationStatus", 1);
 
@@ -236,6 +231,34 @@ public class CompanyDAO extends GenericDAO<Company> {
 
         // Nếu company khác null thì công ty tồn tại, ngược lại thì không
         return company != null;
+    }
+
+    public boolean checkCompanyByAccountId(Company company) {
+        String sql = "SELECT * FROM [dbo].[Company] where accountId = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", company.getAccountId());
+        List<Company> list = queryGenericDAO(Company.class, sql, parameterMap);
+        return list.size() == 0 ? true : false;
+    }
+
+    public boolean checkExistBusinessCode(int id, String businessCode) {
+        List<Company> list = findAll();
+        for (Company company : list) {
+            //lay ra id cua thang company do
+            if (id != company.getAccountId() && businessCode.equals(company.getBusinessCode())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Company findCompanyByAccountId(int id) {
+        String sql = "SELECT * FROM [dbo].[Company] where accountId = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", id);
+        List<Company> list = queryGenericDAO(Company.class, sql, parameterMap);
+        Company com = list.size() == 0 ? null : list.get(0);
+        return com;
     }
 
 }

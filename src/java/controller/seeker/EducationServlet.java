@@ -4,17 +4,21 @@ import constant.CommonConst;
 import dao.EducationDAO;
 import dao.JobSeekerDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.util.Calendar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +26,12 @@ import model.Account;
 
 import model.Education;
 import model.JobSeekers;
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 
 @WebServlet(name = "EducationServlet", urlPatterns = {"/education"})
 public class EducationServlet extends HttpServlet {
@@ -88,7 +98,7 @@ public class EducationServlet extends HttpServlet {
         String url = null; // URL to navigate to after processing
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId()+"");
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
         List<Education> edus = eduDAO.findEducationbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (jobSeeker != null) {
             try {
@@ -97,6 +107,10 @@ public class EducationServlet extends HttpServlet {
                 String fieldofstudy = request.getParameter("fieldofstudy");
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
+
+                Part degreeImgPart = request.getPart("degreeImg");
+                String uploadDir = "uploads/degreeImgs";
+                String degreeImgName = saveFile(degreeImgPart, uploadDir);
 
                 Date startDate = Date.valueOf(startDateStr);
                 Date endDate = Date.valueOf(endDateStr);
@@ -107,42 +121,45 @@ public class EducationServlet extends HttpServlet {
                 Calendar endCal = Calendar.getInstance();
                 endCal.setTime(endDate);
 
-                // Tính số năm giữa 2 ngày
+                boolean isCertificate = "Certificate".equals(degree);
                 int yearsDiff = endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR);
                 int monthsDiff = endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
 
-                // Tính tổng số tháng giữa startDate và endDate
+// Calculate total months between startDate and endDate
                 int totalMonths = yearsDiff * 12 + monthsDiff;
 
-                // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
-                if (totalMonths < 24) {
+// If it's not a Certificate degree and total months is below 24, show an error
+                if (!isCertificate && totalMonths < 24) {
                     try {
                         url = "education?error=" + URLEncoder.encode("End date must be at least 2 years after the start date.", "UTF-8");
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else {
-
-                    // Tạo đối tượng Education
-                    Education eduAdd = new Education();
-                    eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
-                    eduAdd.setInstitution(institution);
-                    eduAdd.setDegree(degree);
-                    eduAdd.setFieldOfStudy(fieldofstudy);
-                    eduAdd.setStartDate(startDate);
-                    eduAdd.setEndDate(endDate);
-
-                    // Thêm bản ghi vào CSDL
-                    eduDAO.insert(eduAdd);
-                    request.setAttribute("successEducation", "Profile uploaded successfully.");
-                    request.setAttribute("edus", edus);
-                    request.setAttribute("jobSeeker", jobSeeker);
-                    url = "education"; // Điều hướng đến trang Education
                 }
+                // Create and populate the Education object
+                Education eduAdd = new Education();
+                eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
+                eduAdd.setInstitution(institution);
+                eduAdd.setDegree(degree);
+                eduAdd.setFieldOfStudy(fieldofstudy);
+                eduAdd.setStartDate(startDate);
+                eduAdd.setEndDate(endDate);
+                eduAdd.setDegreeImg(degreeImgName);
+                // Continue processing eduAdd as needed (e.g., save to the database)
+                eduDAO.insert(eduAdd);
+                // Continue processing eduAdd as needed (e.g., save to the database)
+                request.setAttribute("successEducation", "Profile add successfully.");
+                request.setAttribute("edus", edus);
+                request.setAttribute("jobSeeker", jobSeeker);
+                url = "education"; // Điều hướng đến trang Education
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
-                request.setAttribute("errorEducation", "An error occurred while uploading the profile. Please try again.");
-                url = "view/user/Education.jsp"; // Redirect back to Education upload page with error
+                try {
+                    url = "education?error=" + URLEncoder.encode("An error occurred while uploading the profile. Please try again.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                url = "education"; // Redirect back to Education upload page with error
             }
         } else {
             request.setAttribute("error", "No Job Seeker found for the current account.");
@@ -167,7 +184,10 @@ public class EducationServlet extends HttpServlet {
                 String fieldofstudy = request.getParameter("fieldofstudy");
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
-                String hiddenEndDate = request.getParameter("hiddenEndDate"); // Lấy giá trị từ hidden field
+
+                Part degreeImgPart = request.getPart("degreeImg");
+                String uploadDir = "uploads/degreeImgs";
+                String degreeImgName = saveFile(degreeImgPart, uploadDir);
 
                 int educationID = Integer.parseInt(educationIDStr);
                 Date startDate = Date.valueOf(startDateStr);
@@ -179,6 +199,7 @@ public class EducationServlet extends HttpServlet {
                 Calendar endCal = Calendar.getInstance();
                 endCal.setTime(endDate);
 
+                boolean isCertificate = "Certificate".equals(degree);
                 // Tính số năm giữa 2 ngày
                 int yearsDiff = endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR);
                 int monthsDiff = endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
@@ -187,36 +208,39 @@ public class EducationServlet extends HttpServlet {
                 int totalMonths = yearsDiff * 12 + monthsDiff;
 
                 // Nếu tổng số tháng dưới 24, không lưu và trả về thông báo lỗi
-                if (totalMonths < 24) {
+                if (!isCertificate && totalMonths < 24) {
                     try {
                         url = "education?error=" + URLEncoder.encode("End date must be at least 2 years after the start date.", "UTF-8");
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else {
-
-                    Education edu = new Education();
-
-                    // Tạo đối tượng Education
-                    edu.setEducationID(educationID);
-                    edu.setInstitution(institution);
-                    edu.setDegree(degree);
-                    edu.setFieldOfStudy(fieldofstudy);
-                    edu.setStartDate(startDate);
-                    edu.setEndDate(endDate);
-
-                    // Cập nhật bản ghi trong CSDL
-                    eduDAO.updateEducation(edu);
-                    request.setAttribute("successEducation", "Profile updated successfully.");
-                    request.setAttribute("edus", edus);
-                    request.setAttribute("jobSeeker", jobSeeker);
-                    url = "education"; // Điều hướng đến trang Education
                 }
+                Education edu = new Education();
+
+                // Tạo đối tượng Education
+                edu.setEducationID(educationID);
+                edu.setInstitution(institution);
+                edu.setDegree(degree);
+                edu.setFieldOfStudy(fieldofstudy);
+                edu.setStartDate(startDate);
+                edu.setEndDate(endDate);
+                edu.setDegreeImg(degreeImgName);
+
+                // Cập nhật bản ghi trong CSDL
+                eduDAO.updateEducation(edu);
+                request.setAttribute("successEducation", "Profile updated successfully.");
+                request.setAttribute("edus", edus);
+                request.setAttribute("jobSeeker", jobSeeker);
+                url = "education"; // Điều hướng đến trang Education
 
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
-                request.setAttribute("errorEducation", "An error occurred while updating the profile. Please try again.");
-                url = "view/user/Education.jsp"; // Redirect back to Education upload page with error
+                try {
+                    url = "education?error=" + URLEncoder.encode("An error occurred while uploading the profile. Please try again.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                url = "education"; // Redirect back to Education upload page with error
             }
         } else {
             request.setAttribute("error", "No Job Seeker found for the current account.");
@@ -282,6 +306,41 @@ public class EducationServlet extends HttpServlet {
 
         url = "education"; // Redirect back to the education page
         return url; // Return the URL to navigate to
+    }
+
+    private String saveFile(Part filePart, String uploadDir) throws IOException {
+        // Resolve the absolute path for the upload directory
+        Path uploadPath = Paths.get(getServletContext().getRealPath("/") + uploadDir);
+
+        // Create directories if they don't exist
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // Get the file name from the uploaded part
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+        // Check if the file already exists; if so, add a timestamp to create a unique file name
+        Path filePath = uploadPath.resolve(fileName);
+        if (Files.exists(filePath)) {
+            String fileExtension = "";
+            int dotIndex = fileName.lastIndexOf('.');
+
+            if (dotIndex > 0) {
+                fileExtension = fileName.substring(dotIndex);
+                fileName = fileName.substring(0, dotIndex);
+            }
+
+            // Append timestamp for uniqueness
+            fileName = fileName + "_" + System.currentTimeMillis() + fileExtension;
+            filePath = uploadPath.resolve(fileName);
+        }
+
+        // Save the file
+        Files.copy(filePart.getInputStream(), filePath);
+
+        // Return the relative path to the saved file
+        return uploadDir + "/" + fileName;
     }
 
 }

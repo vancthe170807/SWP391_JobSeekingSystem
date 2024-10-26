@@ -83,10 +83,7 @@
                                         <!-- Error message (displayed in red) -->
                                         <span class="text-danger me-3">${requestScope.notice}</span>
 
-                                        <!-- Button add new company -->
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
-                                            <i class="fas fa-plus"></i> Add New Company
-                                        </button>
+                                       
                                     </div>
                                 </div>
 
@@ -101,49 +98,7 @@
                                 </form>
 
                                 <!--search company end-->
-                                <div class="modal fade" id="addCompanyModal" tabindex="-1" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-success text-white">
-                                                <h5 class="modal-title" id="addCompanyModalLabel">Add New Company</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!--form add company-->
-                                                <form id="addCompanyForm" action="${pageContext.request.contextPath}/companies?action=add-company" method="POST" enctype="multipart/form-data">
-
-                                                    <div class="mb-3">
-                                                        <label for="companyName" class="form-label">Company Name</label>
-                                                        <input type="text" class="form-control" id="companyName" name="name" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="companyDescription" class="form-label">Description</label>
-                                                        <textarea class="form-control" id="companyDescription" name="description" rows="3"></textarea>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="companyLocation" class="form-label">Location</label>
-                                                        <input type="text" class="form-control" id="companyLocation" name="location">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="verificationStatus" class="form-label">Verification Status</label>
-                                                        <select class="form-select" id="verificationStatus" name="verificationStatus">
-                                                            <option value="accept">Accept</option>
-                                                            <option value="violate">Violate</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="businessLicense" class="form-label">Business License</label>
-                                                        <input type="file" class="form-control" id="businessLicense" name="businessLicense" accept="image/*" required="">
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-success">Add Company</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="seeker-list">
                                     <table class="table table-striped">
                                         <thead>

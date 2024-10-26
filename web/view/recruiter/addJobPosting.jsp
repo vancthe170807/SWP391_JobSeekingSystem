@@ -146,13 +146,13 @@
                     <!-- Description -->
                     <div class="form-group">
                         <label for="jobDescription">Job Description:</label>
-                        <textarea id="jobDescription" name="jobDescription" class="form-control" placeholder="Enter job description" rows="3" required>${jobDescription}</textarea>
+                        <textarea id="jobDescription" name="jobDescription" class="form-control" placeholder="Enter job description" rows="6" required>${jobDescription}</textarea>
                     </div>
 
                     <!-- Requirements -->
                     <div class="form-group">
                         <label for="jobRequirements">Job Requirements:</label>
-                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="3" required>${jobRequirements}</textarea>
+                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="6" required>${jobRequirements}</textarea>
                     </div>
 
                     <!-- Two-column row for Min Salary, Max Salary -->
@@ -212,18 +212,15 @@
                     <!-- Job Posting Category -->
                     <div class="form-group">
                         <label for="jobCategory">Job Category:</label>
-                        <select id="jobCategory" name="jobCategory" class="form-control" required onchange="showNewCategoryInput(this)">
+                        <select id="jobCategory" name="jobCategory" class="form-control" required>
                             <option value="">Select Job Category</option>
                             <c:forEach var="category" items="${jobCategories}">
-                                <option value="${category.id}">${category.getName()}</option>
+                                <option value="${category.id}" <c:if test="${category.id == selectedJobCategory}">selected</c:if>>${category.getName()}</option>
                             </c:forEach>
-                            <option value="new">Add New Category</option>
                         </select>
-                        <!-- Input field for new category (hidden initially) -->
-                        <div id="newCategoryInput" style="display:none;">
-                            <input type="text" id="newCategory" name="newCategory" class="form-control" placeholder="Enter new category name">
-                        </div>
                     </div>
+
+
                     <!-- Checkbox -->
                     <div class="form-check">
                         <input type="checkbox" id="jobPathAgreement" name="jobPathAgreement" class="form-check-input" required>
@@ -275,6 +272,7 @@
                 document.getElementById("jobStatus").value = 'Open'; // Default value
                 document.getElementById("postedDate").value = '';
                 document.getElementById("closingDate").value = '';
+                document.getElementById("jobCategory").value = '';
 
                 // Manually uncheck the checkbox if it was checked
                 document.getElementById("jobPathAgreement").checked = false;
@@ -313,14 +311,6 @@
                 }
             });
 
-            function showNewCategoryInput(selectElement) {
-                const newCategoryInput = document.getElementById('newCategoryInput');
-                if (selectElement.value === 'new') {
-                    newCategoryInput.style.display = 'block';
-                } else {
-                    newCategoryInput.style.display = 'none';
-                }
-            }
         </script>
 
         <!-- Include Footer -->

@@ -165,27 +165,14 @@
                 <form action="${pageContext.request.contextPath}/jobPost?action=updateJobPost" method="post">
                     <!-- Grid layout for form -->
                     <div class="form-grid">
-                        <div class="form-group">
-                            <label for="JobPostingID" class="form-label">Job ID</label>
-                            <input type="text" id="JobPostingID" name="JobPostingID" class="form-control" 
-                                   value="${param.JobPostingID != null ? param.JobPostingID : jobPost.getJobPostingID()}" readonly>
-                        </div>
+   
+                        <input type="hidden" id="JobPostingID" name="JobPostingID" 
+                               value="${param.JobPostingID != null ? param.JobPostingID : jobPost.getJobPostingID()}">
 
                         <div class="form-group">
                             <label for="jobTitle" class="form-label">Job Title</label>
                             <input type="text" id="jobTitle" name="jobTitle" class="form-control" 
                                    value="${param.jobTitle != null ? param.jobTitle : jobPost.getTitle()}" required>
-                        </div>
-                        <!-- Job Description -->
-                        <div class="form-group">
-                            <label for="jobDescription" class="form-label">Job Description</label>
-                            <textarea id="jobDescription" name="jobDescription" class="form-control" rows="4" required>${fn:escapeXml(param.jobDescription != null ? param.jobDescription : jobPost.getDescription())}</textarea>
-                        </div>
-
-                        <!-- Job Requirements -->
-                        <div class="form-group">
-                            <label for="jobRequirements" class="form-label">Job Requirements</label>
-                            <textarea id="jobRequirements" name="jobRequirements" class="form-control" rows="4" required>${fn:escapeXml(param.jobRequirements != null ? param.jobRequirements : jobPost.getRequirements())}</textarea>
                         </div>
 
                         <!-- Job Location -->
@@ -194,12 +181,41 @@
                             <input type="text" id="jobLocation" name="jobLocation" class="form-control" 
                                    value="${param.jobLocation != null ? param.jobLocation : jobPost.getLocation()}" required>
                         </div>
+                        <!-- Job Description -->
+                        <div class="form-group">
+                            <label for="jobDescription" class="form-label">Job Description</label>
+                            <textarea id="jobDescription" name="jobDescription" class="form-control" rows="6" required>${fn:escapeXml(param.jobDescription != null ? param.jobDescription : jobPost.getDescription())}</textarea>
+                        </div>
+
+                        <!-- Job Requirements -->
+                        <div class="form-group">
+                            <label for="jobRequirements" class="form-label">Job Requirements</label>
+                            <textarea id="jobRequirements" name="jobRequirements" class="form-control" rows="6" required>${fn:escapeXml(param.jobRequirements != null ? param.jobRequirements : jobPost.getRequirements())}</textarea>
+                        </div>
 
                         <!-- Job Salary -->
                         <div class="form-group">
-                            <label for="jobSalary" class="form-label">Salary $</label>
-                            <input type="number" id="jobSalary" name="jobSalary" class="form-control" 
-                                   value="${param.jobSalary != null ? param.jobSalary : jobPost.getSalary()}" required>
+                            <label for="minSalary" class="form-label">Min Salary $</label>
+                            <input type="number" id="minSalary" name="minSalary" class="form-control" 
+                                   value="${param.minSalary != null ? param.minSalary : jobPost.getMinSalary()}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxSalary" class="form-label">Max Salary $</label>
+                            <input type="number" id="maxSalary" name="maxSalary" class="form-control" 
+                                   value="${param.maxSalary != null ? param.maxSalary : jobPost.getMaxSalary()}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jobCategory">Job Category:</label>
+                            <select id="jobCategory" name="jobCategory" class="form-control" required>
+                                <option value="">Select Job Category</option>
+                                <c:forEach var="category" items="${jobCategories}">
+                                    <option value="${category.getId()}" 
+                                            <c:if test="${category.getId() == selectedJobCategory}">selected</c:if>>
+                                        ${category.getName()}
+                                    </option>
+                                </c:forEach>
+                            </select>
                         </div>
 
                         <!-- Job Status -->
@@ -261,6 +277,7 @@
                     });
                 }
             });
+
         </script>
     </body>
 </html>

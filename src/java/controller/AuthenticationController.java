@@ -230,7 +230,7 @@ public class AuthenticationController extends HttpServlet {
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("account");
-        return "view/home.jsp";
+        return "home";
     }
 
     private String signUp(HttpServletRequest request, HttpServletResponse response) throws MessagingException, ServletException, IOException {
@@ -615,7 +615,7 @@ public class AuthenticationController extends HttpServlet {
             } else {
                 accountDAO.updateAccount(accountEdit);
                 request.setAttribute("successMessage", "Profile updated successfully.");
-                if (accountEdit.getRoleId() == 2) { 
+                if (accountEdit.getRoleId() == 2) {
                     url = "view/recruiter/editRecruiterProfile.jsp";
                 }
                 if (accountEdit.getRoleId() == 3) {
@@ -629,7 +629,6 @@ public class AuthenticationController extends HttpServlet {
         }
         return url;
     }
-
 
     // Vo hieu hoa tai khoan
     private String deactivateAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -6,6 +6,7 @@ package dao;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import model.Job_Posting_Category;
 
 /**
@@ -29,15 +30,6 @@ public class Job_Posting_CategoryDAO extends GenericDAO<Job_Posting_Category> {
         return insertGenericDAO(sql, parameterMap);
     }
 
-    public void updateJobPosting(Job_Posting_Category t) {
-        String sql = "UPDATE [dbo].[Job_Posting_Category]\n"
-                + "   SET [name] = ?\n"
-                + " WHERE id = ?";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("name", t.getName());
-        updateGenericDAO(sql, parameterMap);
-    }
-
     public Job_Posting_Category findJob_Posting_CategoryByID(int id) {
         String sql = "SELECT * FROM [dbo].[Job_Posting_Category] where id = ?";
         parameterMap = new LinkedHashMap<>();
@@ -46,12 +38,14 @@ public class Job_Posting_CategoryDAO extends GenericDAO<Job_Posting_Category> {
         return list.isEmpty() ? null : list.get(0);
     }
 
-
-    public List<Job_Posting_Category> getNameById(int id) {
-        String sql = "  select a.name from Job_Posting_Category a join JobPostings b \n"
-                + "  on a.id = b.Job_Posting_CategoryID where a.id = ?";
+    public Job_Posting_Category findJob_Posting_CategoryNameByJobPostingID(int jobPostingID) {
+        String sql = "SELECT jpc.* "
+                + "FROM [dbo].[JobPostings] jp "
+                + "JOIN [dbo].[Job_Posting_Category] jpc ON jp.Job_Posting_CategoryID = jpc.id "
+                + "WHERE jp.JobPostingID = ?";
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("id", id);
-        return queryGenericDAO(Job_Posting_Category.class, sql, parameterMap);
+        parameterMap.put("jobPostingID", jobPostingID);
+        List<Job_Posting_Category> list = queryGenericDAO(Job_Posting_Category.class, sql, parameterMap); // Query returns a list of names (Strings)
+        return list.isEmpty() ? null : list.get(0);
     }
 }

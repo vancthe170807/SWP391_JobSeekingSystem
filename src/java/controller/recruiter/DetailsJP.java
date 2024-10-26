@@ -25,33 +25,30 @@ public class DetailsJP extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url;
-        switch (action) {
-            case "details":
-                url = viewJP(request, response);
-                break;
-            default:
-                url = "view/recruiter/viewJP.jsp";
+        if ("details".equals(action)) {
+            url = viewJP(request, response);
+        } else {
+            url = "view/recruiter/viewJP.jsp";
         }
         request.getRequestDispatcher(url).forward(request, response);
     }
 
     private String viewJP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = null;
+        String url;
         int idJP = Integer.parseInt(request.getParameter("idJP"));
-        JobPostings jobPost = dao.findJobPostingById(idJP);
-        //JobPostings jobCategories = dao.findJobPostingByRecruiterIDandCategoryID(1,15);
-        Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryByID(idJP);
 
-        //List<Job_Posting_Category> category= categoryDAO.getNameById(idJP);
-        //List<Job_Posting_Category> category= categoryDAO.findAll();
-        //List<Job_Posting_Category> category = categoryDAO.findAll();
-        request.setAttribute("jobCategories", category);
+        // Lấy chi tiết công việc từ DAO
+        JobPostings jobPost = dao.findJobPostingById(idJP);
+
+        // Lấy danh mục công việc của jobPost
+        Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
+        request.setAttribute("category", category); // Đặt với tên 'category'
+
+        // Đặt chi tiết công việc và danh mục vào request
         request.setAttribute("jobPost", jobPost);
+
+        // Chuyển hướng tới trang chi tiết công việc
         url = "view/recruiter/viewJP.jsp";
         return url;
-        
-        
-        
-  
     }
 }

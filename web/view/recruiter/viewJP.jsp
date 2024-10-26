@@ -1,9 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@page import="dao.Job_Posting_CategoryDAO"%>
-<%@page import="dao.AccountDAO"%>
-<%@page import="model.Company"%>
 <%@page import="model.Job_Posting_Category"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
@@ -165,13 +162,29 @@
                         </p>
                     </div>
                 </div>
+
+                <% 
+                    // Lấy thông tin category từ request
+                    Job_Posting_Category category = (Job_Posting_Category) request.getAttribute("category");
+
+                    // Kiểm tra nếu category không null
+                    if (category != null) {
+                %>
                 <div class="job-detail">
                     <div>
-                        <h5>Field:</h5>
-                        <p>${jobCategories.getName()}</p>
-
+                        <h5>Job Category Name:</h5>
+                        <p><%= category.getName() %></p> <!-- Hiển thị tên danh mục công việc -->
                     </div>
                 </div>
+                <% 
+                    } else { 
+                %>
+                <div class="job-detail">
+                    <h5>Job Category Name:</h5>
+                </div>
+                <% 
+                    } 
+                %>
 
                 <a href="javascript:window.history.back();" class="btn-apply">Back</a>
             </div>

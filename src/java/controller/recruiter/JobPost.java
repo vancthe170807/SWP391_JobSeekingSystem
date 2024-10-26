@@ -99,9 +99,9 @@ public class JobPost extends HttpServlet {
             case "add-jp":
                 url = addJobPosting(request, response);
                 break;
-//            case "updateJobPost":
-//                url = updateJP(request, response);
-//                break;
+            case "updateJobPost":
+                url = updateJP(request, response);
+                break;
             default:
                 url = "view/recruiter/jobPost-manager.jsp";
                 break;
@@ -124,7 +124,7 @@ public class JobPost extends HttpServlet {
         }
 
         try {
-            // Retrieve parameters from the request
+            // Lấy các tham số từ request
             String jobTitle = request.getParameter("jobTitle");
             String jobDescription = request.getParameter("jobDescription");
             String jobRequirements = request.getParameter("jobRequirements");
@@ -134,12 +134,16 @@ public class JobPost extends HttpServlet {
             String jobStatus = request.getParameter("jobStatus");
             Date postedDate = Date.valueOf(request.getParameter("postedDate"));
             Date closingDate = Date.valueOf(request.getParameter("closingDate"));
+            String jobCategory = request.getParameter("jobCategory"); // Lấy giá trị từ danh sách có sẵn
 
-            // Retrieve the jobCategory and newCategory from the request
-            String jobCategory = request.getParameter("jobCategory"); // This is the value from the dropdown
-            String newCategory = request.getParameter("newCategory"); // This is the new category input field
-            
-            // Set form data back into the request to retain user input
+            // Lưu lại lựa chọn khi có lỗi
+            request.setAttribute("selectedJobCategory", jobCategory);
+
+            // Lấy danh sách job categories từ cơ sở dữ liệu
+            List<Job_Posting_Category> jobCategories = category.findAll();
+            request.setAttribute("jobCategories", jobCategories);
+
+            // Đặt lại dữ liệu form để giữ lại thông tin đã nhập khi có lỗi
             request.setAttribute("jobTitle", jobTitle);
             request.setAttribute("jobDescription", jobDescription);
             request.setAttribute("jobRequirements", jobRequirements);
@@ -150,34 +154,17 @@ public class JobPost extends HttpServlet {
             request.setAttribute("closingDate", closingDate);
             request.setAttribute("jobStatus", jobStatus);
 
-            int jobCategoryId;
+            List<String> erMess = new ArrayList<>();
 
-            // Check if a new category was added
-            JobPostings jobPost = new JobPostings();
-            if (newCategory != null && !newCategory.trim().isEmpty()) {
-                // A new category has been added
-                Job_Posting_Category newJobCategory = new Job_Posting_Category();
-                newJobCategory.setName(newCategory);
-
-                // Insert new category into the database and get the generated ID
-                jobCategoryId = category.insert(newJobCategory);
-
-                // Check if ID was successfully generated
-                if (jobCategoryId > 0) {
-                    // Set the generated category ID to jobPost
-                    jobPost.setJob_Posting_CategoryID(jobCategoryId);
-                } else {
-                    // Handle the error (e.g., unable to insert category)
-                    request.setAttribute("erMess", "Unable to insert new category");
-                    return "view/recruiter/addJobPosting.jsp";
-                }
-            } else {
-                // Use the existing category ID selected from the dropdown
-                jobCategoryId = Integer.parseInt(jobCategory);
-                jobPost.setJob_Posting_CategoryID(jobCategoryId);
+            // Xác thực dữ liệu đầu vào
+            if (jobCategory == null || jobCategory.trim().isEmpty()) {
+                erMess.add("Please select a job category.");
             }
 
-            // Create a new JobPostings object and set values
+            JobPostings jobPost = new JobPostings();
+            int jobCategoryId = Integer.parseInt(jobCategory); // Sử dụng jobCategory đã chọn
+            jobPost.setJob_Posting_CategoryID(jobCategoryId);
+
             jobPost.setRecruiterID(recruiters.getRecruiterID());
             jobPost.setTitle(jobTitle);
             jobPost.setDescription(jobDescription);
@@ -188,9 +175,8 @@ public class JobPost extends HttpServlet {
             jobPost.setStatus(jobStatus);
             jobPost.setPostedDate(postedDate);
             jobPost.setClosingDate(closingDate);
-            jobPost.setJob_Posting_CategoryID(jobCategoryId); // Set the category ID (either new or existing)
 
-            List<String> erMess = new ArrayList<>();
+            // Thêm các thông báo lỗi nếu có
             if (!valid.checkAtLeast30Chars(jobDescription)) {
                 erMess.add("Description too short");
             }
@@ -198,31 +184,32 @@ public class JobPost extends HttpServlet {
                 erMess.add("Requirements too short");
             }
             if (!valid.isValidDateRange(postedDate) || !valid.isValidDateRange(closingDate)) {
-                erMess.add("Date month year must be greater than 1990 and less than 2500");
+                erMess.add("Date must be between 1990 and 2500");
             }
             if (!valid.isStartDateBeforeEndDate(postedDate, closingDate)) {
-                erMess.add("Expiration date must be greater than post date");
+                erMess.add("Closing date must be after posting date");
             }
             if (!valid.isToday(postedDate)) {
-                erMess.add("Post date must be current date");
+                erMess.add("Post date must be the current date");
             }
-            if (!valid.isValidSalary(minSalary) | !valid.isValidSalary(maxSalary) | !valid.isMaxSalaryGreaterThanMin(maxSalary, minSalary)) {
-                erMess.add("Invalid salary");
+            if (!valid.isValidSalary(minSalary) || !valid.isValidSalary(maxSalary) || !valid.isMaxSalaryGreaterThanMin(maxSalary, minSalary)) {
+                erMess.add("Invalid salary range");
             }
+
+            // Nếu có lỗi, chuyển hướng về trang thêm với thông báo lỗi
             if (!erMess.isEmpty()) {
                 request.setAttribute("erMess", erMess);
                 url = "view/recruiter/addJobPosting.jsp";
             } else {
-                // Insert the new job posting into the database
+                // Nếu hợp lệ, lưu bài đăng vào cơ sở dữ liệu
                 dao.insert(jobPost);
 
-                // Lấy tham số phân trang hiện tại (nếu có)
+                // Phân trang cho danh sách bài đăng
                 String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
                 String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
                 int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-                int pageSize = 10; // Số lượng bản ghi trên mỗi trang
+                int pageSize = 10;
 
-                // Gọi phương thức để phân trang
                 List<JobPostings> jobList;
                 int totalRecords;
 
@@ -234,17 +221,14 @@ public class JobPost extends HttpServlet {
                     totalRecords = dao.countTotalJobPostingsByRecruiterID(recruiters.getRecruiterID());
                 }
 
-                // Tính toán tổng số trang
                 int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-
-                // Gửi các thông tin cần thiết về JSP
                 request.setAttribute("listJobPosting", jobList);
                 request.setAttribute("totalPages", totalPages);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("sortField", sortField);
                 request.setAttribute("searchJP", searchJP);
 
-                // Chuyển hướng đến trang quản lý Job Posting
+                // Chuyển hướng đến trang quản lý bài đăng
                 url = "view/recruiter/jobPost-manager.jsp";
             }
         } catch (Exception e) {
@@ -255,122 +239,121 @@ public class JobPost extends HttpServlet {
         return url;
     }
 
-//    private String updateJP(HttpServletRequest request, HttpServletResponse response) {
-//        String url;
-//        int idJP = Integer.parseInt(request.getParameter("JobPostingID"));
-//
-//        HttpSession session = request.getSession();
-//        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-//        if (account == null) {
-//            return "view/authen/login.jsp";
-//        }
-//        Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
-//        if (recruiters == null) {
-//            return "view/authen/login.jsp";
-//        }
-//        // Lấy thông tin bài đăng từ DAO
-//        JobPostings jobPost = dao.findJobPostingById(idJP);
-//
-//        // Lấy các tham số từ form
-//        String jobTitle = request.getParameter("jobTitle");
-//        String jobDescription = request.getParameter("jobDescription");
-//        String jobRequirements = request.getParameter("jobRequirements");
-//        String jobLocation = request.getParameter("jobLocation");
-//        double jobSalary = Double.parseDouble(request.getParameter("jobSalary"));
-//        String jobStatus = request.getParameter("jobStatus");
-//        Date postedDate = Date.valueOf(request.getParameter("postedDate"));
-//        Date closingDate = Date.valueOf(request.getParameter("closingDate"));
-//
-//        // Set form data back into the request để giữ lại input của người dùng
-//        request.setAttribute("jobTitle", jobTitle);
-//        request.setAttribute("jobDescription", jobDescription);
-//        request.setAttribute("jobRequirements", jobRequirements);
-//        request.setAttribute("jobLocation", jobLocation);
-//        request.setAttribute("jobSalary", jobSalary);
-//        request.setAttribute("jobStatus", jobStatus);
-//        request.setAttribute("postedDate", postedDate);
-//        request.setAttribute("closingDate", closingDate);
-//
-//        // Cập nhật thông tin bài đăng
-//        jobPost.setRecruiterID(recruiters.getRecruiterID());
-//        jobPost.setTitle(jobTitle);
-//        jobPost.setDescription(jobDescription);
-//        jobPost.setRequirements(jobRequirements);
-//        jobPost.setLocation(jobLocation);
-//        jobPost.setSalary(jobSalary);
-//        jobPost.setStatus(jobStatus);
-//        jobPost.setPostedDate(postedDate);
-//        jobPost.setClosingDate(closingDate);
-//
-//        // Kiểm tra tính hợp lệ của dữ liệu
-//        List<String> erMess = new ArrayList<>();
-//        if (!valid.checkAtLeast30Chars(jobDescription)) {
-//            erMess.add("Description too short");
-//        }
-//        if (!valid.checkAtLeast30Chars(jobRequirements)) {
-//            erMess.add("Requirements too short");
-//        }
-//        if (!valid.isValidDateRange(postedDate) | !valid.isValidDateRange(closingDate)) {
-//            erMess.add("Date month year must be greater than 1990 and less than 2500");
-//        }
-//        if (!valid.isStartDateBeforeEndDate(postedDate, closingDate)) {
-//            erMess.add("Expiration date must be greater than post date");
-//        }
-//        if (!valid.isValidSalary(jobSalary)) {
-//            erMess.add("Invalid salary");
-//        }
-//        if (!valid.isToday(postedDate)) {
-//            erMess.add("Post date must be current date");
-//        }
-//
-//        // Nếu có lỗi, trả về trang chỉnh sửa và hiển thị lỗi
-//        if (!erMess.isEmpty()) {
-//            request.setAttribute("eM", erMess);
-//            url = "view/recruiter/editJP.jsp";
-//        } else {
-//            // Cập nhật bài đăng trong cơ sở dữ liệu
-////            dao.updateJobPosting(jobPost);  // Truyền recruiterID để xác thực cập nhật
-////            List<JobPostings> listJobPosting = dao.findAllByRecruiterID(recruiters.getRecruiterID());
-////            request.setAttribute("listJobPosting", listJobPosting);
-////            url = "view/recruiter/jobPost-manager.jsp";
-//// Sau khi cập nhật bài đăng
-//            dao.updateJobPosting(jobPost);
-//
-//// Lấy lại tham số phân trang từ request (page, sortField, searchJP)
-//            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-//            String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
-//            String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
-//
-//// Số lượng bản ghi trên mỗi trang
-//            int pageSize = 10;
-//
-//// Gọi phương thức phân trang
-//            List<JobPostings> listJobPosting;
-//            int totalRecords;
-//
-//            if (!searchJP.isEmpty()) {
-//                listJobPosting = dao.searchJobPostingByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID(), page);
-//                totalRecords = dao.findTotalRecordByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID());
-//            } else {
-//                listJobPosting = dao.findJobPostingsWithFilterAndRecruiterID(sortField, recruiters.getRecruiterID(), page, pageSize);
-//                totalRecords = dao.countTotalJobPostingsByRecruiterID(recruiters.getRecruiterID());
-//            }
-//
-//// Tính toán tổng số trang
-//            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-//
-//// Gửi các thông tin cần thiết về JSP
-//            request.setAttribute("listJobPosting", listJobPosting);
-//            request.setAttribute("totalPages", totalPages);
-//            request.setAttribute("currentPage", page);
-//            request.setAttribute("sortField", sortField);
-//            request.setAttribute("searchJP", searchJP);
-//
-//// Chuyển hướng đến trang quản lý Job Posting
-//            url = "view/recruiter/jobPost-manager.jsp";
-//
-//        }
-//
-//        return url;
-//    }
+    private String updateJP(HttpServletRequest request, HttpServletResponse response) {
+        String url;
+        int idJP = Integer.parseInt(request.getParameter("JobPostingID"));
+
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        if (account == null) {
+            return "view/authen/login.jsp";
+        }
+
+        Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+        if (recruiters == null) {
+            return "view/authen/login.jsp";
+        }
+
+        // Lấy thông tin bài đăng từ DAO
+        JobPostings jobPost = dao.findJobPostingById(idJP);
+        request.setAttribute("selectedJobCategory", jobPost.getJob_Posting_CategoryID());
+
+        // Lấy các tham số từ form
+        String jobTitle = request.getParameter("jobTitle");
+        String jobDescription = request.getParameter("jobDescription");
+        String jobRequirements = request.getParameter("jobRequirements");
+        String jobLocation = request.getParameter("jobLocation");
+        double minSalary = Double.parseDouble(request.getParameter("minSalary"));
+        double maxSalary = Double.parseDouble(request.getParameter("maxSalary"));
+        String jobStatus = request.getParameter("jobStatus");
+        Date postedDate = Date.valueOf(request.getParameter("postedDate"));
+        Date closingDate = Date.valueOf(request.getParameter("closingDate"));
+
+        // Lấy giá trị cho jobCategory
+        String jobCategoryIdStr = request.getParameter("jobCategory");
+        int jobCategoryId = Integer.parseInt(jobCategoryIdStr);
+        jobPost.setJob_Posting_CategoryID(jobCategoryId);
+
+        // Lấy danh sách các danh mục từ cơ sở dữ liệu và đặt vào request
+        List<Job_Posting_Category> jobCategories = category.findAll();
+        request.setAttribute("jobCategories", jobCategories);
+        request.setAttribute("selectedJobCategory", jobCategoryIdStr);
+
+        // Cập nhật thông tin jobPost
+        jobPost.setRecruiterID(recruiters.getRecruiterID());
+        jobPost.setTitle(jobTitle);
+        jobPost.setDescription(jobDescription);
+        jobPost.setRequirements(jobRequirements);
+        jobPost.setLocation(jobLocation);
+        jobPost.setMinSalary(minSalary);
+        jobPost.setMaxSalary(maxSalary);
+        jobPost.setStatus(jobStatus);
+        jobPost.setPostedDate(postedDate);
+        jobPost.setClosingDate(closingDate);
+
+        // Kiểm tra và lưu các lỗi nếu có
+        List<String> erMess = new ArrayList<>();
+        if (!valid.checkAtLeast30Chars(jobDescription)) {
+            erMess.add("Description too short");
+        }
+        if (!valid.checkAtLeast30Chars(jobRequirements)) {
+            erMess.add("Requirements too short");
+        }
+        if (!valid.isValidDateRange(postedDate) || !valid.isValidDateRange(closingDate)) {
+            erMess.add("Date must be between 1990 and 2500");
+        }
+        if (!valid.isStartDateBeforeEndDate(postedDate, closingDate)) {
+            erMess.add("Closing date must be after posting date");
+        }
+        if (!valid.isValidSalary(minSalary) || !valid.isValidSalary(maxSalary) || !valid.isMaxSalaryGreaterThanMin(maxSalary, minSalary)) {
+            erMess.add("Invalid salary range");
+        }
+        if (!valid.isToday(postedDate)) {
+            erMess.add("Post date must be the current date");
+        }
+
+        if (!erMess.isEmpty()) {
+            // Truyền danh sách lỗi và dữ liệu hiện có về lại trang editJP.jsp
+            request.setAttribute("eM", erMess);
+            request.setAttribute("jobTitle", jobTitle);
+            request.setAttribute("jobDescription", jobDescription);
+            request.setAttribute("jobRequirements", jobRequirements);
+            request.setAttribute("jobLocation", jobLocation);
+            request.setAttribute("minSalary", minSalary);
+            request.setAttribute("maxSalary", maxSalary);
+            request.setAttribute("postedDate", postedDate);
+            request.setAttribute("closingDate", closingDate);
+            request.setAttribute("jobStatus", jobStatus);
+            url = "view/recruiter/editJP.jsp";
+        } else {
+            dao.updateJobPosting(jobPost);
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
+            String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
+            int pageSize = 10;
+
+            List<JobPostings> listJobPosting;
+            int totalRecords;
+
+            if (!searchJP.isEmpty()) {
+                listJobPosting = dao.searchJobPostingByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID(), page);
+                totalRecords = dao.findTotalRecordByTitleAndRecruiterID(searchJP, recruiters.getRecruiterID());
+            } else {
+                listJobPosting = dao.findJobPostingsWithFilterAndRecruiterID(sortField, recruiters.getRecruiterID(), page, pageSize);
+                totalRecords = dao.countTotalJobPostingsByRecruiterID(recruiters.getRecruiterID());
+            }
+
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+            request.setAttribute("listJobPosting", listJobPosting);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("sortField", sortField);
+            request.setAttribute("searchJP", searchJP);
+
+            url = "view/recruiter/jobPost-manager.jsp";
+        }
+
+        return url;
+    }
+
 }

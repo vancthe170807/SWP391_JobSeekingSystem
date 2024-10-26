@@ -72,6 +72,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("ClosingDate", t.getClosingDate());
         parameterMap.put("Job_Posting_CategoryID", t.getJob_Posting_CategoryID());
         parameterMap.put("Status", t.getStatus());
+        parameterMap.put("JobPostingID", t.getJobPostingID());
         updateGenericDAO(sql, parameterMap);
     }
 

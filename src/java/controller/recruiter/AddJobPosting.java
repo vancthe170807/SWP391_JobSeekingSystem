@@ -22,9 +22,6 @@ public class AddJobPosting extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if ("addJobPosting".equals(action)) {
             // Lấy danh sách danh mục từ cơ sở dữ liệu
             List<Job_Posting_Category> categories = categoryDAO.findAll();
 
@@ -33,7 +30,7 @@ public class AddJobPosting extends HttpServlet {
 
             // Chuyển hướng tới trang JSP
             request.getRequestDispatcher("view/recruiter/addJobPosting.jsp").forward(request, response);
-        }
+        
     }
 
     @Override

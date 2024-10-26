@@ -46,14 +46,11 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/x.jsp</file>
         </group>
         <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/addJobPosting.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DetailsJP.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/dashboard.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ExcelServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/EditDetail.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobPostings.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewJP.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/DetailsJP.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
         </group>
         <group name="SWP291">

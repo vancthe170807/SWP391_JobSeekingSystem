@@ -88,6 +88,7 @@
         </group>
         <group>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>

@@ -12,6 +12,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Account"%>
+<%@page import="dao.AccountDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -83,7 +85,7 @@
                                         <!-- Error message (displayed in red) -->
                                         <span class="text-danger me-3">${requestScope.notice}</span>
 
-                                       
+
                                     </div>
                                 </div>
 
@@ -98,24 +100,44 @@
                                 </form>
 
                                 <!--search company end-->
-                                
+
                                 <div class="seeker-list">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>
+                                                <th>Create By</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <!-- Table rows will go here (populated dynamically) -->
+                                            <%
+                                                Account account = new Account();
+                                                AccountDAO accDao = new AccountDAO();
+                                            %>
                                             <c:forEach items="${listCompanies}" var="company">
+                                                <c:set var="accountId" value="${company.getAccountId()}"/>
                                                 <tr>
                                                     <!-- CompanyName Column -->
 
                                                     <td>
                                                         ${company.getName()}
+                                                    </td>
+                                                    <td>
+                                                        <%
+                                                        int accountId = (Integer) pageContext.getAttribute("accountId");
+                                                        account = accDao.findUserById(accountId);
+                                                        String name = "";
+                                                        if(account != null){
+                                                         name = account.getFullName();
+                                                        
+                                                        }else{
+                                                         name = "not registered";
+                                                            }
+                                                        %>
+                                                        <%= name%>
                                                     </td>
                                                     <!-- Status Column -->
                                                     <td>
@@ -129,10 +151,7 @@
                                                     </td>
                                                     <!--Edit Column-->
                                                     <td>
-                                                        <!-- Nút Edit với biểu tượng búa -->
-                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCompanyModal${company.id}">
-                                                            <i class="fas fa-hammer"></i> 
-                                                        </button>
+
 
                                                         <!-- Nút View với biểu tượng con mắt -->
                                                         <a href="${pageContext.request.contextPath}/companies?action=view&id=${company.id}" class="btn btn-primary me-2">
@@ -142,44 +161,11 @@
 
                                                 </tr>
                                                 <!--Modal Edit Company--> 
-                                            <div class="modal fade" id="editCompanyModal${company.id}" tabindex="-1" aria-labelledby="editCompanyModalLabel${company.id}" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-success text-white">
-                                                            <h5 class="modal-title" id="editCompanyModalLabel${company.id}">Edit Company</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!--Form to edit company details--> 
-                                                            <form action="${pageContext.request.contextPath}/companies?action=edit-company" method="POST">
-                                                                <input type="hidden" name="id-company" value="${company.id}">
 
-                                                                <div class="mb-3">
-                                                                    <label for="companyName${company.id}" class="form-label">Company Name</label>
-                                                                    <input type="text" class="form-control" id="companyName${company.id}" name="name" value="${company.getName()}" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="companyDescription${company.id}" class="form-label">Description</label>
-                                                                    <textarea class="form-control" id="companyDescription${company.id}" name="description" rows="3" required>${company.getDescription()}</textarea>
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                    <label for="companyLocation${company.id}" class="form-label">Location</label>
-                                                                    <input type="text" class="form-control" id="companyLocation${company.id}" name="location" value="${company.getLocation()}" required>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-success">Save Changes</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
-                                     <!-- Pagination -->
+                                    <!-- Pagination -->
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center" id="pagination">
                                             <c:if test="${pageControl.getPage() > 1}">
@@ -347,7 +333,7 @@
                                                 });
                                             });
         </script>
-        
+
         <script>
             tinymce.init({
                 selector: 'textarea', // Initialize TinyMCE for all text areas
@@ -356,8 +342,8 @@
                 menubar: true, // Disable the menubar
                 branding: false, // Disable the TinyMCE branding
                 height: 300, // Set the height of the editor
-                setup: function(editor) {
-                    editor.on('change', function() {
+                setup: function (editor) {
+                    editor.on('change', function () {
                         tinymce.triggerSave(); // Synchronize TinyMCE content with the form
                     });
                 }

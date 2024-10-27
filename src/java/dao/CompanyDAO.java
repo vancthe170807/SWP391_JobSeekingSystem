@@ -261,4 +261,23 @@ public class CompanyDAO extends GenericDAO<Company> {
         return com;
     }
 
+    public int getCompanyIdByBusinessCode(String businessCode) {
+        String sql = "SELECT id FROM Company WHERE BusinessCode = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("BusinessCode", businessCode);
+        return findTotalRecordGenericDAO(Company.class, sql, parameterMap);
+    }
+
+    public boolean isCompanyValidForVerification(String businessCode, int accountId) {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[Company]\n"
+                + "  WHERE BusinessCode = ? AND accountId = ? AND verificationStatus = 1";  // assuming '1' represents true for verificationStatus
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("BusinessCode", businessCode);
+        parameterMap.put("accountId", accountId);
+
+        // Return true if the result is not empty, meaning the company exists and is active
+        return !queryGenericDAO(Company.class, sql, parameterMap).isEmpty();
+    }
 }

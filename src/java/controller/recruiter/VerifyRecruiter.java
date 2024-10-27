@@ -44,71 +44,63 @@ public class VerifyRecruiter extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy ID công ty và vị trí từ form
-        int companyId;
-        try {
-            companyId = Integer.parseInt(request.getParameter("companyId"));
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Invalid company ID format.");
-            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-            return;
-        }
-        String position = request.getParameter("position");
 
-        // Kiểm tra nếu companyId có tồn tại trong database
-        if (!companyDao.isCompanyExist(companyId)) {
-            request.setAttribute("error", "Company ID does not exist.");
-            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-            return;
-        }
-
-        // Handle file uploads
-        Part frontCitizenIDPart = request.getPart("frontCitizenID");
-        Part backCitizenIDPart = request.getPart("backCitizenID");
-
-        // Kiểm tra nếu người dùng chọn cùng một file cho cả hai mặt
-        if (frontCitizenIDPart.getSubmittedFileName().equals(backCitizenIDPart.getSubmittedFileName())) {
-            request.setAttribute("error", "You cannot upload the same file for both Front and Back Citizen ID.");
-            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-            return;
-        }
-
-        // Save the uploaded files
-        String uploadDir = "uploads/citizen_ids";
-        String frontCitizenIDFileName = saveFile(frontCitizenIDPart, uploadDir);
-        String backCitizenIDFileName = saveFile(backCitizenIDPart, uploadDir);
-
-        // Lấy account từ session
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
-        // Kiểm tra nếu recruiter đã xác nhận chưa
-        Recruiters recruiter = reDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
-        if (recruiter != null && recruiter.isIsVerify()) {
-            // Nếu đã xác nhận, quay về dashboard
-            response.sendRedirect("Dashboard");
-        } else if (recruiter != null && !recruiter.isIsVerify()) {
-            // Nếu yêu cầu đang chờ, ngăn không cho gửi lại
-            request.setAttribute("error", "Your verification request is already pending approval.");
-            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
-            return;
-        } else {
-            // Nếu chưa, tạo request mới
-            Recruiters re = new Recruiters();
-            re.setAccountID(account.getId());
-            re.setCompanyID(companyId);
-            re.setPosition(position);
-            re.setIsVerify(false); // Đặt trạng thái là chưa xác minh
-            re.setFrontCitizenImage(frontCitizenIDFileName);  // Save the front citizen image
-            re.setBackCitizenImage(backCitizenIDFileName);    // Save the back citizen image
-            reDAO.insert(re);
+        String businessCode = request.getParameter("businessCode");
+        String position = request.getParameter("position");
 
-            // Lưu trạng thái "đã nộp đơn xác minh" vào session
-            session.setAttribute("isRecruiterVerified", false);
+        try {
+            // Check if a verification request has already been submitted => ko cho gui lan 2
+            Recruiters existingRecruiter = reDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+            if (existingRecruiter != null && !existingRecruiter.isIsVerify()) {
+                // If there's an existing unverified request, show error message
+                request.setAttribute("error", "Your verification request is already pending approval.");
+                request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+                return;
+            }
+            // Check if the businessCode belongs to the recruiter's own active company
+            if (!companyDao.isCompanyValidForVerification(businessCode, account.getId())) {
+                request.setAttribute("error", "Invalid Business Code or company is not active.");
+                request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+                return;
+            }
 
-            // Gửi thông báo xác nhận thành công
+            // Retrieve CompanyID based on BusinessCode since it's valid
+            int companyId = companyDao.getCompanyIdByBusinessCode(businessCode);
+
+            // File uploads for citizen ID
+            Part frontCitizenIDPart = request.getPart("frontCitizenID");
+            Part backCitizenIDPart = request.getPart("backCitizenID");
+
+            if (frontCitizenIDPart.getSubmittedFileName().equals(backCitizenIDPart.getSubmittedFileName())) {
+                request.setAttribute("error", "You cannot upload the same file for both Front and Back Citizen ID.");
+                request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+                return;
+            }
+
+            String frontCitizenIDFileName = saveFile(frontCitizenIDPart, "uploads/citizen_ids");
+            String backCitizenIDFileName = saveFile(backCitizenIDPart, "uploads/citizen_ids");
+
+            // Create new recruiter entry
+            Recruiters recruiter = new Recruiters();
+            recruiter.setAccountID(account.getId());
+            recruiter.setCompanyID(companyId);
+            recruiter.setPosition(position);
+            recruiter.setIsVerify(false);  // Set verification status to pending
+            recruiter.setFrontCitizenImage(frontCitizenIDFileName);
+            recruiter.setBackCitizenImage(backCitizenIDFileName);
+
+            reDAO.insert(recruiter);
+
             request.setAttribute("verify", "Your verification request has been sent.");
             request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Database error occurred.");
+            request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+            e.printStackTrace();
         }
     }
 // Helper method to save the uploaded file and return the file path

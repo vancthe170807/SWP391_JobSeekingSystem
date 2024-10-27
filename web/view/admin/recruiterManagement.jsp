@@ -204,20 +204,76 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center" id="pagination">
-                                        <c:forEach begin="1" end="${pageControl.getTotalPages()}" var="pageNumber">
-                                            <li>
-                                                <a class="page-link page-number" href="${pageControl.getUrlPattern()}page=${pageNumber}">${pageNumber}</a>
-                                            </li>
-                                        </c:forEach>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="next-page" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                 <!-- Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center" id="pagination">
+                                            <c:if test="${pageControl.getPage() > 1}">
+                                                <li class="page-item">
+                                                    <a
+                                                        class="page-link"
+                                                        href="${pageControl.getUrlPattern()}page=${pageControl.getPage()-1}"
+                                                        aria-label="Previous"
+                                                        >
+                                                        <span aria-hidden="true">&laquo; Previous</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                            <!-- Tính toán để chỉ hiển thị 5 trang tại một thời điểm -->
+                                            <c:set
+                                                var="startPage"
+                                                value="${pageControl.getPage() - 2 > 0 ? pageControl.getPage() - 2 : 1}"
+                                                />
+                                            <c:set
+                                                var="endPage"
+                                                value="${startPage + 4 <= pageControl.getTotalPages() ? startPage + 4 : pageControl.getTotalPages()}"
+                                                />
+                                            <!-- Nút để quay lại nhóm trang trước (nếu có) -->
+                                            <c:if test="${startPage > 1}">
+                                                <li class="page-item">
+                                                    <a
+                                                        class="page-link"
+                                                        href="${pageControl.getUrlPattern()}page=${startPage-1}"
+                                                        >...</a
+                                                    >
+                                                </li>
+                                            </c:if>
+                                            <!-- Hiển thị các trang trong khoảng từ startPage đến endPage -->
+                                            <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                                                <li
+                                                    class="page-item <c:if test='${i == pageControl.getPage()}'>active</c:if>"
+                                                        >
+                                                        <a
+                                                            class="page-link"
+                                                            href="${pageControl.getUrlPattern()}page=${i}"
+                                                        >${i}</a
+                                                    >
+                                                </li>
+                                            </c:forEach>
+                                            <!-- Nút để chuyển sang nhóm trang tiếp theo (nếu có) -->
+                                            <c:if test="${endPage < pageControl.getTotalPages()}">
+                                                <li class="page-item">
+                                                    <a
+                                                        class="page-link"
+                                                        href="${pageControl.getUrlPattern()}page=${endPage + 1}"
+                                                        >...</a
+                                                    >
+                                                </li>
+                                            </c:if>
+                                            <!-- Nút Next để đi đến nhóm trang tiếp theo -->
+                                            <c:if test="${pageControl.getPage() < pageControl.getTotalPages()}">
+                                                <li class="page-item">
+                                                    <a
+                                                        class="page-link"
+                                                        href="${pageControl.getUrlPattern()}page=${pageControl.getPage() + 1}"
+                                                        aria-label="Next"
+                                                        >
+                                                        <span aria-hidden="true">Next &raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+
 
 
                                 <!-- Add more recruiters here -->
@@ -315,34 +371,7 @@
                                                 });
                                             });
     </script>
-    <script>
-        // Get the current page parameter from the URL
-        function getCurrentPage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return parseInt(urlParams.get('page')) || 1;
-        }
-
-        // Add click event listener to the "Next" button
-        document.getElementById('next-page').addEventListener('click', function (event) {
-            event.preventDefault();
-            const currentPage = getCurrentPage();
-            const totalPages = ${pageControl.getTotalPages()};
-            if (currentPage < totalPages) {
-                window.location.href = '${pageControl.getUrlPattern()}page=' + (currentPage + 1);
-            }
-        });
-
-        // Highlight the current page
-        const pageLinks = document.querySelectorAll('.page-number');
-        const currentPage = getCurrentPage();
-        pageLinks.forEach(function (link, index) {
-            if (index + 1 === currentPage) {
-                link.parentElement.classList.add('active');
-            } else {
-                link.parentElement.classList.remove('active');
-            }
-        });
-    </script>
+    
 
 
 

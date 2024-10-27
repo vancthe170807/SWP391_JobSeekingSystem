@@ -4,7 +4,7 @@
     <!-- Navigation Links -->
     <div class="nav-links">
         <div class="nav-item">
-            <a href="${pageContext.request.contextPath}/view/recruiter/dashboard.jsp">Home</a>
+            <a href="#">Home</a>
         </div>
         <div class="nav-item">
             <a href="#">About</a>

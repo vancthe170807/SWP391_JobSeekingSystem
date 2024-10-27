@@ -202,15 +202,28 @@ public class AuthenticationController extends HttpServlet {
                     break;
                 case 2: // Recruiter role;
                     Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(accFound.getId()));
-                    if (recruiters == null || !recruiters.isIsVerify()) {
+
+                    if (recruiters == null) {
+                        // If no recruiter profile is found, redirect to profile creation page
                         url = "view/recruiter/viewRecruiterProfile.jsp";
                     } else {
-                        List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
-                        List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
-                        // Gửi dữ liệu đến JSP
-                        request.setAttribute("listSize", listSize);
-                        request.setAttribute("listTop5", listTop5);
-                        url = "view/recruiter/dashboard.jsp";
+                        // Fetch the associated company
+                        Company company = cdao.findCompanyById(recruiters.getCompanyID());
+
+                        // Check if company is active and recruiter is verified
+                        if (company == null || !company.isVerificationStatus() || !recruiters.isIsVerify()) {
+                            // Redirect to profile if company is inactive or verification was denied
+                            url = "view/recruiter/viewRecruiterProfile.jsp";
+                        } else {
+                            // Fetch recruiter's job postings and recent postings
+                            List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+                            List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
+
+                            // Pass data to dashboard
+                            request.setAttribute("listSize", listSize);
+                            request.setAttribute("listTop5", listTop5);
+                            url = "view/recruiter/dashboard.jsp";
+                        }
                     }
                     break;
 

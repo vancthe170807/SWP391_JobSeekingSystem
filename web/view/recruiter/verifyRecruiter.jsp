@@ -171,8 +171,8 @@
                 <form action="${pageContext.request.contextPath}/verifyRecruiter" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
                     <!-- Company ID input -->
                     <div class="mb-3">
-                        <label for="companyId" class="form-label">Company ID</label>
-                        <input type="text" class="form-control" id="companyId" name="companyId" placeholder="e.g. 12345" value="${param.companyId != null ? param.companyId : ''}" required>
+                        <label for="businessCode" class="form-label">Business code:</label>
+                        <input type="text" class="form-control" id="businessCode" name="businessCode" placeholder="e.g. 12345" value="${param.businessCode != null ? param.businessCode : ''}" required>
                     </div>
 
                     <!-- Position input -->

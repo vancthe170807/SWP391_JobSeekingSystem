@@ -132,5 +132,6 @@ public class JobPostings {
         this.Status = Status;
     }
 
+
     
 }

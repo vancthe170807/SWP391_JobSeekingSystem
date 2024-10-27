@@ -19,7 +19,6 @@ public class Education {
     private Date StartDate;
     private Date EndDate;
     private String DegreeImg;
-
     public Education() {
     }
 

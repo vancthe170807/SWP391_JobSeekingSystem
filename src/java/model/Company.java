@@ -15,21 +15,21 @@ public class Company {
     private String location;
     private boolean verificationStatus;
     private int accountId;
+    private String businessCode;
     private String BusinessLicenseImage;
     public Company() {
     }
 
-    public Company(int id, String name, String description, String location, boolean verificationStatus, int accountId, String BusinessLicenseImage) {
+    public Company(int id, String name, String description, String location, boolean verificationStatus, int accountId, String businessCode, String BusinessLicenseImage) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.location = location;
         this.verificationStatus = verificationStatus;
         this.accountId = accountId;
+        this.businessCode = businessCode;
         this.BusinessLicenseImage = BusinessLicenseImage;
     }
-
-    
 
     public int getId() {
         return id;
@@ -79,6 +79,14 @@ public class Company {
         this.accountId = accountId;
     }
 
+    public String getBusinessCode() {
+        return businessCode;
+    }
+
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
+    }
+
     public String getBusinessLicenseImage() {
         return BusinessLicenseImage;
     }
@@ -86,6 +94,8 @@ public class Company {
     public void setBusinessLicenseImage(String BusinessLicenseImage) {
         this.BusinessLicenseImage = BusinessLicenseImage;
     }
+
+    
     
     
 }

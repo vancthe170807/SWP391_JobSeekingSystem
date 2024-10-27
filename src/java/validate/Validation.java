@@ -124,4 +124,9 @@ public class Validation {
         }
     }
 
+    public boolean checkCode(String businessCode) {
+        String regex = "^\\d{5}$";
+        return businessCode.matches(regex);
+    }
+
 }

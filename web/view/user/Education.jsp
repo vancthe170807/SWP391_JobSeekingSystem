@@ -159,7 +159,6 @@
                                                     <div class="form-group mb-3">
                                                         <label for="degree">Degree</label>
                                                         <select class="form-select" id="degree" name="degree" required>
-                                                            <option value="Certificate" <c:if test="${edu.degree == 'Certificate'}">selected</c:if>>Certificate</option>
                                                             <option value="Bachelor" <c:if test="${edu.degree == 'Bachelor'}">selected</c:if>>Bachelor</option>
                                                             <option value="Master" <c:if test="${edu.degree == 'Master'}">selected</c:if>>Master</option>
                                                             <option value="PhD" <c:if test="${edu.degree == 'PhD'}">selected</c:if>>PhD</option>
@@ -184,8 +183,8 @@
                                                     </div>
                                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                                     <div class="form-group mb-3">
-                                                        <label for="certificate">Degree Image</label>
-                                                        <input type="file" class="form-control" id="certificate" name="degreeImg" accept="image/*" required>
+                                                        <label for="certificate">Load your degree</label>
+                                                        <input type="file" class="form-control" id="certificate" name="degreeImg"  accept="image/*" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -231,7 +230,6 @@
                                     <div class="form-group mb-3">
                                         <label for="degree">Degree</label>
                                         <select class="form-select" id="degree" name="degree" required>
-                                            <option value="Certificate">Certificate</option>
                                             <option value="Bachelor">Bachelor</option>
                                             <option value="Master">Master</option>
                                             <option value="PhD">PhD</option>
@@ -256,7 +254,7 @@
                                     </div>
                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                     <div class="form-group mb-3">
-                                        <label for="degreeImg">Certificate</label>
+                                        <label for="degreeImg">Load your degree</label>
                                         <input type="file" class="form-control" id="degreeImg" name="degreeImg" accept="image/*" required>
                                     </div>
                                 </div>
@@ -266,6 +264,20 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" form="educationForm" class="btn btn-success">Add Education</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                            
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel">Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" alt="Image" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -310,6 +322,10 @@
                         xhr.send("action=delete-education&educationID=" + educationID);
                     }
                 }
+                
+                function showImage(imageUrl) {
+                document.getElementById('modalImage').src = imageUrl;
+            }
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

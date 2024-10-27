@@ -108,7 +108,7 @@ public class EducationServlet extends HttpServlet {
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
 
-                Part degreeImgPart = request.getPart("certificate");
+                Part degreeImgPart = request.getPart("degreeImg");
                 String uploadDir = "uploads/degreeImgs";
                 String degreeImgName = saveFile(degreeImgPart, uploadDir);
 
@@ -152,7 +152,6 @@ public class EducationServlet extends HttpServlet {
                 request.setAttribute("edus", edus);
                 request.setAttribute("jobSeeker", jobSeeker);
                 url = "education"; // Điều hướng đến trang Education
-
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 try {

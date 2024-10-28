@@ -10,8 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 import model.JobSeekers;
 import model.WorkExperience;
@@ -26,25 +30,45 @@ public class ExperienceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url = null;
+        String url = "view/user/Experience.jsp"; // Default page to display experience
+        String error = ""; // Declare error message string
 
         switch (action) {
             case "update-experience":
+                // Forward to the experience update page
                 url = "view/user/Experience.jsp";
                 break;
 
             default: {
-                try {
-                    url = viewExperience(request, response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    response.getWriter().println("Database error.");
-                    url = "view/user/Experience.jsp";
+                HttpSession session = request.getSession();
+                Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+                if (account == null) {
+                    response.sendRedirect("view/authen/login.jsp"); // Redirect to login if not logged in
+                    return;
                 }
+
+                JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
+                if (jobSeeker != null) {
+                    try {
+                        // Attempt to view education details
+                        url = viewExperience(request, response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.getWriter().println("Database error.");
+                    }
+                } else {
+                    // Set error message if job seeker information is missing
+                    error = "You are not currently a member of Job Seeker. Please join to use this function.";
+                    request.setAttribute("errorJobSeeker", error);
+                    url = "view/user/Experience.jsp"; // Forward to education page to show the error message
+                }
+                break;
             }
-            break;
         }
 
+        // Forward to the designated page with any relevant error or data attributes set
         request.getRequestDispatcher(url).forward(request, response);
     }
 
@@ -73,6 +97,7 @@ public class ExperienceServlet extends HttpServlet {
 
     // Add new work experience
     public String addExperience(HttpServletRequest request) throws IOException, ServletException {
+        String url = null;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
@@ -103,16 +128,20 @@ public class ExperienceServlet extends HttpServlet {
                 request.setAttribute("successExperience", "Experience added successfully.");
                 request.setAttribute("wes", wes);
                 request.setAttribute("jobSeeker", jobSeeker);
-
+                url = "experience";
             } catch (Exception e) {
                 e.printStackTrace();
                 request.setAttribute("errorExperience", "An error occurred while adding the experience.");
             }
         } else {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
+            try {
+                url = "experience?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ExperienceServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
-        return "experience"; // Redirect to experience page
+        return url;// Redirect to experience page
     }
 
     // Update work experience
@@ -163,30 +192,35 @@ public class ExperienceServlet extends HttpServlet {
 
     // View work experience
     private String viewExperience(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        String url = null;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
         if (account == null) {
-            return "view/authen/login.jsp"; // Redirect if user is not logged in
+            url = "view/authen/login.jsp"; // Redirect if user is not logged in
         }
 
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
 
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            return "view/authen/login.jsp"; // Redirect to login page
+            try {
+                url = "experience?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ExperienceServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         List<WorkExperience> weList = weDAO.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
 
         if (weList == null || weList.isEmpty()) {
             request.setAttribute("errorExperience", "No experience found for this Job Seeker.");
-            return "view/user/Experience.jsp";
+            url = "view/user/Experience.jsp";
         }
 
         request.setAttribute("wes", weList);
 
-        return "view/user/Experience.jsp";
+        url = "view/user/Experience.jsp";
+        return url;
     }
 
     // Delete work experience

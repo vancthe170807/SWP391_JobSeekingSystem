@@ -54,7 +54,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" id="deactivate-account-tab" data-bs-toggle="tab" href="#deactivate-account" role="tab" aria-controls="deactivate-account" aria-selected="false">Deactivate Account</a>
                         </li>
@@ -69,25 +69,34 @@
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <h4 class="mb-3">Profile Information</h4>
                             <form class="p-4 rounded shadow-sm bg-light">
-                                <div class="author__image mb-3 text-center">
-                                    <c:if test="${empty sessionScope.account.avatar}">
-                                        <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
-                                    </c:if>
-                                    <c:if test="${!empty sessionScope.account.avatar}">
-                                        <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
-                                    </c:if>
-                                </div>
-                                <c:if test="${isJobSeeker}">
-                                    <div class="mb-3">
-                                        <label for="fullName" class="form-label">Job Seeker ID</label>
-                                        <input type="text" id="jobseekerid" class="form-control" placeholder="Full Name" required readonly value="${jobSeekerInfo.jobSeekerID}">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="author__image mb-3 text-center">
+                                            <c:if test="${empty sessionScope.account.avatar}">
+                                                <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
+                                            </c:if>
+                                            <c:if test="${!empty sessionScope.account.avatar}">
+                                                <img src="${sessionScope.account.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
+                                            </c:if>
+                                        </div>
                                     </div>
-                                </c:if>
+                                    <div class="col-md-9">
+                                        <div class="mb-3">
+                                            <label for="fullName" class="form-label">Full Name</label>
+                                            <input type="text" id="name" class="form-control" placeholder="Full Name" required readonly value="${sessionScope.account.fullName}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="dob" class="form-label">Date of Birth</label>
+                                            <input type="date" id="dob" class="form-control" required readonly value="${sessionScope.account.dob}">
+                                        </div>
 
-                                <div class="mb-3">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" id="name" class="form-control" placeholder="Full Name" required readonly value="${sessionScope.account.fullName}">
+                                    </div>
                                 </div>
+
+
+
+
+
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" id="email" class="form-control" placeholder="jobpath@gmail.com" required readonly value="${sessionScope.account.email}">
@@ -96,10 +105,7 @@
                                     <label for="phone" class="form-label">Phone Number</label>
                                     <input type="text" id="phone" class="form-control" placeholder="+84" required readonly value="${sessionScope.account.phone}">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" id="dob" class="form-control" required readonly value="${sessionScope.account.dob}">
-                                </div>
+
                                 <div class="mb-3">
                                     <label for="gender" class="form-label">Gender</label>
                                     <input type="text" id="genderDisplay" class="form-control" value="${sessionScope.account.gender == true ? 'Male' : 'Female'}" readonly>
@@ -185,12 +191,12 @@
                 </div>
 
 
-            
-        </div>
-        <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
-            <i class="fas fa-arrow-up"></i>
-        </button>
+
             </div>
+            <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>

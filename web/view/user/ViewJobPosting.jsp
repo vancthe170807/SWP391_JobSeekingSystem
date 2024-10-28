@@ -43,10 +43,10 @@
                                 <div class="row">
 
                                     <div class="col-md-4">
-                                        <p><strong>Status: </strong>${jobPost.getStatus()}</p>
+                                        <p><i class="fa-solid fa-circle"></i> <strong>Status: </strong>${jobPost.getStatus()}</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p><strong>Salary: </strong>${jobPost.getMinSalary()} $ - ${jobPost.getMaxSalary()} $</p>
+                                        <p><i class="fa-solid fa-money-bill"></i> <strong>Salary: </strong>${jobPost.getMinSalary()} $ - ${jobPost.getMaxSalary()} $</p>
                                     </div>
                                 </div>
                                 <% 
@@ -58,7 +58,7 @@
                                     %>
                                     <div class="row">
                                         <div>
-                                            <p><strong>Job Category:</strong> <%= category.getName() %></p>
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> <%= category.getName() %></p>
                                             <p></p> <!-- Hiển thị tên danh mục công việc -->
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                                         } else { 
                                     %>
                                     <div class="row">
-                                        <p><strong>Job Category:</strong></p>
+                                        <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong></p>
                                     </div>
                                     <% 
                                         } 

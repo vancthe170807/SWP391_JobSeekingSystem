@@ -82,21 +82,32 @@
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- header area end -->
 
-                <section class="hero d-flex align-items-center">
-                    <div class="container">
-                        <h2>Welcome to JobPath</h2>
-                        <p>Your path to finding the perfect job starts here.</p>
-                        <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">Explore Jobs</a>
-                    </div>
-                </section>
+            <section class="hero d-flex align-items-center">
+                <div class="container">
+                    <h2>Welcome to JobPath</h2>
+                    <p>Your path to finding the perfect job starts here.</p>
+                    <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">Explore Jobs</a>
+            </div>
+        </section>
 
-                <!-- Blog Section -->
-                <section class="blog-section py-5">
-                    <div class="container">
-                        <h3 class="text-center mb-5">Top 6 Job Latest from the Blog</h3>
-                        <div class="row">
-                        <c:if test="${not empty listTop6}">
-                            <c:forEach var="list" items="${listTop6}">
+        <!-- Blog Section -->
+        <section class="blog-section py-5">
+            <div class="container">
+                <h3 class="text-center mb-5">Top 6 Job Latest from the Blog</h3>
+                <form action="HomeSeeker" method="GET" onsubmit="saveScrollPosition()">
+                    <label for="jobCategory">Choose with Job Category:</label>
+                    <select name="filter" id="jobCategory" class="form-select" onchange="this.form.submit()">
+                        <option value="">--All--</option>
+                        <!-- Iterate over jobCategories to populate dropdown -->
+                        <c:forEach var="category" items="${jobCategories}">
+                            <option value="${category.getId()}" <c:if test="${category.getId() == selectedFilter}">selected</c:if>>${category.getName()}</option>
+                        </c:forEach>
+                    </select>
+                </form>
+                <div class="row mt-3">
+
+                    <c:if test="${not empty listTop6}">
+                        <c:forEach var="list" items="${listTop6}">
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm" style="text-decoration: none">
                                     <a href="${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${list.getJobPostingID()}" class="text-dark">
@@ -105,19 +116,22 @@
                                             <p class="btn btn-outline-success btn-sm">${list.getLocation()}</p>
                                             <p class="btn btn-success btn-sm">${list.getMinSalary()} $ - ${list.getMaxSalary()} $</p>
                                             <p style="font-style: italic">Post Date: ${list.getPostedDate()}</p>
-                                            
+
                                         </div>
                                     </a>
                                 </div>
                             </div>
-                            </c:forEach>
-                            </c:if>
-                        </div>
-                        
-                        <h3 class="text-center mb-5">Top 3 Company Latest from the Blog</h3>
-                        <div class="row">
-                        <c:if test="${not empty listTop3Company}">
-                            <c:forEach var="listCompany" items="${listTop3Company}">
+                        </c:forEach>
+                    </c:if>
+                </div>
+
+
+
+
+                <h3 class="text-center mb-5">Top 3 Company Latest from the Blog</h3>
+                <div class="row">
+                    <c:if test="${not empty listTop3Company}">
+                        <c:forEach var="listCompany" items="${listTop3Company}">
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm" style="text-decoration: none">
                                     <a href="${pageContext.request.contextPath}/viewCompany?action=details&idCompany=${listCompany.getId()}" class="text-dark">
@@ -128,13 +142,13 @@
                                     </a>
                                 </div>
                             </div>
-                            </c:forEach>
-                            </c:if>
-                        </div>
-                    </div>
-                </section>
-            <!-- content area end -->
-            <!-- THEME PRELOADER START -->
+                        </c:forEach>
+                    </c:if>
+                </div>
+            </div>
+        </section>
+        <!-- content area end -->
+        <!-- THEME PRELOADER START -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
             <!-- THEME PRELOADER END -->
             <button type="button" class="btn btn-success position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
@@ -142,6 +156,25 @@
             </button>
             <!-- all plugin js -->
         <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
+
+        <script>
+            // Lưu vị trí cuộn vào localStorage trước khi gửi form
+            function saveScrollPosition() {
+                localStorage.setItem("scrollPosition", window.scrollY);
+            }
+
+            // Khôi phục vị trí cuộn từ localStorage khi trang tải lại
+            function restoreScrollPosition() {
+                const scrollPosition = localStorage.getItem("scrollPosition");
+                if (scrollPosition) {
+                    window.scrollTo(0, parseInt(scrollPosition));
+                    localStorage.removeItem("scrollPosition"); // Xóa sau khi khôi phục để tránh lỗi
+                }
+            }
+
+            // Gọi hàm khôi phục khi trang đã tải xong
+            window.onload = restoreScrollPosition;
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     </body>

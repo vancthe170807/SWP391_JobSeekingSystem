@@ -60,9 +60,18 @@ public class VerifyRecruiter extends HttpServlet {
                 request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
                 return;
             }
-            // Check if the businessCode belongs to the recruiter's own active company
-            if (!companyDao.isCompanyValidForVerification(businessCode, account.getId())) {
-                request.setAttribute("error", "Invalid Business Code or company is not active.");
+            // Check if the businessCode belongs to the recruiter's own company
+            if (!companyDao.doesBusinessCodeExist(businessCode, account.getId())) {
+                // If the business code does not exist for the given account, show specific error message
+                request.setAttribute("error", "Please input correct business code of your company!.");
+                request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
+                return;
+            }
+
+            // Check if the company is active
+            if (!companyDao.isCompanyActive(businessCode)) {
+                // If the company is inactive, show specific error message
+                request.setAttribute("error", "Company is not active.");
                 request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
                 return;
             }

@@ -9,7 +9,7 @@
     <hr class="bg-light">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/admin/dashboard" class="nav-link" aria-current="page">
+            <a href="${pageContext.request.contextPath}/dashboard" class="nav-link" aria-current="page">
                 <span class="me-2"><i class="fa-solid fa-house"></i></span> Dashboard
             </a>
         </li>

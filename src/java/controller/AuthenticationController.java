@@ -198,7 +198,7 @@ public class AuthenticationController extends HttpServlet {
             // Handle based on role
             switch (accFound.getRoleId()) {
                 case 1: // Admin role
-                    url = "view/admin/adminHome.jsp";
+                    url = "dashboard";
                     break;
                 case 2: // Recruiter role;
                     Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(accFound.getId()));

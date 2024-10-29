@@ -37,6 +37,14 @@
                 color: red; /* Inactive seekers in red */
                 font-weight: bold;
             }
+            .alert-custom {
+                background-color: #FFD700; /* Màu nền vàng */
+                color: #8B4513; /* Màu chữ nâu */
+                font-weight: bold;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+            }
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
@@ -68,10 +76,12 @@
                                 <div class="dash__overview">
 
                                     <h6 class="fw-medium mb-30 text-center fs-2">COMPANY MANAGEMENT</h6>
-                                    <!--drop-down filter company-->
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <!-- Form filter -->
-                                        <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
+                                    
+  
+                                <!--drop-down filter company-->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <!-- Form filter -->
+                                    <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
                                         <label for="company-filter" class="me-2">Filter</label>
                                         <select id="company-filter" name="filter" class="form-select me-3" onchange="this.form.submit()">
                                             <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Companies</option>

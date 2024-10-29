@@ -42,31 +42,50 @@ public class EducationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get ve error đã xử lí ở doPost
+        // Get the error parameter from the request, typically set in doPost
         String error = request.getParameter("error") != null ? request.getParameter("error") : "";
         request.setAttribute("error", error);
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        String url = null;
+        String url = "view/user/Education.jsp"; // Default URL for forwarding
 
         switch (action) {
             case "update-education":
+                // Forward to the education update page
                 url = "view/user/Education.jsp";
                 break;
 
             default: {
-                try {
-                    url = viewEducation(request, response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    response.getWriter().println("Database error.");
-                    url = "view/user/Education.jsp";
+                // Default action to display education page or handle error
+                HttpSession session = request.getSession();
+                Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
+                if (account == null) {
+                    response.sendRedirect("view/authen/login.jsp"); // Redirect to login if not logged in
+                    return;
                 }
+
+                JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
+                if (jobSeeker != null) {
+                    try {
+                        // Attempt to view education details
+                        url = viewEducation(request, response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.getWriter().println("Database error.");
+                        url = "view/user/Education.jsp"; // Set URL to education page in case of exception
+                    }
+                } else {
+                    // Set error message if job seeker information is missing
+                    error = "You are not currently a member of Job Seeker. Please join to use this function.";
+                    request.setAttribute("errorJobSeeker", error);
+                    url = "view/user/Education.jsp"; // Forward to education page to show the error message
+                }
+                break;
             }
-            // Default page if no action matches
-            break;
         }
 
+        // Forward to the designated page with any relevant error or data attributes set
         request.getRequestDispatcher(url).forward(request, response);
     }
 
@@ -145,7 +164,7 @@ public class EducationServlet extends HttpServlet {
                 eduAdd.setStartDate(startDate);
                 eduAdd.setEndDate(endDate);
                 eduAdd.setDegreeImg(degreeImgName);
-                // Continue processing eduAdd as needed (e.g., save to the database)
+
                 eduDAO.insert(eduAdd);
                 // Continue processing eduAdd as needed (e.g., save to the database)
                 request.setAttribute("successEducation", "Profile add successfully.");
@@ -162,8 +181,11 @@ public class EducationServlet extends HttpServlet {
                 url = "education"; // Redirect back to Education upload page with error
             }
         } else {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "JobSeekerCheck";
+            try {
+                url = "education?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return url; // Return the URL to navigate to
@@ -251,6 +273,7 @@ public class EducationServlet extends HttpServlet {
     }
 
     private String viewEducation(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        String url = null;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
@@ -258,11 +281,14 @@ public class EducationServlet extends HttpServlet {
             return "view/authen/login.jsp"; // Redirect if user is not logged in
         }
 
-        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
 
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            return "JobSeekerCheck"; // Redirect to login page
+            try {
+                url = "education?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         // Lấy danh sách học vấn thay vì một đối tượng học vấn đơn lẻ
@@ -270,14 +296,15 @@ public class EducationServlet extends HttpServlet {
 
         if (educationList == null || educationList.isEmpty()) {
             request.setAttribute("errorEducation", "No Education found for this Job Seeker.");
-            return "view/user/Education.jsp";
+            url = "view/user/Education.jsp";
         }
 
         // Set danh sách học vấn vào request attribute
         request.setAttribute("edus", educationList);
 
         // Forward to the education view page
-        return "view/user/Education.jsp";
+        url = "view/user/Education.jsp";
+        return url;
     }
 
     // New method to delete education

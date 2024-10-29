@@ -88,51 +88,60 @@
                 <h1 class="text-center">Manage Your CV</h1>
 
                 <!-- Display success or error messages -->
-            <c:if test="${not empty successCV}">
-                <div class="alert alert-success" role="alert">
-                    ${successCV}
-                </div>
-            </c:if>
 
-            <c:if test="${not empty errorCV}">
+            <c:if test="${not empty errorJobSeeker}">
                 <div class="alert alert-danger" role="alert">
-                    ${errorCV}
+                    ${errorJobSeeker} <a href="JobSeekerCheck">Click here!!</a>
                 </div>
             </c:if>
 
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger" role="alert">
-                    ${error}
-                </div>
-            </c:if>
-
-            <!-- Check if there's a CV -->
-            <c:if test="${not empty cvFilePath}">
-                <!-- Display View CV button -->
-                <div class="d-grid gap-2 mb-1">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
-                        Update CV
-                    </button>
-                </div>
-                <div class="mb-4">
-                    <iframe src="cv?action=view-cv" height="1200px" width="100%" allowfullscreen="" frameborder="0"></iframe>
-                </div>
-
-                <!-- Form to update CV -->
-
-
-            </c:if>
-
-            <c:if test="${empty cvFilePath}">
-                <!-- Form to upload CV if not present -->
-                <form action="${pageContext.request.contextPath}/cv?action=upload-cv" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="cvFile" class="form-label">Upload CV</label>
-                        <input type="file" class="form-control" id="cvFile" name="cvUploadFile" accept=".pdf" required>
+            <c:if test = "${empty errorJobSeeker}">
+                <c:if test="${not empty successCV}">
+                    <div class="alert alert-success" role="alert">
+                        ${successCV}
                     </div>
-                    <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span><br/>
-                    <button type="submit" class="btn btn-success">Upload CV</button>
-                </form>
+                </c:if>
+
+                <c:if test="${not empty errorCV}">
+                    <div class="alert alert-danger" role="alert">
+                        ${errorCV}
+                    </div>
+                </c:if>
+
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger" role="alert">
+                        ${error}
+                    </div>
+                </c:if>
+
+                <!-- Check if there's a CV -->
+                <c:if test="${not empty cvFilePath}">
+                    <!-- Display View CV button -->
+                    <div class="d-grid gap-2 mb-1">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCVModal">
+                            Update CV
+                        </button>
+                    </div>
+                    <div class="mb-4">
+                        <iframe src="cv?action=view-cv" height="1200px" width="100%" allowfullscreen="" frameborder="0"></iframe>
+                    </div>
+
+                    <!-- Form to update CV -->
+
+
+                </c:if>
+
+                <c:if test="${empty cvFilePath}">
+                    <!-- Form to upload CV if not present -->
+                    <form action="${pageContext.request.contextPath}/cv?action=upload-cv" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="cvFile" class="form-label">Upload CV</label>
+                            <input type="file" class="form-control" id="cvFile" name="cvUploadFile" accept=".pdf" required>
+                        </div>
+                        <span style="color: green">Note: <strong>Upload file less than 10MB (or 10 240KB)</strong></span><br/>
+                        <button type="submit" class="btn btn-success">Upload CV</button>
+                    </form>
+                </c:if>
             </c:if>
         </div>
 
@@ -162,6 +171,9 @@
                 </div>
             </div>
         </div>
+
+
+
 
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>

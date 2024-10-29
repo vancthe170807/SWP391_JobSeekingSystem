@@ -34,6 +34,8 @@ public class JobPostings {
         this.Status = Status;
     }
 
+    
+
     public int getJobPostingID() {
         return JobPostingID;
     }
@@ -89,7 +91,7 @@ public class JobPostings {
     public void setMaxSalary(double MaxSalary) {
         this.MaxSalary = MaxSalary;
     }
-
+    
     public String getLocation() {
         return Location;
     }

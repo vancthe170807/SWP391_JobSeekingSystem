@@ -5,6 +5,9 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Job_Posting_Category"%>
+<%@page import="java.util.List"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,7 +20,7 @@
         <!-- Include header -->
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
 
-        <div class="container mb-5 mt-5">
+            <div class="container mb-5 mt-5">
             <c:if test="${not empty jobPost}">
                 <div class="row">
                     <!-- Job Details Section -->
@@ -27,25 +30,47 @@
                                 <h1 class="card-title">${jobPost.getTitle()}</h1>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <p><i class="fas fa-calendar-alt"></i> <strong>Post Date:</strong> ${jobPost.getPostedDate()}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <p><i class="fas fa-hourglass-end"></i> <strong>Deadline:</strong> ${jobPost.getClosingDate()}</p>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-4">
                                         <p><i class="fa-solid fa-location-dot"></i> <strong>Location: </strong>${jobPost.getLocation()}</p>
                                     </div>
+                                </div>
+                                <div class="row">
+
                                     <div class="col-md-4">
-                                        <p><strong>Status: </strong>${jobPost.getStatus()}</p>
+                                        <p><i class="fa-solid fa-circle"></i> <strong>Status: </strong>${jobPost.getStatus()}</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p><strong>Salary: </strong>${jobPost.getSalary()}</p>
+                                        <p><i class="fa-solid fa-money-bill"></i> <strong>Salary: </strong>${jobPost.getMinSalary()} $ - ${jobPost.getMaxSalary()} $</p>
                                     </div>
                                 </div>
-                                
+                                <% 
+                                    // Lấy thông tin category từ request
+                                    Job_Posting_Category category = (Job_Posting_Category) request.getAttribute("category");
+
+                                    // Kiểm tra nếu category không null
+                                    if (category != null) {
+                                    %>
+                                    <div class="row">
+                                        <div>
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> <%= category.getName() %></p>
+                                            <p></p> <!-- Hiển thị tên danh mục công việc -->
+                                        </div>
+                                    </div>
+                                    <% 
+                                        } else { 
+                                    %>
+                                    <div class="row">
+                                        <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong></p>
+                                    </div>
+                                    <% 
+                                        } 
+                                    %>
                             </div>
                         </div>
 

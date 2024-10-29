@@ -152,7 +152,7 @@
                 <div class="card">
                     <h3>${i.getTitle()}</h3>
                     <div class="info-group">
-                    <p class="btn btn-outline-success btn-sm">${i.getSalary()}</p>
+                    <p class="btn btn-outline-success btn-sm">${i.getMinSalary()} $ - ${i.getMaxSalary()} $</p>
                     <p class="btn btn-secondary btn-sm">${i.getLocation()}</p>
                     <p class="btn btn-outline-secondary">
                         <fmt:formatDate value="${i.getPostedDate()}" pattern="dd/MM/yyyy"/> 

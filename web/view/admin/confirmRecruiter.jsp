@@ -106,7 +106,7 @@
                                     </form>
 
                                     <!--search recruiter end-->       
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-striped table-hover" style="border: 2px">
                                         <thead class="table-success">
                                             <tr>
                                                 <th>Name</th>

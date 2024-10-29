@@ -236,5 +236,40 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
 
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
+    
+    public List<JobPostings> getTop6JobPostingsByCategory(int categoryId) {
+        String sql = "select top 6 * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+        parameterMap.put("Job_Posting_CategoryID", categoryId);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+    
+    public List<JobPostings> getJobPostingsByCategory(int categoryId) {
+        String sql = "select * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+        parameterMap.put("Job_Posting_CategoryID", categoryId);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 
+    public List<JobPostings> findTop5Recruiter() {
+        String sql = "SELECT *\n"
+                + "FROM JobPostings\n"
+                + "WHERE RecruiterID IN (\n"
+                + "    SELECT TOP 5 RecruiterID\n"
+                + "    FROM JobPostings\n"
+                + "    GROUP BY RecruiterID\n"
+                + "    ORDER BY COUNT(*) DESC\n"
+                + ")\n"
+                + "ORDER BY RecruiterID, PostedDate;";
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> filterJobPostingStatusForChart() {
+        String sql = "SELECT *\n"
+                + "FROM JobPostings\n"
+                + "ORDER BY Status;";
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 }

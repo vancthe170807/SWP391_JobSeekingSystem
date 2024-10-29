@@ -83,117 +83,129 @@
             <div class='container mt-5 mb-5'>
                 <h1 class="text-center">Experience Profile</h1>
 
+
+
+            <c:if test="${not empty errorJobSeeker}">
+                <div class="alert alert-danger" role="alert">
+                    ${errorJobSeeker} <a href="JobSeekerCheck">Click here!!</a>
+                </div>
+            </c:if>
+
+            <c:if test="${empty errorJobSeeker}">
                 <!-- Display error messages if any -->
-            <c:if test="${not empty errorExperience}">
-                <div class="alert alert-danger" role="alert">
-                    ${errorExperience}
-                </div>
-            </c:if>
+                <c:if test="${not empty errorExperience}">
+                    <div class="alert alert-danger" role="alert">
+                        ${errorExperience}
+                    </div>
+                </c:if>
 
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger" role="alert">
-                    ${error}
-                </div>
-            </c:if>
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger" role="alert">
+                        ${error}
+                    </div>
+                </c:if>
 
-            <!-- Display success messages if any -->
-            <c:if test="${not empty successExperience}">
-                <div class="alert alert-success" role="alert">
-                    ${successExperience}
-                </div>
-            </c:if>
+                <!-- Display success messages if any -->
+                <c:if test="${not empty successExperience}">
+                    <div class="alert alert-success" role="alert">
+                        ${successExperience}
+                    </div>
+                </c:if>
 
-            <!-- Display education details in a table -->
-            <c:if test="${not empty wes}">
-                <table class="table table-bordered">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Job Title</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="we" items="${wes}">
+                <!-- Display education details in a table -->
+                <c:if test="${not empty wes}">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
                             <tr>
-                                <td>${we.companyName}</td>
-                                <td>${we.jobTitle}</td>
-                                <td>${we.startDate}</td>
-                                <td><c:if test="${not empty we.endDate}">${we.endDate}</c:if><c:if test="${empty we.endDate}">N/A</c:if></td>
-                                <td>${we.description}</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateExperienceModal-${we.experienceID}" 
-                                            onclick="populateUpdateModal('${we.experienceID}', '${we.companyName}', '${we.jobTitle}', '${we.startDate}', '${we.endDate}', '${we.description}')">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(${we.experienceID})">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>Company Name</th>
+                                <th>Job Title</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Description</th>
+                                <th>Action</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="we" items="${wes}">
+                                <tr>
+                                    <td>${we.companyName}</td>
+                                    <td>${we.jobTitle}</td>
+                                    <td>${we.startDate}</td>
+                                    <td><c:if test="${not empty we.endDate}">${we.endDate}</c:if><c:if test="${empty we.endDate}">N/A</c:if></td>
+                                    <td>${we.description}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateExperienceModal-${we.experienceID}" 
+                                                onclick="populateUpdateModal('${we.experienceID}', '${we.companyName}', '${we.jobTitle}', '${we.startDate}', '${we.endDate}', '${we.description}')">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(${we.experienceID})">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
 
-                            <!-- Update Education Modal -->
-                        <div class="modal fade" id="updateExperienceModal-${we.experienceID}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-warning text-white">
-                                        <h5 class="modal-title" id="updateModalLabel">Update Experience</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="${pageContext.request.contextPath}/experience" method="post" id="updateExperienceForm-${we.experienceID}">
-                                            <input type="hidden" name="action" value="update-experience">
-                                            <input type="hidden" name="experienceID" value="${we.experienceID}">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group mb-3">
-                                                        <label for="companyName">Institution</label>
-                                                        <input type="text" class="form-control" id="companyName" name="companyName" value="${we.companyName}" required>
-                                                    </div>
+                                <!-- Update Education Modal -->
+                            <div class="modal fade" id="updateExperienceModal-${we.experienceID}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-warning text-white">
+                                            <h5 class="modal-title" id="updateModalLabel">Update Experience</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="${pageContext.request.contextPath}/experience" method="post" id="updateExperienceForm-${we.experienceID}">
+                                                <input type="hidden" name="action" value="update-experience">
+                                                <input type="hidden" name="experienceID" value="${we.experienceID}">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label for="companyName">Institution</label>
+                                                            <input type="text" class="form-control" id="companyName" name="companyName" value="${we.companyName}" required>
+                                                        </div>
 
-                                                    <div class="form-group mb-3">
-                                                        <label for="jobTitle">Job Title</label>
-                                                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" value="${we.jobTitle}" required>
+                                                        <div class="form-group mb-3">
+                                                            <label for="jobTitle">Job Title</label>
+                                                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" value="${we.jobTitle}" required>
                                                         </div>
 
                                                         <div class="form-group mb-3">
                                                             <label for="description">Description</label>
                                                             <textarea id="description" name="description" class="form-control" placeholder="Enter work experience description" rows="3" required>${we.description}</textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group mb-3">
-                                                        <label for="startDate">Start Date</label>
-                                                        <input type="date" class="form-control" id="startDate" name="startDate" value="${we.startDate}" required>
-                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label for="startDate">Start Date</label>
+                                                            <input type="date" class="form-control" id="startDate" name="startDate" value="${we.startDate}" required>
+                                                        </div>
 
-                                                    <div class="form-group mb-3">
-                                                        <label for="endDate">End Date</label>
-                                                        <input type="date" class="form-control" id="endDate" name="endDate" value="${we.endDate}">
+                                                        <div class="form-group mb-3">
+                                                            <label for="endDate">End Date</label>
+                                                            <input type="date" class="form-control" id="endDate" name="endDate" value="${we.endDate}">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" form="updateExperienceForm-${we.experienceID}" class="btn btn-warning">Update Experience</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" form="updateExperienceForm-${we.experienceID}" class="btn btn-warning">Update Experience</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+
+                <!-- Button to trigger the modal for adding/updating education -->
+                <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#experienceModal">
+                    Add Experience
+                </button>
             </c:if>
 
-            <!-- Button to trigger the modal for adding/updating education -->
-            <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#experienceModal">
-                Add Experience
-            </button>
+
         </div>
 
         <!-- Modal for adding/updating education -->

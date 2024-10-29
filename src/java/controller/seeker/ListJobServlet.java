@@ -29,6 +29,8 @@ public class ListJobServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         // Lấy tham số tìm kiếm và phân trang từ request
+                String filter = request.getParameter("filter");
+
         String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
         String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;

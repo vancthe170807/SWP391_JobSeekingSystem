@@ -228,7 +228,7 @@ public class AuthenticationController extends HttpServlet {
                     break;
 
                 case 3: // Job seeker role
-                    url = "view/user/userHome.jsp";
+                    url = "HomeSeeker";
                     break;
                 default:
                     // If role is not recognized, redirect to login with error

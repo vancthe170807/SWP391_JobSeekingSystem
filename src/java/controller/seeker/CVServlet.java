@@ -41,35 +41,48 @@ public class CVServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = "view/user/CV.jsp"; // Default page to forward to
         String error = request.getParameter("error") != null ? request.getParameter("error") : "";
         request.setAttribute("error", error);
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+
         switch (action) {
             case "view-cv":
                 viewCV(request, response);
-                break;
+                return; // Stop further processing
+
             case "update-cv":
-                request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
+                url = "view/user/CV.jsp";
                 break;
+
             default: {
                 // Default action to display the CV page
                 HttpSession session = request.getSession();
                 Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
                 if (account == null) {
                     response.sendRedirect("view/authen/login.jsp"); // Redirect if not logged in
                     return;
                 }
+
                 JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
                 if (jobSeeker != null) {
                     CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
                     if (cv != null) {
                         request.setAttribute("cvFilePath", cv.getFilePath());
                     }
+                } else {
+                    // Set the error message to display on the CV page
+                    error = "You are not currently a member of Job Seeker. Please join to use this function.";
+                    request.setAttribute("errorJobSeeker", error);
                 }
             }
-            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response); // Default page
             break;
         }
+
+        // Forward to the determined URL
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
     @Override
@@ -102,7 +115,11 @@ public class CVServlet extends HttpServlet {
 
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
         if (jobSeeker == null) {
-            url = "JobSeekerCheck"; // Redirect if no JobSeeker is found
+            try {
+                url = "cv?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
@@ -170,13 +187,10 @@ public class CVServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         if (account == null) {
-            return "view/authen/login.jsp";
+            url = "view/authen/login.jsp";
         }
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(account.getId() + "");
-        if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            return "JobSeekerCheck";
-        }
+        
         CV existingCV = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (existingCV == null) {
             try {
@@ -221,33 +235,36 @@ public class CVServlet extends HttpServlet {
             cvDAO.updateCV(existingCV);
 
             request.setAttribute("successCV", "CV updated successfully.");
-            return "cv";
+            url = "cv";
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "File upload failed due to an unexpected error.");
-            return "cv";
+            url = "cv";
         }
+        return url;
     }
 
     // View CV
-    private void viewCV(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private String viewCV(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String url = null;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         if (account == null) {
-            response.sendRedirect("view/authen/login.jsp"); // Redirect if user is not logged in
-            return;
+            url = "view/authen/login.jsp"; // Redirect if user is not logged in
         }
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            request.getRequestDispatcher("view/authen/login.jsp").forward(request, response); // Redirect to login page
-            return;
+            try {
+                url = "cv?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CVServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (cv == null) {
             request.setAttribute("errorCV", "No CV found for this Job Seeker.");
-            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
-            return;
+            url = "cv";
+
         }
 
         // Get the file path from the database
@@ -266,8 +283,7 @@ public class CVServlet extends HttpServlet {
         File file = new File(absoluteFilePath);
         if (!file.exists()) {
             request.setAttribute("errorCV", "File not found.");
-            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
-            return;
+            url = "view/user/CV.jsp";
         }
 
         // Set response headers and content type for PDF viewing
@@ -281,7 +297,8 @@ public class CVServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace(); // Log the error for debugging
             request.setAttribute("errorCV", "Error displaying CV: " + e.getMessage());
-            request.getRequestDispatcher("view/user/CV.jsp").forward(request, response);
+            url = "view/user/CV.jsp";
         }
+        return url;
     }
 }

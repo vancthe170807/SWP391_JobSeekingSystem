@@ -96,8 +96,6 @@ public class Education {
     public void setDegreeImg(String DegreeImg) {
         this.DegreeImg = DegreeImg;
     }
-
-    
     
     
 }

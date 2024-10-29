@@ -54,6 +54,7 @@ public class EducationDAO extends GenericDAO<Education> {
                 + "      ,[FieldOfStudy] = ?\n"
                 + "      ,[StartDate] = ?\n"
                 + "      ,[EndDate] = ?\n"
+                + "      ,[DegreeImg] = ?\n"
                 + " WHERE EducationID = ?";
 
         parameterMap = new LinkedHashMap<>();
@@ -62,7 +63,8 @@ public class EducationDAO extends GenericDAO<Education> {
         parameterMap.put("FieldOfStudy", education.getFieldOfStudy());
         parameterMap.put("StartDate", education.getStartDate());
         parameterMap.put("EndDate", education.getEndDate());
-        parameterMap.put("EducationID", education.getEducationID());
+        parameterMap.put("DegreeImg", education.getDegreeImg());
+        parameterMap.put("EducationID", education.getEducationID());        
         
         updateGenericDAO(sql, parameterMap);
     }

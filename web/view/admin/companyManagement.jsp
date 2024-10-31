@@ -45,6 +45,15 @@
                 border-radius: 5px;
                 text-align: center;
             }
+            .table-bordered td .form-check {
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+            } 
+            .table-bordered thead th {
+                background-color: #28a745; /* Màu xanh lá cây */
+                color: #ffffff; /* Màu trắng cho chữ để dễ đọc */
+            }
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
@@ -56,14 +65,14 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
 
                         <!--content-main can fix-->
                         <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">
@@ -79,7 +88,7 @@
                                     
   
                                 <!--drop-down filter company-->
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3 ms-2">
                                     <!-- Form filter -->
                                     <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
                                         <label for="company-filter" class="me-2">Filter</label>
@@ -112,7 +121,7 @@
                                 <!--search company end-->
 
                                 <div class="seeker-list">
-                                    <table class="table table-striped" style="border: 2px">
+                                    <table class="table table-bordered" style="text-align: center; vertical-align: middle;">
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>

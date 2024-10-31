@@ -67,6 +67,8 @@
                                 <i class="fa-solid fa-school me-2"></i> Manage your Education</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/experience">
                                 <i class="fa-solid fa-briefcase me-2"></i> Manage your Experience</a></li>
+                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/feedbackSeeker">
+                                <i class="fa-solid fa-briefcase me-2"></i> Your Feedback</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/alerts">
                                 <i class="fa-solid fa-bell me-2"></i> Job Alerts</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/authen?action=change-password">

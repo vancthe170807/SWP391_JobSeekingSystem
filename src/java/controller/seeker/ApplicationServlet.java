@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.seeker;
 
 import constant.CommonConst;
@@ -10,17 +6,21 @@ import dao.CVDAO;
 import dao.JobPostingsDAO;
 import dao.JobSeekerDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.Account;
 import model.Applications;
-import model.CV;
 import model.JobPostings;
 import model.JobSeekers;
 
@@ -35,82 +35,132 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int page = parsePage(request);
+        String filter = request.getParameter("status");
+        String action = request.getParameter("action");
+
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+
+        if (account == null) {
+            response.sendRedirect("view/authen/login.jsp");
+            return;
+        }
+
+        JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+
+        if ("cancel-application".equals(action)) {
+            response.sendRedirect(cancelledApplication(request, response));
+            return;
+        }
+
+        if (jobSeeker != null) {
+            try {
+                viewListApplication(request, response, filter);
+            } catch (Exception e) {
+                Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, "Error accessing the database.", e);
+                request.setAttribute("error", "Database error occurred.");
+            }
+        } else {
+            request.setAttribute("errorJobSeeker", "You are not currently a member of Job Seeker. Please join to use this function.");
+        }
+
+        request.getRequestDispatcher("view/user/Application.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String action = request.getParameter("action");
+
+        if ("cancel-application".equals(action)) {
+            response.sendRedirect(cancelledApplication(request, response));
+        } else {
+            response.sendRedirect("home");
+        }
     }
 
-    public String viewListApplication(HttpServletRequest request, HttpServletResponse response) {
-        String url;
+    private void viewListApplication(HttpServletRequest request, HttpServletResponse response, String statusFilter) 
+            throws IOException, UnsupportedEncodingException {
+        int page = parsePage(request);
+        int pageSize = 10;
+
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-
-        if (account == null) {
-            url = "view/authen/login.jsp"; // Redirect if user is not logged in
-        }
 
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
 
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
+            String errorMsg = "You are not currently a member of Job Seeker. Please join to use this function.";
+            response.sendRedirect("application?error=" + URLEncoder.encode(errorMsg, "UTF-8"));
+            return;
         }
 
-        List<Applications> applicationList = applicationDAO.findApplicationByJobSeekerID(jobSeeker.getJobSeekerID());
+        List<Applications> applicationList;
+        int totalRecords;
 
-        if (applicationList == null || applicationList.isEmpty()) {
-            request.setAttribute("errorApplication", "No Application found for this Job Seeker.");
-            url = "view/user/Application.jsp";
+        if (statusFilter != null && !statusFilter.isEmpty()) {
+            applicationList = applicationDAO.findApplicationByJobSeekerIDAndStatus(
+                    jobSeeker.getJobSeekerID(), Integer.parseInt(statusFilter), page, pageSize);
+            totalRecords = applicationDAO.countTotalApplicationsByJSIDAndStatus(
+                    jobSeeker.getJobSeekerID(), Integer.parseInt(statusFilter));
+        } else {
+            applicationList = applicationDAO.findApplicationByJobSeekerID(jobSeeker.getJobSeekerID(), page, pageSize);
+            totalRecords = applicationDAO.countTotalApplicationsByJSID(jobSeeker.getJobSeekerID());
         }
 
+        Map<Integer, String> jobPostingMap = new HashMap<>();
+        for (Applications app : applicationList) {
+            JobPostings jobPosting = jobPostingDAO.findJobPostingById(app.getJobPostingID());
+            if (jobPosting != null && !"Violated".equals(jobPosting.getStatus())) {
+                jobPostingMap.put(app.getApplicationID(), jobPosting.getTitle());
+            }
+        }
+
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
         request.setAttribute("applications", applicationList);
-
-        url = "view/user/Application.jsp";
-
-        return url;
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("jobPostingMap", jobPostingMap);
+        request.setAttribute("selectedStatus", statusFilter);
     }
-    
-    //Tao 1 don xin viec
-    public String addApplication(HttpServletRequest request, HttpServletResponse response) {
-        String url = null;
-        
+
+    private String cancelledApplication(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
         if (account == null) {
-            url = "view/authen/login.jsp"; // Redirect if user is not logged in
+            return "view/authen/login.jsp";
         }
 
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-
         if (jobSeeker == null) {
-            request.setAttribute("error", "No Job Seeker found for the current account.");
-            url = "view/authen/login.jsp"; // Redirect to login page
+            try {
+                return "application?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
-        CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
-        if(cv == null) {
-            request.setAttribute("error", "No CV found for the current account.");
-            url = "";
+
+        try {
+            int applicationId = Integer.parseInt(request.getParameter("applicationId"));
+            int status = Integer.parseInt(request.getParameter("status"));
+
+            applicationDAO.cancelApplication(applicationId, status);
+            request.setAttribute("successApplication", "Job application canceled successfully.");
+        } catch (NumberFormatException e) {
+            Logger.getLogger(ApplicationServlet.class.getName()).log(Level.WARNING, "Invalid application ID or status", e);
+            request.setAttribute("error", "Invalid application ID or status.");
         }
-        
-        String jobPostingIDStr = request.getParameter("jobPostingID");
-        String seekerName = request.getParameter("seekerName");
-        
-        int jobPostingID = Integer.parseInt(jobPostingIDStr);
-        
-        JobPostings jobPosting = jobPostingDAO.findJobPostingById(jobPostingID);
-        
-        Applications application = new Applications();
-        application.setJobPostingID(jobPostingID);
-        application.setJobSeekerID(jobSeeker.getJobSeekerID());
-        application.setCVID(cv.getCVID());
-        application.setStatus("");   
-        return url;
+
+        return "application";
     }
 
+    private int parsePage(HttpServletRequest request) {
+        try {
+            return Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+            return 1; // default to page 1 if parsing fails
+        }
+    }
 }

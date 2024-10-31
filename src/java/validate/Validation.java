@@ -78,9 +78,10 @@ public class Validation {
 
     // Method to check if startDate is before endDate
     public boolean isStartDateBeforeEndDate(Date startDate, Date endDate) {
-        // Return true if startDate is before endDate
-        return startDate.before(endDate);
-    }
+    // Return true if startDate is before or equal to endDate
+    return !endDate.before(startDate);
+}
+
 
     // Method to check if the input date is the current date
     public boolean isToday(Date inputDate) {

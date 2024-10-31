@@ -235,10 +235,6 @@
                         font-weight: bold;
                     }
 
-                    /* Ensure pagination stays at the bottom */
-                    .footer-container {
-                        margin-top: auto; /* Pushes footer to the bottom */
-                    }
                 </style>
             </head>
             <body>

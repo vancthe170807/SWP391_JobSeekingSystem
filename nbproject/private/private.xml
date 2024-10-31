@@ -54,13 +54,28 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
         </group>
         <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/UpdateJP.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/Dashboard.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/VerifyRecruiter.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/dao/CVDAO.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/dashboard.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/Dashboard.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/editJP.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/AuthenticationController.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/sidebar-re.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/JobPost.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/footer-re.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/viewRecruiterProfile.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/viewJP.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/model/CV.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/seeker/CVServlet.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/dao/RecruitersDAO.java</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/verifyRecruiter.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/addJobPosting.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/user/CV.jsp</file>
+            <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/authen/login.jsp</file>
         </group>
         <group name="SWP291">
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/ManageFeedBackController.java</file>

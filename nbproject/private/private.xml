@@ -78,10 +78,13 @@
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/authen/login.jsp</file>
         </group>
         <group name="SWP291">
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/JobPostingController.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/jobPostManagement.jsp</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/ManageFeedBackController.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/seeker/FeedbackServlet.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/Feedback.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/user/Feedback.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/viewDetailUser.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/utils/Email.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/AccountDAO.java</file>
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/feedbackManagement.jsp</file>
         </group>
     </open-files>

@@ -29,7 +29,7 @@
             </a>
         </li>
         <li>
-            <a href="/admin/jobs" class="nav-link">
+            <a href="${pageContext.request.contextPath}/job_posting" class="nav-link">
                 <span class="me-2"><i class="fa-solid fa-briefcase"></i></span> Job Postings
             </a>
         </li>

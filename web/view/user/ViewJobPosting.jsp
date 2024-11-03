@@ -130,6 +130,47 @@
                 </div>
             </c:if>
         </div>
+        <!--feedback-->
+        <div class="container my-5">
+            <c:if test="${not empty jobPost}">
+                <!-- Existing Job Posting Code... -->
+                <c:if test="${not empty notice}">
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+                        <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    ${notice}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+                <!-- Feedback Section -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="m-0">Feedback <i class="fas fa-comments"></i></h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Feedback Form -->
+                        <form action="${pageContext.request.contextPath}/feedbackSeeker?action=create" method="post">
+                            <input type="hidden" name="jobPostingID" value="${jobPost.getJobPostingID()}">
+                            <div class="mb-3">
+                                <label for="feedbackContent" class="form-label">Leave your feedback:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
+                                    <textarea class="form-control" id="feedbackContent" name="content" rows="3" required placeholder="Enter your feedback here..."></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Submit Feedback
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </c:if>
+        </div>
+
 
         <!-- Include footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
@@ -137,5 +178,14 @@
         <!-- Bootstrap JS and Popper -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var toastEl = document.getElementById('liveToast');
+                if (toastEl) {
+                    var toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                }
+            });
+        </script>
     </body>
 </html>

@@ -16,17 +16,20 @@ public class Feedback {
     private String ContentFeedback;
     private Date CreatedAt;
     private int Status;
-
+    private int JobPostingID;
     public Feedback() {
     }
 
-    public Feedback(int FeedbackID, int AccountID, String ContentFeedback, Date CreatedAt, int Status) {
+    public Feedback(int FeedbackID, int AccountID, String ContentFeedback, Date CreatedAt, int Status, int JobPostingID) {
         this.FeedbackID = FeedbackID;
         this.AccountID = AccountID;
         this.ContentFeedback = ContentFeedback;
         this.CreatedAt = CreatedAt;
         this.Status = Status;
+        this.JobPostingID = JobPostingID;
     }
+
+    
 
     public int getFeedbackID() {
         return FeedbackID;
@@ -66,6 +69,14 @@ public class Feedback {
 
     public void setStatus(int Status) {
         this.Status = Status;
+    }
+
+    public int getJobPostingID() {
+        return JobPostingID;
+    }
+
+    public void setJobPostingID(int JobPostingID) {
+        this.JobPostingID = JobPostingID;
     }
     
     

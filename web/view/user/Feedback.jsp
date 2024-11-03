@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.JobPostings"%>
+<%@page import="dao.JobPostingsDAO"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -74,18 +76,21 @@
             <!-- Header Area End -->
             <div class="container mt-5">
                 <h1>Seeker's Feedback</h1>
-                <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addFeedbackModal">
-                    <i class="fas fa-plus"></i> Create New Feedback
-                </button>
+
                 <table class="table table-hover mt-3 table-bordered">
                     <thead class="thead">
                         <tr>
                             <th>Content</th>
                             <th>Status</th>
+                            <th>About</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <%
+                        JobPostings jobPost = new JobPostings();
+                        JobPostingsDAO jobPostDao = new JobPostingsDAO();
+                    %>
                     <c:forEach var="feedback" items="${feedbackList}">
                         <c:if test="${feedback.getStatus() != 4}">
                             <tr>
@@ -105,6 +110,20 @@
                                             <span class="badge badge-reject">Delete</span>
                                         </c:otherwise>
                                     </c:choose>
+                                </td>
+                                <td>
+                                    <c:set var="jobPostId" value="${feedback.getJobPostingID()}"/>
+                                    <%
+                                        int jobPostId = (Integer) pageContext.getAttribute("jobPostId");
+                                        jobPost = jobPostDao.findJobPostingById(jobPostId);
+                                        String title = "";
+                                        if(jobPost != null){
+                                            title = jobPost.getTitle();
+                                        }
+                                    %>
+                                    <a href="${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${feedback.getJobPostingID()}" class="text-decoration-none">
+                                        <%= title %>
+                                    </a>
                                 </td>
                                 <td class="text-center">
                                     <form action="feedbackSeeker" method="post" style="display:inline;">
@@ -129,30 +148,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- Add Feedback Modal -->
-        <div class="modal fade" id="addFeedbackModal" tabindex="-1" aria-labelledby="addFeedbackModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="feedbackSeeker?action=create" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addFeedbackModalLabel">Create New Feedback</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="feedbackContent" class="form-label">Feedback Content</label>
-                                <textarea class="form-control" id="feedbackContent" name="content" rows="4" required></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" name="action" value="create"/>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
         <!-- Edit Feedback Modal -->
         <div class="modal fade" id="editFeedbackModal" tabindex="-1" aria-labelledby="editFeedbackModalLabel" aria-hidden="true">
             <div class="modal-dialog">

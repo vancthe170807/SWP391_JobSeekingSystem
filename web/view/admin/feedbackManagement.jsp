@@ -8,6 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Account"%>
 <%@page import="dao.AccountDAO"%>
+<%@page import="model.JobPostings"%>
+<%@page import="dao.JobPostingsDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -184,6 +186,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Feedback By</th>
+                                                <th>About</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -192,9 +195,12 @@
                                             <%
                                                Account account = new Account();
                                                AccountDAO accDao = new AccountDAO();
+                                               JobPostings jobPost = new JobPostings();
+                                               JobPostingsDAO jobPostDao = new JobPostingsDAO();
                                             %>
                                             <c:forEach items="${listFeedback}" var="feedback">
                                                 <c:set var="accountId" value="${feedback.getAccountID()}"/>
+                                                <c:set var="jobPostId" value="${feedback.getJobPostingID()}"/>
                                                 <tr>
                                                     <!-- Full Name Column -->
                                                     <td>
@@ -207,6 +213,23 @@
                                                             }
                                                         %>
                                                         <%= name%>
+                                                    </td>
+                                                    <td>
+                                                        <%
+                                                            int jobPostId = (Integer) pageContext.getAttribute("jobPostId");
+                                                            jobPost = jobPostDao.findJobPostingById(jobPostId);
+                                                                String title = "";
+                                                            if(jobPost != null){
+                                                                title = jobPost.getTitle();
+                                                               }
+                                                        %>
+                                                        <form action="${pageContext.request.contextPath}/job_posting" method="POST" style="display: inline;">
+                                                            <input type="hidden" name="action" value="view">
+                                                            <input type="hidden" name="jobPostID" value="${feedback.getJobPostingID()}">
+                                                            <button type="submit" class="btn btn-link text-decoration-none" style="padding: 0;">
+                                                                <%= title %>
+                                                            </button>
+                                                        </form>
                                                     </td>
 
                                                     <!-- Status Column -->
@@ -266,7 +289,7 @@
 
                                                     <!-- Row for Feedback Details -->
                                                     <tr id="details-${feedback.getFeedbackID()}" style="display: none;">
-                                                    <td colspan="3">
+                                                    <td colspan="4">
                                                         <div class="card shadow-sm">
                                                             <div class="card-body">
                                                                 <!-- Header with title -->

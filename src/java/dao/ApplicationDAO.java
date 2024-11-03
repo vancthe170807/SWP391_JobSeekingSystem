@@ -94,7 +94,7 @@ public class ApplicationDAO extends GenericDAO<Applications> {
         String sql = "select * from Applications where Status = ?";
         parameterMap = new LinkedHashMap<>();
 
-        parameterMap.put("Status", 4);
+        parameterMap.put("Status", 0);
         return queryGenericDAO(Applications.class, sql, parameterMap);
     }
     

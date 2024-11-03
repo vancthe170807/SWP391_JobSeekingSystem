@@ -43,29 +43,62 @@ public class HomeSeekerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String filter = request.getParameter("filter");
+        String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
+        String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int pageSize = 12; // Number of records per page
+
         String minSalaryParam = request.getParameter("minSalary");
         String maxSalaryParam = request.getParameter("maxSalary");
 
         List<JobPostings> listTop6;
-        if (minSalaryParam != null && maxSalaryParam != null) {
-            // Lọc theo khoảng lương nếu có yêu cầu
-            double minSalary = Double.parseDouble(minSalaryParam);
-            double maxSalary = Double.parseDouble(maxSalaryParam);
-            listTop6 = jobPostingsDAO.getJobsBySalaryRange(minSalary, maxSalary);
-        } else if (filter == null || filter.isEmpty()) {
-            listTop6 = jobPostingsDAO.getJobPostingsByOpen();
-        } else {
+        int totalRecords;
+
+        // Determine if salary range filtering is requested
+        boolean salaryRangeFilter = (minSalaryParam != null && !minSalaryParam.isEmpty())
+                && (maxSalaryParam != null && !maxSalaryParam.isEmpty());
+
+        double minSalary = salaryRangeFilter ? Double.parseDouble(minSalaryParam) : 0;
+        double maxSalary = salaryRangeFilter ? Double.parseDouble(maxSalaryParam) : Double.MAX_VALUE;
+
+        // Apply search, filtering, and sorting logic
+        if (!searchJP.isEmpty()) {
+            // Search job postings by title
+            listTop6 = jobPostingsDAO.searchJobPostingByTitle(searchJP, page);
+            totalRecords = jobPostingsDAO.findTotalRecordByTitle(searchJP, minSalary, maxSalary);
+
+            if (listTop6.isEmpty()) {
+                request.setAttribute("NoJP", "No job postings found.");
+            }
+        } else if (filter != null && !filter.isEmpty()) {
+            // Filter job postings by category
             int categoryId = Integer.parseInt(filter);
-            listTop6 = jobPostingsDAO.getTop6JobPostingsByCategory(categoryId);
+            listTop6 = jobPostingsDAO.getJobPostingsByCategory(categoryId);
+            totalRecords = jobPostingsDAO.countJobPostingsByCategory(categoryId);
+        } else if (salaryRangeFilter) {
+            // Filter by salary range only
+            listTop6 = jobPostingsDAO.getJobsBySalaryRange(minSalary, maxSalary, page, pageSize, sortField);
+            totalRecords = jobPostingsDAO.countJobsBySalaryRange(minSalary, maxSalary);
+        } else {
+            // Default case: retrieve all job postings
+            listTop6 = jobPostingsDAO.findJobPostingsWithFilter(sortField, page, pageSize);
+            totalRecords = jobPostingsDAO.countTotalJobPostings();
         }
+
+        // Calculate total pages for pagination
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
         List<Job_Posting_Category> jobCategories = jobCategoryDAO.findAll();
 
         request.setAttribute("listTop6", listTop6);
         request.setAttribute("jobCategories", jobCategories);
         request.setAttribute("selectedFilter", filter);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
         request.setAttribute("minSalary", minSalaryParam);
         request.setAttribute("maxSalary", maxSalaryParam);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("searchJP", searchJP);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/user/userHome.jsp");
         dispatcher.forward(request, response);

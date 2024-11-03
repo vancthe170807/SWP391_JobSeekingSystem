@@ -154,6 +154,8 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
         String url = "view/authen/login.jsp"; // Default page on error
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        int jobPostingID = Integer.parseInt(request.getParameter("jobPostingID"));
+        JobPostings jobPosting = dao.findJobPostingById(jobPostingID);
 
         if (account == null) {
             return url; // Redirect if not logged in
@@ -172,12 +174,9 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
         CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (cv == null) {
             request.setAttribute("error", "No CV found for the current account.");
-            url = "view/user/jobPostingDetail.jsp";
+            url = "jobPostingDetail?action=details&idJP=" + jobPostingID;
             return url;
         }
-
-        int jobPostingID = Integer.parseInt(request.getParameter("jobPostingID"));
-        JobPostings jobPosting = dao.findJobPostingById(jobPostingID);
 
         // Kiểm tra application đang pending
         Applications existingApplication = applicationDAO.findPendingApplication(jobSeeker.getJobSeekerID(), jobPostingID);

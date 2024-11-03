@@ -103,33 +103,53 @@
                                 <td><c:out value="${jobPostingMap[app.applicationID]}" /></td>
                                 <td>${app.appliedDate}</td>
                                 <td>
+                                    <!-- Display the violation message if it exists, otherwise display the status badge -->
                                     <c:choose>
-                                        <c:when test="${app.status == 3}">
-                                            <span class="badge bg-info text-dark"><i class="fa fa-clock"></i> Pending</span>
+                                        <c:when test="${applicationStatusMap[app.applicationID] == 'Violate'}">
+                                            <span class="badge bg-warning text-dark"><i class="fa-solid fa-triangle-exclamation"></i> Violate</span>
                                         </c:when>
-                                        <c:when test="${app.status == 2}">
-                                            <span class="badge bg-success"><i class="fa fa-check-circle"></i> Approved</span>
-                                        </c:when>
-                                        <c:when test="${app.status == 1}">
-                                            <span class="badge bg-danger"><i class="fa fa-times-circle"></i> Rejected</span>
-                                        </c:when>
-                                        <c:when test="${app.status == 0}">
-                                            <span class="badge bg-secondary"><i class="fa fa-ban"></i> Cancelled</span>
-                                        </c:when>
+                                        <c:otherwise>
+                                            <c:choose>
+                                                <c:when test="${app.status == 3}">
+                                                    <span class="badge bg-info text-dark"><i class="fa fa-clock"></i> Pending</span>
+                                                </c:when>
+                                                <c:when test="${app.status == 2}">
+                                                    <span class="badge bg-success"><i class="fa fa-check-circle"></i> Approved</span>
+                                                </c:when>
+                                                <c:when test="${app.status == 1}">
+                                                    <span class="badge bg-danger"><i class="fa fa-times-circle"></i> Rejected</span>
+                                                </c:when>
+                                                <c:when test="${app.status == 0}">
+                                                    <span class="badge bg-secondary"><i class="fa fa-ban"></i> Cancelled</span>
+                                                </c:when>
+                                            </c:choose>
+                                        </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td>
-                                    <c:if test="${app.status == 3}">
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelApplicationModal-${app.applicationID}">
-                                            <i class="fa fa-ban"></i> Cancel
-                                        </button>
-                                    </c:if>
-                                    <a href="${pageContext.request.contextPath}/ViewDetailApplication?action=details&applicationId=${app.applicationID}" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i> View</a>
-                                </td>
-                            </tr>
 
-                            <!-- Modal for Cancel Application -->
-                        <div class="modal fade" id="cancelApplicationModal-${app.applicationID}" tabindex="-1" aria-labelledby="cancelModalLabel-${app.applicationID}" aria-hidden="true">
+                                <td>
+                                    <!-- View Button: Disabled if the job posting is "Violate" -->
+                                    <button type="button" 
+                                            class="btn btn-info btn-sm" 
+                                            onclick="window.location.href = '${pageContext.request.contextPath}/ViewDetailApplication?action=details&applicationId=${app.applicationID}'"
+                                            <c:if test="${applicationStatusMap[app.applicationID] == 'Violate'}">disabled</c:if>>
+                                                <i class="fa-solid fa-eye"></i> View
+                                            </button>
+
+                                            <!-- Cancel Button: Disabled if the application status is not Pending (3) or the job posting is "Violate" -->
+                                            <button type="button" 
+                                                    class="btn btn-danger btn-sm" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#cancelApplicationModal-${app.applicationID}"
+                                            <c:if test="${app.status != 3 || applicationStatusMap[app.applicationID] == 'Violate'}">disabled</c:if>>
+                                                <i class="fa fa-ban"></i> Cancel
+                                            </button>
+                                    </td>
+
+                                </tr>
+
+                                <!-- Modal for Cancel Application -->
+                            <div class="modal fade" id="cancelApplicationModal-${app.applicationID}" tabindex="-1" aria-labelledby="cancelModalLabel-${app.applicationID}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">

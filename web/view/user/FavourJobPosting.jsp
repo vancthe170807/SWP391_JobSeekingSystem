@@ -90,18 +90,23 @@
                     <tbody>
                         <c:forEach var="fjp" items="${favourJPs}">
                             <tr>
-                                <td><c:out value="${jobPostingMap[fjp.favourJPID]}" /></td>
-                                
-                                <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFavourJPModal-${fjp.favourJPID}">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </button>
-                                    <a href="${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${fjp.jobPostingID}" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i> View</a>
-                                </td>
-                            </tr>
 
-                            <!-- Modal for Cancel Application -->
-                        <div class="modal fade" id="deleteFavourJPModal-${fjp.favourJPID}" tabindex="-1" aria-labelledby="cancelModalLabel-${app.applicationID}" aria-hidden="true">
+                                <td><c:out value="${jobPostingMap[fjp.favourJPID]}" /></td>
+                                <td>
+                                    <button type="button" 
+                                            class="btn btn-info btn-sm" 
+                                            onclick="window.location.href = '${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${fjp.jobPostingID}'"
+                                            <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">disabled</c:if>>
+                                                <i class="fa-solid fa-eye"></i> View
+                                            </button> 
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFavourJPModal-${fjp.favourJPID}" <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">disabled</c:if>>
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Modal for Cancel Application -->
+                            <div class="modal fade" id="deleteFavourJPModal-${fjp.favourJPID}" tabindex="-1" aria-labelledby="cancelModalLabel-${app.applicationID}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -126,7 +131,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
-                
+
             </c:if>
         </div>
 

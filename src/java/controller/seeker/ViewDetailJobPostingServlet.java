@@ -122,6 +122,9 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             int idJP = Integer.parseInt(request.getParameter("idJP"));
             JobPostings jobPost = dao.findJobPostingById(idJP);
             request.setAttribute("jobPost", jobPost);
+            //lay ve notice
+            String notice = request.getParameter("notice");
+            request.setAttribute("notice", notice);
             Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
             request.setAttribute("category", category); // Đặt với tên 'category'
 

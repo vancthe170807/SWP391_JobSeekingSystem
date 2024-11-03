@@ -172,10 +172,11 @@
 
                             <!-- Back Button -->
                             <div class="back-btn">
-                                <a href="${pageContext.request.contextPath}/job_posting" class="btn btn-secondary">
+                                <button onclick="history.back();" class="btn btn-secondary">
                                     <i class="fas fa-arrow-left"></i> Back
-                                </a>
+                                </button>
                             </div>
+
                         </div>
                     </div>
                 </div>

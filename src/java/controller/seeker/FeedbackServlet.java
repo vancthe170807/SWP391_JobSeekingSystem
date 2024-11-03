@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import model.Account;
 import model.Feedback;
@@ -63,17 +65,21 @@ public class FeedbackServlet extends HttpServlet {
         return "feedbackSeeker";
     }
 
-    private String createFeedback(HttpServletRequest request) {
+    private String createFeedback(HttpServletRequest request) throws UnsupportedEncodingException {
         //lay ve accountid
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         String content = request.getParameter("content");
+        int jobPostId = Integer.parseInt(request.getParameter("jobPostingID"));
         //set vao doi tuong feedback de insert
         Feedback feedback = new Feedback();
         feedback.setAccountID(account.getId());
+        feedback.setJobPostingID(jobPostId);
         feedback.setContentFeedback(content);
         feedbackDao.insert(feedback);
-        return "feedbackSeeker";
+        return "jobPostingDetail?action=" + URLEncoder.encode("details", "UTF-8") 
+                + "&idJP=" + URLEncoder.encode(String.valueOf(jobPostId), "UTF-8")
+                + "&notice=" + URLEncoder.encode("Send feedback successfully!!", "UTF-8");
     }
 
     private String editFeedback(HttpServletRequest request) {

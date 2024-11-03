@@ -23,10 +23,17 @@ public class FeedbackDAO extends GenericDAO<Feedback> {
 
     @Override
     public int insert(Feedback t) {
-        String sql = "INSERT INTO [dbo].[Feedback] ([AccountID],[ContentFeedback]) VALUES (?,?)";
+        String sql = """
+                     INSERT INTO [dbo].[Feedback]
+                                ([AccountID]
+                                ,[ContentFeedback]
+                                ,[JobPostingID])
+                          VALUES
+                                (?,?,?)""";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("AccountID", t.getAccountID());
         parameterMap.put("ContentFeedback", t.getContentFeedback());
+        parameterMap.put("JobPostingID", t.getJobPostingID());
         return insertGenericDAO(sql, parameterMap);
     }
 

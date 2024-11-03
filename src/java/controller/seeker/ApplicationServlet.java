@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.seeker;
 
 import constant.CommonConst;
@@ -109,7 +105,7 @@ public class ApplicationServlet extends HttpServlet {
         application.setJobPostingID(jobPostingID);
         application.setJobSeekerID(jobSeeker.getJobSeekerID());
         application.setCVID(cv.getCVID());
-        application.setStatus("");   
+        application.setStatus(3);   
         return url;
     }
 

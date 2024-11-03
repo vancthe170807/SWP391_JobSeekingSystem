@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.seeker;
 
 import constant.CommonConst;
@@ -20,16 +19,16 @@ import java.util.List;
 import model.Account;
 import model.JobPostings;
 
-@WebServlet(name="ListJobServlet", urlPatterns={"/listJob"})
+@WebServlet(name = "ListJobServlet", urlPatterns = {"/listJob"})
 public class ListJobServlet extends HttpServlet {
-   
+
     private final JobPostingsDAO jobPostingsDAO = new JobPostingsDAO();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         // Lấy tham số tìm kiếm và phân trang từ request
-                String filter = request.getParameter("filter");
+        String filter = request.getParameter("filter");
 
         String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
         String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
@@ -69,31 +68,29 @@ public class ListJobServlet extends HttpServlet {
         // Chuyển hướng đến trang quản lý Job Posting
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/user/ListJob.jsp");
         dispatcher.forward(request, response);
-    } 
-
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListJobServlet</title>");  
+            out.println("<title>Servlet ListJobServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListJobServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ListJobServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
 }

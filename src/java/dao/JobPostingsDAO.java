@@ -42,7 +42,11 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", recruiterID);
         List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
 
     }
 
@@ -157,7 +161,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
         parameterMap.put("fetch", RECORD_PER_PAGE);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+                ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public List<JobPostings> searchJobPostingByTitle(String searchJP, int page) {
@@ -192,7 +201,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         parameterMap.put("offset", (page - 1) * pageSize);
         parameterMap.put("fetch", pageSize);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+                ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public List<JobPostings> findJobPostingsWithFilter(String sortField, int page, int pageSize) {
@@ -201,7 +215,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Status", "Open");
         parameterMap.put("offset", (page - 1) * pageSize);
         parameterMap.put("fetch", pageSize);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+                ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public int countTotalJobPostingsByRecruiterID(int recruiterID) {

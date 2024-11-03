@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
+
 /**
  *
  * @author ADMIN
@@ -179,18 +181,44 @@ public abstract class GenericDAO<T> extends DBContext {
             IllegalAccessException,
             InvocationTargetException {
 
-        // Khởi tạo đối tượng
+        // Initialize the object of type T
         T obj = clazz.getDeclaredConstructor().newInstance();
 
-        // Lấy danh sách các field của lớp
+        // Get metadata for checking column existence
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        // Get all fields of the class
         Field[] fields = clazz.getDeclaredFields();
 
-        // Duyệt qua từng field
+        // Loop through each field
         for (Field field : fields) {
+            field.setAccessible(true); // Make field accessible
+            String fieldName = field.getName();
 
-            // Set giá trị cho field
+            // Check if the field exists in ResultSet columns
+            boolean columnExists = false;
+            for (int i = 1; i <= columnCount; i++) {
+                if (metaData.getColumnName(i).equalsIgnoreCase(fieldName)) {
+                    columnExists = true;
+                    break;
+                }
+            }
+
+            // If column does not exist in ResultSet, skip this field
+            if (!columnExists) {
+                continue;
+            }
+
+            // Get the value from the ResultSet for the current field
             Object value = getFieldValue(rs, field);
-            field.setAccessible(true);
+
+            // Check if the field type is LocalDateTime and convert if necessary
+            if (field.getType().equals(LocalDateTime.class) && value instanceof Timestamp) {
+                value = ((Timestamp) value).toLocalDateTime(); // Convert Timestamp to LocalDateTime
+            }
+
+            // Set the value to the field in the object
             field.set(obj, value);
         }
 
@@ -209,11 +237,10 @@ public abstract class GenericDAO<T> extends DBContext {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
-        
-        if(Collection.class.isAssignableFrom(fieldType)){
+
+        if (Collection.class.isAssignableFrom(fieldType)) {
             return null;
-        }
-        else if (Map.class.isAssignableFrom(fieldType)){
+        } else if (Map.class.isAssignableFrom(fieldType)) {
             return null;
         }
 

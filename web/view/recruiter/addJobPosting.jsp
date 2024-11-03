@@ -20,35 +20,41 @@
             .job-posting-container {
                 flex: 1;
                 padding: 40px;
-                margin-left: 260px; /* Adjust for the sidebar */
-                margin-top: 80px; /* Adjust for header */
+                margin-left: 260px;
+                margin-top: 80px;
                 box-sizing: border-box;
-                background-color: #f5f5f5;
+                background-color: #f9f9f9;
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
             }
 
-            /* Form card styling */
+            /* Form card styling with hover effect */
             .job-posting-card {
                 background-color: #ffffff;
                 padding: 40px;
                 border-radius: 10px;
                 border: 1px solid #ddd;
-                max-width: 900px; /* Increased width */
+                max-width: 850px;
                 width: 100%;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .job-posting-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
             }
 
             /* Title styling */
             .job-posting-card h2 {
                 text-align: center;
-                margin-bottom: 30px; /* Increased space */
+                margin-bottom: 30px;
                 font-weight: bold;
                 color: #007b5e;
             }
 
-            /* Label and input field styling */
+            /* Label and input field styling with hover effect */
             .form-group label {
                 display: block;
                 font-weight: bold;
@@ -62,17 +68,17 @@
                 border-radius: 5px;
                 padding: 12px;
                 font-size: 15px;
-                background-color: #fafafa;
-                margin-bottom: 20px; /* Increased space */
+                background-color: #f0f8f5;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                margin-bottom: 20px;
             }
 
-            /* Two-column layout for form fields */
-            .row .col-md-6 {
-                padding-right: 15px;
-                padding-left: 15px;
+            .form-control:focus {
+                border-color: #007b5e;
+                box-shadow: 0 0 5px rgba(0, 123, 94, 0.5);
             }
 
-            /* Button styling */
+            /* Button styling with hover effect */
             .btn-group {
                 display: flex;
                 justify-content: flex-start;
@@ -80,18 +86,33 @@
                 margin-top: 20px;
             }
 
+            .btn-success, .btn-secondary {
+                padding: 12px 24px;
+                font-size: 16px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
             .btn-success {
                 background-color: #007b5e;
                 border: none;
-                padding: 12px 24px;
-                font-size: 16px;
+                color: white;
             }
 
             .btn-secondary {
                 background-color: #6c757d;
                 border: none;
-                padding: 12px 24px;
-                font-size: 16px;
+                color: white;
+            }
+
+            .btn-success:hover {
+                background-color: #005f46;
+                transform: scale(1.05);
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                transform: scale(1.05);
             }
 
             /* Checkbox styling */
@@ -99,25 +120,10 @@
                 margin-top: 20px;
             }
 
-            footer {
-                background-color: #389354;
-                color: white;
-                text-align: center;
-                padding: 20px 0;
-                width: calc(100% - 260px);
-                margin-left: 260px;
-                bottom: 0;
-                position: relative;
-            }
-
-            footer a {
-                color: white;
-                text-decoration: none;
-                margin: 0 15px;
-            }
-
-            footer a:hover {
-                text-decoration: underline;
+            /* Error and success message styling */
+            .alert {
+                margin-top: 20px;
+                border-radius: 5px;
             }
 
         </style>
@@ -140,32 +146,30 @@
                     <!-- Title -->
                     <div class="form-group">
                         <label for="jobTitle">Job Title:</label>
-                        <input type="text" id="jobTitle" name="jobTitle" class="form-control" placeholder="Enter job title" value="${jobTitle}" required>
+                        <input type="text" id="jobTitle" name="jobTitle" class="form-control" placeholder="Enter job title" value="${fn:escapeXml(jobTitle)}" required>
                     </div>
 
                     <!-- Description -->
                     <div class="form-group">
                         <label for="jobDescription">Job Description:</label>
-                        <textarea id="jobDescription" name="jobDescription" class="form-control" placeholder="Enter job description" rows="6" required>${jobDescription}</textarea>
+                        <textarea id="jobDescription" name="jobDescription" class="form-control" placeholder="Enter job description" rows="6">${fn:escapeXml(jobDescription)}</textarea>
                     </div>
 
                     <!-- Requirements -->
                     <div class="form-group">
                         <label for="jobRequirements">Job Requirements:</label>
-                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="6" required>${jobRequirements}</textarea>
+                        <textarea id="jobRequirements" name="jobRequirements" class="form-control" placeholder="Enter job requirements" rows="6">${fn:escapeXml(jobRequirements)}</textarea>
                     </div>
 
                     <!-- Two-column row for Min Salary, Max Salary -->
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- Min Salary -->
                             <div class="form-group">
                                 <label for="minSalary">Min Salary $:</label>
                                 <input type="number" id="minSalary" name="minSalary" class="form-control" placeholder="Enter minimum salary" value="${minSalary}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <!-- Max Salary -->
                             <div class="form-group">
                                 <label for="maxSalary">Max Salary $:</label>
                                 <input type="number" id="maxSalary" name="maxSalary" class="form-control" placeholder="Enter maximum salary" value="${maxSalary}" required>
@@ -176,12 +180,12 @@
                     <!-- Location -->
                     <div class="form-group">
                         <label for="jobLocation">Location:</label>
-                        <input type="text" id="jobLocation" name="jobLocation" class="form-control" placeholder="Enter job location" value="${jobLocation}" required>
+                        <input type="text" id="jobLocation" name="jobLocation" class="form-control" placeholder="Enter job location" value="${fn:escapeXml(jobLocation)}" required>
                     </div>
 
+                    <!-- Status and Posted Date -->
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- Status -->
                             <div class="form-group">
                                 <label for="jobStatus">Status:</label>
                                 <select id="jobStatus" name="jobStatus" class="form-control" required>
@@ -192,43 +196,43 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <!-- Posted Date -->
                                 <div class="form-group">
                                     <label for="postedDate">Posted Date:</label>
                                     <input type="date" id="postedDate" name="postedDate" class="form-control" value="${postedDate}" required>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Closing Date and Category -->
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- Closing Date -->
                             <div class="form-group">
                                 <label for="closingDate">Closing Date:</label>
                                 <input type="date" id="closingDate" name="closingDate" class="form-control" value="${closingDate}" required>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="jobCategory">Job Category:</label>
+                                <select id="jobCategory" name="jobCategory" class="form-control" required>
+                                    <option value="">Select Job Category</option>
+                                    <c:forEach var="category" items="${jobCategories}">
+                                        <option value="${category.id}" <c:if test="${category.id == selectedJobCategory}">selected</c:if>>${category.getName()}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Job Posting Category -->
-                    <div class="form-group">
-                        <label for="jobCategory">Job Category:</label>
-                        <select id="jobCategory" name="jobCategory" class="form-control" required>
-                            <option value="">Select Job Category</option>
-                            <c:forEach var="category" items="${jobCategories}">
-                                <option value="${category.id}" <c:if test="${category.id == selectedJobCategory}">selected</c:if>>${category.getName()}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-
 
                     <!-- Checkbox -->
                     <div class="form-check">
                         <input type="checkbox" id="jobPathAgreement" name="jobPathAgreement" class="form-check-input" required>
                         <label class="form-check-label" for="jobPathAgreement">
-                            I have read and agree to Job Paths Terms of Service
+                            I have read and agree to Job Path's Terms of Service
                         </label>
                     </div>
 
+                    <!-- Error Message -->
                     <c:if test="${not empty erMess}">
                         <div class="alert alert-danger" role="alert">
                             <ul>
@@ -238,7 +242,8 @@
                             </ul>
                         </div>
                     </c:if>
-                    <!-- Success message -->
+
+                    <!-- Success Message -->
                     <c:if test="${not empty successPost}">
                         <div class="alert alert-success">
                             ${successPost}
@@ -254,66 +259,54 @@
             </div>
         </div>
 
+        <!-- Include Footer -->
+        <%@ include file="../recruiter/footer-re.jsp" %>
+
         <!-- JavaScript to handle form reset and validation -->
         <script>
             function clearForm() {
-                // Reset form fields to their default values
-                document.getElementById("jobPostingForm").reset();
-
-                // Manually reset TinyMCE content for job description and requirements
-                tinymce.get("jobDescription").setContent('');
-                tinymce.get("jobRequirements").setContent('');
-
-                // Manually clear other input fields
+                // Manually reset each input field by ID
                 document.getElementById("jobTitle").value = '';
-                document.getElementById("jobLocation").value = '';
                 document.getElementById("minSalary").value = '';
                 document.getElementById("maxSalary").value = '';
-                document.getElementById("jobStatus").value = 'Open'; // Default value
+                document.getElementById("jobLocation").value = '';
                 document.getElementById("postedDate").value = '';
                 document.getElementById("closingDate").value = '';
-                document.getElementById("jobCategory").value = '';
-
-                // Manually uncheck the checkbox if it was checked
+                document.getElementById("jobStatus").selectedIndex = 0;
+                document.getElementById("jobCategory").selectedIndex = 0;
                 document.getElementById("jobPathAgreement").checked = false;
+
+                // Manually clear TinyMCE fields
+                tinymce.get("jobDescription").setContent('');
+                tinymce.get("jobRequirements").setContent('');
             }
 
-            function validateForm() {
-                // Ensure job description and job requirements are not empty
-                const jobDescription = tinymce.get("jobDescription").getContent({format: "text"}).trim();
-                const jobRequirements = tinymce.get("jobRequirements").getContent({format: "text"}).trim();
-
-                if (!jobDescription) {
-                    alert("Job Description cannot be empty.");
-                    return false;
-                }
-
-                if (!jobRequirements) {
-                    alert("Job Requirements cannot be empty.");
-                    return false;
-                }
-
-                // All validation passed
-                return true;
-            }
-
+            // Initialize TinyMCE with required validation check
             tinymce.init({
-                selector: 'textarea', // Initialize TinyMCE for all text areas
+                selector: 'textarea',
                 plugins: 'advlist autolink lists link image charmap print preview anchor',
                 toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
-                menubar: true, // Disable the menubar
-                branding: false, // Disable the TinyMCE branding
-                height: 300, // Set the height of the editor
+                branding: false,
+                height: 300,
                 setup: function (editor) {
                     editor.on('change', function () {
-                        tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+                        tinymce.triggerSave();
                     });
                 }
             });
 
+            // Custom form validation for TinyMCE fields
+            function validateForm() {
+                let description = tinymce.get("jobDescription").getContent();
+                let requirements = tinymce.get("jobRequirements").getContent();
+
+                if (description.trim() === "" || requirements.trim() === "") {
+                    alert("Please fill in the required fields: Job Description and Job Requirements.");
+                    return false;
+                }
+                return true;
+            }
         </script>
 
-        <!-- Include Footer -->
-        <%@ include file="../recruiter/footer-re.jsp" %>
     </body>
 </html>

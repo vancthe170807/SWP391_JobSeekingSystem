@@ -72,4 +72,13 @@ public class FavourJobPostingDAO extends GenericDAO<FavourJobPosting> {
         parameterMap.put("fetch", pageSize);
         return queryGenericDAO(FavourJobPosting.class, sql, parameterMap);
     }
+    
+    public FavourJobPosting findExistFavourJP(int jobSeekerID, int jobPostingID) {
+        String sql = "SELECT * FROM FavourJobPosting WHERE JobSeekerID = ? AND  JobPostingID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", jobSeekerID);
+        parameterMap.put("JobPostingID", jobPostingID);
+        List<FavourJobPosting> list = queryGenericDAO(FavourJobPosting.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+    }
 }

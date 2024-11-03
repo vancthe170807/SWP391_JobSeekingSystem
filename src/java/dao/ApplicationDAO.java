@@ -127,7 +127,7 @@ public class ApplicationDAO extends GenericDAO<Applications> {
     }
 
     public Applications findPendingApplication(int jobSeekerID, int jobPostingID) {
-        String sql = "SELECT * FROM Applications WHERE JobSeekerID = ? AND JobPostingID = ? AND Status = 1";
+        String sql = "SELECT * FROM Applications WHERE JobSeekerID = ? AND JobPostingID = ? AND Status = 3";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", jobSeekerID);
         parameterMap.put("JobPostingID", jobPostingID);

@@ -63,7 +63,7 @@ public class VerifyRecruiter extends HttpServlet {
             // Check if the businessCode belongs to the recruiter's own company
             if (!companyDao.doesBusinessCodeExist(businessCode, account.getId())) {
                 // If the business code does not exist for the given account, show specific error message
-                request.setAttribute("error", "Invalid Business Code.");
+                request.setAttribute("error", "Please input correct business code of your company!.");
                 request.getRequestDispatcher("view/recruiter/verifyRecruiter.jsp").forward(request, response);
                 return;
             }

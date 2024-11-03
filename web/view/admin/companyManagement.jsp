@@ -12,6 +12,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Account"%>
+<%@page import="dao.AccountDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,6 +37,23 @@
                 color: red; /* Inactive seekers in red */
                 font-weight: bold;
             }
+            .alert-custom {
+                background-color: #FFD700; /* Màu nền vàng */
+                color: #8B4513; /* Màu chữ nâu */
+                font-weight: bold;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .table-bordered td .form-check {
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+            } 
+            .table-bordered thead th {
+                background-color: #28a745; /* Màu xanh lá cây */
+                color: #ffffff; /* Màu trắng cho chữ để dễ đọc */
+            }
         </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
@@ -46,14 +65,14 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
 
                         <!--content-main can fix-->
                         <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">
@@ -66,10 +85,12 @@
                                 <div class="dash__overview">
 
                                     <h6 class="fw-medium mb-30 text-center fs-2">COMPANY MANAGEMENT</h6>
-                                    <!--drop-down filter company-->
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <!-- Form filter -->
-                                        <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
+                                    
+  
+                                <!--drop-down filter company-->
+                                <div class="d-flex justify-content-between align-items-center mb-3 ms-2">
+                                    <!-- Form filter -->
+                                    <form action="${pageContext.request.contextPath}/companies" method="GET" class="d-flex align-items-center">
                                         <label for="company-filter" class="me-2">Filter</label>
                                         <select id="company-filter" name="filter" class="form-select me-3" onchange="this.form.submit()">
                                             <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Companies</option>
@@ -83,7 +104,7 @@
                                         <!-- Error message (displayed in red) -->
                                         <span class="text-danger me-3">${requestScope.notice}</span>
 
-                                       
+
                                     </div>
                                 </div>
 
@@ -98,24 +119,44 @@
                                 </form>
 
                                 <!--search company end-->
-                                
+
                                 <div class="seeker-list">
-                                    <table class="table table-striped" style="border: 2px">
+                                    <table class="table table-bordered" style="text-align: center; vertical-align: middle;">
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>
+                                                <th>Create By</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <!-- Table rows will go here (populated dynamically) -->
+                                            <%
+                                                Account account = new Account();
+                                                AccountDAO accDao = new AccountDAO();
+                                            %>
                                             <c:forEach items="${listCompanies}" var="company">
+                                                <c:set var="accountId" value="${company.getAccountId()}"/>
                                                 <tr>
                                                     <!-- CompanyName Column -->
 
                                                     <td>
                                                         ${company.getName()}
+                                                    </td>
+                                                    <td>
+                                                        <%
+                                                        int accountId = (Integer) pageContext.getAttribute("accountId");
+                                                        account = accDao.findUserById(accountId);
+                                                        String name = "";
+                                                        if(account != null){
+                                                         name = account.getFullName();
+                                                        
+                                                        }else{
+                                                         name = "not registered";
+                                                            }
+                                                        %>
+                                                        <%= name%>
                                                     </td>
                                                     <!-- Status Column -->
                                                     <td>
@@ -129,10 +170,7 @@
                                                     </td>
                                                     <!--Edit Column-->
                                                     <td>
-                                                        <!-- Nút Edit với biểu tượng búa -->
-                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCompanyModal${company.id}">
-                                                            <i class="fas fa-hammer"></i> 
-                                                        </button>
+
 
                                                         <!-- Nút View với biểu tượng con mắt -->
                                                         <a href="${pageContext.request.contextPath}/companies?action=view&id=${company.id}" class="btn btn-primary me-2">
@@ -142,44 +180,11 @@
 
                                                 </tr>
                                                 <!--Modal Edit Company--> 
-                                            <div class="modal fade" id="editCompanyModal${company.id}" tabindex="-1" aria-labelledby="editCompanyModalLabel${company.id}" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-success text-white">
-                                                            <h5 class="modal-title" id="editCompanyModalLabel${company.id}">Edit Company</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!--Form to edit company details--> 
-                                                            <form action="${pageContext.request.contextPath}/companies?action=edit-company" method="POST">
-                                                                <input type="hidden" name="id-company" value="${company.id}">
 
-                                                                <div class="mb-3">
-                                                                    <label for="companyName${company.id}" class="form-label">Company Name</label>
-                                                                    <input type="text" class="form-control" id="companyName${company.id}" name="name" value="${company.getName()}" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="companyDescription${company.id}" class="form-label">Description</label>
-                                                                    <textarea class="form-control" id="companyDescription${company.id}" name="description" rows="3" required>${company.getDescription()}</textarea>
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                    <label for="companyLocation${company.id}" class="form-label">Location</label>
-                                                                    <input type="text" class="form-control" id="companyLocation${company.id}" name="location" value="${company.getLocation()}" required>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-success">Save Changes</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
-                                     <!-- Pagination -->
+                                    <!-- Pagination -->
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center" id="pagination">
                                             <c:if test="${pageControl.getPage() > 1}">
@@ -347,7 +352,7 @@
                                                 });
                                             });
         </script>
-        
+
         <script>
             tinymce.init({
                 selector: 'textarea', // Initialize TinyMCE for all text areas
@@ -356,8 +361,8 @@
                 menubar: true, // Disable the menubar
                 branding: false, // Disable the TinyMCE branding
                 height: 300, // Set the height of the editor
-                setup: function(editor) {
-                    editor.on('change', function() {
+                setup: function (editor) {
+                    editor.on('change', function () {
                         tinymce.triggerSave(); // Synchronize TinyMCE content with the form
                     });
                 }

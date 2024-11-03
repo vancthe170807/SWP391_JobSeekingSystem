@@ -48,14 +48,14 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
 
                         <!--content-main can fix-->
                         <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px">
@@ -68,16 +68,18 @@
                                 <div class="dash__overview">
 
                                     <h6 class="fw-medium mb-30 text-center fs-2">SEEKER ACCOUNT MANAGEMENT</h6>
-                                    <!--drop-down filter seeker-->
-                                    <div class="filter-dropdown">
-                                        <form action="${pageContext.request.contextPath}/seekers" method="GET">
-                                        <label for="seeker-filter">Filter</label>
-                                        <select id="seeker-filter" name="filter" onchange="this.form.submit()">
-                                            <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Seekers</option>
-                                            <option value="active" ${param.filter == 'active' ? 'selected' : ''}>Active Seekers</option>
-                                            <option value="inactive" ${param.filter == 'inactive' ? 'selected' : ''}>Inactive Seekers</option>
-                                        </select>
-                                    </form>
+                                    <div class="d-flex justify-content-between align-items-center mb-3 ms-2">
+                                        <!--drop-down filter seeker-->
+                                        <div class="filter-dropdown">
+                                            <form action="${pageContext.request.contextPath}/seekers" method="GET">
+                                            <label for="seeker-filter">Filter</label>
+                                            <select id="seeker-filter" name="filter" onchange="this.form.submit()">
+                                                <option value="all" ${param.filter == null || param.filter == 'all' ? 'selected' : ''}>All Seekers</option>
+                                                <option value="active" ${param.filter == 'active' ? 'selected' : ''}>Active Seekers</option>
+                                                <option value="inactive" ${param.filter == 'inactive' ? 'selected' : ''}>Inactive Seekers</option>
+                                            </select>
+                                        </form>
+                                    </div>
                                 </div>
                                 <hr/>
                                 <!--search seeker-->
@@ -141,7 +143,7 @@
                                     </table>
 
                                     <!-- Pagination -->
-                                     <!-- Pagination -->
+                                    <!-- Pagination -->
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center" id="pagination">
                                             <c:if test="${pageControl.getPage() > 1}">
@@ -285,33 +287,33 @@
         <jsp:include page="../common/admin/common-js-admin.jsp"></jsp:include>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
-                                            $(document).ready(function () {
-                                                $('.form-check-input').change(function () {
-                                                    var seekerId = $(this).data('seeker-id');
-                                                    var isActive = this.checked;
-                                                    var label = $(this).siblings('.form-check-label');
+                                                $(document).ready(function () {
+                                                    $('.form-check-input').change(function () {
+                                                        var seekerId = $(this).data('seeker-id');
+                                                        var isActive = this.checked;
+                                                        var label = $(this).siblings('.form-check-label');
 
-                                                    $.ajax({
-                                                        url: '${pageContext.request.contextPath}/seekers',
-                                                        type: 'POST',
-                                                        data: {
-                                                            action: isActive ? 'active' : 'deactive',
-                                                            'id-seeker': seekerId
-                                                        },
-                                                        success: function (response) {
-                                                            console.log('Seeker status updated successfully');
+                                                        $.ajax({
+                                                            url: '${pageContext.request.contextPath}/seekers',
+                                                            type: 'POST',
+                                                            data: {
+                                                                action: isActive ? 'active' : 'deactive',
+                                                                'id-seeker': seekerId
+                                                            },
+                                                            success: function (response) {
+                                                                console.log('Seeker status updated successfully');
 
-                                                        },
-                                                        error: function (xhr, status, error) {
-                                                            console.error('Error updating seeker status');
-                                                            $(this).prop('checked', !isActive);
+                                                            },
+                                                            error: function (xhr, status, error) {
+                                                                console.error('Error updating seeker status');
+                                                                $(this).prop('checked', !isActive);
 
-                                                        }
+                                                            }
+                                                        });
                                                     });
                                                 });
-                                            });
         </script>   
-        
+
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

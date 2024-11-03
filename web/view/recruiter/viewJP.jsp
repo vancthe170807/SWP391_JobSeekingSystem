@@ -14,93 +14,105 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            /* Main content layout */
+            /* Main content layout with reduced width */
             .job-posting-container {
                 flex: 1;
                 padding: 20px;
-                margin-left: 260px; /* Adjust for sidebar */
-                margin-top: 80px; /* Adjust for header */
+                margin-left: 260px;
+                margin-top: 80px;
                 box-sizing: border-box;
-                background-color: #f5f5f5; /* Light background */
-                min-height: calc(100vh - 140px); /* Ensure container takes full height minus header and footer */
+                background-color: #f5f5f5;
+                min-height: calc(100vh - 140px);
+                display: flex;
+                justify-content: center;
             }
 
             .job-posting-content {
                 background-color: white;
-                padding: 30px;
+                padding: 20px;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                margin-bottom: 20px;
+                max-width: 800px; /* Reduced width */
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .job-posting-content:hover {
+                transform: scale(1.02);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             }
 
             .job-posting-header {
                 text-align: center;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .job-posting-header h2 {
                 color: #007b5e;
                 font-weight: bold;
+                transition: color 0.3s ease;
+            }
+
+            /* Field styling with animation */
+            .job-detail-full,
+            .job-detail {
+                background-color: #f0f8f5;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .job-detail-full:hover,
+            .job-detail:hover {
+                background-color: #e0f3ea;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            }
+
+            .job-detail-full h5, .job-detail h5 {
+                color: #007b5e;
+                font-weight: bold;
+                margin-bottom: 5px;
+                transition: color 0.3s ease;
+            }
+
+            .job-detail-full p, .job-detail p {
+                margin-bottom: 0;
+                color: #333;
             }
 
             .job-detail {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 20px;
+                gap: 15px;
             }
 
             .job-detail div {
                 width: 48%;
             }
 
-            .job-detail h5 {
-                color: #007b5e;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
-
-            .job-detail p {
-                margin-bottom: 10px;
-                color: #333;
-            }
-
-            /* Buttons */
+            /* Button styling */
             .btn-apply {
                 background-color: #007b5e;
                 color: white;
-                padding: 12px 30px;
+                padding: 10px 25px;
                 font-size: 16px;
                 border-radius: 5px;
                 text-decoration: none;
                 display: inline-block;
                 margin-top: 20px;
+                align-self: center;
+                transition: background-color 0.3s ease, transform 0.3s ease;
             }
 
             .btn-apply:hover {
                 background-color: #005f46;
+                transform: scale(1.05);
             }
 
-            /* Footer */
-            footer {
-                background-color: #389354;
-                color: white;
-                text-align: center;
-                padding: 20px 0;
-                width: calc(100% - 260px); /* Adjusting for sidebar width */
-                margin-left: 260px;
-                position: relative;
-                bottom: 0;
-            }
-
-            footer a {
-                color: white;
-                text-decoration: none;
-                margin: 0 15px;
-            }
-
-            footer a:hover {
-                text-decoration: underline;
-            }
         </style>
     </head>
     <body>
@@ -117,74 +129,66 @@
                 <div class="job-posting-header">
                     <h2>${jobPost.getTitle()}</h2>
                 </div>
+
+                <!-- Full-row details with adaptive content length -->
+                <div class="job-detail-full">
+                    <h5>Description:</h5>
+                    <p>${jobPost.getDescription()}</p>
+                </div>
+                <div class="job-detail-full">
+                    <h5>Requirements:</h5>
+                    <p>${jobPost.getRequirements()}</p>
+                </div>
+
+                <!-- Two-column layout for remaining details -->
                 <div class="job-detail">
-                    <div>
-                        <h5>Description:</h5>
-                        <p>${jobPost.getDescription()}</p>
-                    </div>
                     <div>
                         <h5>Status:</h5>
                         <p>${jobPost.getStatus()}</p>
-
                     </div>
-                </div>
-                <div class="job-detail">
                     <div>
                         <h5>Date Posted:</h5>
                         <p><fmt:formatDate value="${jobPost.getPostedDate()}" pattern="dd-MM-yyyy"/></p>
                     </div>
+                </div>
+
+                <div class="job-detail">
                     <div>
                         <h5>Closing Date:</h5>
                         <p><fmt:formatDate value="${jobPost.getClosingDate()}" pattern="dd-MM-yyyy"/></p>
-                    </div>
-                </div>
-                <div class="job-detail">
-                    <div>
-                        <h5>Requirements:</h5>
-                        <p>${jobPost.getRequirements()}</p>
                     </div>
                     <div>
                         <h5>Location:</h5>
                         <p>${jobPost.getLocation()}</p>
                     </div>
                 </div>
+
                 <div class="job-detail">
                     <div>
                         <h5>Min Salary $:</h5>
-                        <p>
-                            <fmt:formatNumber value="${jobPost.getMinSalary()}" type="number" groupingUsed="true"/>
-                        </p>
+                        <p><fmt:formatNumber value="${jobPost.getMinSalary()}" type="number" groupingUsed="true"/></p>
                     </div>
                     <div>
                         <h5>Max Salary $:</h5>
-                        <p>
-                            <fmt:formatNumber value="${jobPost.getMaxSalary()}" type="number" groupingUsed="true"/>
-                        </p>
+                        <p><fmt:formatNumber value="${jobPost.getMaxSalary()}" type="number" groupingUsed="true"/></p>
                     </div>
                 </div>
 
                 <% 
-                    // Lấy thông tin category từ request
                     Job_Posting_Category category = (Job_Posting_Category) request.getAttribute("category");
-
-                    // Kiểm tra nếu category không null
                     if (category != null) {
                 %>
                 <div class="job-detail">
                     <div>
-                        <h5>Job Category Name:</h5>
-                        <p><%= category.getName() %></p> <!-- Hiển thị tên danh mục công việc -->
+                        <h5>Job Category:</h5>
+                        <p><%= category.getName() %></p>
                     </div>
                 </div>
-                <% 
-                    } else { 
-                %>
+                <% } else { %>
                 <div class="job-detail">
-                    <h5>Job Category Name:</h5>
+                    <h5>Job Category:</h5>
                 </div>
-                <% 
-                    } 
-                %>
+                <% } %>
 
                 <a href="javascript:window.history.back();" class="btn-apply">Back</a>
             </div>

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.*;
 import model.Company;
 import model.JobPostings;
 
@@ -236,7 +237,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
 
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> getTop6JobPostingsByCategory(int categoryId) {
         String sql = "select top 6 * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
         parameterMap = new LinkedHashMap<>();
@@ -244,7 +245,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Job_Posting_CategoryID", categoryId);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> getJobPostingsByCategory(int categoryId) {
         String sql = "select * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
         parameterMap = new LinkedHashMap<>();
@@ -253,4 +254,34 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
 
+    public List<JobPostings> findTop5Recruiter() {
+        String sql = "SELECT *\n"
+                + "FROM JobPostings\n"
+                + "WHERE RecruiterID IN (\n"
+                + "    SELECT TOP 5 RecruiterID\n"
+                + "    FROM JobPostings\n"
+                + "    GROUP BY RecruiterID\n"
+                + "    ORDER BY COUNT(*) DESC\n"
+                + ")\n"
+                + "ORDER BY RecruiterID, PostedDate;";
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public List<JobPostings> filterJobPostingStatusForChart() {
+        String sql = "SELECT *\n"
+                + "FROM JobPostings\n"
+                + "ORDER BY Status;";
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    // Tim Job theo khoang luong
+    public List<JobPostings> getJobsBySalaryRange(double MinSalary, double MaxSalary) {
+        String sql = "SELECT * FROM JobPostings WHERE MinSalary >= ? AND MaxSalary <= ? AND Status = ?";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("MinSalary", MinSalary);
+        parameterMap.put("MaxSalary", MaxSalary);
+        parameterMap.put("Status", "Open");
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 }

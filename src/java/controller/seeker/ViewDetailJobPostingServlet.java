@@ -124,6 +124,26 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             request.setAttribute("jobPost", jobPost);
             Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
             request.setAttribute("category", category); // Đặt với tên 'category'
+
+            JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
+            if (jobSeeker == null) {
+                try {
+                    url = "jobPostingDetail?error=" + URLEncoder.encode("You are not currently a member of Job Seeker. Please join to use this function.", "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return url;
+            }
+
+            Applications existingApplication = applicationDAO.findPendingApplication(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
+            if(existingApplication != null) {
+                request.setAttribute("existingApplication", existingApplication);
+            }
+            
+            FavourJobPosting existFavourJP = favourJPDAO.findExistFavourJP(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
+            if(existFavourJP != null) {
+                request.setAttribute("existFavourJP", existFavourJP);
+            }
             url = "view/user/ViewJobPosting.jsp";
             return url;
         }
@@ -232,7 +252,7 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             FavourJobPosting favourJobPosting = new FavourJobPosting();
             favourJobPosting.setJobSeekerID(jobSeeker.getJobSeekerID());
             favourJobPosting.setJobPostingID(jobPostingID);
-            
+
             favourJPDAO.insert(favourJobPosting);
 
         } else {

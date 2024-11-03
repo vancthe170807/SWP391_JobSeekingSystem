@@ -9,7 +9,7 @@
     <hr class="bg-light">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/admin/dashboard" class="nav-link" aria-current="page">
+            <a href="${pageContext.request.contextPath}/dashboard" class="nav-link" aria-current="page">
                 <span class="me-2"><i class="fa-solid fa-house"></i></span> Dashboard
             </a>
         </li>
@@ -19,13 +19,13 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/companies" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-users"></i></span> Company Management
+            <a href="${pageContext.request.contextPath}/recruiters" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-users"></i></span> Recruiter Management
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/recruiters" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-users"></i></span> Recruiter Management
+            <a href="${pageContext.request.contextPath}/companies" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-building"></i></span> Company Management
             </a>
         </li>
         <li>
@@ -34,8 +34,8 @@
             </a>
         </li>
         <li>
-            <a href="/admin/reports" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-file-alt"></i></span> Reports
+            <a href="${pageContext.request.contextPath}/feedback" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-file-alt"></i></span> Feedback
             </a>
         </li>
         <li>

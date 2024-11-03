@@ -5,7 +5,9 @@
 package controller.admin;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
+import dao.AccountDAO;
 import dao.CompanyDAO;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,12 +26,14 @@ import java.util.logging.Logger;
 import model.Account;
 import model.Company;
 import model.PageControl;
+import utils.Email;
 
 @MultipartConfig
 @WebServlet(name = "CompanyAdminController", urlPatterns = {"/companies"})
 public class CompanyAdminController extends HttpServlet {
 
     CompanyDAO dao = new CompanyDAO();
+    AccountDAO accDao = new AccountDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -125,9 +129,7 @@ public class CompanyAdminController extends HttpServlet {
         request.setAttribute("pageControl", pageControl);
         // SWT: CRITICAL(CODE_SMELL)
         switch (action) {
-            case "add-company":
-                url = "view/admin/addCompany.jsp";
-                break;
+
             case "view":
                 url = viewDetailCompany(request);
                 break;
@@ -152,106 +154,62 @@ public class CompanyAdminController extends HttpServlet {
             case "accept":
                 url = accepetCompany(request);
                 break;
-            case "add-company":
-                url = addCompany(request, response);
-                break;
-            case "edit-company":
-                url = editCompany(request, response);
-                break;
             default:
                 url = "companies";
         }
         response.sendRedirect(url);
     }
 
-    private String violateCompany(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id-company"));
-        Company company = dao.findCompanyById(id);
-        dao.violateCompany(company);
-        return "companies";
-    }
+    private String violateCompany(HttpServletRequest request) throws UnsupportedEncodingException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id-company"));
+            Company company = dao.findCompanyById(id);
+            Account account = accDao.findUserById(company.getAccountId());
+            //send mail process
+            String subjectMail = "Notification: Suspension of " + company.getName() + " on the Platform";
+            String contentMail = "Dear " + account.getFullName() + ",\n"
+                    + "\n"
+                    + "We would like to inform you that the company " + company.getName() + ", which you represent for recruitment on our platform, has been suspended due to [reason for suspension, e.g., non-compliance with terms of use, policy violation, etc.].\n"
+                    + "\n"
+                    + "Effective immediately, all job listings for this company will no longer be publicly visible, and candidates will not be able to apply for its positions. This suspension will remain in place until the issue is resolved.\n"
+                    + "\n"
+                    + "If you have any questions or need assistance, please feel free to contact our support team at [support email] or [support phone number].\n"
+                    + "\n"
+                    + "Best regards";
+            Email.sendEmail(account.getEmail(), subjectMail, contentMail);
+            dao.violateCompany(company);
 
-    private String accepetCompany(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id-company"));
-        Company company = dao.findCompanyById(id);
-        dao.acceptCompany(company);
-        return "companies";
-    }
-
-    private String addCompany(HttpServletRequest request, HttpServletResponse response) {
-        String url = "";
-
-//        get ve cac thuoc tinh cua company
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String location = request.getParameter("location");
-        String verificationStatus = request.getParameter("verificationStatus");
-        String businessLicense = getBusinessLicenseImg("businessLicense", request);
-//        tao doi tuong company va set cac thuoc tinh
-        Company company = new Company();
-        company.setName(name);
-        company.setDescription(description);
-        company.setLocation(location);
-        company.setBusinessLicenseImage(businessLicense);
-        switch (verificationStatus) {
-            case "accept":
-                company.setVerificationStatus(true);
-                break;
-            case "violate":
-                company.setVerificationStatus(false);
-                break;
-            default:
-                company.setVerificationStatus(true);
+            return "companies?notice=" + URLEncoder.encode("Deactive and send Email successfully!", "UTF-8");
+        } catch (MessagingException ex) {
+            return "companies?notice=" + URLEncoder.encode("Deactive and send Email process have error!!", "UTF-8");
         }
-        if (dao.checkExistNameCompany(name)) {
-
-            try {
-                url = "companies?notice=" + URLEncoder.encode("Exist company name!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            try {
-                dao.insert(company);
-                url = "companies?notice=" + URLEncoder.encode("Add succesfully!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return url;
     }
 
-    private String editCompany(HttpServletRequest request, HttpServletResponse response) {
-        String url = "";
-//        get ve cac gia tri cua company de edit
-        int id = Integer.parseInt(request.getParameter("id-company"));
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String location = request.getParameter("location");
-//        tim company theo id 
-        Company companyEdit = dao.findCompanyById(id);
-//        set cac gia tri moi
-
-        companyEdit.setName(name);
-        companyEdit.setDescription(description);
-        companyEdit.setLocation(location);
-        if (dao.checkExistOther(name, companyEdit.getId())) {
-            try {
-                url = "companies?notice=" + URLEncoder.encode("Exist company name!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            try {
-                dao.updateCompany(companyEdit);
-                url = "companies?notice=" + URLEncoder.encode("Edit successfully!!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private String accepetCompany(HttpServletRequest request) throws UnsupportedEncodingException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id-company"));
+            Company company = dao.findCompanyById(id);
+            Account account = accDao.findUserById(company.getAccountId());
+            //send mail process
+            String subjectMail = "Notification: Your Company Has Been Reactivated on Our Platform";
+            String contentMail = "Dear " + account.getFullName() + ",\n"
+                    + "\n"
+                    + "We are pleased to inform you that your company, " + company.getName() + ", has been reactivated on our platform. You can now continue posting job opportunities and managing your recruitment activities.\n"
+                    + "\n"
+                    + "Thank you for your cooperation, and please reach out if you have any questions or need assistance.\n"
+                    + "\n"
+                    + "Best regards";
+            Email.sendEmail(account.getEmail(), subjectMail, contentMail);
+            dao.acceptCompany(company);
+            return "companies?notice=" + URLEncoder.encode("Active and send Email successfully!", "UTF-8");
+        } catch (MessagingException ex) {
+            return "companies?notice=" + URLEncoder.encode("Active and send Email process have error!!", "UTF-8");
         }
-        return url;
     }
+
+    
+    
+    
 
     private String viewDetailCompany(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));

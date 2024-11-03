@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.*;
 import model.Company;
 import model.JobPostings;
 
@@ -273,6 +274,16 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
 
+    // Tim Job theo khoang luong
+    public List<JobPostings> getJobsBySalaryRange(double MinSalary, double MaxSalary) {
+        String sql = "SELECT * FROM JobPostings WHERE MinSalary >= ? AND MaxSalary <= ? AND Status = ?";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("MinSalary", MinSalary);
+        parameterMap.put("MaxSalary", MaxSalary);
+        parameterMap.put("Status", "Open");
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
     public List<JobPostings> findAndfilterJobPostings(String status, String salaryRange, String postDate, String search, int page) {
         String sql = """
                      SELECT jb.* FROM JobPostings as jb, Recruiters as re, Account as acc

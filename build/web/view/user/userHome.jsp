@@ -1,181 +1,261 @@
-<%-- 
-    Document   : userHome
-    Created on : Sep 16, 2024, 9:20:00 PM
-    Author     : Admin
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!--css-->
-        <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home - JobPath</title>
+        
+        <!-- CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+        
         <style>
-
             .hero {
                 background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)),
-                    url('path/to/your/background/image.jpg') no-repeat center center/cover; /* Add a background image */
+                    url('${pageContext.request.contextPath}/assets/images/hero-bg.jpg') center/cover no-repeat;
                 color: white;
                 padding: 120px 0;
                 text-align: center;
-                position: relative;
             }
 
             .hero h2 {
-                font-size: 48px;
+                font-size: 3rem;
                 font-weight: 700;
+                margin-bottom: 1rem;
             }
 
             .hero p {
-                font-size: 20px;
-                margin: 20px 0;
+                font-size: 1.25rem;
+                margin-bottom: 2rem;
             }
 
             .explore-btn {
                 background-color: #28a745;
                 color: white;
-                padding: 10px 30px;
-                text-decoration: none;
-                border-radius: 5px;
-                font-size: 18px;
-                transition: background-color 0.3s ease;
+                padding: 0.625rem 1.875rem;
+                border-radius: 0.3125rem;
+                font-size: 1.125rem;
+                transition: all 0.3s ease;
             }
 
             .explore-btn:hover {
                 background-color: #218838;
-            }
-
-            .blog-section h3 {
-                font-size: 32px;
-                font-weight: 600;
-                color: #333;
-                margin-bottom: 40px;
-            }
-
-            .blog-title {
-                font-size: 24px;
-                font-weight: 500;
+                color: white;
+                transform: translateY(-2px);
             }
 
             .card {
-                transition: transform 0.3s;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
             }
 
             .card:hover {
-                transform: scale(1.05);
+                transform: translateY(-5px);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
             }
 
-            footer p {
-                margin: 0;
-            }
-            .text-dark {
-                text-decoration: none
-            }
-        </style>
-
-    </head>
-    <body class="template-dashboard">
-        <!-- header area -->
-        <jsp:include page="../common/user/header-user.jsp"></jsp:include>
-            <!-- header area end -->
-
-            <section class="hero d-flex align-items-center">
-                <div class="container">
-                    <h2>Welcome to JobPath</h2>
-                    <p>Your path to finding the perfect job starts here.</p>
-                    <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">Explore Jobs</a>
-            </div>
-        </section>
-
-        <!-- Blog Section -->
-        <section class="blog-section py-5">
-            <div class="container">
-                <h3 class="text-center mb-5">Top 6 Job Latest from the Blog</h3>
-                <form action="HomeSeeker" method="GET" onsubmit="saveScrollPosition()">
-                    <label for="jobCategory">Choose with Job Category:</label>
-                    <select name="filter" id="jobCategory" class="form-select" onchange="this.form.submit()">
-                        <option value="">--All--</option>
-                        <!-- Iterate over jobCategories to populate dropdown -->
-                        <c:forEach var="category" items="${jobCategories}">
-                            <option value="${category.getId()}" <c:if test="${category.getId() == selectedFilter}">selected</c:if>>${category.getName()}</option>
-                        </c:forEach>
-                    </select>
-                </form>
-                <div class="row mt-3">
-
-                    <c:if test="${not empty listTop6}">
-                        <c:forEach var="list" items="${listTop6}">
-                            <div class="col-md-4 mb-4">
-                                <div class="card shadow-sm" style="text-decoration: none">
-                                    <a href="${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${list.getJobPostingID()}" class="text-dark">
-                                        <div class="card-body">
-                                            <h4 class="blog-title">${list.getTitle()}</h4>
-                                            <p class="btn btn-outline-success btn-sm">${list.getLocation()}</p>
-                                            <p class="btn btn-success btn-sm">${list.getMinSalary()} $ - ${list.getMaxSalary()} $</p>
-                                            <p style="font-style: italic">Post Date: ${list.getPostedDate()}</p>
-
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:if>
-                </div>
-
-
-
-
-                <h3 class="text-center mb-5">Top 3 Company Latest from the Blog</h3>
-                <div class="row">
-                    <c:if test="${not empty listTop3Company}">
-                        <c:forEach var="listCompany" items="${listTop3Company}">
-                            <div class="col-md-4 mb-4">
-                                <div class="card shadow-sm" style="text-decoration: none">
-                                    <a href="${pageContext.request.contextPath}/viewCompany?action=details&idCompany=${listCompany.getId()}" class="text-dark">
-                                        <div class="card-body">
-                                            <h4 class="blog-title">${listCompany.getName()}</h4>
-                                            <p class="btn btn-outline-success btn-sm">${listCompany.getLocation()}</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:if>
-                </div>
-            </div>
-        </section>
-        <!-- content area end -->
-        <!-- THEME PRELOADER START -->
-        <jsp:include page="../common/footer.jsp"></jsp:include>
-            <!-- THEME PRELOADER END -->
-            <button type="button" class="btn btn-success position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            <!-- all plugin js -->
-        <jsp:include page="../common/user/common-js-user.jsp"></jsp:include>
-
-        <script>
-            // Lưu vị trí cuộn vào localStorage trước khi gửi form
-            function saveScrollPosition() {
-                localStorage.setItem("scrollPosition", window.scrollY);
+            .job-card-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                height: 100%;
             }
 
-            // Khôi phục vị trí cuộn từ localStorage khi trang tải lại
-            function restoreScrollPosition() {
-                const scrollPosition = localStorage.getItem("scrollPosition");
-                if (scrollPosition) {
-                    window.scrollTo(0, parseInt(scrollPosition));
-                    localStorage.removeItem("scrollPosition"); // Xóa sau khi khôi phục để tránh lỗi
+            .job-card-link:hover {
+                color: inherit;
+            }
+
+            .salary-filter-form {
+                background-color: #f8f9fa;
+                padding: 1.25rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            }
+
+            #back-to-top {
+                display: none;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 99;
+                transition: opacity 0.3s ease;
+            }
+
+            @media (max-width: 768px) {
+                .hero h2 {
+                    font-size: 2rem;
+                }
+                
+                .hero p {
+                    font-size: 1rem;
                 }
             }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <jsp:include page="../common/user/header-user.jsp"/>
 
-            // Gọi hàm khôi phục khi trang đã tải xong
-            window.onload = restoreScrollPosition;
-        </script>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Welcome to JobPath</h2>
+                <p>Your path to finding the perfect job starts here.</p>
+                <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">
+                    Explore Jobs
+                </a>
+            </div>
+        </section>
+
+        <!-- Job Listings Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <!-- Filters Sidebar -->
+                    <div class="col-md-3 mb-4">
+                        <div class="salary-filter-form">
+                            <!-- Category Filter -->
+                            <form action="HomeSeeker" method="GET" class="mb-4" id="categoryForm">
+                                <div class="mb-3">
+                                    <label for="jobCategory" class="form-label fw-bold">Job Category:</label>
+                                    <select name="filter" id="jobCategory" class="form-select">
+                                        <option value="">All Categories</option>
+                                        <c:forEach var="category" items="${jobCategories}">
+                                            <option value="${category.getId()}" ${category.getId() == selectedFilter ? 'selected' : ''}>
+                                                ${category.getName()}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </form>
+
+                            <!-- Salary Filter -->
+                            <form action="HomeSeeker" method="GET" class="mt-4">
+                                <h5 class="mb-3">Salary Range</h5>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <label for="minSalary" class="form-label">Min ($):</label>
+                                        <input type="number" 
+                                               class="form-control" 
+                                               id="minSalary" 
+                                               name="minSalary" 
+                                               value="${minSalary}"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="maxSalary" class="form-label">Max ($):</label>
+                                        <input type="number" 
+                                               class="form-control" 
+                                               id="maxSalary" 
+                                               name="maxSalary" 
+                                               value="${maxSalary}"/>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 mt-3">
+                                    Apply Filters
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Job Listings -->
+                    <div class="col-md-9">
+                        <div class="row">
+                            <c:if test="${empty listTop6}">
+                                <div class="col-12 text-center">
+                                    <h4>No jobs found matching your criteria</h4>
+                                </div>
+                            </c:if>
+                            <c:forEach var="job" items="${listTop6}">
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <a href="${pageContext.request.contextPath}/jobPostingDetail?action=details&idJP=${job.getJobPostingID()}" 
+                                       class="job-card-link">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">${job.getTitle()}</h5>
+                                                <div class="mb-2">
+                                                    <span class="badge bg-primary">
+                                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                                        ${job.getLocation()}
+                                                    </span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <span class="badge bg-success">
+                                                        <i class="fas fa-dollar-sign me-1"></i>
+                                                        ${job.getMinSalary()} - ${job.getMaxSalary()}
+                                                    </span>
+                                                </div>
+                                                <p class="text-muted mb-0">
+                                                    <i class="far fa-clock me-1"></i>
+                                                    Posted: ${job.getPostedDate()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <jsp:include page="../common/footer.jsp"/>
+
+        <!-- Back to Top Button -->
+        <button type="button" class="btn btn-success" id="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        
+        <script>
+            // Category filter auto-submit
+            document.getElementById('jobCategory').addEventListener('change', function() {
+                document.getElementById('categoryForm').submit();
+            });
+
+            // Salary range validation
+            const minSalaryInput = document.getElementById('minSalary');
+            const maxSalaryInput = document.getElementById('maxSalary');
+
+            minSalaryInput.addEventListener('change', function() {
+                const minValue = parseInt(this.value);
+                if (maxSalaryInput.value && minValue > parseInt(maxSalaryInput.value)) {
+                    maxSalaryInput.value = minValue;
+                }
+            });
+
+            maxSalaryInput.addEventListener('change', function() {
+                const maxValue = parseInt(this.value);
+                if (minSalaryInput.value && maxValue < parseInt(minSalaryInput.value)) {
+                    minSalaryInput.value = maxValue;
+                }
+            });
+
+            // Back to top button
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.onscroll = function() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            };
+
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+        
+        <jsp:include page="../common/user/common-js-user.jsp"/>
     </body>
 </html>

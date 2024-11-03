@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -15,13 +15,13 @@ public class Applications {
     private int JobPostingID;
     private int JobSeekerID;
     private int CVID;
-    private String Status;
-    private LocalDateTime AppliedDate;
+    private int Status;
+    private Date AppliedDate;
 
     public Applications() {
     }
 
-    public Applications(int ApplicationID, int JobPostingID, int JobSeekerID, int CVID, String Status, LocalDateTime AppliedDate) {
+    public Applications(int ApplicationID, int JobPostingID, int JobSeekerID, int CVID, int Status, Date AppliedDate) {
         this.ApplicationID = ApplicationID;
         this.JobPostingID = JobPostingID;
         this.JobSeekerID = JobSeekerID;
@@ -62,19 +62,19 @@ public class Applications {
         this.CVID = CVID;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return Status;
     }
 
-    public void setStatus(String Status) {
+    public void setStatus(int Status) {
         this.Status = Status;
     }
 
-    public LocalDateTime getAppliedDate() {
+    public Date getAppliedDate() {
         return AppliedDate;
     }
 
-    public void setAppliedDate(LocalDateTime AppliedDate) {
+    public void setAppliedDate(Date AppliedDate) {
         this.AppliedDate = AppliedDate;
     }
     

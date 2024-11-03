@@ -14,9 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
             /* Custom font and layout */
-            body {
-                font-family: Arial, sans-serif;
-            }
+
             .card {
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 border-radius: 10px;

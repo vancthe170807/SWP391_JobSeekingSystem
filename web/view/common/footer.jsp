@@ -18,16 +18,16 @@
                     </ul>
                 </div>
 
-<!--                <div class="rts__footer__widget mb-4">
-                    <div class="font-20 fw-medium mb-3 h6">Quick Links</div>
-                    <ul class="list-unstyled">
-                        <li><a href="job-list-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Browse Jobs</a></li>
-                        <li><a href="candidate-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Browse Candidates</a></li>
-                        <li><a href="blog-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Blog & News</a></li>
-                        <li><a href="faq.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">FAQ</a></li>
-                        <li><a href="#" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Job Alerts</a></li>
-                    </ul>
-                </div>-->
+                <!--                <div class="rts__footer__widget mb-4">
+                                    <div class="font-20 fw-medium mb-3 h6">Quick Links</div>
+                                    <ul class="list-unstyled">
+                                        <li><a href="job-list-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Browse Jobs</a></li>
+                                        <li><a href="candidate-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Browse Candidates</a></li>
+                                        <li><a href="blog-1.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Blog & News</a></li>
+                                        <li><a href="faq.html" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">FAQ</a></li>
+                                        <li><a href="#" aria-label="footer__menu__link" style="color: #f8f9fa;" class="footer-link">Job Alerts</a></li>
+                                    </ul>
+                                </div>-->
             </div>
         </div>
     </div>
@@ -41,12 +41,42 @@
 </footer>
 
 <style>
+    /* Ensures the page-wrapper takes up at least 100% of the viewport height */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .page-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .content {
+        flex: 1; /* This makes the main content area grow to fill space */
+    }
+
+    .rts__section.footer__home__one {
+        background-color: #495057;
+        color: #f8f9fa;
+        border-top: 5px solid #28a745;
+    }
+
+    .footer__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
     .footer__link {
         transition: color 0.3s ease, transform 0.3s ease;
     }
 
     .footer__link:hover {
-        color: #28a745; /* Change to the desired hover color */
+        color: #28a745;
         transform: scale(1.05);
     }
 
@@ -56,4 +86,5 @@
             align-items: center;
         }
     }
+
 </style>

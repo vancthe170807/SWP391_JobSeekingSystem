@@ -7,8 +7,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Education"%>
+<%@page import="model.WorkExperience"%>
 <%@page import="model.JobSeekers"%>
 <%@page import="dao.EducationDAO"%>
+<%@page import="dao.WorkExperienceDAO"%>
 <%@page import="dao.JobSeekerDAO"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
@@ -64,20 +66,28 @@
 
                         <form class="p-4 rounded shadow-sm bg-light">
                             <!-- Avatar và Thông tin người dùng -->
+                            <!-- Avatar và Thông tin người dùng -->
                             <div class="d-flex align-items-start">
                                 <!-- Avatar -->
-                                <div class="me-4">
+                                <div class="me-4 text-start">
                                     <c:if test="${empty requestScope.accountView.avatar}">
                                         <img src="${pageContext.request.contextPath}/assets/img/dashboard/avatar-mail.png" alt="Avatar" class="rounded-circle" width="150" height="150">
                                     </c:if>
                                     <c:if test="${!empty requestScope.accountView.avatar}">
                                         <img src="${requestScope.accountView.avatar}" alt="Avatar" class="rounded-circle" width="150" height="150">
                                     </c:if>
-                                    <!-- Nút Xem Chi Tiết Giáo Dục (chỉ hiển thị khi RoleId == 2) -->
+                                    <!-- Nút Xem Chi Tiết Giáo Dục và Kinh Nghiệm -->
                                     <c:if test="${requestScope.accountView.getRoleId() == 3}">
-                                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#educationModal">
-                                            Detail Education
-                                        </button>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#educationModal">
+                                                Detail Education
+                                            </button>
+                                        </div>
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#experienceModal">
+                                                Detail Experience
+                                            </button>
+                                        </div>
                                     </c:if>
                                 </div>
 
@@ -219,7 +229,72 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                
+                    </div>   
+                    <!-- Modal để hiển thị thông tin Experience -->
+                    <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="experienceModalLabel">Experience Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Table hiển thị thông tin Experience -->
+                                    <c:set var="accountId" value="${requestScope.accountView.getId()}" />
+                                    <% 
+                                        // Gọi các đối tượng và phương thức cần thiết để lấy danh sách kinh nghiệm
+                                        WorkExperience experience = new WorkExperience();
+                                        WorkExperienceDAO experienceDao = new WorkExperienceDAO();
+                                        
+                                    %>
+                                    <table class="table table-bordered text-center">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Company</th>
+                                                <th>Job title</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                //lay ve id cua jobseeker theo accountid
+                                                
+                                                jobSeeker = jobSeekerDao.findJobSeekerIDByAccountID(String.valueOf(accountId));
+                                                if(jobSeeker != null){
+                                                List<WorkExperience> listExperience = experienceDao.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
+                                                for(WorkExperience ex: listExperience){
+                                                
+                                                
+                                                // duyet listEdu
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <%= ex.getCompanyName()%>
+                                                </td>
+                                                <td><%= ex.getJobTitle()%></td>
+                                                <td><%= ex.getStartDate()%></td>
+                                                <td><%= ex.getEndDate()%></td>
+                                                <td><%= ex.getDescription()%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                              }else{
+                                            %>    
+                                            <tr>
+                                                <td colspan="6">No experience found.</td>
+                                            </tr>
+                                            <%}%> 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Back to Top Button -->
                     <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">

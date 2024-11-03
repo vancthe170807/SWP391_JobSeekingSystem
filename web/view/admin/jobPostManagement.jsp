@@ -196,12 +196,17 @@
                                                 </form>
 
 
-                                                <button type="submit" class="btn btn-warning btn-sm" onclick="openResolvedModal(${jobPost.getJobPostingID()})">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <!-- Thêm các hàng dữ liệu khác tại đây -->
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-warning btn-sm" 
+                                                    onclick="openResolvedModal(${jobPost.getJobPostingID()})"
+                                                    <c:if test="${jobPost.getStatus() == 'Violate'}">disabled</c:if>
+                                                        >
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <!-- Thêm các hàng dữ liệu khác tại đây -->
                                     </c:forEach>
                                 </tbody>
                             </table>
@@ -373,17 +378,17 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
         <script>
-                                                    function openResolvedModal(jobPostId) {
-                                                        document.getElementById('resolved-feedback-id').value = jobPostId;
-                                                        new bootstrap.Modal(document.getElementById('resolvedModal')).show();
-                                                    }
+                                                        function openResolvedModal(jobPostId) {
+                                                            document.getElementById('resolved-feedback-id').value = jobPostId;
+                                                            new bootstrap.Modal(document.getElementById('resolvedModal')).show();
+                                                        }
 
 
 
-                                                    // Clear form when modals are hidden
-                                                    document.getElementById('resolvedModal').addEventListener('hidden.bs.modal', function () {
-                                                        document.getElementById('resolved-response').value = '';
-                                                    });
+                                                        // Clear form when modals are hidden
+                                                        document.getElementById('resolvedModal').addEventListener('hidden.bs.modal', function () {
+                                                            document.getElementById('resolved-response').value = '';
+                                                        });
 
 
         </script>

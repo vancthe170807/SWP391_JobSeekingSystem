@@ -84,13 +84,13 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <!--content-main can fix-->
                         <div class="container-fluid">
                             <div class="row">

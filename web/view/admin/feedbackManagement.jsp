@@ -148,7 +148,7 @@
 
                                     <!-- Search input and button in the same input group -->
                                     <div class="input-group" style="width: 500px;">
-                                        <input type="text" name="search" class="form-control" placeholder="Search by feedback content" value="${param.search != null ? param.search : ''}">
+                                        <input type="text" name="search" class="form-control" placeholder="Feedback by" value="${param.search != null ? param.search : ''}">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search"></i>
                                         </button>

@@ -34,11 +34,22 @@ public class ApplicationDAO extends GenericDAO<Applications> {
     }
 
     //Danh sach don xin viec tu seeker
+    public List<Applications> findApplicationByJobSeekerID(int id, int page, int pageSize) {
+        String sql = "select * from Applications where JobSeekerID = ? ORDER BY ApplicationID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        parameterMap = new LinkedHashMap<>();
+
+        parameterMap.put("JobSeekerID", id);
+        parameterMap.put("offset", (page - 1) * pageSize);
+        parameterMap.put("fetch", pageSize);
+        return queryGenericDAO(Applications.class, sql, parameterMap);
+    }
+    
     public List<Applications> findApplicationByJobSeekerID(int id) {
         String sql = "select * from Applications where JobSeekerID = ?";
         parameterMap = new LinkedHashMap<>();
 
         parameterMap.put("JobSeekerID", id);
+
         return queryGenericDAO(Applications.class, sql, parameterMap);
     }
 
@@ -57,16 +68,16 @@ public class ApplicationDAO extends GenericDAO<Applications> {
     }
 
     // Danh sach don xin viec tu Status = Appending
-    public List<Applications> findApplicationByAppending() {
+    public List<Applications> findApplicationByPending() {
         String sql = "select * from Applications where Status = ?";
         parameterMap = new LinkedHashMap<>();
 
-        parameterMap.put("Status", 1);
+        parameterMap.put("Status", 3);
         return queryGenericDAO(Applications.class, sql, parameterMap);
     }
 
     // Danh sach don xin viec tu Status = Agree
-    public List<Applications> findApplicationByAgree() {
+    public List<Applications> findApplicationByApproved() {
         String sql = "select * from Applications where Status = ?";
         parameterMap = new LinkedHashMap<>();
 
@@ -79,7 +90,7 @@ public class ApplicationDAO extends GenericDAO<Applications> {
         String sql = "select * from Applications where Status = ?";
         parameterMap = new LinkedHashMap<>();
 
-        parameterMap.put("Status", 3);
+        parameterMap.put("Status", 1);
         return queryGenericDAO(Applications.class, sql, parameterMap);
     }
 
@@ -88,7 +99,18 @@ public class ApplicationDAO extends GenericDAO<Applications> {
         String sql = "select * from Applications where Status = ?";
         parameterMap = new LinkedHashMap<>();
 
-        parameterMap.put("Status", 4);
+        parameterMap.put("Status", 0);
+        return queryGenericDAO(Applications.class, sql, parameterMap);
+    }
+    
+    public List<Applications> findApplicationByJobSeekerIDAndStatus(int jobSeekerID, int status, int page, int pageSize) {
+        String sql = "SELECT * FROM Applications WHERE JobSeekerID = ? AND Status = ? ORDER BY ApplicationID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", jobSeekerID);
+        parameterMap.put("Status", status);
+        parameterMap.put("offset", (page - 1) * pageSize);
+        parameterMap.put("fetch", pageSize);
         return queryGenericDAO(Applications.class, sql, parameterMap);
     }
 
@@ -106,59 +128,34 @@ public class ApplicationDAO extends GenericDAO<Applications> {
 
     //Update Status of Application
     public void cancelApplication(int applicationId, int status) {
-        String sql = "update [Applications] set[Status] = ?"
-                + "WHERE [ApplicationID] = ?";
-
+        String sql = "UPDATE [Applications] SET [Status] = ? WHERE [ApplicationID] = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("Status", status);
         parameterMap.put("ApplicationID", applicationId);
-
         updateGenericDAO(sql, parameterMap);
     }
 
-    public void ChangeStatusApplication(int applicationId, int status) {
-        String sql = "update [Applications] set[Status] = ? "
-                + "WHERE [ApplicationID] = ?";
-
+    public Applications findPendingApplication(int jobSeekerID, int jobPostingID) {
+        String sql = "SELECT * FROM Applications WHERE JobSeekerID = ? AND JobPostingID = ? AND Status = 3";
         parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", jobSeekerID);
+        parameterMap.put("JobPostingID", jobPostingID);
+        List<Applications> list = queryGenericDAO(Applications.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+    }
+    
+    public int countTotalApplicationsByJSIDAndStatus(int jobSeekerID, int status) {
+        String sql = "SELECT count(*) FROM [dbo].[Applications] WHERE JobSeekerID = ? AND Status = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", jobSeekerID);
         parameterMap.put("Status", status);
-        parameterMap.put("ApplicationID", applicationId);
-
-        updateGenericDAO(sql, parameterMap);
+        return findTotalRecordGenericDAO(Applications.class, sql, parameterMap);
     }
-
-    //
-    public List<Applications> getApplicationsWithJobPostingStatus() {
-        // Define the SQL query
-        String sql = "SELECT Applications.*, JobPostings.Status AS JobPostingStatus "
-                + "FROM Applications "
-                + "JOIN JobPostings ON Applications.JobPostingID = JobPostings.JobPostingID";
-
-        // Initialize parameter map (no parameters in this query, but we follow the pattern)
-        parameterMap = new LinkedHashMap<>();
-        return queryGenericDAO(Applications.class, sql, parameterMap);
-
-    }
-
-    public List<Applications> findApplicationsByJobPostingIDWithPagination(int jobPostId, int offset, int pageSize) {
-        String sql = "SELECT * FROM Applications WHERE JobPostingID = ? ORDER BY AppliedDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("JobPostingID", jobPostId);
-        parameterMap.put("offset", offset);
-        parameterMap.put("pageSize", pageSize);
-
-        return queryGenericDAO(Applications.class, sql, parameterMap);
-    }
-
-    public int countApplicationsByJobPostingID(int jobPostId) {
-        String sql = "SELECT COUNT(*) FROM Applications WHERE JobPostingID = ?";
-        parameterMap = new LinkedHashMap<>();
-        parameterMap.put("JobPostingID", jobPostId);
-
-         return findTotalRecordGenericDAO(Applications.class, sql, parameterMap);
-    }
-
     
-    
-   
+    public int countTotalApplicationsByJSID(int jobSeekerID) {
+        String sql = "SELECT count(*) FROM [dbo].[Applications] WHERE JobSeekerID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", jobSeekerID);
+        return findTotalRecordGenericDAO(Applications.class, sql, parameterMap);
+    }
 }

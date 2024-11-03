@@ -19,23 +19,23 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/companies" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-users"></i></span> Company Management
-            </a>
-        </li>
-        <li>
             <a href="${pageContext.request.contextPath}/recruiters" class="nav-link">
                 <span class="me-2"><i class="fa-solid fa-users"></i></span> Recruiter Management
             </a>
         </li>
         <li>
-            <a href="/admin/jobs" class="nav-link">
+            <a href="${pageContext.request.contextPath}/companies" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-building"></i></span> Company Management
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/job_posting" class="nav-link">
                 <span class="me-2"><i class="fa-solid fa-briefcase"></i></span> Job Postings
             </a>
         </li>
         <li>
-            <a href="/admin/reports" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-file-alt"></i></span> Reports
+            <a href="${pageContext.request.contextPath}/feedback" class="nav-link">
+                <span class="me-2"><i class="fa-solid fa-file-alt"></i></span> Feedback
             </a>
         </li>
         <li>

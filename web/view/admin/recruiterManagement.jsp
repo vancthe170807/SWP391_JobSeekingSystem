@@ -56,6 +56,10 @@
                 justify-content: center; /* Căn giữa theo chiều ngang */
                 align-items: center; /* Căn giữa theo chiều dọc */
             }   
+            .table-bordered thead th {
+                background-color: #28a745; /* Màu xanh lá cây */
+                color: #ffffff; /* Màu trắng cho chữ để dễ đọc */
+            }
         </style>
     </head>
     <body>
@@ -66,13 +70,13 @@
             <!-- content area -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <!--Side bar-->
                     <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                         <!--side bar-end-->
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <!--content-main can fix-->
                         <!--tao doi tuong companyDao de lay ve ten company-->
 
@@ -85,7 +89,7 @@
                                     <div class="sidebar__action"><i class="fa-sharp fa-regular fa-bars"></i> Sidebar</div>
                                 </div>
                                 <!-- sidebar menu end -->
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3 ms-2">
                                     <!--drop-down filter recruiter-->
                                     <div class="filter-dropdown">
                                         <form action="${pageContext.request.contextPath}/recruiters" method="GET">

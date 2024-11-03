@@ -41,6 +41,15 @@ public class CVDAO extends GenericDAO<CV> {
         
     }
     
+    public CV findCVbyCVID(int CVID) {
+        String sql = "select * from CVs where CVID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("CVID", CVID);
+        List<CV> list = queryGenericDAO(CV.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+        
+    }
+    
     public void updateCV(CV cv) {
         String sql = "update [CVs] set [FilePath] = ?"
                 + ", [UploadDate] = ?"

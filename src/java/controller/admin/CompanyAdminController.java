@@ -207,80 +207,9 @@ public class CompanyAdminController extends HttpServlet {
         }
     }
 
-    private String addCompany(HttpServletRequest request, HttpServletResponse response) {
-        String url = "";
-
-//        get ve cac thuoc tinh cua company
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String location = request.getParameter("location");
-        String verificationStatus = request.getParameter("verificationStatus");
-        String businessLicense = getBusinessLicenseImg("businessLicense", request);
-//        tao doi tuong company va set cac thuoc tinh
-        Company company = new Company();
-        company.setName(name);
-        company.setDescription(description);
-        company.setLocation(location);
-        company.setBusinessLicenseImage(businessLicense);
-        switch (verificationStatus) {
-            case "accept":
-                company.setVerificationStatus(true);
-                break;
-            case "violate":
-                company.setVerificationStatus(false);
-                break;
-            default:
-                company.setVerificationStatus(true);
-        }
-        if (dao.checkExistNameCompany(name)) {
-
-            try {
-                url = "companies?notice=" + URLEncoder.encode("Exist company name!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            try {
-                dao.insert(company);
-                url = "companies?notice=" + URLEncoder.encode("Add succesfully!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return url;
-    }
-
-    private String editCompany(HttpServletRequest request, HttpServletResponse response) {
-        String url = "";
-//        get ve cac gia tri cua company de edit
-        int id = Integer.parseInt(request.getParameter("id-company"));
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String location = request.getParameter("location");
-//        tim company theo id 
-        Company companyEdit = dao.findCompanyById(id);
-//        set cac gia tri moi
-
-        companyEdit.setName(name);
-        companyEdit.setDescription(description);
-        companyEdit.setLocation(location);
-        if (dao.checkExistOther(name, companyEdit.getId())) {
-            try {
-                url = "companies?notice=" + URLEncoder.encode("Exist company name!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                dao.updateCompany(companyEdit);
-                url = "companies?notice=" + URLEncoder.encode("Edit successfully!!", "UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(CompanyAdminController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return url;
-    }
+    
+    
+    
 
     private String viewDetailCompany(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));

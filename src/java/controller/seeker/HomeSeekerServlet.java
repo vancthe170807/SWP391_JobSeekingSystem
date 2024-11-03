@@ -31,7 +31,7 @@ public class HomeSeekerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     @Override
@@ -39,28 +39,33 @@ public class HomeSeekerServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String filter = request.getParameter("filter");
-        
+        String minSalaryParam = request.getParameter("minSalary");
+        String maxSalaryParam = request.getParameter("maxSalary");
+
         List<JobPostings> listTop6;
-        if (filter == null || filter.isEmpty()) {
-            // Nếu không có filter, lấy top 6 công việc gần đây
-            listTop6 = jobPostingsDAO.getTop6RecentJobPostingsByOpen();
+        if (minSalaryParam != null && maxSalaryParam != null) {
+            // Lọc theo khoảng lương nếu có yêu cầu
+            double minSalary = Double.parseDouble(minSalaryParam);
+            double maxSalary = Double.parseDouble(maxSalaryParam);
+            listTop6 = jobPostingsDAO.getJobsBySalaryRange(minSalary, maxSalary);
+        } else if (filter == null || filter.isEmpty()) {
+            listTop6 = jobPostingsDAO.getJobPostingsByOpen();
         } else {
-            // Lấy danh sách công việc theo category ID từ filter
             int categoryId = Integer.parseInt(filter);
             listTop6 = jobPostingsDAO.getTop6JobPostingsByCategory(categoryId);
         }
-        
+
         List<Job_Posting_Category> jobCategories = jobCategoryDAO.findAll();
-        List<Company> listTop3Company = companyDAO.getTop3RecentCompanysByOpen();
 
         request.setAttribute("listTop6", listTop6);
-        request.setAttribute("listTop3Company", listTop3Company);
         request.setAttribute("jobCategories", jobCategories);
-        request.setAttribute("selectedFilter", filter); 
+        request.setAttribute("selectedFilter", filter);
+        request.setAttribute("minSalary", minSalaryParam);
+        request.setAttribute("maxSalary", maxSalaryParam);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/user/userHome.jsp");
         dispatcher.forward(request, response);

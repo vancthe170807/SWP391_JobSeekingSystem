@@ -92,11 +92,12 @@ public class AccountDAO extends GenericDAO<Account> {
 //    hiển thi các user theo role
 
     public List<Account> findAllUserByRoleId(int roleId, int page) {
-        String sql = "SELECT * FROM [dbo].[Account]\n"
-                + "where roleId = ?\n"
-                + "order by id\n"
-                + "OFFSET ? rows\n"
-                + "FETCH NEXT ? rows only";
+        String sql = """
+                     SELECT * FROM [dbo].[Account]
+                     where roleId = ?
+                     order by id
+                     OFFSET ? rows
+                     FETCH NEXT ? rows only""";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("roleId", roleId);
         parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);

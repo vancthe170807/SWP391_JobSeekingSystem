@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.*;
 import model.Company;
 import model.JobPostings;
 
@@ -255,7 +256,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
 
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> getTop6JobPostingsByCategory(int categoryId) {
         String sql = "select top 6 * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
         parameterMap = new LinkedHashMap<>();
@@ -263,7 +264,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Job_Posting_CategoryID", categoryId);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
-    
+
     public List<JobPostings> getJobPostingsByCategory(int categoryId) {
         String sql = "select * from JobPostings where Status = ? and Job_Posting_CategoryID = ? order by PostedDate desc";
         parameterMap = new LinkedHashMap<>();
@@ -291,4 +292,117 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
                 + "ORDER BY Status;";
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
+
+    // Tim Job theo khoang luong
+    public List<JobPostings> getJobsBySalaryRange(double MinSalary, double MaxSalary) {
+        String sql = "SELECT * FROM JobPostings WHERE MinSalary >= ? AND MaxSalary <= ? AND Status = ?";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("MinSalary", MinSalary);
+        parameterMap.put("MaxSalary", MaxSalary);
+        parameterMap.put("Status", "Open");
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+    public List<JobPostings> findAndfilterJobPostings(String status, String salaryRange, String postDate, String search, int page) {
+        String sql = """
+                     SELECT jb.* FROM JobPostings as jb, Recruiters as re, Account as acc
+                     where jb.RecruiterID = re.RecruiterID AND re.AccountID = acc.id """;
+
+        // Thêm điều kiện lọc nếu các giá trị không null hoặc không rỗng
+        if (status != null && !status.isEmpty() && !status.equals("all")) {
+            sql += " AND jb.Status = ?";
+        }
+        if (salaryRange != null && !salaryRange.isEmpty() && !salaryRange.equals("all")) {
+            switch (salaryRange) {
+                case "0-1000":
+                    sql += " AND jb.MinSalary >= 0 AND jb.MaxSalary <=1000";
+                    break;
+                case "1000+":
+                    sql += " AND jb.MinSalary >= 1000";
+                    break;
+                case "2000+":
+                    sql += " AND jb.MinSalary >= 2000";
+                    break;
+            }
+        }
+        if (postDate != null && !postDate.isEmpty()) {
+            sql += " AND jb.PostedDate = ?";
+        }
+        if (search != null && !search.isEmpty()) {
+            sql += " AND acc.lastName + ' ' + acc.firstName like ?";
+        }
+        sql += """
+                order by JobPostingID
+               OFFSET ? rows
+               FETCH NEXT ? rows only""";
+        parameterMap = new LinkedHashMap<>();
+        if (status != null && !status.isEmpty() && !status.equals("all")) {
+            parameterMap.put("Status", status);
+        }
+        if (postDate != null && !postDate.isEmpty()) {
+            parameterMap.put("PostedDate", postDate);
+        }
+        if (search != null && !search.isEmpty()) {
+            parameterMap.put("FullName", "%" + search + "%");
+        }
+        parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
+        parameterMap.put("fetch", RECORD_PER_PAGE);
+        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    public void violateJobPost(int jobPostId) {
+        String sql = """
+                     UPDATE [dbo].[JobPostings]
+                        SET 
+                           [Status] = ?
+                      WHERE JobPostingID = ?""";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Violate");
+        parameterMap.put("JobPostingID", jobPostId);
+        updateGenericDAO(sql, parameterMap);
+    }
+
+    public int findAndfilterAllRecord(String status, String salaryRange, String postDate, String search) {
+        String sql = """
+                     SELECT count(*) FROM JobPostings as jb, Recruiters as re, Account as acc
+                     where jb.RecruiterID = re.RecruiterID AND re.AccountID = acc.id """;
+
+        // Thêm điều kiện lọc nếu các giá trị không null hoặc không rỗng
+        if (status != null && !status.isEmpty() && !status.equals("all")) {
+            sql += " AND jb.Status = ?";
+        }
+        if (salaryRange != null && !salaryRange.isEmpty() && !salaryRange.equals("all")) {
+            switch (salaryRange) {
+                case "0-1000":
+                    sql += " AND jb.MinSalary >= 0 AND jb.MaxSalary <=1000";
+                    break;
+                case "1000+":
+                    sql += " AND jb.MinSalary >= 1000";
+                    break;
+                case "2000+":
+                    sql += " AND jb.MinSalary >= 2000";
+                    break;
+            }
+        }
+        if (postDate != null && !postDate.isEmpty()) {
+            sql += " AND jb.PostedDate = ?";
+        }
+        if (search != null && !search.isEmpty()) {
+            sql += " AND acc.lastName + ' ' + acc.firstName like ?";
+        }
+        
+        parameterMap = new LinkedHashMap<>();
+        if (status != null && !status.isEmpty() && !status.equals("all")) {
+            parameterMap.put("Status", status);
+        }
+        if (postDate != null && !postDate.isEmpty()) {
+            parameterMap.put("PostedDate", postDate);
+        }
+        if (search != null && !search.isEmpty()) {
+            parameterMap.put("FullName", "%" + search + "%");
+        }
+        
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
 }

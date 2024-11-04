@@ -15,6 +15,15 @@
         <title>Seeker Profile</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            .custom-badge {
+                font-size: 1.2rem; /* Adjust font size as needed */
+                padding: 10px 20px; /* Adds padding for a bigger badge */
+                margin-top: 10px; /* Adds some spacing around the badge */
+                border-radius: 8px; /* Optional: rounds the badge corners */
+            }
+        </style>
+
     </head>
     <body class="template-dashboard">
         <!-- header area -->
@@ -25,8 +34,9 @@
                 <div>
                 <c:if test="${jobSeeker != null}">
                     <div>
-                        <p class="btn btn-outline-success">Your JobSeeker ID: <strong >#${jobSeeker.getJobSeekerID()}</strong></p>
+                        <span class="badge custom-badge bg-success">Your JobSeeker ID: #${jobSeeker.getJobSeekerID()}</span>
                     </div>
+
                 </c:if>
 
                 <!-- If jobSeeker is null, show the alternative content -->

@@ -19,11 +19,11 @@
         <!-- Include header -->
         <jsp:include page="../view/common/header-area.jsp"></jsp:include>
 
-        <div class="container mb-5 mt-5">
+            <div class="container mb-5 mt-5">
             <c:if test="${not empty jobPost}">
                 <div class="row">
                     <!-- Job Details Section -->
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <h1 class="card-title">${jobPost.getTitle()}</h1>
@@ -48,54 +48,25 @@
                                         <p><i class="fa-solid fa-money-bill"></i> <strong>Salary: </strong>${jobPost.getMinSalary()} $ - ${jobPost.getMaxSalary()} $</p>
                                     </div>
                                 </div>
-                                <% 
-                                    // Lấy thông tin category từ request
-                                    Job_Posting_Category category = (Job_Posting_Category) request.getAttribute("category");
 
-                                    // Kiểm tra nếu category không null
-                                    if (category != null) {
-                                    %>
-                                    <div class="row">
-                                        <div>
-                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> <%= category.getName() %></p>
-                                            <p></p> <!-- Hiển thị tên danh mục công việc -->
-                                        </div>
-                                    </div>
-                                    <% 
-                                        } else { 
-                                    %>
-                                    <div class="row">
-                                        <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong></p>
-                                    </div>
-                                    <% 
-                                        } 
-                                    %>
-                            </div>
-                        </div>
-
-                        <!-- Job Description -->
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="m-0">Description</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>${jobPost.getDescription()}</p>
-                            </div>
-                        </div>
-
-                        <!-- Job Requirements -->
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="m-0">Requirements</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>${jobPost.getRequirements()}</p>
+                                <div class="row">
+                                    <c:choose>
+                                        <c:when test="${category != 'This category was deleted!'}">
+                                            <!-- Hiển thị thông tin Category nếu Category hợp lệ -->
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> ${category.name}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị thông báo lỗi nếu Category bị xóa hoặc không tồn tại -->
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> This category was deleted!</p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Sidebar Section for Extra Details (Optional) -->
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header bg-success text-white">
                                 <h5 class="m-0">Apply Job</h5>
@@ -105,6 +76,25 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+                <!-- Job Description -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="m-0">Description</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>${jobPost.getDescription()}</p>
+                    </div>
+                </div>
+
+                <!-- Job Requirements -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="m-0">Requirements</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>${jobPost.getRequirements()}</p>
                     </div>
                 </div>
             </c:if>

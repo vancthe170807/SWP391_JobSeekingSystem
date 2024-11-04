@@ -186,6 +186,16 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Status", "Opened");  // Thêm RecruiterID vào truy vấn
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
+    
+    public int findTotalRecordByTitle(String searchQuery, double minSalary, double maxSalary) {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE Title LIKE '%' + ? + '%' AND MinSalary >= ? AND MaxSalary <= ? AND Status = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Title", searchQuery);
+        parameterMap.put("Status", "Opened");  // Thêm RecruiterID vào truy vấn
+        parameterMap.put("MinSalary", minSalary);
+        parameterMap.put("MaxSalary", maxSalary);
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
 
     public List<JobPostings> findJobPostingsWithFilterAndRecruiterID(String sortField, int recruiterID, int page, int pageSize) {
         String sql = "SELECT * FROM [dbo].[JobPostings] WHERE RecruiterID = ? ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
@@ -209,6 +219,23 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE RecruiterID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+    
+    public int countJobsBySalaryRange(double minSalary, double maxSalary) {
+        String sql = "SELECT count(*) FROM [dbo].[JobPostings] WHERE MinSalary >= ? AND MaxSalary <= ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("MinSalary", minSalary);
+        parameterMap.put("MaxSalary", maxSalary);
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+    
+    public int countJobPostingsByCategory(int categoryId) {
+        String sql = "SELECT COUNT(*) FROM JobPostings WHERE Status = ? and Job_Posting_CategoryID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("Status", "Open");
+        parameterMap.put("Job_Posting_CategoryID", categoryId);
+
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
     }
 
@@ -251,6 +278,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("Status", "Open");
         parameterMap.put("Job_Posting_CategoryID", categoryId);
+
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
 
@@ -275,13 +303,15 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
     }
 
     // Tim Job theo khoang luong
-    public List<JobPostings> getJobsBySalaryRange(double MinSalary, double MaxSalary) {
-        String sql = "SELECT * FROM JobPostings WHERE MinSalary >= ? AND MaxSalary <= ? AND Status = ?";
+    public List<JobPostings> getJobsBySalaryRange(double MinSalary, double MaxSalary, int page, int pageSize, String sortField) {
+        String sql = "SELECT * FROM JobPostings WHERE MinSalary >= ? AND MaxSalary <= ? AND Status = ? ORDER BY " + sortField + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("MinSalary", MinSalary);
         parameterMap.put("MaxSalary", MaxSalary);
         parameterMap.put("Status", "Open");
+        parameterMap.put("offset", (page - 1) * pageSize);
+        parameterMap.put("fetch", pageSize);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
     public List<JobPostings> findAndfilterJobPostings(String status, String salaryRange, String postDate, String search, int page) {

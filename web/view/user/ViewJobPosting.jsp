@@ -49,7 +49,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> ${category != null ? category.name : 'N/A'}</p>
+                                    <c:choose>
+                                        <c:when test="${category != 'This category was deleted!'}">
+                                            <!-- Hiển thị thông tin Category nếu Category hợp lệ -->
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> ${category.name}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị thông báo lỗi nếu Category bị xóa hoặc không tồn tại -->
+                                            <p><i class="fa-solid fa-list"></i> <strong>Job Category:</strong> This category was deleted!</p>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>

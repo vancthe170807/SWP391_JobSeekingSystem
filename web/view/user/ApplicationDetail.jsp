@@ -67,8 +67,8 @@
     <body>
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
 
-        <div class="container mb-5 mt-5">
-            <h1 class="text-center">Application Details</h1>
+            <div class="container mb-5 mt-5">
+                <h1 class="text-center">Application Details</h1>
 
             <c:if test="${not empty errorApplication}">
                 <div class="alert alert-danger" role="alert">
@@ -80,39 +80,39 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="info-section">
-                        <h2 class="section-header">Information</h2>
-                        <c:if test="${not empty account}">
-                            <p><strong>Fullname:</strong> ${account.fullName}</p>
-                            <p><strong>Date of birth:</strong> ${account.dob}</p>
-                            <p><strong>Phone Number:</strong> ${account.phone}</p>
-                            <p><strong>Email:</strong> ${account.email}</p>
-                            <p><strong>Gender:</strong> ${account.gender ? 'Male' : 'Female'}</p>
-                            <p><strong>Address:</strong> ${account.address}</p>
-                        </c:if>
-                    </div>
+                            <h2 class="section-header">Information</h2>
+                            <c:if test="${not empty account}">
+                                <p><strong>Fullname:</strong> ${account.fullName}</p>
+                                <p><strong>Date of birth:</strong> ${account.dob}</p>
+                                <p><strong>Phone Number:</strong> ${account.phone}</p>
+                                <p><strong>Email:</strong> ${account.email}</p>
+                                <p><strong>Gender:</strong> ${account.gender ? 'Male' : 'Female'}</p>
+                                <p><strong>Address:</strong> ${account.address}</p>
+                            </c:if>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="info-section">
-                        <h2 class="section-header">Application Information</h2>
-                        <c:if test="${not empty application}">
-                            <p><strong>Applied Date:</strong> ${application.appliedDate}</p>
-                            <p><strong>Status:</strong> 
-                                <c:choose>
-                                    <c:when test="${application.status == 3}">
-                                        <span class="badge bg-info text-dark"><i class="fa fa-clock"></i> Pending</span>
-                                    </c:when>
-                                    <c:when test="${application.status == 2}">
-                                        <span class="badge bg-success"><i class="fa fa-check-circle"></i> Approved</span>
-                                    </c:when>
-                                    <c:when test="${application.status == 1}">
-                                        <span class="badge bg-danger"><i class="fa fa-times-circle"></i> Rejected</span>
-                                    </c:when>
-                                    <c:when test="${application.status == 0}">
-                                        <span class="badge bg-secondary"><i class="fa fa-ban"></i> Cancelled</span>
-                                    </c:when>
-                                </c:choose>
-                            </p>
-                        </c:if>
+                            <h2 class="section-header">Application Information</h2>
+                            <c:if test="${not empty application}">
+                                <p><strong>Applied Date:</strong> ${application.appliedDate}</p>
+                                <p><strong>Status:</strong> 
+                                    <c:choose>
+                                        <c:when test="${application.status == 3}">
+                                            <span class="badge bg-info text-dark"><i class="fa fa-clock"></i> Pending</span>
+                                        </c:when>
+                                        <c:when test="${application.status == 2}">
+                                            <span class="badge bg-success"><i class="fa fa-check-circle"></i> Approved</span>
+                                        </c:when>
+                                        <c:when test="${application.status == 1}">
+                                            <span class="badge bg-danger"><i class="fa fa-times-circle"></i> Rejected</span>
+                                        </c:when>
+                                        <c:when test="${application.status == 0}">
+                                            <span class="badge bg-secondary"><i class="fa fa-ban"></i> Cancelled</span>
+                                        </c:when>
+                                    </c:choose>
+                                </p>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -125,15 +125,23 @@
                                 <p><strong>Title:</strong> ${jobPost.title}</p>
                                 <p><strong>Location:</strong> ${jobPost.location}</p>
                                 <p><strong>Salary:</strong> ${jobPost.minSalary} $ - ${jobPost.maxSalary} $</p>
+                                <c:choose>
+                                    <c:when test="${category != 'This category was deleted!'}">
+                                        <!-- Hiển thị thông tin Category nếu Category hợp lệ -->
+                                        <p><strong>Job Category:</strong> ${category.name}</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Hiển thị thông báo lỗi nếu Category bị xóa hoặc không tồn tại -->
+                                        <p><strong>Job Category:</strong> This category was deleted!</p>
+                                    </c:otherwise>
+                                </c:choose>
                                 <p><strong>Description:</strong> ${jobPost.description}</p>
                                 <p><strong>Requirement:</strong> ${jobPost.requirements}</p>
                             </c:if>
                             <c:if test="${empty jobPost}">
                                 <p>Job posting details are not available.</p>
                             </c:if>
-                            <c:if test="${not empty category}">
-                                <p><strong>Category:</strong> ${category.name}</p>
-                            </c:if>
+
                         </div>
                     </div>
 
@@ -142,8 +150,8 @@
                             <h2 class="section-header">CV Details</h2>
                             <c:if test="${not empty cv}">
                                 <iframe src="cv?action=view-cv" height="500px" width="100%" allowfullscreen="" frameborder="0"></iframe>
-                            </c:if>
-                            <c:if test="${empty cv}">
+                                </c:if>
+                                <c:if test="${empty cv}">
                                 <p>CV details are not available.</p>
                             </c:if>
                         </div>

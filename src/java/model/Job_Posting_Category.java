@@ -12,6 +12,7 @@ public class Job_Posting_Category {
     private int id;
     private String name;
     private boolean status;
+
     public Job_Posting_Category() {
     }
 

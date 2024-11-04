@@ -48,4 +48,46 @@ public class Job_Posting_CategoryDAO extends GenericDAO<Job_Posting_Category> {
         List<Job_Posting_Category> list = queryGenericDAO(Job_Posting_Category.class, sql, parameterMap); // Query returns a list of names (Strings)
         return list.isEmpty() ? null : list.get(0);
     }
+
+    public void editCategory(int categoryId, String nameCate) {
+        String sql = """
+                     UPDATE [dbo].[Job_Posting_Category]
+                        SET [name] = ?
+                      WHERE id = ?""";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name", nameCate);
+        parameterMap.put("id", categoryId);
+        updateGenericDAO(sql, parameterMap);
+    }
+
+    public void delete(String categoryId) {
+        String sql = """
+                     UPDATE [dbo].[Job_Posting_Category]
+                        SET [status] = ?
+                      WHERE id = ?""";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("status", "0");
+        parameterMap.put("id", categoryId);
+        updateGenericDAO(sql, parameterMap);
+    }
+
+    public boolean checkDuplicateName(String nameCate) {
+        List<Job_Posting_Category> listCate = findAll();
+        for (Job_Posting_Category jobCate : listCate) {
+            if (jobCate.getName().equalsIgnoreCase(nameCate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkDuplicateOther(int categoryId, String nameCate) {
+        List<Job_Posting_Category> listCate = findAll();
+        for (Job_Posting_Category jobCate : listCate) {
+            if (jobCate.getId() != categoryId && jobCate.getName().equalsIgnoreCase(nameCate)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

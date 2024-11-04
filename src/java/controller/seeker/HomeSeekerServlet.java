@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import model.Company;
 import model.JobPostings;
@@ -89,9 +90,16 @@ public class HomeSeekerServlet extends HttpServlet {
         int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
         List<Job_Posting_Category> jobCategories = jobCategoryDAO.findAll();
+        List<Job_Posting_Category> activeCategories = new ArrayList<>();
+
+        for(Job_Posting_Category category: jobCategories) {
+            if(category.isStatus()) {
+                activeCategories.add(category);
+            }
+        }
 
         request.setAttribute("listTop6", listTop6);
-        request.setAttribute("jobCategories", jobCategories);
+        request.setAttribute("activeCategories", activeCategories);
         request.setAttribute("selectedFilter", filter);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);

@@ -14,59 +14,65 @@
                 background-color: #f4f4f9;
             }
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+                font-weight: bold;
                 color: #333;
-                margin-top: 20px;
+                margin-bottom: 30px;
                 text-transform: uppercase;
-                text-align: center;
+                position: relative;
             }
-            table thead th {
-                background-color: #28a745; /* Màu xanh cho tiêu đề bảng */
+            h1::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 5px;
+                background-color: #28a745;
+            }
+            table {
+                border-collapse: separate;
+                border-spacing: 0 15px;
+            }
+            thead th {
+                background-color: #28a745;
                 color: #fff;
-                text-align: center;
-                padding: 10px;
                 text-transform: uppercase;
+                padding: 10px;
+            }
+            tbody tr {
+                background-color: #f9f9f9;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
             }
             tbody tr:hover {
                 background-color: #e9ecef;
             }
-            .badge-pending {
-                background-color: #ffc107; /* Màu vàng cho trạng thái pending */
-                color: #212529;
-            }
-            .badge-reject {
-                background-color: #dc3545; /* Màu đỏ cho trạng thái reject */
-                color: #fff;
-            }
-            .badge-resolved {
-                background-color: #28a745; /* Màu xanh cho trạng thái resolved */
-                color: #fff;
-            }
-            .btn-add {
-                background-color: #28a745;
-                color: #fff;
-                margin-bottom: 20px;
-            }
-            .btn-add:hover {
-                background-color: #218838;
-            }
-            .table td, .table th {
+            td {
+                padding: 15px;
                 vertical-align: middle;
             }
-
-            .table .text-center {
-                text-align: center;
+            button:hover {
+                transform: scale(1.05);
+                transition: transform 0.2s ease;
             }
-            thead {
-                background-color: #28a745; /* Màu xanh lá cây */
-                color: #fff;
+            .btn-warning {
+                background-color: #ffc107;
+                border-color: #ffc107;
             }
-
-            thead th {
-                color: #fff; /* Đảm bảo chữ màu trắng */
-                text-align: center;
-                padding: 10px;
-                text-transform: uppercase;
+            .btn-danger {
+                background-color: #dc3545;
+                border-color: #dc3545;
+            }
+            .modal-content {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+            }
+            .modal-header {
+                border-bottom: 0;
+                background-color: #28a745;
+                color: white;
             }
         </style>
     </head>
@@ -75,7 +81,7 @@
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- Header Area End -->
             <div class="container mt-5">
-                <h1>Seeker's Feedback</h1>
+                <h1 class="text-center">Seeker's Feedback</h1>
 
                 <table class="table table-hover mt-3 table-bordered">
                     <thead class="thead">
@@ -98,16 +104,16 @@
                                 <td class="text-center">
                                     <c:choose>
                                         <c:when test="${feedback.getStatus() == 1}">
-                                            <span class="badge badge-pending">Pending</span>
+                                            <span class="badge bg-info">Pending</span>
                                         </c:when>
                                         <c:when test="${feedback.getStatus() == 2}">
-                                            <span class="badge badge-resolved">Resolved</span>
+                                            <span class="badge bg-success">Resolved</span>
                                         </c:when>
                                         <c:when test="${feedback.getStatus() == 3}">
-                                            <span class="badge badge-reject ">Reject</span>
+                                            <span class="badge bg-secondary ">Reject</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="badge badge-reject">Delete</span>
+                                            <span class="badge bg-warning">Delete</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

@@ -154,23 +154,24 @@ public class EducationServlet extends HttpServlet {
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                // Create and populate the Education object
-                Education eduAdd = new Education();
-                eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
-                eduAdd.setInstitution(institution);
-                eduAdd.setDegree(degree);
-                eduAdd.setFieldOfStudy(fieldofstudy);
-                eduAdd.setStartDate(startDate);
-                eduAdd.setEndDate(endDate);
-                eduAdd.setDegreeImg(degreeImgName);
+                } else {
+                    // Create and populate the Education object
+                    Education eduAdd = new Education();
+                    eduAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
+                    eduAdd.setInstitution(institution);
+                    eduAdd.setDegree(degree);
+                    eduAdd.setFieldOfStudy(fieldofstudy);
+                    eduAdd.setStartDate(startDate);
+                    eduAdd.setEndDate(endDate);
+                    eduAdd.setDegreeImg(degreeImgName);
 
-                eduDAO.insert(eduAdd);
-                // Continue processing eduAdd as needed (e.g., save to the database)
-                request.setAttribute("successEducation", "Profile add successfully.");
-                request.setAttribute("edus", edus);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "education"; // Điều hướng đến trang Education
+                    eduDAO.insert(eduAdd);
+                    // Continue processing eduAdd as needed (e.g., save to the database)
+                    request.setAttribute("successEducation", "Profile add successfully.");
+                    request.setAttribute("edus", edus);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "education"; // Điều hướng đến trang Education
+                }
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 try {
@@ -236,25 +237,25 @@ public class EducationServlet extends HttpServlet {
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                } else {
+                    Education edu = new Education();
+
+                    // Tạo đối tượng Education
+                    edu.setEducationID(educationID);
+                    edu.setInstitution(institution);
+                    edu.setDegree(degree);
+                    edu.setFieldOfStudy(fieldofstudy);
+                    edu.setStartDate(startDate);
+                    edu.setEndDate(endDate);
+                    edu.setDegreeImg(degreeImgName);
+
+                    // Cập nhật bản ghi trong CSDL
+                    eduDAO.updateEducation(edu);
+                    request.setAttribute("successEducation", "Profile updated successfully.");
+                    request.setAttribute("edus", edus);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "education"; // Điều hướng đến trang Education
                 }
-                Education edu = new Education();
-
-                // Tạo đối tượng Education
-                edu.setEducationID(educationID);
-                edu.setInstitution(institution);
-                edu.setDegree(degree);
-                edu.setFieldOfStudy(fieldofstudy);
-                edu.setStartDate(startDate);
-                edu.setEndDate(endDate);
-                edu.setDegreeImg(degreeImgName);
-
-                // Cập nhật bản ghi trong CSDL
-                eduDAO.updateEducation(edu);
-                request.setAttribute("successEducation", "Profile updated successfully.");
-                request.setAttribute("edus", edus);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "education"; // Điều hướng đến trang Education
-
             } catch (Exception e) {
                 e.printStackTrace(); // Log the exception for debugging
                 try {

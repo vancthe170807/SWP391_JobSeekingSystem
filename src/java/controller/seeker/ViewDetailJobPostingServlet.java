@@ -126,8 +126,11 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             String notice = request.getParameter("notice");
             request.setAttribute("notice", notice);
             Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
-            request.setAttribute("category", category); // Đặt với tên 'category'
-
+            if (category.isStatus()) {
+                request.setAttribute("category", category); // Đặt với tên 'category'
+            } else {
+                request.setAttribute("category", "This category was deleted!");
+            }
             JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
             if (jobSeeker == null) {
                 try {
@@ -139,12 +142,12 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             }
 
             Applications existingApplication = applicationDAO.findPendingApplication(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
-            if(existingApplication != null) {
+            if (existingApplication != null) {
                 request.setAttribute("existingApplication", existingApplication);
             }
-            
+
             FavourJobPosting existFavourJP = favourJPDAO.findExistFavourJP(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
-            if(existFavourJP != null) {
+            if (existFavourJP != null) {
                 request.setAttribute("existFavourJP", existFavourJP);
             }
             url = "view/user/ViewJobPosting.jsp";

@@ -102,7 +102,11 @@
                                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFavourJPModal-${fjp.favourJPID}" <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">disabled</c:if>>
                                                 <i class="fa fa-trash"></i> Delete
                                             </button>
+                                                <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">
+                                        <span class="badge bg-warning text-dark"><i class="fa-solid fa-triangle-exclamation"></i> This job posting is violated!</span>
+                                    </c:if>
                                     </td>
+                                    
                                 </tr>
 
                                 <!-- Modal for Cancel Application -->

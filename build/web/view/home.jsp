@@ -152,7 +152,7 @@
                                     <label for="jobCategory" class="form-label fw-bold">Job Category:</label>
                                     <select name="filter" id="jobCategory" class="form-select">
                                         <option value="">All Categories</option>
-                                        <c:forEach var="category" items="${jobCategories}">
+                                        <c:forEach var="category" items="${activeCategories}">
                                             <option value="${category.getId()}" ${category.getId() == selectedFilter ? 'selected' : ''}>
                                                 ${category.getName()}
                                             </option>

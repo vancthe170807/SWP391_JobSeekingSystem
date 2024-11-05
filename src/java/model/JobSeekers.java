@@ -13,6 +13,7 @@ import java.util.Date;
 public class JobSeekers {
     private int JobSeekerID;
     private int AccountID;
+    private Account account;
 
     public JobSeekers() {
     }
@@ -36,5 +37,13 @@ public class JobSeekers {
 
     public void setAccountID(int AccountID) {
         this.AccountID = AccountID;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

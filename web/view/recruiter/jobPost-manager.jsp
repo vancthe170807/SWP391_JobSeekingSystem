@@ -235,6 +235,45 @@
                         font-weight: bold;
                     }
 
+
+                    .job-title-violate {
+                        color: red;
+                        font-weight: bold;
+                        opacity: 0.5; /* Làm mờ tiêu đề và icon */
+                    }
+
+                    .job-title-violate .fa-exclamation-triangle {
+                        color: red;
+                        margin-left: 5px;
+                    }
+
+
+                    .status-violate {
+                        font-weight: bold;
+                    }
+
+                    .edit-violate {
+                        color: red; /* Màu đỏ cho icon */
+                        cursor: not-allowed; /* Thay đổi con trỏ để cho thấy không thể nhấn */
+                        opacity: 0.5;
+                    }
+
+                    .status-violate {
+                        color: red;
+                        font-weight: bold;
+                        opacity: 0.5;
+                    }
+
+                    .date-violate {
+                        color: red;
+                        font-weight: bold;
+                        opacity: 0.5; /* Làm mờ nội dung */
+                    }
+
+                    table tbody tr:hover {
+                        background-color: #e0f7fa; /* Màu nền sáng hơn khi hover */
+                        transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi mượt */
+                    }
                 </style>
             </head>
             <body>
@@ -259,7 +298,6 @@
                             <a href="${pageContext.request.contextPath}/AddJobPosting" class="btn-add-job">
                                 <i class="fas fa-plus"></i> Add New Job
                             </a>
-
 
                             <!-- Filter Buttons -->
                             <div class="filter-buttons">
@@ -306,36 +344,75 @@
                                         <th>Date Posted</th>
                                         <th>Status</th>
                                         <th>Actions</th>
+                                        <th>Applications</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="i" items="${listJobPosting}">
                                         <tr>
-                                            <td>${i.getTitle()}</td>
                                             <td>
-                                                <fmt:formatDate
-                                                    value="${i.getPostedDate()}"
-                                                    pattern="dd-MM-yyyy"
-                                                    />
+                                                <c:if test="${i.getStatus() == 'Violate'}">
+                                                    <span class="job-title-violate">
+                                                        ${i.getTitle()}
+                                                        <i class="fas fa-exclamation-triangle" title="Violate"></i>
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="${i.getStatus() != 'Violate'}">
+                                                    ${i.getTitle()}
+                                                </c:if>
                                             </td>
-                                            <td>${i.getStatus()}</td>
+
+                                            <td>
+                                                <c:if test="${i.getStatus() == 'Violate'}">
+                                                    <span class="date-violate">
+                                                        <fmt:formatDate value="${i.getPostedDate()}" pattern="dd-MM-yyyy" />
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="${i.getStatus() != 'Violate'}">
+                                                    <fmt:formatDate value="${i.getPostedDate()}" pattern="dd-MM-yyyy" />
+                                                </c:if>
+                                            </td>
+
+                                            <td>
+                                                <c:if test="${i.getStatus() == 'Violate'}">
+                                                    <span class="status-violate">${i.getStatus()}</span>
+                                                </c:if>
+                                                <c:if test="${i.getStatus() != 'Violate'}">
+                                                    ${i.getStatus()}
+                                                </c:if>
+                                            </td>
+
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/detailsJP?action=details&idJP=${i.getJobPostingID()}" class="btn-action">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
 
-                                                <a
-                                                    href="${pageContext.request.contextPath}/updateJP?idJP=${i.getJobPostingID()}"
-                                                    class="btn-action"
-                                                    ><i class="fas fa-edit"></i
-                                                    ></a>
-                                                <a
-                                                    href="javascript:void(0);"
-                                                    class="btn-action text-danger"
-                                                    onclick="confirmDelete('${i.getJobPostingID()}')"
-                                                    >
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <c:choose>
+                                                    <c:when test="${i.getStatus() == 'Violate'}">
+                                                        <span class="btn-action edit-violate" onclick="showEditWarning()">
+                                                            <i class="fas fa-edit"></i>
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="${pageContext.request.contextPath}/updateJP?idJP=${i.getJobPostingID()}" class="btn-action">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>                    
+                                            </td>
+
+                                            <td>
+                                                <c:if test="${i.application.size() !=  0}">
+                                                    <a
+                                                        href="${pageContext.request.contextPath}/applicationSeekers?action=view&jobPostId=${i.getJobPostingID()}"
+                                                        class="btn-action text-info"
+                                                        >
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </a>
+                                                </c:if>
+                                                <c:if test="${i.application.size() ==  0}">
+                                                    Not yet
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -429,15 +506,9 @@
                     <%@ include file="../recruiter/footer-re.jsp" %>
                 </div>
 
-                <!-- JavaScript for sorting and delete confirmation -->
                 <script>
-                    function confirmDelete(jobId) {
-                        var confirmed = confirm(
-                                "Are you sure you want to delete this job posting?"
-                                );
-                        if (confirmed) {
-                            window.location.href = "deleteJP?idJP=" + jobId;
-                        }
+                    function showEditWarning() {
+                        alert("This Job Posting cannot be edited because it has a status of 'Violate'");
                     }
                 </script>
             </body>

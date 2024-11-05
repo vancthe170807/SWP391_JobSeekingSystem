@@ -34,6 +34,19 @@ public class JobSeekerDAO extends GenericDAO<JobSeekers> {
         List<JobSeekers> list = queryGenericDAO(JobSeekers.class, sql, parameterMap);
         return list.isEmpty() ? null : list.get(0);  // Return first result if found, else null
     }
+    
+    public JobSeekers findJobSeekerIDByJobSeekerID(String JobSeekerID) {
+        String sql = "SELECT * FROM [dbo].[JobSeekers] WHERE JobSeekerID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobSeekerID", JobSeekerID);
+
+        List<JobSeekers> list = queryGenericDAO(JobSeekers.class, sql, parameterMap);
+        AccountDAO accountDao = new AccountDAO();
+        if(!list.isEmpty()) {
+            list.get(0).setAccount(accountDao.findUserById(list.get(0).getAccountID()));
+        }
+        return list.isEmpty() ? null : list.get(0);  
+    }
 
     public static void main(String[] args) {
         // Test findJobSeekerByAccountID method

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>web/view/admin/jobPostManagement.jsp</url>
+            <bookmark id="2">
+                <name/>
+                <line>425</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>web/view/recruiter/deactivateAccount.jsp</url>
             <bookmark id="1">
@@ -147,11 +155,6 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/CVDAO.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/admin/RecruiterAdminController.java</file>
         </group>
-        <group name="SWP291">
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/Feedback.java</file>
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/user/Feedback.jsp</file>
-            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/feedbackManagement.jsp</file>
-        </group>
         <group name="SWP391_Project">
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/controller/seeker/ViewDetailApplicationServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/DBContext.java</file>
@@ -199,6 +202,15 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/user/Feedback.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/web/view/admin/detailJobPosting.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/JobSeeker/src/java/dao/RecruitersDAO.java</file>
+        </group>
+        <group name="SWP291">
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/JobPostingController.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/web/view/admin/jobPostManagement.jsp</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/Job_Posting_Category.java</file>
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/dao/Job_Posting_CategoryDAO.java</file>
+        </group>
+        <group name="TestSWT">
+            <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/controller/admin/SeekerAdminController.java</file>
         </group>
     </open-files>
 </project-private>

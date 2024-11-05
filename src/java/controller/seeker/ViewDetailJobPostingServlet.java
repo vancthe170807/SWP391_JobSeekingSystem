@@ -47,6 +47,7 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+        
         String url;
         switch (action) {
             case "details":

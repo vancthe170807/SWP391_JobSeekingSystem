@@ -145,33 +145,37 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-3 col-md-6">
                     <div class="card text-center mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Candidates</h5>
-                            <h3 class="text-success">Not yet</h3>
-                            <p>Candidates this month</p>
+                            <h5 class="card-title">Offending post</h5>
+                            <h3 class="text-info">${totalViolateJPForRecruiter}</h3>
+                            <p>Total number of job postings</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="card text-center mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Interviews</h5>
-                            <h3 class="text-warning">Not yet</h3>
-                            <p>Interviews scheduled</p>
+                            <h5 class="card-title">Pending candidate</h5>
+                            <h3 class="text-success">${totalPendingApplications}</h3>
+                            <p>Total number of candidates</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="card text-center mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Hires</h5>
-                            <h3 class="text-info">Not Yet</h3>
-                            <p>Hires this month</p>
+                            <h5 class="card-title">Successful candidate</h5>
+                            <h3 class="text-warning">${totalAgreeForRecruiter}</h3>
+                            <p>Total number of candidates</p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
             </div>
             <!-- Top 5 Recent Job Postings and Chart section -->
             <div class="recent-postings">
@@ -213,10 +217,10 @@
             var applicantChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Tháng 1', 'Tháng 3', 'Tháng 5', 'Tháng 7', 'Tháng 9', 'Tháng 11'],
+                    labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
                     datasets: [{
-                            label: 'Sessions',
-                            data: [0, 1, 0, 0, 0, 0],
+                            label: 'Number of job postings per quarter',
+                            data: [${q1}, ${q2}, ${q3}, ${q4}],
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1

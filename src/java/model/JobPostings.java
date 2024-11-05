@@ -1,8 +1,10 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 public class JobPostings {
+
     private int JobPostingID;
     private int RecruiterID;
     private String Title;
@@ -15,6 +17,7 @@ public class JobPostings {
     private Date ClosingDate;
     private int Job_Posting_CategoryID;
     private String Status;
+    private List<Applications> application;
 
     public JobPostings() {
     }
@@ -33,8 +36,6 @@ public class JobPostings {
         this.Job_Posting_CategoryID = Job_Posting_CategoryID;
         this.Status = Status;
     }
-
-    
 
     public int getJobPostingID() {
         return JobPostingID;
@@ -91,7 +92,7 @@ public class JobPostings {
     public void setMaxSalary(double MaxSalary) {
         this.MaxSalary = MaxSalary;
     }
-    
+
     public String getLocation() {
         return Location;
     }
@@ -132,6 +133,11 @@ public class JobPostings {
         this.Status = Status;
     }
 
+    public List<Applications> getApplication() {
+        return application;
+    }
 
-    
+    public void setApplication(List<Applications> application) {
+        this.application = application;
+    }
 }

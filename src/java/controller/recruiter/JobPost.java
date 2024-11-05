@@ -1,8 +1,10 @@
 package controller.recruiter;
 
 import constant.CommonConst;
+import dao.ApplicationDAO;
 import dao.CompanyDAO;
 import dao.JobPostingsDAO;
+import dao.JobSeekerDAO;
 import dao.Job_Posting_CategoryDAO;
 import dao.RecruitersDAO;
 import jakarta.servlet.RequestDispatcher;
@@ -46,6 +48,7 @@ public class JobPost extends HttpServlet {
 
         // Fetch the recruiter info using the account ID
         Recruiters recruiters = recruitersDAO.findRecruitersbyAccountID(String.valueOf(account.getId()));
+        //JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
 
         if (recruiters == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/verifyRecruiter.jsp");
@@ -56,7 +59,7 @@ public class JobPost extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/view/recruiter/verifyRecruiter.jsp");
                 dispatcher.forward(request, response);
             } else {
-// Lấy tham số tìm kiếm và phân trang từ request
+                // Lấy tham số tìm kiếm và phân trang từ request
                 String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
                 String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
                 int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -64,8 +67,6 @@ public class JobPost extends HttpServlet {
 
                 List<JobPostings> jobList;
                 int totalRecords;
-
-                jobList = dao.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
 
                 // Kiểm tra nếu có từ khóa tìm kiếm
                 if (!searchJP.isEmpty()) {
@@ -84,6 +85,7 @@ public class JobPost extends HttpServlet {
                 // Tính toán tổng số trang
                 int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
+                // Lấy danh sách tất cả các Application liên quan đến JobPostings của recruiter
                 // Gửi các thông tin cần thiết về JSP
                 request.setAttribute("listJobPosting", jobList);
                 request.setAttribute("totalPages", totalPages);
@@ -238,6 +240,7 @@ public class JobPost extends HttpServlet {
                 request.setAttribute("searchJP", searchJP);
 
                 // Chuyển hướng đến trang quản lý bài đăng
+                //url = "view/recruiter/jobPost-manager.jsp";
                 url = "view/recruiter/jobPost-manager.jsp";
             }
         } catch (Exception e) {

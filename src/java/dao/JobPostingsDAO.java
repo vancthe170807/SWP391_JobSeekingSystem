@@ -43,7 +43,11 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("RecruiterID", recruiterID);
         List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
 
     }
 
@@ -158,7 +162,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         parameterMap.put("offset", (page - 1) * RECORD_PER_PAGE);
         parameterMap.put("fetch", RECORD_PER_PAGE);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+        ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public List<JobPostings> searchJobPostingByTitle(String searchJP, int page) {
@@ -203,7 +212,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("RecruiterID", recruiterID);  // Thêm RecruiterID vào truy vấn
         parameterMap.put("offset", (page - 1) * pageSize);
         parameterMap.put("fetch", pageSize);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+        ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public List<JobPostings> findJobPostingsWithFilter(String sortField, int page, int pageSize) {
@@ -212,7 +226,12 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("Status", "Open");
         parameterMap.put("offset", (page - 1) * pageSize);
         parameterMap.put("fetch", pageSize);
-        return queryGenericDAO(JobPostings.class, sql, parameterMap);
+        List<JobPostings> list = queryGenericDAO(JobPostings.class, sql, parameterMap);
+        ApplicationDAO applicationDao = new ApplicationDAO();
+        for (JobPostings jobPostings : list) {
+            jobPostings.setApplication(applicationDao.findApplicationByJobPostingID(jobPostings.getJobPostingID()));
+        }
+        return list;
     }
 
     public int countTotalJobPostingsByRecruiterID(int recruiterID) {
@@ -314,6 +333,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         parameterMap.put("fetch", pageSize);
         return queryGenericDAO(JobPostings.class, sql, parameterMap);
     }
+
     public List<JobPostings> findAndfilterJobPostings(String status, String salaryRange, String postDate, String search, int page) {
         String sql = """
                      SELECT jb.* FROM JobPostings as jb, Recruiters as re, Account as acc
@@ -401,7 +421,7 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         if (search != null && !search.isEmpty()) {
             sql += " AND acc.lastName + ' ' + acc.firstName like ?";
         }
-        
+
         parameterMap = new LinkedHashMap<>();
         if (status != null && !status.isEmpty() && !status.equals("all")) {
             parameterMap.put("Status", status);
@@ -412,8 +432,92 @@ public class JobPostingsDAO extends GenericDAO<JobPostings> {
         if (search != null && !search.isEmpty()) {
             parameterMap.put("FullName", "%" + search + "%");
         }
-        
+
         return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+
+    ///
+    public String getJobPostingTitleByJobPostingId(int jobPostingId) {
+        // Câu truy vấn SQL để lấy tiêu đề (Title) của JobPosting theo JobPostingID
+        String sql = "SELECT Title FROM JobPostings WHERE JobPostingID = ?";
+
+        // Tạo map chứa các tham số cho câu truy vấn
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobPostingID", jobPostingId);
+
+        // Thực hiện truy vấn và lấy kết quả
+        List<String> titles = queryGenericDAO1(String.class, sql, parameterMap);
+
+        // Trả về title nếu có kết quả, nếu không trả về null
+        return titles.isEmpty() ? null : titles.get(0);
+    }
+
+    public String findJobPostingStatusByJobPostingId(int jobPostingId) {
+        String sql = "SELECT Status FROM JobPostings WHERE JobPostingID = ?";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobPostingID", jobPostingId);
+
+        // Thực hiện truy vấn và lấy danh sách kết quả
+        List<String> statusList = queryGenericDAO1(String.class, sql, parameterMap);
+
+        // Trả về phần tử đầu tiên nếu có kết quả, nếu không thì trả về null
+        return statusList.isEmpty() ? null : statusList.get(0);
+    }
+
+    public int countViolateJobPostingsForRecruiter(int recruiterId) {
+        String sql = "SELECT COUNT(*) FROM JobPostings "
+                + "WHERE RecruiterID = ? AND Status = 'Violate'";
+
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("RecruiterID", recruiterId);
+
+        return findTotalRecordGenericDAO(JobPostings.class, sql, parameterMap);
+    }
+///
+    public int findTotalJobPostingCountByQuarter(int recruiterID, int quarter) {
+        // Xác định khoảng thời gian của quý dựa trên tham số quarter
+        int startMonth;
+        int endMonth;
+
+        switch (quarter) {
+            case 1:
+                startMonth = 1;
+                endMonth = 3;
+                break;
+            case 2:
+                startMonth = 4;
+                endMonth = 6;
+                break;
+            case 3:
+                startMonth = 7;
+                endMonth = 9;
+                break;
+            case 4:
+                startMonth = 10;
+                endMonth = 12;
+                break;
+            default:
+                throw new IllegalArgumentException("Quý phải nằm trong khoảng từ 1 đến 4.");
+        }
+
+        // Tạo câu truy vấn để tính tổng số job posting trong quý cho RecruiterID
+        String sql = "SELECT COUNT(JobPostingID) AS TotalJobPostings "
+                + "FROM [dbo].[JobPostings] "
+                + "WHERE RecruiterID = ? "
+                + "AND MONTH(PostedDate) BETWEEN ? AND ?";
+
+        // Tạo map chứa các tham số cho câu truy vấn
+        Map<String, Object> parameterMap = new LinkedHashMap<>();
+        parameterMap.put("RecruiterID", recruiterID);
+        parameterMap.put("StartMonth", startMonth);
+        parameterMap.put("EndMonth", endMonth);
+
+        // Gọi hàm queryGenericDAO để thực hiện truy vấn và trả về kết quả
+        List<Integer> result = queryGenericDAO1(Integer.class, sql, parameterMap);
+
+        // Trả về tổng số job postings (nếu không có kết quả thì trả về 0)
+        return result.isEmpty() ? 0 : result.get(0);
     }
 
 }

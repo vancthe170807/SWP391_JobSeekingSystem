@@ -190,7 +190,7 @@
                 } else if (role === 2) {
                     window.location.href = "${pageContext.request.contextPath}/view/recruiter/recruiterHome.jsp";
                 } else if (role === 3) {
-                    window.location.href = "${pageContext.request.contextPath}/view/user/userHome.jsp";
+                    window.location.href = "${pageContext.request.contextPath}/HomeSeeker";
                 }
             }
 

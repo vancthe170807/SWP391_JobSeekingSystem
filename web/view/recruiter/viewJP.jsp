@@ -113,6 +113,12 @@
                 transform: scale(1.05);
             }
 
+            .status-violate {
+                color: red;
+                font-weight: bold;
+                opacity: 0.5;
+            }
+
         </style>
     </head>
     <body>
@@ -144,8 +150,16 @@
                 <div class="job-detail">
                     <div>
                         <h5>Status:</h5>
-                        <p>${jobPost.getStatus()}</p>
+                        <p>
+                            <c:if test="${jobPost.getStatus() == 'Violate'}">
+                                <span class="status-violate">${jobPost.getStatus()}</span>
+                            </c:if>
+                            <c:if test="${jobPost.getStatus() != 'Violate'}">
+                                ${jobPost.getStatus()}
+                            </c:if>
+                        </p>
                     </div>
+
                     <div>
                         <h5>Date Posted:</h5>
                         <p><fmt:formatDate value="${jobPost.getPostedDate()}" pattern="dd-MM-yyyy"/></p>

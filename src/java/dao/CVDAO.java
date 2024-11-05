@@ -33,7 +33,7 @@ public class CVDAO extends GenericDAO<CV> {
     
     //Tim CV cho Job Seeker
     public CV findCVbyJobSeekerID(int JobSeekerID) {
-        String sql = "select * from CVs where JobSeekerID = ?";
+        String sql = "select * from CVs where CVID = ?";
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobSeekerID", JobSeekerID);
         List<CV> list = queryGenericDAO(CV.class, sql, parameterMap);

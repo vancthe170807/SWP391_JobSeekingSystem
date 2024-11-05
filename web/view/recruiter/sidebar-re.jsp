@@ -34,7 +34,6 @@
     </a>
     <a href="${pageContext.request.contextPath}/view/recruiter/changePW-re.jsp"><i class="fas fa-lock"></i> Change Password</a>
     <a href="${pageContext.request.contextPath}/view/recruiter/deactiveAccountRecruiter.jsp"><i class="fa-solid fa-eraser"></i> Deactive Account</a>
-    <a href="#"><i class="fas fa-user"></i> Feed Back</a>
 
     <a href="${pageContext.request.contextPath}/view/authen/logout.jsp" style="color: red;">
         <i class="fas fa-sign-out-alt" style="color: red;"></i> Log Out

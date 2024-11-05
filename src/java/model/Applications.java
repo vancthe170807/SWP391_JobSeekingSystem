@@ -4,19 +4,21 @@
  */
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
  * @author vanct
  */
 public class Applications {
+
     private int ApplicationID;
     private int JobPostingID;
     private int JobSeekerID;
     private int CVID;
     private int Status;
     private Date AppliedDate;
+    private transient JobSeekers jobSeeker;
 
     public Applications() {
     }
@@ -77,7 +79,13 @@ public class Applications {
     public void setAppliedDate(Date AppliedDate) {
         this.AppliedDate = AppliedDate;
     }
-    
-    
-    
+
+    public JobSeekers getJobSeeker() {
+        return jobSeeker;
+    }
+
+    public void setJobSeeker(JobSeekers jobSeeker) {
+        this.jobSeeker = jobSeeker;
+    }
+
 }

@@ -4,7 +4,7 @@
     <!-- Navigation Links -->
     <div class="nav-links">
         <div class="nav-item">
-            <a href="#">Home</a>
+            <a href="${pageContext.request.contextPath}/Dashboard">Home</a>
         </div>
         <div class="nav-item">
             <a href="#">About</a>

@@ -5,6 +5,7 @@
 package controller.recruiter;
 
 import constant.CommonConst;
+import dao.ApplicationDAO;
 import dao.CompanyDAO;
 import dao.JobPostingsDAO;
 import dao.Job_Posting_CategoryDAO;
@@ -31,6 +32,7 @@ public class Dashboard extends HttpServlet {
     RecruitersDAO RecruitersDAO = new RecruitersDAO();
     Job_Posting_CategoryDAO categoryDAO = new Job_Posting_CategoryDAO();
     CompanyDAO cdao = new CompanyDAO();
+    ApplicationDAO applicationDao = new ApplicationDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,6 +63,22 @@ public class Dashboard extends HttpServlet {
             } else {
                 List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersIDandOneMonth(recruiters.getRecruiterID());
                 List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
+                //tong so bai dang cho duyet pendding
+                int totalPendingForRecruiter = applicationDao.countPendingApplicationsForRecruiter(recruiters.getRecruiterID());
+                int totalAgreeForRecruiter = applicationDao.countAgreeApplicationsForRecruiter(recruiters.getRecruiterID());
+                int totalViolateJPForRecruiter = jobPostingsDAO.countViolateJobPostingsForRecruiter(recruiters.getRecruiterID());
+                int q1 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 1);
+                int q2 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 2);
+                int q3 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 3);
+                int q4 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 4);
+                request.setAttribute("q1", q1);
+                request.setAttribute("q2", q2);
+                request.setAttribute("q3", q3);
+                request.setAttribute("q4", q4);
+                
+                request.setAttribute("totalViolateJPForRecruiter", totalViolateJPForRecruiter);
+                request.setAttribute("totalAgreeForRecruiter", totalAgreeForRecruiter);
+                request.setAttribute("totalPendingApplications", totalPendingForRecruiter);
 
                 // Gửi dữ liệu đến JSP
                 request.setAttribute("listSize", listSize);

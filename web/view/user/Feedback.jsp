@@ -81,7 +81,7 @@
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- Header Area End -->
             <div class="container mt-5">
-                <h1 class="text-center">Seeker's Feedback</h1>
+                <h1 class="text-center">My Feedback</h1>
 
                 <table class="table table-hover mt-3 table-bordered">
                     <thead class="thead">

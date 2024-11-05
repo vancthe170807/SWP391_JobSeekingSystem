@@ -614,6 +614,21 @@
         }
     });
 </script>
+<script>
+    tinymce.init({
+        selector: 'textarea', // Initialize TinyMCE for all text areas
+        plugins: 'advlist autolink lists link image charmap print preview anchor',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+        menubar: true, // Disable the menubar
+        branding: false, // Disable the TinyMCE branding
+        height: 300, // Set the height of the editor
+        setup: function (editor) {
+            editor.on('change', function () {
+                tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+            });
+        }
+    });
+</script>
 
 <script>
     tinymce.init({

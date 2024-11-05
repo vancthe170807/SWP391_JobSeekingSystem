@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import model.Account;
 import model.Company;
-import org.eclipse.jdt.internal.compiler.lookup.TypeConstants;
 
 /**
  *

@@ -23,7 +23,8 @@
         <!--css-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+        <!-- TinyMCE Script -->
+        <script src="https://cdn.tiny.cloud/1/ygxzbqd4ej8z1yjswkp0ljn56qm4r6luix9l83auaajk3h3q/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
         <!-- Add custom styles -->
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -610,6 +611,37 @@
             document.getElementById('duplicateEditToastBody').innerHTML = "${duplicateEdit}";
             var duplicateEditToast = new bootstrap.Toast(document.getElementById('duplicateEditToast'));
             duplicateEditToast.show();
+        }
+    });
+</script>
+<script>
+    tinymce.init({
+        selector: 'textarea', // Initialize TinyMCE for all text areas
+        plugins: 'advlist autolink lists link image charmap print preview anchor',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+        menubar: true, // Disable the menubar
+        branding: false, // Disable the TinyMCE branding
+        height: 300, // Set the height of the editor
+        setup: function (editor) {
+            editor.on('change', function () {
+                tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+            });
+        }
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea', // Initialize TinyMCE for all text areas
+        plugins: 'advlist autolink lists link image charmap print preview anchor',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+        menubar: true, // Disable the menubar
+        branding: false, // Disable the TinyMCE branding
+        height: 300, // Set the height of the editor
+        setup: function (editor) {
+            editor.on('change', function () {
+                tinymce.triggerSave(); // Synchronize TinyMCE content with the form
+            });
         }
     });
 </script>

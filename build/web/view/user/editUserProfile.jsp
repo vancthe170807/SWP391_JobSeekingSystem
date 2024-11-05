@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="text-center mb-3">
-                        <button type="submit" class="btn btn-success" onclick="document.querySelector('#profile-form').submit()">Save Profile</button>
+                        <button type="submit" class="btn btn-success">Save Profile</button>
                     </div>
                 </form>
                             <!-- Display success or error messages -->

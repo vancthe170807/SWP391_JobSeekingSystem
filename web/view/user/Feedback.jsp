@@ -81,7 +81,7 @@
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
             <!-- Header Area End -->
             <div class="container mt-5">
-                <h1 class="text-center">Seeker's Feedback</h1>
+                <h1 class="text-center">My Feedback</h1>
 
                 <table class="table table-hover mt-3 table-bordered">
                     <thead class="thead">
@@ -180,6 +180,9 @@
                 </div>
             </div>
         </div>
+        <button type="button" class="btn btn-primary position-fixed" id="back-to-top" style="bottom: 20px; right: 20px;">
+                <i class="fas fa-arrow-up"></i>
+            </button>
         <!-- Footer -->
         <jsp:include page="../common/footer.jsp"></jsp:include>
 
@@ -200,6 +203,24 @@
 
                 modalContent.value = feedbackContent;
                 modalFeedbackId.value = feedbackId;
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.onscroll = function () {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            };
+
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         </script>
     </body>

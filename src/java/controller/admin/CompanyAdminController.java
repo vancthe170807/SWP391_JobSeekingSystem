@@ -169,7 +169,7 @@ public class CompanyAdminController extends HttpServlet {
             String subjectMail = "Notification: Suspension of " + company.getName() + " on the Platform";
             String contentMail = "Dear " + account.getFullName() + ",\n"
                     + "\n"
-                    + "We would like to inform you that the company " + company.getName() + ", which you represent for recruitment on our platform, has been suspended due to [reason for suspension, e.g., non-compliance with terms of use, policy violation, etc.].\n"
+                    + "We would like to inform you that the company " + company.getName() + ", which you represent for recruitment on our platform, has been suspended due to recieved a lot of report.\n"
                     + "\n"
                     + "Effective immediately, all job listings for this company will no longer be publicly visible, and candidates will not be able to apply for its positions. This suspension will remain in place until the issue is resolved.\n"
                     + "\n"

@@ -142,7 +142,7 @@
                                 <div class="mb-3">
                                     <label for="currentPassword" class="form-label">Please Enter Your Login Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your password" value="${cookie.cp.value}" required onkeydown="preventSpaces(event)">
+                                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your password" required onkeydown="preventSpaces(event)">
                                         <span class="input-group-text cursor-pointer" onclick="togglePassword('currentPassword')">
                                             👁️
                                         </span>
@@ -151,7 +151,6 @@
                                 <p class="text-danger">
                                     <strong>Note:</strong> After your account is deactivated, you will temporarily be unable to use it. If you wish to reactivate your account, please contact the Admin for assistance.
                                 </p>
-                                <button type="button" class="btn btn-primary">Cancel</button>
                                 <button type="submit" class="btn btn-danger">Deactivate Account</button>
                             </form>
                         </div>
@@ -203,7 +202,7 @@
 
 
             </div>
-            <button type="button" class="btn btn-primary position-fixed" id="rts-back-to-top" style="bottom: 20px; right: 20px;">
+            <button type="button" class="btn btn-primary position-fixed" id="back-to-top" style="bottom: 20px; right: 20px;">
                 <i class="fas fa-arrow-up"></i>
             </button>
         </div>
@@ -248,6 +247,23 @@
                 var myTab = new bootstrap.Tab(document.querySelector(activeTab));
                 myTab.show();
             }
+            // Back to top button
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.onscroll = function () {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            };
+
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

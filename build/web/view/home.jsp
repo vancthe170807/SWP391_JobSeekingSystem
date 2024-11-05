@@ -11,15 +11,15 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <style>
+            /* Custom CSS styles go here */
             .hero {
-                background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)),
-                    url('${pageContext.request.contextPath}/assets/img/istockphoto-475352876-612x612.jpg') center/cover no-repeat;
+                background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)), url('${pageContext.request.contextPath}/assets/img/istockphoto-475352876-612x612.jpg') center/cover no-repeat;
                 color: white;
                 padding: 120px 0;
                 text-align: center;
             }
 
-            .hero h2 {
+            .hero h1 {
                 font-size: 3rem;
                 font-weight: 700;
                 margin-bottom: 1rem;
@@ -31,18 +31,20 @@
             }
 
             .search-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 20px;
+                background-color: #f8f9fa;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             }
+
             .search-box {
                 width: 100%;
                 padding: 12px;
                 border: 1px solid #ddd;
                 border-radius: 25px;
-                margin-right: 10px;
                 font-size: 16px;
             }
+
             .search-button {
                 background-color: #28a745;
                 color: white;
@@ -51,31 +53,24 @@
                 border-radius: 25px;
                 transition: background-color 0.3s;
             }
+
             .search-button:hover {
                 background-color: #218838;
             }
 
-            .explore-btn {
-                background-color: #28a745;
-                color: white;
-                padding: 0.625rem 1.875rem;
-                border-radius: 0.3125rem;
-                font-size: 1.125rem;
-                transition: all 0.3s ease;
+            .filter-form {
+                background-color: #f8f9fa;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             }
 
-            .explore-btn:hover {
-                background-color: #218838;
-                color: white;
-                transform: translateY(-2px);
-            }
-
-            .card {
+            .job-card {
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
                 height: 100%;
             }
 
-            .card:hover {
+            .job-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
             }
@@ -90,32 +85,6 @@
             .job-card-link:hover {
                 color: inherit;
             }
-
-            .salary-filter-form {
-                background-color: #f8f9fa;
-                padding: 1.25rem;
-                border-radius: 0.5rem;
-                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            }
-
-            #back-to-top {
-                display: none;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 99;
-                transition: opacity 0.3s ease;
-            }
-
-            @media (max-width: 768px) {
-                .hero h2 {
-                    font-size: 2rem;
-                }
-
-                .hero p {
-                    font-size: 1rem;
-                }
-            }
         </style>
     </head>
     <body class="d-flex flex-column min-vh-100">
@@ -126,15 +95,8 @@
             <!-- Hero Section -->
             <section class="hero">
                 <div class="container">
-                    <h2>Welcome to JobPath</h2>
+                    <h1>Welcome to JobPath</h1>
                     <p>Your path to finding the perfect job starts here.</p>
-                    <!-- Search Bar -->
-                    <form action="${pageContext.request.contextPath}/home" method="get" class="search-container">
-                    <input type="text" name="searchJP" class="search-box" placeholder="Search by job title" value="${searchJP}">
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
             </div>
         </section>
 
@@ -144,51 +106,43 @@
                 <div class="row">
                     <!-- Filters Sidebar -->
                     <div class="col-md-3 mb-4">
-                        <div class="salary-filter-form">
-                            <a href="${pageContext.request.contextPath}/home" class="btn btn-success">Show all Job Posting</a>
-                            <!-- Category Filter -->
-                            <form action="home" method="GET" class="mb-4 mt-4" id="categoryForm">
+                        <div class="filter-form">
+                            <h4 class="mb-3">Filters</h4>
+                            <form action="home" method="GET" class="mb-4" id="filterForm">
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-md-9">
+                                        <input type="text" name="search" class="form-control search-box" placeholder="Search by job title" value="${param.search}">
+                                    </div>
+                                    <div class="col-md-2 mt-2 mt-md-0">
+                                        <button type="submit" class="search-button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div class="mb-3">
-                                    <label for="jobCategory" class="form-label fw-bold">Job Category:</label>
-                                    <select name="filter" id="jobCategory" class="form-select">
+                                    <label for="jobCategory" class="form-label">Job Category:</label>
+                                    <select name="filterCategory" id="jobCategory" class="form-select" onchange="document.getElementById('filterForm').submit();">
                                         <option value="">All Categories</option>
                                         <c:forEach var="category" items="${activeCategories}">
-                                            <option value="${category.getId()}" ${category.getId() == selectedFilter ? 'selected' : ''}>
-                                                ${category.getName()}
-                                            </option>
+                                            <option value="${category.getId()}" ${category.getId() == param.filterCategory ? 'selected' : ''}>${category.getName()}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="minSalary" class="form-label">Salary Range:</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="minSalary" name="minSalary" placeholder="Min ($)" value="${param.minSalary}">
+                                        <span class="input-group-text">-</span>
+                                        <input type="number" class="form-control" id="maxSalary" name="maxSalary" placeholder="Max ($)" value="${param.maxSalary}">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Filter by Salary</button>
+                                </div>
                             </form>
 
-                            <!-- Salary Filter -->
-                            <form action="home" method="GET" class="mt-4">
-                                <h5 class="mb-3">Salary Range</h5>
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <label for="minSalary" class="form-label">Min ($):</label>
-                                        <input type="number" 
-                                               class="form-control" 
-                                               id="minSalary" 
-                                               name="minSalary" 
-                                               value="${minSalary}"/>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="maxSalary" class="form-label">Max ($):</label>
-                                        <input type="number" 
-                                               class="form-control" 
-                                               id="maxSalary" 
-                                               name="maxSalary" 
-                                               value="${maxSalary}"/>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-success w-100 mt-3">
-                                    Apply Filters
-                                </button>
-                            </form>
-                            <div class="mt-4">
-                                <a href="${pageContext.request.contextPath}/home?sort=title&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Filter by Title A-Z</a>
-                                <a href="${pageContext.request.contextPath}/home?sort=postedDate&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Filter by Post Date</a>
+                            <div class="mb-4">
+                                <a href="${pageContext.request.contextPath}/home?sort=title&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Sort by Title A-Z</a>
+                                <a href="${pageContext.request.contextPath}/home?sort=postedDate&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Sort by Post Date</a>
                             </div>
                         </div>
                     </div>
@@ -196,16 +150,15 @@
                     <!-- Job Listings -->
                     <div class="col-md-9">
                         <div class="row">
-                            <c:if test="${empty listTop6}">
+                            <c:if test="${empty jobPostingsList}">
                                 <div class="col-12 text-center">
                                     <h4>No jobs found matching your criteria</h4>
                                 </div>
                             </c:if>
-                            <c:forEach var="job" items="${listTop6}">
+                            <c:forEach var="job" items="${jobPostingsList}">
                                 <div class="col-md-6 col-lg-4 mb-4">
-                                    <a href="${pageContext.request.contextPath}/viewdetail?action=details&idJP=${job.getJobPostingID()}" 
-                                       class="job-card-link">
-                                        <div class="card h-100">
+                                    <a href="${pageContext.request.contextPath}/viewdetail?action=details&idJP=${job.getJobPostingID()}" class="job-card-link">
+                                        <div class="card job-card h-100">
                                             <div class="card-body">
                                                 <h5 class="card-title mb-3">${job.getTitle()}</h5>
                                                 <div class="mb-2">
@@ -230,34 +183,50 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <nav aria-label="Page navigation" class="footer-container">
-                    <ul class="pagination justify-content-center">
-                        <c:if test="${currentPage > 1}">
-                            <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}/home?page=${currentPage - 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo; Previous</span>
-                                </a>
-                            </li>
-                        </c:if>
 
-                        <c:forEach begin="1" end="${totalPages}" var="i">
-                            <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                                <a class="page-link" href="${pageContext.request.contextPath}/home?page=${i}&sort=${sortField}&searchJP=${searchJP}">${i}</a>
-                            </li>
-                        </c:forEach>
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center" id="pagination">
+                                <c:if test="${pageControl.getPage() > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageControl.getPage()-1}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo; Previous</span>
+                                        </a>
+                                    </li>
+                                </c:if>
 
-                        <c:if test="${currentPage < totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}/home?page=${currentPage + 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Next">
-                                    <span aria-hidden="true">Next &raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </nav>
+                                <c:set var="startPage" value="${pageControl.getPage() - 2 > 0 ? pageControl.getPage() - 2 : 1}"/>
+                                <c:set var="endPage" value="${startPage + 4 <= pageControl.getTotalPages() ? startPage + 4 : pageControl.getTotalPages()}"/>
+
+                                <c:if test="${startPage > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageControl.getUrlPattern()}page=${startPage-1}">...</a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                                    <li class="page-item ${i == pageControl.getPage() ? 'active' : ''}">
+                                        <a class="page-link" href="${pageControl.getUrlPattern()}page=${i}">${i}</a>
+                                    </li>
+                                </c:forEach>
+
+                                <c:if test="${endPage < pageControl.getTotalPages()}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageControl.getUrlPattern()}page=${endPage + 1}">...</a>
+                                    </li>
+                                </c:if>
+
+                                <c:if test="${pageControl.getPage() < pageControl.getTotalPages()}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageControl.getUrlPattern()}page=${pageControl.getPage() + 1}" aria-label="Next">
+                                            <span aria-hidden="true">Next &raquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-                
             </div>
         </section>
 

@@ -20,6 +20,17 @@
         <jsp:include page="../common/user/header-user.jsp"></jsp:include>
 
             <div class="container my-5">
+            <% if (request.getParameter("error") != null) { %>
+            <div class="alert alert-danger">
+                <%= request.getParameter("error") %>
+            </div>
+            <% } %>
+
+            <% if (request.getParameter("success") != null) { %>
+            <div class="alert alert-success">
+                <%= request.getParameter("success") %>
+            </div>
+            <% } %>
             <c:if test="${not empty jobPost}">
                 <div class="row">
                     <!-- Job Details Section -->

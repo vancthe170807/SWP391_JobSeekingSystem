@@ -165,9 +165,10 @@
         <!-- Profile Container -->
         <div class="profile-container">
             <div class="profile-card">
-                <c:forEach var="education" items="${educations}">
-                    <div class="form-section">
-                        <h2>View Education</h2>
+
+                <div class="form-section">
+                    <h2>View Education</h2>
+                    <c:forEach var="education" items="${educations}">
                         <div class="profile-info">
                             <table>
                                 <tr>
@@ -204,15 +205,16 @@
 
                             </table>
                         </div>
-
-                        <!-- Back Button -->
-                        <div class="text-center">
-                            <a href="javascript:history.back()" class="back-button">
-                                <i class="fas fa-arrow-left"></i> Back to Applications
-                            </a>
-                        </div>
+                                <hr/>
+                    </c:forEach>
+                    <!-- Back Button -->
+                    <div class="text-center">
+                        <a href="javascript:history.back()" class="back-button">
+                            <i class="fas fa-arrow-left"></i> Back to Applications
+                        </a>
                     </div>
-                </c:forEach>
+                </div>
+
             </div>
         </div>
         <!-- Modal -->

@@ -20,6 +20,7 @@ import java.util.List;
 import model.Company;
 import model.JobPostings;
 import model.Job_Posting_Category;
+import model.PageControl;
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
 
@@ -41,76 +42,60 @@ public class HomeController extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String filter = request.getParameter("filter");
-        String searchJP = request.getParameter("searchJP") != null ? request.getParameter("searchJP") : "";
-        String sortField = request.getParameter("sort") != null ? request.getParameter("sort") : "JobPostingID";
-        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int pageSize = 12; // Number of records per page
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        String minSalaryParam = request.getParameter("minSalary");
-        String maxSalaryParam = request.getParameter("maxSalary");
-
-        List<JobPostings> listTop6;
-        int totalRecords;
-
-        // Determine if salary range filtering is requested
-        boolean salaryRangeFilter = (minSalaryParam != null && !minSalaryParam.isEmpty())
-                && (maxSalaryParam != null && !maxSalaryParam.isEmpty());
-
-        double minSalary = salaryRangeFilter ? Double.parseDouble(minSalaryParam) : 0;
-        double maxSalary = salaryRangeFilter ? Double.parseDouble(maxSalaryParam) : Double.MAX_VALUE;
-
-        // Apply search, filtering, and sorting logic
-        if (!searchJP.isEmpty()) {
-            // Search job postings by title
-            listTop6 = jobPostingsDAO.searchJobPostingByTitle(searchJP, page);
-            totalRecords = jobPostingsDAO.findTotalRecordByTitle(searchJP, minSalary, maxSalary);
-
-            if (listTop6.isEmpty()) {
-                request.setAttribute("NoJP", "No job postings found.");
-            }
-        } else if (filter != null && !filter.isEmpty()) {
-            // Filter job postings by category
-            int categoryId = Integer.parseInt(filter);
-            listTop6 = jobPostingsDAO.getJobPostingsByCategory(categoryId);
-            totalRecords = jobPostingsDAO.countJobPostingsByCategory(categoryId);
-        } else if (salaryRangeFilter) {
-            // Filter by salary range only
-            listTop6 = jobPostingsDAO.getJobsBySalaryRange(minSalary, maxSalary, page, pageSize, sortField);
-            totalRecords = jobPostingsDAO.countJobsBySalaryRange(minSalary, maxSalary);
-        } else {
-            // Default case: retrieve all job postings
-            listTop6 = jobPostingsDAO.findJobPostingsWithFilter(sortField, page, pageSize);
-            totalRecords = jobPostingsDAO.countTotalJobPostings();
+        PageControl pageControl = new PageControl();
+        
+        // Parse and validate page parameter
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+            if (page < 1) page = 1;
+        } catch (NumberFormatException e) {
+            page = 1;
         }
 
-        // Calculate total pages for pagination
-        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-
+        // Fetch category information and filter active categories
         List<Job_Posting_Category> jobCategories = jobCategoryDAO.findAll();
         List<Job_Posting_Category> activeCategories = new ArrayList<>();
-
-        for(Job_Posting_Category category: jobCategories) {
-            if(category.isStatus()) {
+        for (Job_Posting_Category category : jobCategories) {
+            if (category.isStatus()) {
                 activeCategories.add(category);
             }
         }
 
-        request.setAttribute("listTop6", listTop6);
-        request.setAttribute("activeCategories", activeCategories);
-        request.setAttribute("selectedFilter", filter);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("minSalary", minSalaryParam);
-        request.setAttribute("maxSalary", maxSalaryParam);
-        request.setAttribute("sortField", sortField);
-        request.setAttribute("searchJP", searchJP);
+        // Get filter and search parameters
+        String minSalary = request.getParameter("minSalary") != null ? request.getParameter("minSalary") : "";
+        String maxSalary = request.getParameter("maxSalary") != null ? request.getParameter("maxSalary") : "";
+        String filterCategory = request.getParameter("filterCategory") != null ? request.getParameter("filterCategory") : "";
+        String search = request.getParameter("search") != null ? request.getParameter("search") : "";
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/home.jsp");
-        dispatcher.forward(request, response);
-    }
-}
+        // Retrieve job postings based on filters
+        List<JobPostings> jobPostingsList = jobPostingsDAO.findAndfilterJobPostingsHome(minSalary, maxSalary, filterCategory, search, page);
+        int totalRecord = jobPostingsDAO.findAndfilterAllHomeRecord(minSalary, maxSalary, filterCategory, search);
+
+        // Set up URL pattern for pagination links
+        String requestURL = request.getRequestURL().toString();
+        pageControl.setUrlPattern(requestURL + "?minSalary=" + minSalary + "&maxSalary=" + maxSalary 
+                + "&filterCategory=" + filterCategory + "&search=" + search + "&");
+
+        // Calculate total pages for pagination
+        int totalPage = (totalRecord + 11) / 12; // Ceiling division for total pages
+        
+        // Configure page control attributes
+        pageControl.setPage(page);
+        pageControl.setTotalRecord(totalRecord);
+        pageControl.setTotalPages(totalPage);
+
+        // Set attributes for request scope
+        request.setAttribute("jobPostingsList", jobPostingsList);
+        request.setAttribute("pageControl", pageControl);
+        request.setAttribute("activeCategories", activeCategories);
+
+        // Forward to JSP
+        request.getRequestDispatcher("view/home.jsp").forward(request, response);
+    }}
    
     
 

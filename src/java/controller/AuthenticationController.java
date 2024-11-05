@@ -3,6 +3,7 @@ package controller;
 import utils.Email;
 import constant.CommonConst;
 import dao.AccountDAO;
+import dao.ApplicationDAO;
 import dao.CompanyDAO;
 import dao.JobPostingsDAO;
 import dao.JobSeekerDAO;
@@ -49,6 +50,7 @@ public class AuthenticationController extends HttpServlet {
     RecruitersDAO reDAO = new RecruitersDAO();
     CompanyDAO cdao = new CompanyDAO();
     Validation valid = new Validation();
+    ApplicationDAO applicationDao = new ApplicationDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -202,7 +204,6 @@ public class AuthenticationController extends HttpServlet {
                     break;
                 case 2: // Recruiter role;
                     Recruiters recruiters = reDAO.findRecruitersbyAccountID(String.valueOf(accFound.getId()));
-
                     if (recruiters == null) {
                         // If no recruiter profile is found, redirect to profile creation page
                         url = "view/recruiter/viewRecruiterProfile.jsp";
@@ -218,6 +219,23 @@ public class AuthenticationController extends HttpServlet {
                             // Fetch recruiter's job postings and recent postings
                             List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
                             List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
+
+                            //tong so bai dang cho duyet pendding
+                            int totalPendingForRecruiter = applicationDao.countPendingApplicationsForRecruiter(recruiters.getRecruiterID());
+                            int totalAgreeForRecruiter = applicationDao.countAgreeApplicationsForRecruiter(recruiters.getRecruiterID());
+                            int totalViolateJPForRecruiter = jobPostingsDAO.countViolateJobPostingsForRecruiter(recruiters.getRecruiterID());
+                            int q1 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 1);
+                            int q2 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 2);
+                            int q3 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 3);
+                            int q4 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 4);
+                            
+                            request.setAttribute("q1", q1);
+                            request.setAttribute("q2", q2);
+                            request.setAttribute("q3", q3);
+                            request.setAttribute("q4", q4);
+                            request.setAttribute("totalViolateJPForRecruiter", totalViolateJPForRecruiter);
+                            request.setAttribute("totalAgreeForRecruiter", totalAgreeForRecruiter);
+                            request.setAttribute("totalPendingApplications", totalPendingForRecruiter);
 
                             // Pass data to dashboard
                             request.setAttribute("listSize", listSize);

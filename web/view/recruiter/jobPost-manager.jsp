@@ -508,7 +508,7 @@
 
                 <script>
                     function showEditWarning() {
-                        alert("Không thể chỉnh sửa Job Posting này vì nó có trạng thái 'Violate'.");
+                        alert("This Job Posting cannot be edited because it has a status of 'Violate'");
                     }
                 </script>
             </body>

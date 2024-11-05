@@ -4,9 +4,10 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
     <multipart-config>
-        <max-file-size>10485760</max-file-size> <!-- 10MB -->
-        <max-request-size>20971520</max-request-size> <!-- 20MB -->
+        <max-file-size>10485760</max-file-size>
+        <!-- 10MB -->
+        <max-request-size>20971520</max-request-size>
+        <!-- 20MB -->
         <file-size-threshold>0</file-size-threshold>
     </multipart-config>
-
 </web-app>

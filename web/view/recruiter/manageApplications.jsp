@@ -1,9 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="java.util.Map" %>
-
-<%@ page import="java.util.HashMap" %>
+<%@page import="model.JobPostings"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -140,7 +139,7 @@
             <div class="job-posting-container flex-grow-1">
                 <div class="container">
                     <!-- Title Section -->
-                    <h2 class="table-title mt-4 mb-4">Application Management</h2>
+                    <h2 class="table-title mt-4 mb-4">${jobPostingTitle}</h2>
 
                     <!-- Row for Back Button, Filter Buttons, and Search Box -->
                     <div class="row align-items-center mb-3">
@@ -149,21 +148,31 @@
                             <a href="${pageContext.request.contextPath}/jobPost" class="btn btn-secondary">Back</a>
                         </div>
 
-
                         <!-- Filter Buttons -->
                         <div class="col-auto">
-                            <button class="btn btn-outline-primary me-2" onclick="filterByName()">Filter by Name</button>
-                            <button class="btn btn-outline-primary" onclick="filterByDate()">Filter by Applied Date</button>
-                        </div>
+                            <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
+                                <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
+                                <input type="text" name="searchName" value="${searchName}" placeholder="Search by Applicant Name" class="form-control d-inline-block" style="width: 200px;">
+                                <button type="submit" class="btn btn-outline-primary">Search</button>
+                            </form>
 
-                        <!-- Search Box aligned to the right -->
-                        <div class="col ms-auto" style="max-width: 300px;">
-                            <div class="input-group">
-                                <input type="text" id="searchInput" class="form-control" placeholder="Search by Applicant Name">
-                                <button class="btn btn-primary" onclick="searchByName()">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
+                            <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
+                                <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
+                                <select name="statusFilter" class="form-control d-inline-block" style="width: 150px;">
+                                    <option value="">All Status</option>
+                                    <option value="3" ${statusFilter == '3' ? 'selected' : ''}>Pending</option>
+                                    <option value="2" ${statusFilter == '2' ? 'selected' : ''}>Agree</option>
+                                    <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Reject</option>
+                                    <option value="0" ${statusFilter == '0' ? 'selected' : ''}>Cancel</option>
+                                </select>
+                                <button type="submit" class="btn btn-outline-primary">Filter by Status</button>
+                            </form>
+
+                            <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
+                                <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
+                                <input type="date" name="dateFilter" value="${dateFilter}" class="form-control d-inline-block" style="width: 200px;">
+                                <button type="submit" class="btn btn-outline-primary">Filter by Applied Date</button>
+                            </form>
                         </div>
                     </div>
 
@@ -182,7 +191,8 @@
                             <tbody>
                                 <c:forEach var="application" items="${applications}">
                                     <tr>
-                                        <td>${application.jobSeeker.account.fullName}</td>
+                                        <td>${application.jobSeeker.account.firstName} ${application.jobSeeker.account.lastName}</td>
+
                                         <td>
                                             <fmt:formatDate value="${application.getAppliedDate()}" pattern="dd-MM-yyyy" />
                                         </td>
@@ -198,6 +208,9 @@
                                                 <c:when test="${application.getStatus() == 1}">
                                                     <span class="badge bg-danger">Reject</span>
                                                 </c:when>
+                                                <c:when test="${application.getStatus() == 0}">
+                                                    <span class="badge bg-danger">Cancel</span>
+                                                </c:when>
                                             </c:choose>
                                         </td>
                                         <td>
@@ -212,26 +225,57 @@
                                             </a>
 
                                         </td>
+
+                                        <%
+
+                                            String jobPostingStatus = (String) request.getAttribute("jobPostingStatus");
+                                            boolean isViolate = "Violate".equals(jobPostingStatus);
+                                        %>
+
                                         <td>
                                             <c:choose>
                                                 <c:when test="${application.getStatus() == 3}">
-                                                    <button type="button" class="btn btn-success btn-action" data-bs-toggle="modal" data-bs-target="#changeStatusModal" 
-                                                            onclick="openModal(${application.getApplicationID()})">
-                                                        <i class="fas fa-edit"></i>Confirm
+
+                                                    <button type="button" class="btn btn-success btn-action <%= isViolate ? "text-danger" : "" %>" 
+                                                            data-bs-toggle="modal" data-bs-target="#changeStatusModal" 
+                                                            onclick="openModal(${application.getApplicationID()})" 
+                                                            <%= isViolate ? "disabled" : "" %>>
+                                                        <i class="fas fa-edit"></i> Confirm
                                                     </button>
+
+                                                    <% if (isViolate) { %>
+
+                                                    <span class="text-danger"> (Not allowed)</span>
+                                                    <% } %>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <span class="text-muted">Not yet</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
+
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
                     </div>
 
-
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage - 1}">Previous</a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                                    <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${i}">${i}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${currentPage < totalPages}">
+                                <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage + 1}">Next</a></li>
+                                </c:if>
+                        </ul>
+                    </nav>
 
                     <!-- Error message if no applications found -->
                     <c:if test="${empty applications}">
@@ -262,6 +306,7 @@
                                         <textarea class="form-control" id="emailContent" name="emailContent" rows="4" placeholder="Enter your message here..." required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button> <!-- Nút reset -->
                                 </form>
                             </div>
                         </div>
@@ -270,37 +315,42 @@
 
             </div>
 
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${currentPage > 1}">
-                        <li class="page-item">
-                            <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage - 1}">Previous</a>
-                        </li>
-                    </c:if>
-
-                    <c:forEach var="i" begin="1" end="${totalPages}">
-                        <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                            <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${i}">${i}</a>
-                        </li>
-                    </c:forEach>
-
-                    <c:if test="${currentPage < totalPages}">
-                        <li class="page-item">
-                            <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage + 1}">Next</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </nav>
-
             <!-- Include Footer -->
             <%@ include file="../recruiter/footer-re.jsp" %>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-                                                                function openModal(applicationId) {
-                                                                    document.getElementById("applicationId").value = applicationId;
-                                                                }
+                                        function openModal(applicationId) {
+                                            document.getElementById("applicationId").value = applicationId;
+                                        }
+        </script>
+        <!-- TinyMCE và mã JavaScript cho nút Reset -->
+        <script src="https://cdn.tiny.cloud/1/ygxzbqd4ej8z1yjswkp0ljn56qm4r6luix9l83auaajk3h3q/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+                                        // Khởi tạo TinyMCE cho textarea với id là 'emailContent'
+                                        tinymce.init({
+                                            selector: 'textarea',
+                                            plugins: 'advlist autolink lists link image charmap print preview anchor',
+                                            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+                                            branding: false,
+                                            height: 300,
+                                            setup: function (editor) {
+                                                editor.on('change', function () {
+                                                    tinymce.triggerSave();
+                                                });
+                                            }
+                                        });
+
+                                        // Hàm reset để xóa nội dung trong TinyMCE
+                                        function resetForm() {
+                                            // Reset nội dung của TinyMCE editor
+                                            tinymce.get('emailContent').setContent('');
+
+                                            // Reset các trường khác trong form nếu cần
+                                            document.getElementById('status').selectedIndex = 0; // Đặt lại giá trị đầu tiên của dropdown
+                                            document.getElementById('changeStatusForm').reset(); // Reset form nếu cần
+                                        }
         </script>
     </body>
 </html>

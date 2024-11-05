@@ -666,4 +666,63 @@ public abstract class GenericDAO<T> extends DBContext {
 
     public abstract int insert(T t);
 
+    protected <T> List<T> queryGenericDAO1(Class<T> clazz, String sql, Map<String, Object> parameterMap) {
+        List<T> result = new ArrayList<>();
+        try {
+            // Lấy kết nối
+            connection = new DBContext().connection;
+
+            // Chuẩn bị danh sách các tham số
+            List<Object> parameters = new ArrayList<>(parameterMap.values());
+
+            // Chuẩn bị câu lệnh
+            statement = connection.prepareStatement(sql);
+
+            // Gán giá trị cho các tham số
+            int index = 1;
+            for (Object value : parameters) {
+                statement.setObject(index, value);
+                index++;
+            }
+
+            // Thực thi truy vấn
+            resultSet = statement.executeQuery();
+
+            // Xử lý kết quả dựa trên kiểu của clazz
+            while (resultSet.next()) {
+                if (clazz == String.class || clazz == Integer.class || clazz == Double.class || clazz == Long.class) {
+                    // Nếu kiểu trả về là một kiểu đơn giản, lấy giá trị trực tiếp
+                    T value = (T) resultSet.getObject(1); // Lấy cột đầu tiên
+                    result.add(value);
+                } else {
+                    // Nếu là một kiểu phức tạp, sử dụng mapRow để ánh xạ vào đối tượng
+                    T obj = mapRow(resultSet, clazz);
+                    result.add(obj);
+                }
+            }
+
+        } catch (IllegalAccessException
+                | IllegalArgumentException
+                | InstantiationException
+                | NoSuchMethodException
+                | InvocationTargetException
+                | SQLException e) {
+            System.err.println("4USER: Bắn Exception ở hàm query: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("4USER: Bắn Exception ở hàm query: " + e.getMessage());
+            }
+        }
+        return result;
+    }
 }

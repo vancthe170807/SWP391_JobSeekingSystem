@@ -38,7 +38,9 @@ public class Email {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(body);
+
+            // Thiết lập nội dung email dưới dạng HTML
+            message.setContent(body, "text/html; charset=UTF-8");
 
             // Gửi email
             Transport.send(message);

@@ -75,26 +75,17 @@
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/JobPostings.java</file>
         </group>
         <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/ApplicationDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/ListJobServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobSeekerDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/ViewDetailJobPostingServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/FavourJobPostingServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/seeker/ViewDetailApplicationServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/JobSeekers.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/JobPostingsDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/SendApplicationStatusServlet.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/model/Applications.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/viewJP.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ApplicationSeekersController.java</file>
-        </group>
-        <group>
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/manageApplications_Goc.jsp</file>
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/src/java/controller/recruiter/ApplicationSeekersController.java</file>
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/recruiter/manageApplications_Loc.jsp</file>
             <file>file:/D:/FALL2024/SWP391/swp391-jobseeker/web/view/authen/login.jsp</file>
+        </group>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/login.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ApplicationSeekersController.java</file>
         </group>
     </open-files>
 </project-private>

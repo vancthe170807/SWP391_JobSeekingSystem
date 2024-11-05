@@ -43,7 +43,8 @@
 
                     /* Center and style header section */
                     .header-section {
-                        text-align: center;
+                        display: flex;
+                        justify-content: center;
                         margin-bottom: 20px;
                     }
 
@@ -51,7 +52,6 @@
                         color: #007b5e;
                         font-weight: bold;
                         font-size: 26px;
-                        display: inline-block;
                         margin-top: 80px;
                     }
 
@@ -235,7 +235,6 @@
                         font-weight: bold;
                     }
 
-
                     .job-title-violate {
                         color: red;
                         font-weight: bold;
@@ -246,7 +245,6 @@
                         color: red;
                         margin-left: 5px;
                     }
-
 
                     .status-violate {
                         font-weight: bold;

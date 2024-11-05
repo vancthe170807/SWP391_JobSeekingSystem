@@ -221,10 +221,12 @@
                                 <select id="jobCategory" name="jobCategory" class="form-control" required>
                                     <option value="">Select Job Category</option>
                                     <c:forEach var="category" items="${jobCategories}">
-                                        <option value="${category.getId()}" 
-                                                <c:if test="${category.getId() == selectedJobCategory}">selected</c:if>>
-                                            ${category.getName()}
-                                        </option>
+                                        <c:if test="${category.status == true}">
+                                            <option value="${category.getId()}" 
+                                                    <c:if test="${category.getId() == selectedJobCategory}">selected</c:if>>
+                                                ${category.getName()}
+                                            </option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
                             </div>

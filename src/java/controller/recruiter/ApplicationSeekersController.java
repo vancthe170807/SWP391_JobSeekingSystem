@@ -161,17 +161,6 @@ public class ApplicationSeekersController extends HttpServlet {
             ApplicationDAO applicationDao = new ApplicationDAO();
             JobPostingsDAO jp = new JobPostingsDAO();
 
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
-
-            if (account == null) {
-                response.sendRedirect("view/authen/login.jsp");
-                return;
-            }
-
-            JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
-            request.setAttribute("jobSeeker", jobSeeker);
-
             String jobPostId = request.getParameter("jobPostId");
             int jobPostIdInt = Integer.parseInt(jobPostId);
 

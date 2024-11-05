@@ -208,8 +208,9 @@ public class ApplicationDAO extends GenericDAO<Applications> {
 
     public int countApplicationsByFilters(int jobPostingId, String searchName, String statusFilter, String dateFilter) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Applications as A"
-                + " Join JobSeekers as J on A.JobSeekerId = J.JobSeekerId"
-                + " Join Account as Ac on Ac.id = J.AccountId WHERE JobPostingID = ? ");
+                + " JOIN JobSeekers as J ON A.JobSeekerId = J.JobSeekerId"
+                + " JOIN Account as Ac ON Ac.id = J.AccountId WHERE JobPostingID = ?");
+
         parameterMap = new LinkedHashMap<>();
         parameterMap.put("JobPostingID", jobPostingId);
 
@@ -226,12 +227,8 @@ public class ApplicationDAO extends GenericDAO<Applications> {
             sql.append(" AND CONVERT(date, AppliedDate) = ?");
             parameterMap.put("AppliedDate", java.sql.Date.valueOf(dateFilter));
         }
-        List<Applications> applications = queryGenericDAO(Applications.class, sql.toString(), parameterMap);
-        JobSeekerDAO jobSeekerDao = new JobSeekerDAO();
-        for (Applications application : applications) {
-            application.setJobSeeker(jobSeekerDao.findJobSeekerIDByJobSeekerID(application.getJobSeekerID() + ""));
-        }
-        return applications.size();
+
+        return countGenericDAO(sql.toString(), parameterMap);
     }
 
     //dem tong so ung vien pendding all bai dang
@@ -246,7 +243,7 @@ public class ApplicationDAO extends GenericDAO<Applications> {
 
         return findTotalRecordGenericDAO(Applications.class, sql, parameterMap);
     }
-    
+
     public int countAgreeApplicationsForRecruiter(int recruiterId) {
         String sql = "SELECT COUNT(*) "
                 + "FROM Applications a "
@@ -259,17 +256,15 @@ public class ApplicationDAO extends GenericDAO<Applications> {
         return findTotalRecordGenericDAO(Applications.class, sql, parameterMap);
     }
 
-    public int getTotalApplicationsByJobPostingID(int jobPostId)  {
-    String sql = "SELECT COUNT(*) FROM Applications WHERE JobPostingID = ?";
-    parameterMap = new LinkedHashMap<>();
-    parameterMap.put("JobPostingID", jobPostId);
+    public int getTotalApplicationsByJobPostingID(int jobPostId) {
+        String sql = "SELECT COUNT(*) FROM Applications WHERE JobPostingID = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("JobPostingID", jobPostId);
 
-    List<Integer> result = queryGenericDAO1(Integer.class, sql, parameterMap);
+        List<Integer> result = queryGenericDAO1(Integer.class, sql, parameterMap);
 
-    // Trả về giá trị đầu tiên của danh sách kết quả, nếu có
-    return result.isEmpty() ? 0 : result.get(0);
-}
-
-
+        // Trả về giá trị đầu tiên của danh sách kết quả, nếu có
+        return result.isEmpty() ? 0 : result.get(0);
+    }
 
 }

@@ -725,4 +725,44 @@ public abstract class GenericDAO<T> extends DBContext {
         }
         return result;
     }
+
+    protected int countGenericDAO(String sql, Map<String, Object> parameterMap) {
+        int count = 0;
+        List<Object> parameters = new ArrayList<>(parameterMap.values());
+        try {
+            connection = new DBContext().connection;
+            statement = connection.prepareStatement(sql);
+
+            // Set parameters
+            int index = 1;
+            for (Object value : parameters) {
+                statement.setObject(index, value);
+                index++;
+            }
+
+            // Execute the query and get the count
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Exception in countGenericDAO: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Exception while closing resources in countGenericDAO: " + e.getMessage());
+            }
+        }
+        return count;
+    }
+
 }

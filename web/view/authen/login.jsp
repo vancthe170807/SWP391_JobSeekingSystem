@@ -9,19 +9,28 @@
         <title>Login</title>
         <!-- Bootstrap for responsiveness -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style>
+            .g-recaptcha {
+                transform: scale(0.85); /* Thu nhỏ reCAPTCHA */
+                transform-origin: 0 0;  /* Căn chỉnh reCAPTCHA ở góc trên bên trái */
+            }
+        </style>
+
     </head>
     <body class="bg-light d-flex flex-column min-vh-100">
         <!-- Header Area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
-            <!-- Header Area End -->
 
             <!-- Login Container -->
             <div class="container d-flex justify-content-center align-items-center flex-grow-1">
                 <div class="card shadow-sm" style="width: 100%; max-width: 500px; margin-top: 20px; margin-bottom: 20px">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h4 class="card-title" style="text-align: center; font-weight: bolder">Login</h4>
-                            <a href="${pageContext.request.contextPath}/home" class="btn-close" aria-label="Close"></a>
+
+                        <div class="mb-4 text-center position-relative">
+                            <h4 class="card-title" style="font-weight: bolder">
+                                Login Job<span style="color: green;">Path</span>
+                            </h4>
+                            <a href="${pageContext.request.contextPath}/home" class="btn-close position-absolute top-0 end-0" aria-label="Close"></a>
                     </div>
 
                     <!-- Display error message if login fails -->
@@ -80,71 +89,71 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script type="text/javascript">
-                            function togglePassword() {
-                                var input = document.getElementById("password");
-                                var icon = document.getElementById("togglePassword");
-                                if (input.type === "password") {
-                                    input.type = "text";
-                                    icon.textContent = '🙈'; // Change icon to indicate password is shown
-                                } else {
-                                    input.type = "password";
-                                    icon.textContent = '👁️'; // Change icon back to indicate password is hidden
-                                }
-                            }
+                                    function togglePassword() {
+                                        var input = document.getElementById("password");
+                                        var icon = document.getElementById("togglePassword");
+                                        if (input.type === "password") {
+                                            input.type = "text";
+                                            icon.textContent = '🙈'; // Change icon to indicate password is shown
+                                        } else {
+                                            input.type = "password";
+                                            icon.textContent = '👁️'; // Change icon back to indicate password is hidden
+                                        }
+                                    }
 
-                            // Prevent entering spaces in username and password fields
-                            function preventSpaces(event) {
-                                if (event.key === " ") {
-                                    event.preventDefault();
-                                    alert("Username and Password cannot contain spaces!");
-                                }
-                            }
+                                    // Prevent entering spaces in username and password fields
+                                    function preventSpaces(event) {
+                                        if (event.key === " ") {
+                                            event.preventDefault();
+                                            alert("Username and Password cannot contain spaces!");
+                                        }
+                                    }
 
-                            // Remove spaces when entering username
-                            document.getElementById("username").addEventListener("input", function () {
-                                this.value = this.value.replace(/\s/g, "");  // Remove all spaces
-                            });
+                                    // Remove spaces when entering username
+                                    document.getElementById("username").addEventListener("input", function () {
+                                        this.value = this.value.replace(/\s/g, "");  // Remove all spaces
+                                    });
 
-                            // Remove spaces when entering password
-                            document.getElementById("password").addEventListener("input", function () {
-                                this.value = this.value.replace(/\s/g, "");  // Remove all spaces
-                            });
+                                    // Remove spaces when entering password
+                                    document.getElementById("password").addEventListener("input", function () {
+                                        this.value = this.value.replace(/\s/g, "");  // Remove all spaces
+                                    });
 
-                            function validateForm() {
-                                var username = document.getElementById("username").value;
-                                var password = document.getElementById("password").value;
+                                    function validateForm() {
+                                        var username = document.getElementById("username").value;
+                                        var password = document.getElementById("password").value;
 
-                                // Trim spaces from start and end
-                                username = username.trim();
-                                password = password.trim();
+                                        // Trim spaces from start and end
+                                        username = username.trim();
+                                        password = password.trim();
 
-                                // Check for spaces anywhere in username or password
-                                if (/\s/.test(username) || /\s/.test(password)) {
-                                    alert("Username and Password cannot contain spaces!");
-                                    return false;  // Prevent form submission
-                                }
+                                        // Check for spaces anywhere in username or password
+                                        if (/\s/.test(username) || /\s/.test(password)) {
+                                            alert("Username and Password cannot contain spaces!");
+                                            return false;  // Prevent form submission
+                                        }
 
-                                return true;  // Allow submission if no errors
-                            }
+                                        return true;  // Allow submission if no errors
+                                    }
 
-                            document.getElementById("login-form").onsubmit = function () {
-                                return validateForm();
-                            };
+                                    document.getElementById("login-form").onsubmit = function () {
+                                        return validateForm();
+                                    };
 
-                            // Attach event listeners to prevent space input
-                            document.getElementById("username").addEventListener("keydown", preventSpaces);
-                            document.getElementById("password").addEventListener("keydown", preventSpaces);
+                                    // Attach event listeners to prevent space input
+                                    document.getElementById("username").addEventListener("keydown", preventSpaces);
+                                    document.getElementById("password").addEventListener("keydown", preventSpaces);
 
-                            function checkCapCha() {
-                                var form = document.getElementById("login-form");
-                                var error = document.getElementById("error");
-                                const response = grecaptcha.getResponse();
-                                if (response) {
-                                    form.submit();
-                                } else {
-                                    error.textContent = "Please verify that you are not a robot";
-                                }
-                            }
+                                    function checkCapCha() {
+                                        var form = document.getElementById("login-form");
+                                        var error = document.getElementById("error");
+                                        const response = grecaptcha.getResponse();
+                                        if (response) {
+                                            form.submit();
+                                        } else {
+                                            error.textContent = "Please verify that you are not a robot";
+                                        }
+                                    }
         </script>
     </body>
 </html>

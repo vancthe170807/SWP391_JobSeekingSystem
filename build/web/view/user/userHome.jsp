@@ -6,15 +6,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home - JobPath</title>
-        
+
         <!-- CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        
+
         <style>
             .hero {
                 background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)),
-                    url('${pageContext.request.contextPath}/assets/images/hero-bg.jpg') center/cover no-repeat;
+                    url('${pageContext.request.contextPath}/assets/img/istockphoto-475352876-612x612.jpg') center/cover no-repeat;
                 color: white;
                 padding: 120px 0;
                 text-align: center;
@@ -29,6 +29,31 @@
             .hero p {
                 font-size: 1.25rem;
                 margin-bottom: 2rem;
+            }
+
+            .search-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            .search-box {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: 25px;
+                margin-right: 10px;
+                font-size: 16px;
+            }
+            .search-button {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 25px;
+                transition: background-color 0.3s;
+            }
+            .search-button:hover {
+                background-color: #218838;
             }
 
             .explore-btn {
@@ -87,7 +112,7 @@
                 .hero h2 {
                     font-size: 2rem;
                 }
-                
+
                 .hero p {
                     font-size: 1rem;
                 }
@@ -103,9 +128,13 @@
             <div class="container">
                 <h2>Welcome to JobPath</h2>
                 <p>Your path to finding the perfect job starts here.</p>
-                <a href="${pageContext.request.contextPath}/listJob" class="btn explore-btn">
-                    Explore Jobs
-                </a>
+                <!-- Search Bar -->
+                <form action="${pageContext.request.contextPath}/HomeSeeker" method="get" class="search-container">
+                    <input type="text" name="searchJP" class="search-box" placeholder="Search by job title" value="${searchJP}">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
         </section>
 
@@ -116,13 +145,14 @@
                     <!-- Filters Sidebar -->
                     <div class="col-md-3 mb-4">
                         <div class="salary-filter-form">
+                            <a href="${pageContext.request.contextPath}/HomeSeeker" class="btn btn-success">Show all Job Posting</a>
                             <!-- Category Filter -->
-                            <form action="HomeSeeker" method="GET" class="mb-4" id="categoryForm">
+                            <form action="HomeSeeker" method="GET" class="mb-4 mt-4" id="categoryForm">
                                 <div class="mb-3">
                                     <label for="jobCategory" class="form-label fw-bold">Job Category:</label>
                                     <select name="filter" id="jobCategory" class="form-select">
                                         <option value="">All Categories</option>
-                                        <c:forEach var="category" items="${jobCategories}">
+                                        <c:forEach var="category" items="${activeCategories}">
                                             <option value="${category.getId()}" ${category.getId() == selectedFilter ? 'selected' : ''}>
                                                 ${category.getName()}
                                             </option>
@@ -156,6 +186,10 @@
                                     Apply Filters
                                 </button>
                             </form>
+                            <div class="mt-4">
+                                <a href="${pageContext.request.contextPath}/HomeSeeker?sort=title&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Filter by Title A-Z</a>
+                                <a href="${pageContext.request.contextPath}/HomeSeeker?sort=postedDate&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Filter by Post Date</a>
+                            </div>
                         </div>
                     </div>
 
@@ -196,8 +230,34 @@
                                 </div>
                             </c:forEach>
                         </div>
+                        <nav aria-label="Page navigation" class="footer-container">
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${currentPage > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageContext.request.contextPath}/HomeSeeker?page=${currentPage - 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo; Previous</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                                        <a class="page-link" href="${pageContext.request.contextPath}/HomeSeeker?page=${i}&sort=${sortField}&searchJP=${searchJP}">${i}</a>
+                                    </li>
+                                </c:forEach>
+
+                                <c:if test="${currentPage < totalPages}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="${pageContext.request.contextPath}/HomeSeeker?page=${currentPage + 1}&sort=${sortField}&searchJP=${searchJP}" aria-label="Next">
+                                            <span aria-hidden="true">Next &raquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -212,10 +272,10 @@
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-        
+
         <script>
             // Category filter auto-submit
-            document.getElementById('jobCategory').addEventListener('change', function() {
+            document.getElementById('jobCategory').addEventListener('change', function () {
                 document.getElementById('categoryForm').submit();
             });
 
@@ -223,14 +283,14 @@
             const minSalaryInput = document.getElementById('minSalary');
             const maxSalaryInput = document.getElementById('maxSalary');
 
-            minSalaryInput.addEventListener('change', function() {
+            minSalaryInput.addEventListener('change', function () {
                 const minValue = parseInt(this.value);
                 if (maxSalaryInput.value && minValue > parseInt(maxSalaryInput.value)) {
                     maxSalaryInput.value = minValue;
                 }
             });
 
-            maxSalaryInput.addEventListener('change', function() {
+            maxSalaryInput.addEventListener('change', function () {
                 const maxValue = parseInt(this.value);
                 if (minSalaryInput.value && maxValue < parseInt(minSalaryInput.value)) {
                     minSalaryInput.value = maxValue;
@@ -240,7 +300,7 @@
             // Back to top button
             const backToTopButton = document.getElementById('back-to-top');
 
-            window.onscroll = function() {
+            window.onscroll = function () {
                 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                     backToTopButton.style.display = 'block';
                 } else {
@@ -248,14 +308,14 @@
                 }
             };
 
-            backToTopButton.addEventListener('click', function() {
+            backToTopButton.addEventListener('click', function () {
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
             });
         </script>
-        
+
         <jsp:include page="../common/user/common-js-user.jsp"/>
     </body>
 </html>

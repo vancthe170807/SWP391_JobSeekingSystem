@@ -46,7 +46,11 @@ public class ViewDetailJobServlet extends HttpServlet {
         JobPostings jobPost = dao.findJobPostingById(idJP);
         request.setAttribute("jobPost", jobPost);
         Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
-            request.setAttribute("category", category); // Đặt với tên 'category'
+            if (category.isStatus()) {
+                request.setAttribute("category", category); // Đặt với tên 'category'
+            } else {
+                request.setAttribute("category", "This category was deleted!");
+            }
         url = "view/ViewJobPosting.jsp";
         return url;
     }

@@ -80,7 +80,7 @@ public class ApplicationServlet extends HttpServlet {
         }
     }
 
-    private void viewListApplication(HttpServletRequest request, HttpServletResponse response, String statusFilter) 
+    private void viewListApplication(HttpServletRequest request, HttpServletResponse response, String statusFilter)
             throws IOException, UnsupportedEncodingException {
         int page = parsePage(request);
         int pageSize = 10;
@@ -110,11 +110,19 @@ public class ApplicationServlet extends HttpServlet {
         }
 
         Map<Integer, String> jobPostingMap = new HashMap<>();
+        Map<Integer, String> applicationStatusMap = new HashMap<>();
+        
         for (Applications app : applicationList) {
             JobPostings jobPosting = jobPostingDAO.findJobPostingById(app.getJobPostingID());
-            if (jobPosting != null && !"Violated".equals(jobPosting.getStatus())) {
-                jobPostingMap.put(app.getApplicationID(), jobPosting.getTitle());
+            jobPostingMap.put(app.getApplicationID(), jobPosting.getTitle());
+            
+            if ("Violate".equals(jobPosting.getStatus())) {
+                // Set a custom status message for applications with violated job postings
+                applicationStatusMap.put(app.getApplicationID(), "Violate");
+            } else {
+                applicationStatusMap.put(app.getApplicationID(), app.getStatus()+""); // Set the normal status if no violation
             }
+
         }
 
         int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
@@ -122,6 +130,7 @@ public class ApplicationServlet extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("jobPostingMap", jobPostingMap);
+        request.setAttribute("applicationStatusMap", applicationStatusMap);
         request.setAttribute("selectedStatus", statusFilter);
     }
 

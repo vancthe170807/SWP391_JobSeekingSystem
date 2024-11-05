@@ -122,9 +122,15 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             int idJP = Integer.parseInt(request.getParameter("idJP"));
             JobPostings jobPost = dao.findJobPostingById(idJP);
             request.setAttribute("jobPost", jobPost);
+            //lay ve notice
+            String notice = request.getParameter("notice");
+            request.setAttribute("notice", notice);
             Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(idJP);
-            request.setAttribute("category", category); // Đặt với tên 'category'
-
+            if (category.isStatus()) {
+                request.setAttribute("category", category); // Đặt với tên 'category'
+            } else {
+                request.setAttribute("category", "This category was deleted!");
+            }
             JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
             if (jobSeeker == null) {
                 try {
@@ -136,12 +142,12 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             }
 
             Applications existingApplication = applicationDAO.findPendingApplication(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
-            if(existingApplication != null) {
+            if (existingApplication != null) {
                 request.setAttribute("existingApplication", existingApplication);
             }
-            
+
             FavourJobPosting existFavourJP = favourJPDAO.findExistFavourJP(jobSeeker.getJobSeekerID(), jobPost.getJobPostingID());
-            if(existFavourJP != null) {
+            if (existFavourJP != null) {
                 request.setAttribute("existFavourJP", existFavourJP);
             }
             url = "view/user/ViewJobPosting.jsp";
@@ -154,6 +160,8 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
         String url = "view/authen/login.jsp"; // Default page on error
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+        int jobPostingID = Integer.parseInt(request.getParameter("jobPostingID"));
+        JobPostings jobPosting = dao.findJobPostingById(jobPostingID);
 
         if (account == null) {
             return url; // Redirect if not logged in
@@ -172,12 +180,9 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
         CV cv = cvDAO.findCVbyJobSeekerID(jobSeeker.getJobSeekerID());
         if (cv == null) {
             request.setAttribute("error", "No CV found for the current account.");
-            url = "view/user/jobPostingDetail.jsp";
+            url = "jobPostingDetail?action=details&idJP=" + jobPostingID;
             return url;
         }
-
-        int jobPostingID = Integer.parseInt(request.getParameter("jobPostingID"));
-        JobPostings jobPosting = dao.findJobPostingById(jobPostingID);
 
         // Kiểm tra application đang pending
         Applications existingApplication = applicationDAO.findPendingApplication(jobSeeker.getJobSeekerID(), jobPostingID);

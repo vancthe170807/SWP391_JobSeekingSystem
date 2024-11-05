@@ -50,7 +50,7 @@ public class ViewDetailApplicationServlet extends HttpServlet {
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
 
         if (account == null) {
-            return "login.jsp"; // Redirect to login page if user is not logged in
+            return "view/authen/login.jsp"; // Redirect to login page if user is not logged in
         }
 
         try {
@@ -68,6 +68,13 @@ public class ViewDetailApplicationServlet extends HttpServlet {
             }
 
             Job_Posting_Category category = categoryDAO.findJob_Posting_CategoryNameByJobPostingID(application.getJobPostingID());
+            
+            if(category != null && category.isStatus()) {
+                request.setAttribute("category", category);
+            } else {
+                request.setAttribute("category", "This category was deleted!");
+            }
+            
             CV cv = cvDAO.findCVbyCVID(application.getCVID());
             if (cv == null) {
                 request.setAttribute("errorApplication", "CV not found.");
@@ -77,7 +84,7 @@ public class ViewDetailApplicationServlet extends HttpServlet {
             request.setAttribute("account", account);
             request.setAttribute("application", application);
             request.setAttribute("jobPost", jobPost);
-            request.setAttribute("category", category);
+            
             request.setAttribute("cv", cv);
 
             return "view/user/ApplicationDetail.jsp";

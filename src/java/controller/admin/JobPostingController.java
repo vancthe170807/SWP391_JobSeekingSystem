@@ -7,6 +7,7 @@ package controller.admin;
 import static constant.CommonConst.RECORD_PER_PAGE;
 import dao.AccountDAO;
 import dao.JobPostingsDAO;
+import dao.Job_Posting_CategoryDAO;
 import dao.RecruitersDAO;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.JobPostings;
+import model.Job_Posting_Category;
 import model.PageControl;
 import model.Recruiters;
 import utils.Email;
@@ -34,6 +36,7 @@ public class JobPostingController extends HttpServlet {
     JobPostingsDAO jobPostingsDAO = new JobPostingsDAO();
     RecruitersDAO reDao = new RecruitersDAO();
     AccountDAO accDao = new AccountDAO();
+    Job_Posting_CategoryDAO cateDao = new Job_Posting_CategoryDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,8 +44,12 @@ public class JobPostingController extends HttpServlet {
         //get ve thong báo
         String success = request.getParameter("success") != null ? request.getParameter("success") : "";
         String error = request.getParameter("error") != null ? request.getParameter("error") : "";
+        String duplicate = request.getParameter("duplicate") != null ? request.getParameter("duplicate") : "";
+        String duplicateEdit = request.getParameter("duplicateEdit") != null ? request.getParameter("duplicateEdit") : "";
         request.setAttribute("success", success);
         request.setAttribute("error", error);
+        request.setAttribute("duplicate", duplicate);
+        request.setAttribute("duplicateEdit", duplicateEdit);
         // get ve pageNumber
         PageControl pageControl = new PageControl();
         String pageRaw = request.getParameter("page");
@@ -67,9 +74,9 @@ public class JobPostingController extends HttpServlet {
 
         List<JobPostings> jobPostingsList = jobPostingsDAO.findAndfilterJobPostings(status, salaryRange, postDate, search, page);
         int totalRecord = jobPostingsDAO.findAndfilterAllRecord(status, salaryRange, postDate, search);
-        
-        pageControl.setUrlPattern(requestURL + "?filterStatus=" + status + "&filterSalary=" 
-                + salaryRange + "&search=" + search  + "&");
+
+        pageControl.setUrlPattern(requestURL + "?filterStatus=" + status + "&filterSalary="
+                + salaryRange + "&search=" + search + "&");
         request.setAttribute("jobPostingsList", jobPostingsList);
         //total page
         int totalPage = (totalRecord % RECORD_PER_PAGE) == 0 ? (totalRecord / RECORD_PER_PAGE) : (totalRecord / RECORD_PER_PAGE) + 1;
@@ -79,6 +86,10 @@ public class JobPostingController extends HttpServlet {
         pageControl.setTotalPages(totalPage);
         //set attribute pageControl 
         request.setAttribute("pageControl", pageControl);
+
+        //tai thong tin cac category job posting
+        List<Job_Posting_Category> listCate = cateDao.findAll();
+        request.setAttribute("categoryList", listCate);
         request.getRequestDispatcher("view/admin/jobPostManagement.jsp").forward(request, response);
     }
 
@@ -90,6 +101,15 @@ public class JobPostingController extends HttpServlet {
         switch (action) {
             case "violate":
                 url = violateJobPosting(request);
+                break;
+            case "editCate":
+                url = editCategory(request);
+                break;
+            case "deleteCate":
+                url = deleteCategory(request);
+                break;
+            case "addCate":
+                url = addCategory(request);
                 break;
             case "view":
                 url = viewJobPosting(request);
@@ -126,6 +146,39 @@ public class JobPostingController extends HttpServlet {
         JobPostings jobPost = jobPostingsDAO.findJobPostingById(jobPostId);
         request.setAttribute("jobPost", jobPost);
         return "view/admin/detailJobPosting.jsp";
+    }
+
+    private String editCategory(HttpServletRequest request) throws UnsupportedEncodingException {
+        String url = "";
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        String nameCate = request.getParameter("newCategoryName");
+        if (cateDao.checkDuplicateOther(categoryId, nameCate)) {
+            url = "job_posting?duplicateEdit=" + URLEncoder.encode("This category is existed!!", "UTF-8");
+        } else {
+            cateDao.editCategory(categoryId, nameCate);
+            url = "job_posting";
+        }
+        return url;
+    }
+
+    private String deleteCategory(HttpServletRequest request) {
+        String categoryId = request.getParameter("categoryId");
+        cateDao.delete(categoryId);
+        return "job_posting";
+    }
+
+    private String addCategory(HttpServletRequest request) throws UnsupportedEncodingException {
+        String url = "";
+        String nameCate = request.getParameter("cateName");
+        Job_Posting_Category jobPostCate = new Job_Posting_Category();
+        jobPostCate.setName(nameCate);
+        if (cateDao.checkDuplicateName(nameCate)) {
+            url = "job_posting?duplicate=" + URLEncoder.encode("This category is existed!!", "UTF-8");
+        } else {
+            cateDao.insert(jobPostCate);
+            url = "job_posting";
+        }
+        return url;
     }
 
 }

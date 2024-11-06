@@ -104,6 +104,11 @@
                         ${error}
                     </div>
                 </c:if>
+                <c:if test="${not empty errorExperience}">
+                    <div class="alert alert-danger" role="alert">
+                        ${errorExperience}
+                    </div>
+                </c:if>
 
                 <!-- Display success messages if any -->
                 <c:if test="${not empty successExperience}">

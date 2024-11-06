@@ -151,14 +151,14 @@
                         <div class="col-auto">
                             <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
                                 <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
-                                <input type="text" name="searchName" value="${searchName}" placeholder="Search by Applicant Name" class="form-control d-inline-block" style="width: 200px;">
+                                <input type="text" name="searchName" value="${searchName}" placeholder="Search by name" class="form-control d-inline-block" style="width: 200px;">
                                 <button type="submit" class="btn btn-outline-primary">Search</button>
                             </form>
 
                             <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
                                 <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
                                 <select name="statusFilter" class="form-control d-inline-block" style="width: 150px;">
-                                    <option value="">All Status</option>
+                                    <option value="">All status</option>
                                     <option value="3" ${statusFilter == '3' ? 'selected' : ''}>Pending</option>
                                     <option value="2" ${statusFilter == '2' ? 'selected' : ''}>Agree</option>
                                     <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Reject</option>

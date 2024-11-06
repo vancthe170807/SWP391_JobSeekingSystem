@@ -107,6 +107,10 @@ public class ViewDetailJobPostingServlet extends HttpServlet {
             if (jobPost == null) {
                 return "home?error=" + URLEncoder.encode("Job posting not found.", "UTF-8");
             }
+            boolean isOpenJP = jobPost.getStatus().equals("Open");
+            if(isOpenJP) {
+                request.setAttribute("isOpenJP", isOpenJP);
+            }
             request.setAttribute("jobPost", jobPost);
 
             // Get category details

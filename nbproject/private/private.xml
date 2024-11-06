@@ -87,6 +87,7 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/userProfile.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/admin/companyManagement.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/dao/DBContext.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/controller/seeker/EducationServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/controller/HomeController.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/editUserProfile.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/constant/CommonConst.java</file>
@@ -101,7 +102,9 @@
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/recruiter/createCompany.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/controller/seeker/ViewDetailJobPostingServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/dao/CompanyDAO.java</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/Experience.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/Education.jsp</file>
+            <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/src/java/controller/seeker/ExperienceServlet.java</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/CV.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/ViewJobPosting.jsp</file>
             <file>file:/D:/Learning_Document/Term_5/SWP391/Project/swp391-jobseeker/web/view/user/userHome.jsp</file>

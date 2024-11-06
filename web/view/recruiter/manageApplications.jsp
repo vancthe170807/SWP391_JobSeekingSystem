@@ -124,7 +124,6 @@
                 margin-right: 5px;
             }
 
-
         </style>
     </head>
     <body>
@@ -213,17 +212,24 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewCV&id=${application.getCVID()}" class="btn-action text-primary">
-                                                <i class="fas fa-file-pdf"></i>CV
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewEducation&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-secondary">
-                                                <i class="fas fa-graduation-cap"></i>Education
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewWorkExperience&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-warning">
-                                                <i class="fas fa-briefcase"></i>Work Experience
-                                            </a>
 
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${application.getStatus() == 1 || application.getStatus() == 0}">
+                                                    Not yet
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewCV&id=${application.getCVID()}" class="btn-action text-primary">
+                                                        <i class="fas fa-file-pdf"></i>CV
+                                                    </a>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewEducation&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-secondary">
+                                                        <i class="fas fa-graduation-cap"></i>Education
+                                                    </a>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewWorkExperience&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-warning">
+                                                        <i class="fas fa-briefcase"></i>Work Experience
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
 
                                         <%

@@ -88,7 +88,7 @@
                         <tr>
                             <th>Content</th>
                             <th>Status</th>
-                            <th>About</th>
+                            <th>Job Title</th>
                             <th>Action</th>
                         </tr>
                     </thead>

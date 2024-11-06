@@ -228,7 +228,7 @@ public class AuthenticationController extends HttpServlet {
                             int q2 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 2);
                             int q3 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 3);
                             int q4 = jobPostingsDAO.findTotalJobPostingCountByQuarter(recruiters.getRecruiterID(), 4);
-                            
+
                             request.setAttribute("q1", q1);
                             request.setAttribute("q2", q2);
                             request.setAttribute("q3", q3);
@@ -272,6 +272,8 @@ public class AuthenticationController extends HttpServlet {
         String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
         String gender = request.getParameter("gender");
+        Date dob = Date.valueOf(request.getParameter("dob"));
+        int yearofbirth = dob.toLocalDate().getYear();
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -280,6 +282,7 @@ public class AuthenticationController extends HttpServlet {
         request.setAttribute("lname", lastname);
         request.setAttribute("fname", firstname);
         request.setAttribute("gender", gender);
+        request.setAttribute("dob", dob);
         request.setAttribute("username", username);
         request.setAttribute("email", email);
         request.setAttribute("password", password);
@@ -299,6 +302,7 @@ public class AuthenticationController extends HttpServlet {
             default:
                 account.setGender(true);
         }
+        account.setDob(dob);
         account.setUsername(username);
         account.setEmail(email);
         account.setPassword(password);
@@ -314,6 +318,9 @@ public class AuthenticationController extends HttpServlet {
 // Validate inputs
         if (!valid.checkName(firstname)) {
             errorMessages.put("errorFname", "Your first name is invalid!!");
+        }
+        if (!valid.checkYearOfBirth(yearofbirth)) {
+            errorMessages.put("errorDob", "You must be between 17 and 50 years old!");
         }
         if (!valid.checkName(lastname)) {
             errorMessages.put("errorLname", "Your last name is invalid!!");

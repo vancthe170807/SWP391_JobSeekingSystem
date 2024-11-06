@@ -7,7 +7,6 @@ package dao;
 import static constant.CommonConst.RECORD_PER_PAGE;
 import java.util.LinkedHashMap;
 import java.util.List;
-import model.Company;
 import model.Feedback;
 
 /**

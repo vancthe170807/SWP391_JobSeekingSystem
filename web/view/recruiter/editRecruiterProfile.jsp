@@ -25,10 +25,10 @@
                 justify-content: center;
                 align-items: center;
                 min-height: calc(100vh - 80px); /* Adjust for full height excluding header */
-                padding: 20px; 
-                margin-left: 240px; 
-                padding-top: 80px; 
-                background-color: #f8f9fa; 
+                padding: 20px;
+                margin-left: 240px;
+                padding-top: 80px;
+                background-color: #f8f9fa;
             }
 
             /* Card styling for the profile section */
@@ -178,11 +178,11 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" name="lastName" value="${sessionScope.account.getLastName()}" required>
+                                <input type="text" class="form-control" id="lastName" name="lastName" readonly="" value="${sessionScope.account.getLastName()}" required>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" name="firstName" value="${sessionScope.account.getFirstName()}" required>
+                                <input type="text" class="form-control" id="firstName" name="firstName" readonly="" value="${sessionScope.account.getFirstName()}" required>
                             </div>
                         </div>
 
@@ -201,10 +201,8 @@
                         <!-- Gender -->
                         <div class="form-group">
                             <label for="gender">Gender</label>
-                            <select class="form-control" id="gender" name="gender">
-                                <option value="male" ${sessionScope.account.isGender() == 'male' ? 'selected' : ''}>Male</option>
-                                <option value="female" ${sessionScope.account.isGender() == 'female' ? 'selected' : ''}>Female</option>
-                            </select>
+                            <input type="text" id="genderDisplay" class="form-control" value="${sessionScope.account.gender == true ? 'Male' : 'Female'}" readonly>
+                            <input type="hidden" name="gender" id="genderHidden">
                         </div>
 
                         <!-- Address -->
@@ -216,7 +214,7 @@
                         <!-- Date of Birth -->
                         <div class="form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" name="date" value="${sessionScope.account.getDob()}" required>
+                            <input type="date" class="form-control" id="dob" name="date" readonly="" value="${sessionScope.account.getDob()}" required>
                         </div>
 
                         <!-- Save Button -->
@@ -236,7 +234,7 @@
                             <ul>
                                 <c:forEach var="error" items="${errorsMessage}">
                                     <li>${error}</li>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                         </div>
                     </c:if>

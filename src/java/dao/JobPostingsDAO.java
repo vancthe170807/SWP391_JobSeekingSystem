@@ -1,13 +1,9 @@
 package dao;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.sql.*;
-import model.Company;
 import model.JobPostings;
 
 public class JobPostingsDAO extends GenericDAO<JobPostings> {

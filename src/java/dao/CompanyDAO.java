@@ -5,10 +5,8 @@
 package dao;
 
 import static constant.CommonConst.RECORD_PER_PAGE;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import model.Account;
 import model.Company;
 
 /**

@@ -31,8 +31,9 @@ public class ExperienceServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         String url = "view/user/Experience.jsp"; // Default page to display experience
-        String error = ""; // Declare error message string
-
+        String error = request.getParameter("error") != null ? request.getParameter("error") : "";
+        request.setAttribute("error", error);
+        
         switch (action) {
             case "update-experience":
                 // Forward to the experience update page
@@ -113,22 +114,33 @@ public class ExperienceServlet extends HttpServlet {
                 Date startDate = Date.valueOf(startDateStr);
                 Date endDate = Date.valueOf(endDateStr);
 
-                WorkExperience weAdd = new WorkExperience();
-                weAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
-                weAdd.setCompanyName(companyName);
-                weAdd.setJobTitle(jobTitle);
-                weAdd.setStartDate(startDate);
-                weAdd.setEndDate(endDate);
-                weAdd.setDescription(description);
+                // Check if endDate is earlier than startDate
+                if (endDate.before(startDate)) {
+                    // Set error message for invalid date range
+                    try {
+                        url = "experience?error=" + URLEncoder.encode("End date cannot be earlier than start date.", "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(ExperienceServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
 
-                weDAO.insert(weAdd); // Insert work experience
+                    WorkExperience weAdd = new WorkExperience();
+                    weAdd.setJobSeekerID(jobSeeker.getJobSeekerID());
+                    weAdd.setCompanyName(companyName);
+                    weAdd.setJobTitle(jobTitle);
+                    weAdd.setStartDate(startDate);
+                    weAdd.setEndDate(endDate);
+                    weAdd.setDescription(description);
 
-                // Reload updated list after insertion
-                List<WorkExperience> wes = weDAO.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
-                request.setAttribute("successExperience", "Experience added successfully.");
-                request.setAttribute("wes", wes);
-                request.setAttribute("jobSeeker", jobSeeker);
-                url = "experience";
+                    weDAO.insert(weAdd); // Insert work experience
+
+                    // Reload updated list after insertion
+                    List<WorkExperience> wes = weDAO.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
+                    request.setAttribute("successExperience", "Experience added successfully.");
+                    request.setAttribute("wes", wes);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "experience";
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 request.setAttribute("errorExperience", "An error occurred while adding the experience.");
@@ -146,6 +158,7 @@ public class ExperienceServlet extends HttpServlet {
 
     // Update work experience
     public String updateExperience(HttpServletRequest request) throws IOException, ServletException {
+        String url = null;
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute(CommonConst.SESSION_ACCOUNT);
         JobSeekers jobSeeker = jobSeekerDAO.findJobSeekerIDByAccountID(String.valueOf(account.getId()));
@@ -162,23 +175,33 @@ public class ExperienceServlet extends HttpServlet {
                 int experienceID = Integer.parseInt(experienceIDStr);
                 Date startDate = Date.valueOf(startDateStr);
                 Date endDate = Date.valueOf(endDateStr);
+                // Check if endDate is earlier than startDate
+                if (endDate.before(startDate)) {
+                    // Set error message for invalid date range
+                    try {
+                        url = "experience?error=" + URLEncoder.encode("End date cannot be earlier than start date.", "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(ExperienceServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
 
-                WorkExperience weUpdate = new WorkExperience();
-                weUpdate.setExperienceID(experienceID);
-                weUpdate.setCompanyName(companyName);
-                weUpdate.setJobTitle(jobTitle);
-                weUpdate.setStartDate(startDate);
-                weUpdate.setEndDate(endDate);
-                weUpdate.setDescription(description);
+                    WorkExperience weUpdate = new WorkExperience();
+                    weUpdate.setExperienceID(experienceID);
+                    weUpdate.setCompanyName(companyName);
+                    weUpdate.setJobTitle(jobTitle);
+                    weUpdate.setStartDate(startDate);
+                    weUpdate.setEndDate(endDate);
+                    weUpdate.setDescription(description);
 
-                weDAO.updateExperience(weUpdate); // Update experience
+                    weDAO.updateExperience(weUpdate); // Update experience
 
-                // Reload updated list after update
-                List<WorkExperience> wes = weDAO.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
-                request.setAttribute("successExperience", "Experience updated successfully.");
-                request.setAttribute("wes", wes);
-                request.setAttribute("jobSeeker", jobSeeker);
-
+                    // Reload updated list after update
+                    List<WorkExperience> wes = weDAO.findWorkExperiencesbyJobSeekerID(jobSeeker.getJobSeekerID());
+                    request.setAttribute("successExperience", "Experience updated successfully.");
+                    request.setAttribute("wes", wes);
+                    request.setAttribute("jobSeeker", jobSeeker);
+                    url = "experience";
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 request.setAttribute("errorExperience", "An error occurred while updating the experience.");
@@ -187,7 +210,7 @@ public class ExperienceServlet extends HttpServlet {
             request.setAttribute("error", "No Job Seeker found for the current account.");
         }
 
-        return "experience"; // Redirect to experience page
+        return url;
     }
 
     // View work experience

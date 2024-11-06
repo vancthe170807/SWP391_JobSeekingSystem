@@ -140,10 +140,6 @@
                                 </div>
                             </form>
 
-                            <div class="mb-4">
-                                <a href="${pageContext.request.contextPath}/home?sort=title&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Sort by Title A-Z</a>
-                                <a href="${pageContext.request.contextPath}/home?sort=postedDate&page=1&searchJP=${searchJP}" class="btn btn-success btn-sm">Sort by Post Date</a>
-                            </div>
                         </div>
                     </div>
 

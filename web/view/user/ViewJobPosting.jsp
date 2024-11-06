@@ -107,6 +107,7 @@
                                 </c:if>
                                 <c:if test="${empty existingApplication}">
                                     <!-- Apply Job Form -->
+                                    <c:if test="${not empty isOpenJP}">
                                     <form action="${pageContext.request.contextPath}/jobPostingDetail?action=add-application" method="post">
                                         <input type="hidden" name="jobPostingID" value="${jobPost.jobPostingID}">
                                         <c:if test="${not empty jobSeeker}">
@@ -119,6 +120,7 @@
                                             <i class="fas fa-paper-plane"></i> Apply Job
                                         </button>
                                     </form>
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${not empty existingApplication}">
                                     <button class="btn btn-outline-success btn-block w-100">

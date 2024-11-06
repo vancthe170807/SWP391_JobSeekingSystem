@@ -7,7 +7,6 @@ import model.CV;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;

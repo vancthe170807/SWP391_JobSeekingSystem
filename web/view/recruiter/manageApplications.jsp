@@ -216,7 +216,7 @@
                                         <td>
                                             <c:choose>
                                                 <c:when test="${application.getStatus() == 1 || application.getStatus() == 0}">
-                                                    Not yet
+                                                    No information
                                                 </c:when>
                                                 <c:otherwise>
                                                     <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewCV&id=${application.getCVID()}" class="btn-action text-primary">

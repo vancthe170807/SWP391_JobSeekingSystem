@@ -19,10 +19,7 @@ import java.net.URLEncoder;  //mã hóa cv có tiếng việt tránh gây lỗi 
 import java.nio.charset.StandardCharsets;
 import model.CV;
 
-/**
- *
- * @author HP
- */
+
 @WebServlet("/downloadCV")
 public class DownloadCVServlet extends HttpServlet {
 

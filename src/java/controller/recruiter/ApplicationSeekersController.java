@@ -29,10 +29,7 @@ import model.JobSeekers;
 import model.WorkExperience;
 import utils.Email;
 
-/**
- *
- * @author HP
- */
+
 @WebServlet(name = "ApplicationSeekersController", urlPatterns = {"/applicationSeekers"})
 public class ApplicationSeekersController extends HttpServlet {
 

@@ -4,27 +4,27 @@
     <head>
         <title>Register</title>
         <jsp:include page="../common/authen/common-css-authen.jsp"></jsp:include>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
-    <body>
-        <!-- Header Area -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        </head>
+        <body>
+            <!-- Header Area -->
         <jsp:include page="../common/header-area.jsp"></jsp:include>
-        <!-- Header Area End -->
+            <!-- Header Area End -->
 
-        <div class="container" style="margin-top: 20px; margin-bottom: 20px">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">Create A Free Account</h5>
-                            <p class="text-center">Choose your Account Type</p>
+            <div class="container" style="margin-top: 20px; margin-bottom: 20px">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Create A Free Account</h5>
+                                <p class="text-center">Choose your Account Type</p>
 
-                            <div class="d-flex justify-content-center mb-3">
-                                <button class="btn btn-outline-success me-2 active" data-role="seeker">Seeker</button>
-                                <button class="btn btn-outline-success" data-role="recruiter">Recruiter</button>
-                            </div>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <button class="btn btn-outline-success me-2 active" data-role="seeker">Seeker</button>
+                                    <button class="btn btn-outline-success" data-role="recruiter">Recruiter</button>
+                                </div>
 
-                            <form action="${pageContext.request.contextPath}/authen?action=sign-up" method="POST" class="d-flex flex-column gap-3">
+                                <form action="${pageContext.request.contextPath}/authen?action=sign-up" method="POST" class="d-flex flex-column gap-3">
                                 <input type="hidden" name="role" value="3" />
 
                                 <div class="mb-3">
@@ -47,6 +47,11 @@
                                     </select>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="dob" class="form-label">Date of Birth</label>
+                                    <input type="date" name="dob" id="dob" class="form-control" required>
+                                    <span class="text-danger">${errorDob}</span>
+                                </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" name="username" id="username" class="form-control" placeholder="Enter username" value="${requestScope.username}" required>

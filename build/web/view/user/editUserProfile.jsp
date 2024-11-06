@@ -36,11 +36,11 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="lname" class="form-label">Last Name</label>
-                                    <input type="text" name="lastName" id="lname" class="form-control" placeholder="Last Name" required value="${sessionScope.account.getLastName()}">
+                                    <input type="text" name="lastName" id="lname" class="form-control" placeholder="Last Name" readonly="" required value="${sessionScope.account.getLastName()}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="fname" class="form-label">First Name</label>
-                                    <input type="text" name="firstName" id="fname" class="form-control" placeholder="First Name" required value="${sessionScope.account.getFirstName()}">
+                                    <input type="text" name="firstName" id="fname" class="form-control" placeholder="First Name" readonly="" required value="${sessionScope.account.getFirstName()}">
                                 </div>
                             </div>
                             <div class="row">
@@ -50,16 +50,14 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" name="date" id="dob" class="form-control" required value="${sessionScope.account.getDob()}">
+                                    <input type="date" name="date" id="dob" class="form-control" readonly="" value="${sessionScope.account.getDob()}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="gender" class="form-label">Gender</label>
-                                    <select name="gender" id="gender" class="form-select">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
+                                    <input type="text" id="genderDisplay" class="form-control" value="${sessionScope.account.gender == true ? 'Male' : 'Female'}" readonly>
+                                    <input type="hidden" name="gender" id="genderHidden">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="add" class="form-label">Address</label>

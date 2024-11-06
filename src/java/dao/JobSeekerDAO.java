@@ -3,7 +3,6 @@ package dao;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
-import model.Account;
 import model.JobSeekers;
 
 /**

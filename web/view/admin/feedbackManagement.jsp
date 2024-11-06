@@ -189,7 +189,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Feedback By</th>
-                                                <th>About</th>
+                                                <th>Job Title</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

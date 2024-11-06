@@ -98,13 +98,13 @@
             <!-- content area -->
             <!-- Thay thế phần content area hiện tại với đoạn code sau -->
             <div class="row g-0"> <!-- Thêm g-0 để remove gutters -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <!--Side bar-->
                 <jsp:include page="../common/admin/sidebar-admin.jsp"></jsp:include>
                     <!--side bar-end-->
                 </div>
 
-                <div class="col-md-9 ps-0"> <!-- Thêm ps-0 để remove padding bên trái -->
+                <div class="col-md-10 ps-0"> <!-- Thêm ps-0 để remove padding bên trái -->
                     <div class="dashboard__right">
                         <div class="dash__content">
                             <div class="dash__overview">

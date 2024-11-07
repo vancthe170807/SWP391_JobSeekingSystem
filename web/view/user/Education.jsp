@@ -236,7 +236,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="institution">Institution</label>
-                                        <input type="text" class="form-control" id="institution" name="institution" required>
+                                        <input type="text" class="form-control" id="institution" name="institution" value="${requestScope.institution}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
@@ -251,18 +251,18 @@
 
                                     <div class="form-group mb-3">
                                         <label for="fieldofstudy">Field of Study</label>
-                                        <input type="text" class="form-control" id="fieldofstudy" name="fieldofstudy" required>
+                                        <input type="text" class="form-control" id="fieldofstudy" name="fieldofstudy" value="${requestScope.fieldofstudy}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="startDate">Start Date</label>
-                                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                        <input type="date" class="form-control" id="startDate" name="startDate" value="${requestScope.startDateStr}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="endDate">End Date</label>
-                                        <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                        <input type="date" class="form-control" id="endDate" name="endDate" value="${requestScope.endDateStr}" required>
                                     </div>
                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                     <div class="form-group mb-3">

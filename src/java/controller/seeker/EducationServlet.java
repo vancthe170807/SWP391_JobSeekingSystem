@@ -126,6 +126,12 @@ public class EducationServlet extends HttpServlet {
                 String fieldofstudy = request.getParameter("fieldofstudy");
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
+                
+                request.setAttribute("institution", institution);
+                request.setAttribute("degree", degree);
+                request.setAttribute("fieldofstudy", fieldofstudy);
+                request.setAttribute("startDateStr", startDateStr);
+                request.setAttribute("endDateStr", endDateStr);
 
                 Part degreeImgPart = request.getPart("degreeImg");
                 String uploadDir = "uploads/degreeImgs";

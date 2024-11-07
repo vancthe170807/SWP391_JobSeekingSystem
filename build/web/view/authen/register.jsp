@@ -49,7 +49,7 @@
 
                                 <div class="mb-3">
                                     <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" name="dob" id="dob" class="form-control" required>
+                                    <input type="date" name="dob" id="dob" class="form-control" value="${requestScope.dob}" required>
                                     <span class="text-danger">${errorDob}</span>
                                 </div>
                                 <div class="mb-3">

@@ -422,7 +422,7 @@
                         <c:if test="${not empty requestScope.NoJP}">
                             <div class="error-message">${requestScope.NoJP}</div>
                         </c:if>
-
+                            
                         <!-- Pagination controls -->
                         <nav aria-label="Page navigation" class="footer-container">
                             <ul class="pagination justify-content-center">

@@ -223,28 +223,28 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="companyName">Company Name</label>
-                                        <input type="text" class="form-control" id="companyName" name="companyName" required>
+                                        <input type="text" class="form-control" id="companyName" name="companyName" value="${sessionScope.companyName}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="jobTitle">Job Title</label>
-                                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" value="${sessionScope.jobTitle}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="description">Description</label>
-                                        <textarea id="description" name="description" class="form-control" placeholder="Enter work experience description" rows="3" required></textarea>
+                                        <textarea id="description" name="description" class="form-control" placeholder="Enter work experience description" rows="3" required>${sessionScope.description}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="startDate">Start Date</label>
-                                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                        <input type="date" class="form-control" id="startDate" name="startDate" value="${sessionScope.startDateStr}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="endDate">End Date</label>
-                                        <input type="date" class="form-control" id="endDate" name="endDate">
+                                        <input type="date" class="form-control" id="endDate" name="endDate" value="${sessionScope.endDateStr}">
                                     </div>
                                 </div>
                             </div>

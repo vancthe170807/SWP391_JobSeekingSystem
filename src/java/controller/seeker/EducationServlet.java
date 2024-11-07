@@ -126,12 +126,6 @@ public class EducationServlet extends HttpServlet {
                 String fieldofstudy = request.getParameter("fieldofstudy");
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
-                
-                request.setAttribute("institution", institution);
-                request.setAttribute("degree", degree);
-                request.setAttribute("fieldofstudy", fieldofstudy);
-                request.setAttribute("startDateStr", startDateStr);
-                request.setAttribute("endDateStr", endDateStr);
 
                 Part degreeImgPart = request.getPart("degreeImg");
                 String uploadDir = "uploads/degreeImgs";
@@ -157,6 +151,11 @@ public class EducationServlet extends HttpServlet {
                 if (!isCertificate && totalMonths < 24) {
                     try {
                         url = "education?error=" + URLEncoder.encode("End date must be at least 2 years after the start date.", "UTF-8");
+                        session.setAttribute("institution", institution);
+                        session.setAttribute("degree", degree);
+                        session.setAttribute("fieldofstudy", fieldofstudy);
+                        session.setAttribute("startDateStr", startDateStr);
+                        session.setAttribute("endDateStr", endDateStr);
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(EducationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -170,6 +169,12 @@ public class EducationServlet extends HttpServlet {
                     eduAdd.setStartDate(startDate);
                     eduAdd.setEndDate(endDate);
                     eduAdd.setDegreeImg(degreeImgName);
+
+                    session.removeAttribute("institution");
+                    session.removeAttribute("degree");
+                    session.removeAttribute("fieldofstudy");
+                    session.removeAttribute("startDateStr");
+                    session.removeAttribute("endDateStr");
 
                     eduDAO.insert(eduAdd);
                     // Continue processing eduAdd as needed (e.g., save to the database)

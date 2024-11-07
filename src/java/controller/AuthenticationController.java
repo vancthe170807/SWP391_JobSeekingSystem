@@ -217,7 +217,7 @@ public class AuthenticationController extends HttpServlet {
                             url = "view/recruiter/viewRecruiterProfile.jsp";
                         } else {
                             // Fetch recruiter's job postings and recent postings
-                            List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersID(recruiters.getRecruiterID());
+                            List<JobPostings> listSize = jobPostingsDAO.findJobPostingbyRecruitersIDandOneMonth(recruiters.getRecruiterID());
                             List<JobPostings> listTop5 = jobPostingsDAO.getTop5RecentJobPostingsByRecruiterID(recruiters.getRecruiterID());
 
                             //tong so bai dang cho duyet pendding

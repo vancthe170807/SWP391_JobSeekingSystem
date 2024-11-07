@@ -2,7 +2,7 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light text-light vh-100" 
      style="width: 280px; position: fixed; top: 0; left: 0; border-right: 2px solid #28a745;">
     <div class="rts__logo text-center mb-3">
-        <a href="${pageContext.request.contextPath}/dashboard">
+        <a href="${pageContext.request.contextPath}/home">
             <img class="logo__image" src="${pageContext.request.contextPath}/assets/img/logo/header__one.svg" width="160" height="40" alt="logo">
         </a>
     </div>
@@ -38,11 +38,7 @@
                 <span class="me-2"><i class="fa-solid fa-file-alt"></i></span> Feedback
             </a>
         </li>
-        <li>
-            <a href="/admin/settings" class="nav-link">
-                <span class="me-2"><i class="fa-solid fa-gear"></i></span> Settings
-            </a>
-        </li>
+        
     </ul>
     <hr class="bg-light">
     <div class="dropdown mt-auto">
@@ -62,9 +58,7 @@
         </a>
 
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa-solid fa-house me-2"></i> Dashboard</a></li>
-            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/profile"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
-            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/alerts"><i class="fa-solid fa-bell me-2"></i> Job Alerts</a></li>
+            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/dashboard"><i class="fa-solid fa-house me-2"></i> Dashboard</a></li>
             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/authen?action=change-password"><i class="fa-solid fa-lock me-2"></i> Change Password</a></li>
             <li><hr class="dropdown-divider bg-light"></li>
             <li><a class="dropdown-item text-white bg-danger" href="${pageContext.request.contextPath}/view/authen/logout.jsp"><i class="fa-solid fa-right-from-bracket me-2"></i> Log Out</a></li>

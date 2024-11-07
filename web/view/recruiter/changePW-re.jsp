@@ -153,6 +153,7 @@
                 border-radius: 8px;
                 font-weight: bold;
                 text-align: center;
+                margin-bottom: 23px;
             }
 
             /* Password note styling */

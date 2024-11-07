@@ -124,7 +124,6 @@
                 margin-right: 5px;
             }
 
-
         </style>
     </head>
     <body>
@@ -152,14 +151,14 @@
                         <div class="col-auto">
                             <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
                                 <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
-                                <input type="text" name="searchName" value="${searchName}" placeholder="Search by Applicant Name" class="form-control d-inline-block" style="width: 200px;">
+                                <input type="text" name="searchName" value="${searchName}" placeholder="Search by name" class="form-control d-inline-block" style="width: 200px;">
                                 <button type="submit" class="btn btn-outline-primary">Search</button>
                             </form>
 
                             <form action="${pageContext.request.contextPath}/applicationSeekers" method="get" class="d-inline">
                                 <input type="hidden" name="jobPostId" value="${param.jobPostId}" />
                                 <select name="statusFilter" class="form-control d-inline-block" style="width: 150px;">
-                                    <option value="">All Status</option>
+                                    <option value="">All status</option>
                                     <option value="3" ${statusFilter == '3' ? 'selected' : ''}>Pending</option>
                                     <option value="2" ${statusFilter == '2' ? 'selected' : ''}>Agree</option>
                                     <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Reject</option>
@@ -213,17 +212,24 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewCV&id=${application.getCVID()}" class="btn-action text-primary">
-                                                <i class="fas fa-file-pdf"></i>CV
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewEducation&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-secondary">
-                                                <i class="fas fa-graduation-cap"></i>Education
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewWorkExperience&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-warning">
-                                                <i class="fas fa-briefcase"></i>Work Experience
-                                            </a>
 
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${application.getStatus() == 1 || application.getStatus() == 0}">
+                                                    No information
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewCV&id=${application.getCVID()}" class="btn-action text-primary">
+                                                        <i class="fas fa-file-pdf"></i>CV
+                                                    </a>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewEducation&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-secondary">
+                                                        <i class="fas fa-graduation-cap"></i>Education
+                                                    </a>
+                                                    <a href="${pageContext.request.contextPath}/applicationSeekers?action=viewWorkExperience&id=${application.jobSeeker.getJobSeekerID()}" class="btn-action text-warning">
+                                                        <i class="fas fa-briefcase"></i>Work Experience
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
 
                                         <%

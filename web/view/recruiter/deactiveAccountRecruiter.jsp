@@ -116,7 +116,7 @@
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Please Enter Your Login Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your password" value="${cookie.cp.value}" required onkeydown="preventSpaces(event)">
+                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your password" required onkeydown="preventSpaces(event)">
                             <span class="input-group-text" onclick="togglePasswordVisibility('currentPassword')">
                                 👁️
                             </span>

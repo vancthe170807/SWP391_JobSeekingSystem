@@ -66,17 +66,19 @@
                     </div>
 
                     <!-- Sidebar Section for Extra Details (Optional) -->
-                    <div class="col-md-2">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="m-0">Apply Job</h5>
+                    <c:if test="${empty sessionScope.account}">
+                        <div class="col-md-2">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="m-0">Apply Job</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>You must be <a href="${pageContext.request.contextPath}/authen" style="text-decoration: none">login</a> with Seeker role to apply job. Regard!</p>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>You must be <a href="${pageContext.request.contextPath}/authen" style="text-decoration: none">login</a> to apply job. Regard!</p>
-                            </div>
-                        </div>
 
-                    </div>
+                        </div>
+                    </c:if>
                 </div>
                 <!-- Job Description -->
                 <div class="card mb-4 shadow-sm">

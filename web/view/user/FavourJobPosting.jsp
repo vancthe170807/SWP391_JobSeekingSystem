@@ -99,8 +99,8 @@
                                             <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">disabled</c:if>>
                                                 <i class="fa-solid fa-eye"></i> View
                                             </button> 
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFavourJPModal-${fjp.favourJPID}" <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">disabled</c:if>>
-                                                <i class="fa fa-trash"></i> Delete
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFavourJPModal-${fjp.favourJPID}">
+                                                <i class="fa fa-trash"></i> Unlike
                                             </button>
                                                 <c:if test="${favourJPMap[fjp.favourJPID] == 'Violate'}">
                                         <span class="badge bg-warning text-dark"><i class="fa-solid fa-triangle-exclamation"></i> This job posting is violated!</span>
@@ -114,18 +114,18 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteFavourJPModal-${fjp.favourJPID}">Delete Favourite Job Posting</h5>
+                                        <h5 class="modal-title" id="deleteFavourJPModal-${fjp.favourJPID}">Unlike Job Posting</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="${pageContext.request.contextPath}/FavourJobPosting" method="post">
                                         <div class="modal-body">
-                                            <p>Are you sure you want to cancel this application?</p>
+                                            <p>Are you sure you want to unlike this job posting?</p>
                                             <input type="hidden" name="action" value="delete-favourJP">
                                             <input type="hidden" name="favourJPId" value="${fjp.favourJPID}">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                                            <button type="submit" class="btn btn-danger">Confirm Unlike</button>
                                         </div>
                                     </form>
                                 </div>

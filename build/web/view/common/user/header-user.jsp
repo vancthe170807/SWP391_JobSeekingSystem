@@ -60,8 +60,6 @@
 
                         <!-- Dropdown Menu -->
                         <ul class="dropdown-menu dropdown-menu-end shadow-lg animate__animated animate__fadeIn">
-                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/dashboard">
-                                <i class="fa-solid fa-house me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/JobSeekerCheck">
                                 <i class="fa-solid fa-user me-2"></i> Profile</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/cv">
@@ -74,8 +72,6 @@
                                 <i class="fa-solid fa-bell me-2"></i> My Applications</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/feedbackSeeker">
                                 <i class="fa-solid fa-briefcase me-2"></i> Your Feedback</a></li>
-                            <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/admin/alerts">
-                                <i class="fa-solid fa-bell me-2"></i> Job Alerts</a></li>
                             <li><a class="dropdown-item text-dark" href="${pageContext.request.contextPath}/authen?action=change-password">
                                 <i class="fa-solid fa-lock me-2"></i> Change Password</a></li>
                             <li><hr class="dropdown-divider"></li>

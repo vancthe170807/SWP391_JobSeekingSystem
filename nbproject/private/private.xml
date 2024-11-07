@@ -75,15 +75,6 @@
             <file>file:/D:/SWP291/JobSeekerNew/JobSeeker/swp391-jobseeker/src/java/model/JobPostings.java</file>
         </group>
         <group>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/authen/login.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/ApplicationDAO.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/DBContext.java</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/educationSeeker.jsp</file>
-            <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ApplicationSeekersController.java</file>
-        </group>
-        <group>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/workExperienceSeeker.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/dao/ApplicationDAO.java</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
@@ -91,6 +82,11 @@
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/educationSeeker.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/editRecruiterProfile.jsp</file>
             <file>file:/D:/TranTuan/swp391-jobseeker/src/java/controller/recruiter/ApplicationSeekersController.java</file>
+        </group>
+        <group>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/manageApplications.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/header-re.jsp</file>
+            <file>file:/D:/TranTuan/swp391-jobseeker/web/view/recruiter/jobPost-manager.jsp</file>
         </group>
     </open-files>
 </project-private>

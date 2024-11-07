@@ -18,15 +18,6 @@
                 margin: auto;
             }
 
-            /* Title styling */
-            .table-title {
-                font-size: 24px;
-                font-weight: bold;
-                color: #007b5e;
-                padding-top:70px;
-                text-align: center;
-            }
-
             /* Row and cell styling */
             .table {
                 width: 100%;
@@ -123,6 +114,41 @@
             .btn-action i {
                 margin-right: 5px;
             }
+            .page-container {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .job-posting-container {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+
+            .content-wrapper {
+                display: flex;
+                flex-direction: column;
+                min-height: 80vh; /* Giúp giữ chiều cao của nội dung */
+            }
+
+            .table-responsive {
+                flex-grow: 1; /* Đẩy bảng chiếm không gian còn lại */
+            }
+
+            .pagination-container {
+                margin-top: auto; /* Đẩy phân trang xuống đáy */
+                padding-bottom: 20px; /* Thêm khoảng trống phía dưới */
+            }
+
+            .table-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: #007b5e;
+                padding-top: 40px; /* Khoảng cách cố định giữa tiêu đề và header */
+                margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và bảng */
+                text-align: center;
+            }
 
         </style>
     </head>
@@ -136,7 +162,7 @@
 
             <!-- Main content for Applications Management -->
             <div class="job-posting-container flex-grow-1">
-                <div class="container">
+                <div class="container content-wrapper">
                     <!-- Title Section -->
                     <h2 class="table-title mt-4 mb-4">${jobPostingTitle}</h2>
 
@@ -266,22 +292,32 @@
                         </table>
                     </div>
 
-                    <!-- Pagination -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <c:if test="${currentPage > 1}">
-                                <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage - 1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach var="i" begin="1" end="${totalPages}">
-                                <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                                    <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <c:if test="${currentPage < totalPages}">
-                                <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage + 1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                    </nav>
+                    <!-- Pagination Container at the bottom -->
+                    <div class="pagination-container mt-auto">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${currentPage > 1}">
+                                    <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage - 1}">Previous</a></li>
+                                    </c:if>
+                                    <c:set var="startPage" value="${currentPage > 3 ? currentPage - 2 : 1}" />
+                                    <c:set var="endPage" value="${startPage + 4}" />
+                                    <c:if test="${endPage > totalPages}">
+                                        <c:set var="endPage" value="${totalPages}" />
+                                        <c:set var="startPage" value="${endPage - 4 > 0 ? endPage - 4 : 1}" />
+                                    </c:if>
+
+                                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="?jobPostId=${param.jobPostId}&page=${i}">${i}</a>
+                                    </li>
+                                </c:forEach>
+
+                                <c:if test="${currentPage < totalPages}">
+                                    <li class="page-item"><a class="page-link" href="?jobPostId=${param.jobPostId}&page=${currentPage + 1}">Next</a></li>
+                                    </c:if>
+                            </ul>
+                        </nav>
+                    </div>
 
                     <!-- Error message if no applications found -->
                     <c:if test="${empty applications}">

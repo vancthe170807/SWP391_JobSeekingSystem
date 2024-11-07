@@ -89,71 +89,71 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script type="text/javascript">
-                                    function togglePassword() {
-                                        var input = document.getElementById("password");
-                                        var icon = document.getElementById("togglePassword");
-                                        if (input.type === "password") {
-                                            input.type = "text";
-                                            icon.textContent = '🙈'; // Change icon to indicate password is shown
-                                        } else {
-                                            input.type = "password";
-                                            icon.textContent = '👁️'; // Change icon back to indicate password is hidden
-                                        }
-                                    }
+                            function togglePassword() {
+                                var input = document.getElementById("password");
+                                var icon = document.getElementById("togglePassword");
+                                if (input.type === "password") {
+                                    input.type = "text";
+                                    icon.textContent = '🙈'; // Change icon to indicate password is shown
+                                } else {
+                                    input.type = "password";
+                                    icon.textContent = '👁️'; // Change icon back to indicate password is hidden
+                                }
+                            }
 
-                                    // Prevent entering spaces in username and password fields
-                                    function preventSpaces(event) {
-                                        if (event.key === " ") {
-                                            event.preventDefault();
-                                            alert("Username and Password cannot contain spaces!");
-                                        }
-                                    }
+                            // Prevent entering spaces in username and password fields
+                            function preventSpaces(event) {
+                                if (event.key === " ") {
+                                    event.preventDefault();
+                                    alert("Username and Password cannot contain spaces!");
+                                }
+                            }
 
-                                    // Remove spaces when entering username
-                                    document.getElementById("username").addEventListener("input", function () {
-                                        this.value = this.value.replace(/\s/g, "");  // Remove all spaces
-                                    });
+                            // Remove spaces when entering username
+                            document.getElementById("username").addEventListener("input", function () {
+                                this.value = this.value.replace(/\s/g, "");  // Remove all spaces
+                            });
 
-                                    // Remove spaces when entering password
-                                    document.getElementById("password").addEventListener("input", function () {
-                                        this.value = this.value.replace(/\s/g, "");  // Remove all spaces
-                                    });
+                            // Remove spaces when entering password
+                            document.getElementById("password").addEventListener("input", function () {
+                                this.value = this.value.replace(/\s/g, "");  // Remove all spaces
+                            });
 
-                                    function validateForm() {
-                                        var username = document.getElementById("username").value;
-                                        var password = document.getElementById("password").value;
+                            function validateForm() {
+                                var username = document.getElementById("username").value;
+                                var password = document.getElementById("password").value;
 
-                                        // Trim spaces from start and end
-                                        username = username.trim();
-                                        password = password.trim();
+                                // Trim spaces from start and end
+                                username = username.trim();
+                                password = password.trim();
 
-                                        // Check for spaces anywhere in username or password
-                                        if (/\s/.test(username) || /\s/.test(password)) {
-                                            alert("Username and Password cannot contain spaces!");
-                                            return false;  // Prevent form submission
-                                        }
+                                // Check for spaces anywhere in username or password
+                                if (/\s/.test(username) || /\s/.test(password)) {
+                                    alert("Username and Password cannot contain spaces!");
+                                    return false;  // Prevent form submission
+                                }
 
-                                        return true;  // Allow submission if no errors
-                                    }
+                                return true;  // Allow submission if no errors
+                            }
 
-                                    document.getElementById("login-form").onsubmit = function () {
-                                        return validateForm();
-                                    };
+                            document.getElementById("login-form").onsubmit = function () {
+                                return validateForm();
+                            };
 
-                                    // Attach event listeners to prevent space input
-                                    document.getElementById("username").addEventListener("keydown", preventSpaces);
-                                    document.getElementById("password").addEventListener("keydown", preventSpaces);
+                            // Attach event listeners to prevent space input
+                            document.getElementById("username").addEventListener("keydown", preventSpaces);
+                            document.getElementById("password").addEventListener("keydown", preventSpaces);
 
-                                    function checkCapCha() {
-                                        var form = document.getElementById("login-form");
-                                        var error = document.getElementById("error");
-                                        const response = grecaptcha.getResponse();
-                                        if (response) {
-                                            form.submit();
-                                        } else {
-                                            error.textContent = "Please verify that you are not a robot";
-                                        }
-                                    }
+                            function checkCapCha() {
+                                var form = document.getElementById("login-form");
+                                var error = document.getElementById("error");
+                                const response = grecaptcha.getResponse();
+                                if (response) {
+                                    form.submit();
+                                } else {
+                                    error.textContent = "Please verify that you are not a robot";
+                                }
+                            }
         </script>
     </body>
 </html>

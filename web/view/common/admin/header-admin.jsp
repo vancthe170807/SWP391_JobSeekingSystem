@@ -10,7 +10,7 @@
                         <ul class="nav">
                             <!-- Add your navigation items here -->
                             <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/dashboard" style="color: white;">Home</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/home" style="color: white;">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#" style="color: white;">About</a>

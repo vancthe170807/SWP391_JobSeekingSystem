@@ -236,33 +236,33 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="institution">Institution</label>
-                                        <input type="text" class="form-control" id="institution" name="institution" required>
+                                        <input type="text" class="form-control" id="institution" name="institution" value="${sessionScope.institution}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="degree">Degree</label>
                                         <select class="form-select" id="degree" name="degree" required>
-                                            <option value="Bachelor">Bachelor</option>
-                                            <option value="Master">Master</option>
-                                            <option value="PhD">PhD</option>
-                                            <option value="Different">Different</option>
+                                            <option value="Bachelor" <c:if test="${sessionScope.degree == 'Bachelor'}">selected</c:if>>Bachelor</option>
+                                            <option value="Master" <c:if test="${sessionScope.degree == 'Master'}">selected</c:if>>Master</option>
+                                            <option value="PhD" <c:if test="${sessionScope.degree == 'PhD'}">selected</c:if>>PhD</option>
+                                            <option value="Different" <c:if test="${sessionScope.degree == 'Different'}">selected</c:if>>Different</option>
                                         </select>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="fieldofstudy">Field of Study</label>
-                                        <input type="text" class="form-control" id="fieldofstudy" name="fieldofstudy" required>
+                                        <input type="text" class="form-control" id="fieldofstudy" name="fieldofstudy" value="${sessionScope.fieldofstudy}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="startDate">Start Date</label>
-                                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                        <input type="date" class="form-control" id="startDate" name="startDate" value="${sessionScope.startDateStr}" required>
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="endDate">End Date</label>
-                                        <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                        <input type="date" class="form-control" id="endDate" name="endDate" value="${sessionScope.endDateStr}" required>
                                     </div>
                                     <span style="color: green; font-style: italic">If you haven't graduated yet and are still in school, you can enter your anticipated graduation date here.</span>
                                     <div class="form-group mb-3">
@@ -275,7 +275,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" form="educationForm" class="btn btn-success">Add Education</button>
+                        <button type="submit" form="educationForm" class="btn btn-success" id="submitEducationForm">Add Education</button>
                     </div>
                 </div>
             </div>
@@ -338,6 +338,8 @@
                 function showImage(imageUrl) {
                     document.getElementById('modalImage').src = imageUrl;
                 }
+
+                
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

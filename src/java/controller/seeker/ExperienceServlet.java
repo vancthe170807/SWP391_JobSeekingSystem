@@ -33,7 +33,7 @@ public class ExperienceServlet extends HttpServlet {
         String url = "view/user/Experience.jsp"; // Default page to display experience
         String error = request.getParameter("error") != null ? request.getParameter("error") : "";
         request.setAttribute("error", error);
-        
+
         switch (action) {
             case "update-experience":
                 // Forward to the experience update page
@@ -119,6 +119,11 @@ public class ExperienceServlet extends HttpServlet {
                     // Set error message for invalid date range
                     try {
                         url = "experience?error=" + URLEncoder.encode("End date cannot be earlier than start date.", "UTF-8");
+                        session.setAttribute("companyName", companyName);
+                        session.setAttribute("jobTitle", jobTitle);
+                        session.setAttribute("startDateStr", startDateStr);
+                        session.setAttribute("endDateStr", endDateStr);
+                        session.setAttribute("description", description);
                     } catch (UnsupportedEncodingException ex) {
                         Logger.getLogger(ExperienceServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -131,6 +136,12 @@ public class ExperienceServlet extends HttpServlet {
                     weAdd.setStartDate(startDate);
                     weAdd.setEndDate(endDate);
                     weAdd.setDescription(description);
+
+                    session.removeAttribute("companyName");
+                    session.removeAttribute("jobTitle");
+                    session.removeAttribute("startDateStr");
+                    session.removeAttribute("endDateStr");
+                    session.removeAttribute("description");
 
                     weDAO.insert(weAdd); // Insert work experience
 

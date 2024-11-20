@@ -14,13 +14,13 @@
 
 ### 2. Member of Team
 
-| ID Student | Fullname         | Leader |
+| ID Student | Fullname         | Note |
 |------------|------------------|--------|
-| ~~HE170309~~   | ~~Nguyễn Ngọc Tú~~    |        |
+| ~~HE170309~~   | ~~Nguyễn Ngọc Tú~~    |Quit|
 | HE170807   | Chu Thế Văn       |        |
-| ~~HE171932~~   | ~~Nguyễn Văn Dũng~~   |        |
+| ~~HE171932~~   | ~~Nguyễn Văn Dũng~~   |Quit|
 | HE173048   | Trần Văn Tuấn     |        |
-| HE181811   | Ninh Hải Nam      | True   |
+| HE181811   | Ninh Hải Nam      |Leader Team|
 
 ### 3. Link of Google Drive for Project
 

@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -17,7 +17,6 @@ public class Account {
     private String password;
     private String email;
     private String phone;
-    private String citizenId;
     private String firstName;
     private String lastName;
     private Date dob;
@@ -25,19 +24,20 @@ public class Account {
     private String avatar;
     private int roleId;
     private boolean isActive;
-    private Date creatAt;
-    private Date updateAt;
+    private Date createAt;
+    private Date updatedAt;
+    private boolean gender;
 
+   
     public Account() {
     }
 
-    public Account(int id, String username, String password, String email, String phone, String citizenId, String firstName, String lastName, Date dob, String address, String avatar, int roleId, boolean isActive, Date creatAt, Date updateAt) {
+    public Account(int id, String username, String password, String email, String phone, String firstName, String lastName, Date dob, String address, String avatar, int roleId, boolean isActive, Date createAt, Date updatedAt, boolean gender) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.citizenId = citizenId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -45,9 +45,12 @@ public class Account {
         this.avatar = avatar;
         this.roleId = roleId;
         this.isActive = isActive;
-        this.creatAt = creatAt;
-        this.updateAt = updateAt;
+        this.createAt = createAt;
+        this.updatedAt = updatedAt;
+        this.gender = gender;
     }
+
+    
 
     public int getRoleId() {
         return roleId;
@@ -96,15 +99,6 @@ public class Account {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public String getCitizenId() {
-        return citizenId;
-    }
-
-    public void setCitizenId(String citizenId) {
-        this.citizenId = citizenId;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -153,20 +147,31 @@ public class Account {
         this.isActive = isActive;
     }
 
-    public Date getCreatAt() {
-        return creatAt;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setCreatAt(Date creatAt) {
-        this.creatAt = creatAt;
+    public void setCreateAt(Date creatAt) {
+        this.createAt = creatAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updateAt) {
+        this.updatedAt = updateAt;
+    }
+    public String getFullName() {
+        return lastName + " " + firstName;
+    } 
+
+    public boolean isGender() {
+        return gender;
     }
 
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+    
 }
